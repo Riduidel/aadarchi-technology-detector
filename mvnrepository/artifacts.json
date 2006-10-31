@@ -1,5 +1,180 @@
 [
   {
+    "coordinates": "commons-codec.commons-codec",
+    "name": "Codec",
+    "description": "The codec package contains simple encoder and decoders for various formats such as Base64 and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
+    "tags": [
+      "decoding",
+      "encoding"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "20041127.091804": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "commons-lang.commons-lang",
+    "name": "Lang",
+    "description": "Commons.Lang, a package of Java utility classes for the classes that are in java.lang\u0027s hierarchy, or are considered to be so standard as to justify existence in java.lang.",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "20030203.000129": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2": {
+        "date": "Oct 07, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.1": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-b1.1": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-b1": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "javax.servlet.jstl",
+    "name": "jstl",
+    "description": "",
+    "tags": [
+      "web"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.1.2": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.1": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.6": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.5": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.4": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.3": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.2": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Nov 26, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "junit.junit",
     "name": "JUnit",
     "description": "JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.",
@@ -12,6 +187,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1": {
+        "date": "Oct 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0": {
         "date": "Feb 18, 2006",
         "users": 0,
