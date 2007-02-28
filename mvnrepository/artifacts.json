@@ -250,6 +250,63 @@
     }
   },
   {
+    "coordinates": "commons-io.commons-io",
+    "name": "IO",
+    "description": "Commons-IO contains utility classes, stream implementations, file filters, and endian classes.",
+    "tags": [
+      "io"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "20030203.000550": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.1": {
+        "date": "Feb 13, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3": {
+        "date": "Jan 30, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Mar 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.1": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "commons-lang.commons-lang",
     "name": "Lang",
     "description": "Commons.Lang, a package of Java utility classes for the classes that are in java.lang\u0027s hierarchy, or are considered to be so standard as to justify existence in java.lang.",
@@ -261,6 +318,12 @@
     "versions": {
       "20030203.000129": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3": {
+        "date": "Feb 13, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -654,6 +717,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "Feb 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "May 07, 2006",
         "users": 0,
@@ -717,6 +786,36 @@
     }
   },
   {
+    "coordinates": "org.hibernate.hibernate-entitymanager",
+    "name": "Hibernate EntityManager",
+    "description": "Hibernate EntityManager implements the programming interfaces and lifecycle rules as defined by the EJB3 persistence specification.",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "3.2.1.ga": {
+        "date": "Jan 01, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.0.ga": {
+        "date": "Oct 19, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.0.cr2": {
+        "date": "Nov 17, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.slf4j.slf4j-api",
     "name": "SLF4J API Module",
     "description": "The slf4j API",
@@ -726,6 +825,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.0": {
+        "date": "Feb 25, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2": {
         "date": "Jan 24, 2007",
         "users": 0,
@@ -870,6 +975,197 @@
         "interpolatedUsers": 0
       },
       "1.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-m4": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "org.springframework.spring-context",
+    "name": "Spring context",
+    "description": "Spring Framework: Context",
+    "tags": [
+      "framework",
+      "spring",
+      "web"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "2.0.2": {
+        "date": "Jan 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.1": {
+        "date": "Nov 25, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m4": {
+        "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m2": {
+        "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m1": {
+        "date": "Feb 14, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0": {
+        "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.8": {
+        "date": "Aug 24, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.7": {
+        "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.6": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.5": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.4": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.3": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2-rc2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.5": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.4": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.3": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-rc2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
         "date": "Dec 23, 2005",
         "users": 0,
         "previousUsers": 0,
@@ -1266,6 +1562,185 @@
     }
   },
   {
+    "coordinates": "org.springframework.spring-webmvc",
+    "name": "Spring web MVC",
+    "description": "Spring Framework: WebMVC",
+    "tags": [
+      "framework",
+      "spring",
+      "web"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "2.0.2": {
+        "date": "Jan 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.1": {
+        "date": "Nov 25, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m2": {
+        "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m1": {
+        "date": "Feb 14, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0": {
+        "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.8": {
+        "date": "Aug 24, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.7": {
+        "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.6": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.5": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.4": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.3": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2-rc2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.5": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.4": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.3": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-rc2": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc1": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Dec 23, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "oro.oro",
     "name": "oro",
     "description": "",
@@ -1292,6 +1767,57 @@
       },
       "2.0.6": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "xml-apis.xml-apis",
+    "name": "XML Commons External Components XML APIs",
+    "description": "xml-commons provides an Apache-hosted set of DOM, SAX, and JAXP interfaces for use in other xml-based projects. Our hope is that we can standardize on both a common version and packaging scheme for these critical XML standards interfaces to make the lives of both our developers and users easier. The External Components portion of xml-commons contains interfaces that are defined by external standards organizations. For DOM, that\u0027s the W3C; for SAX it\u0027s David Megginson and sax.sourceforge.net; for JAXP it\u0027s Sun.",
+    "tags": [
+      "xml"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "2.0.2": {
+        "date": "Nov 19, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.0": {
+        "date": "Nov 19, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.04": {
+        "date": "Dec 22, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.03": {
+        "date": "May 12, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.02": {
+        "date": "Nov 19, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.b2": {
+        "date": "Feb 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
