@@ -1,23 +1,5 @@
 [
   {
-    "coordinates": "com.h2database.h2",
-    "name": "H2 Database Engine",
-    "description": "H2 Database Engine",
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "1.0.20061217": {
-        "date": "Dec 22, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "commons-beanutils.commons-beanutils",
     "name": "BeanUtils",
     "description": "BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
@@ -243,6 +225,81 @@
       },
       "1.0": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "commons-dbcp.commons-dbcp",
+    "name": "Commons DBCP",
+    "description": "Commons Database Connection Pooling",
+    "tags": [
+      "pool"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "20030825.184428": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "20030821.193421": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "20030818.201141": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.1": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-RC2": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1-RC1": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-dev-20020806": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Nov 24, 2005",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -717,6 +774,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.6": {
+        "date": "Apr 01, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.5": {
         "date": "Feb 14, 2007",
         "users": 0,
@@ -787,7 +850,7 @@
   },
   {
     "coordinates": "org.hibernate.hibernate-entitymanager",
-    "name": "Hibernate EntityManager",
+    "name": "Hibernate Entity Manager",
     "description": "Hibernate EntityManager implements the programming interfaces and lifecycle rules as defined by the EJB3 persistence specification.",
     "ranking": 0,
     "users": 0,
@@ -878,6 +941,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Mar 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Jan 09, 2007",
         "users": 0,
@@ -910,6 +979,12 @@
       },
       "2.0": {
         "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Mar 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1021,6 +1096,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Mar 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Jan 09, 2007",
         "users": 0,
@@ -1053,6 +1134,12 @@
       },
       "2.0": {
         "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Mar 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1212,6 +1299,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Mar 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Jan 09, 2007",
         "users": 0,
@@ -1244,6 +1337,12 @@
       },
       "2.0": {
         "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Mar 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1397,6 +1496,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Mar 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Jan 09, 2007",
         "users": 0,
@@ -1423,6 +1528,12 @@
       },
       "2.0": {
         "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Mar 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1576,6 +1687,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Mar 09, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Jan 09, 2007",
         "users": 0,
@@ -1602,6 +1719,12 @@
       },
       "2.0": {
         "date": "Oct 04, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Mar 09, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
