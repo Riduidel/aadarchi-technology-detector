@@ -1,5 +1,29 @@
 [
   {
+    "coordinates": "com.h2database.h2",
+    "name": "H2 Database Engine",
+    "description": "H2 Database Engine",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.0.20070304": {
+        "date": "Mar 12, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.20061217": {
+        "date": "Dec 22, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "commons-beanutils.commons-beanutils",
     "name": "BeanUtils",
     "description": "BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
@@ -258,6 +282,12 @@
       },
       "20030818.201141": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.2": {
+        "date": "Apr 04, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -888,6 +918,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.1": {
+        "date": "Apr 15, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.3.0": {
         "date": "Feb 25, 2007",
         "users": 0,
@@ -941,6 +977,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.4": {
+        "date": "Apr 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.3": {
         "date": "Mar 09, 2007",
         "users": 0,
@@ -1096,6 +1138,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.4": {
+        "date": "Apr 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.3": {
         "date": "Mar 09, 2007",
         "users": 0,
@@ -1299,6 +1347,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.4": {
+        "date": "Apr 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.3": {
         "date": "Mar 09, 2007",
         "users": 0,
@@ -1496,6 +1550,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.4": {
+        "date": "Apr 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.3": {
         "date": "Mar 09, 2007",
         "users": 0,
@@ -1687,6 +1747,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.4": {
+        "date": "Apr 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.3": {
         "date": "Mar 09, 2007",
         "users": 0,
@@ -1862,6 +1928,17 @@
         "interpolatedUsers": 0
       }
     }
+  },
+  {
+    "coordinates": "org.testng.testng",
+    "name": "TestNG",
+    "description": "TestNG is a unit testing framework.",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {}
   },
   {
     "coordinates": "oro.oro",
