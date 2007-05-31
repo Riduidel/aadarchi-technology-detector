@@ -9,6 +9,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.20070429": {
+        "date": "May 15, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.20070304": {
         "date": "Mar 12, 2007",
         "users": 0,
@@ -97,6 +103,46 @@
         "interpolatedUsers": 0
       },
       "1.2": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "commons-cli.commons-cli",
+    "name": "CLI",
+    "description": "Commons CLI provides a simple API for presenting, processing and validating a command line interface.",
+    "tags": [
+      "command",
+      "line"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "20040117.000000": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-beta-2": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-beta-1": {
         "date": "Nov 08, 2005",
         "users": 0,
         "previousUsers": 0,
@@ -676,6 +722,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.1": {
+        "date": "May 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3": {
+        "date": "May 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2": {
         "date": "Feb 01, 2007",
         "users": 0,
@@ -690,6 +748,30 @@
       },
       "4.0": {
         "date": "Feb 18, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.8.2": {
+        "date": "May 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.8.1": {
+        "date": "May 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.8": {
+        "date": "May 14, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.7": {
+        "date": "May 14, 2007",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -879,6 +961,24 @@
     }
   },
   {
+    "coordinates": "org.apache.velocity.velocity",
+    "name": "Apache Velocity",
+    "description": "Apache Velocity is a general purpose template engine.",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.5": {
+        "date": "Mar 07, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.hibernate.hibernate-entitymanager",
     "name": "Hibernate Entity Manager",
     "description": "Hibernate EntityManager implements the programming interfaces and lifecycle rules as defined by the EJB3 persistence specification.",
@@ -888,6 +988,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.3.1.ga": {
+        "date": "May 31, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.1.ga": {
         "date": "Jan 01, 2007",
         "users": 0,
@@ -918,6 +1024,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.4.0": {
+        "date": "May 22, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.3.1": {
         "date": "Apr 15, 2007",
         "users": 0,
@@ -963,6 +1075,108 @@
     }
   },
   {
+    "coordinates": "org.slf4j.slf4j-log4j12",
+    "name": "SLF4J LOG4J-12 Binding",
+    "description": "The slf4j log4j-12 binding",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.4.0": {
+        "date": "May 22, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.1": {
+        "date": "Apr 15, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.0": {
+        "date": "Feb 25, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Jan 24, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0-beta0": {
+        "date": "Sep 17, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0-RC1": {
+        "date": "Nov 16, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0-RC0": {
+        "date": "Nov 09, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0": {
+        "date": "Dec 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Jul 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc5": {
+        "date": "Apr 30, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc3": {
+        "date": "Dec 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc2": {
+        "date": "Dec 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-rc1": {
+        "date": "Dec 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-beta9": {
+        "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Apr 30, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.springframework.spring-beans",
     "name": "Spring beans",
     "description": "Spring Framework: Beans",
@@ -977,6 +1191,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "May 08, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "Apr 10, 2007",
         "users": 0,
@@ -1138,6 +1358,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "May 08, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "Apr 10, 2007",
         "users": 0,
@@ -1347,6 +1573,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "May 08, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "Apr 10, 2007",
         "users": 0,
@@ -1550,6 +1782,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "May 08, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "Apr 10, 2007",
         "users": 0,
@@ -1747,6 +1985,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.5": {
+        "date": "May 08, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.4": {
         "date": "Apr 10, 2007",
         "users": 0,
