@@ -9,6 +9,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.58": {
+        "date": "Sep 16, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.57": {
         "date": "Aug 26, 2007",
         "users": 0,
@@ -1072,6 +1078,39 @@
     "versions": {
       "1.5": {
         "date": "Mar 07, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "org.easymock.easymock",
+    "name": "EasyMock",
+    "description": "EasyMock provides Mock Objects for interfaces in JUnit tests by generating them on the fly using Java\u0027s proxy mechanism",
+    "tags": [
+      "mock"
+    ],
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "2.3": {
+        "date": "Jul 10, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2": {
+        "date": "Apr 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0": {
+        "date": "Feb 01, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
