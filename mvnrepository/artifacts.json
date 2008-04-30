@@ -129,6 +129,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.71": {
+        "date": "Apr 25, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.70": {
+        "date": "Apr 20, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.69": {
         "date": "Mar 29, 2008",
         "users": 0,
@@ -425,6 +437,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.2.1": {
+        "date": "Apr 15, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2": {
         "date": "Jun 22, 2006",
         "users": 0,
@@ -1238,6 +1256,36 @@
     "versions": {}
   },
   {
+    "coordinates": "org.apache.httpcomponents.httpclient",
+    "name": "HttpClient (base module)",
+    "description": "HttpComponents Client (base module)",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "4.0-alpha3": {
+        "date": "Feb 25, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0-alpha2": {
+        "date": "Nov 06, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0-alpha1": {
+        "date": "Jul 18, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.apache.httpcomponents.httpcore",
     "name": "HttpCore (base module)",
     "description": "HttpComponents Core (Java 1.3 compatible)",
@@ -1292,6 +1340,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.9": {
+        "date": "Apr 10, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.8": {
         "date": "Nov 26, 2007",
         "users": 0,
@@ -2170,6 +2224,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -2373,6 +2439,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -2624,6 +2702,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -2864,6 +2954,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -2894,6 +2996,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -2929,6 +3043,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -3168,6 +3294,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.4": {
+        "date": "Apr 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.3": {
+        "date": "Apr 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.2": {
         "date": "Mar 06, 2008",
         "users": 0,
@@ -3395,7 +3533,7 @@
   {
     "coordinates": "org.testng.testng",
     "name": "TestNG",
-    "description": "TestNG is a unit testing framework.",
+    "description": "TestNG is a testing framework inspired from JUnit and NUnit but introducing some new functionalities that make it more powerful and easier to use.",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
