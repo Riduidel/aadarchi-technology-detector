@@ -129,6 +129,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.73": {
+        "date": "May 31, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.72": {
+        "date": "May 10, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.71": {
         "date": "Apr 25, 2008",
         "users": 0,
@@ -1265,6 +1277,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0-alpha4": {
+        "date": "May 07, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0-alpha3": {
         "date": "Feb 25, 2008",
         "users": 0,
@@ -1597,7 +1615,7 @@
   {
     "coordinates": "org.easymock.easymock",
     "name": "EasyMock",
-    "description": "EasyMock provides Mock Objects for interfaces in JUnit tests by generating them on the fly using Java\u0027s proxy mechanism",
+    "description": "EasyMock provides an easy way to create Mock Objects for interfaces by generating them on the fly using Java\u0027s proxy mechanism",
     "tags": [
       "mock"
     ],
@@ -1628,6 +1646,30 @@
     }
   },
   {
+    "coordinates": "org.hamcrest.hamcrest-all",
+    "name": "Hamcrest All",
+    "description": "Hamcrest All",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.1": {
+        "date": "Jul 18, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "May 21, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.hamcrest.hamcrest-core",
     "name": "Hamcrest Core",
     "description": "",
@@ -1647,14 +1689,20 @@
   },
   {
     "coordinates": "org.hibernate.hibernate-entitymanager",
-    "name": "Hibernate Entity Manager",
-    "description": "Hibernate EntityManager implements the programming interfaces and lifecycle rules as defined by the EJB3 persistence specification.",
+    "name": "Hibernate Entitity Manager",
+    "description": "Hibernate Entitity Manager",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.3.2.GA": {
+        "date": "May 22, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.3.1.ga": {
         "date": "May 31, 2007",
         "users": 0,
