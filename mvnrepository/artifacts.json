@@ -309,6 +309,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.107": {
+        "date": "Jan 24, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.106": {
+        "date": "Jan 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.105": {
         "date": "Dec 19, 2008",
         "users": 0,
@@ -1652,6 +1664,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0-alpha-1": {
+        "date": "Jan 07, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.1.0-M1": {
+        "date": "Jan 08, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.9": {
         "date": "Apr 10, 2008",
         "users": 0,
@@ -2099,6 +2123,48 @@
     }
   },
   {
+    "coordinates": "org.hibernate.hibernate-c3p0",
+    "name": "Hibernate C3P0 ConnectionProvider",
+    "description": "C3P0-based implementation of the Hibernate ConnectionProvder contract",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "3.3.1.GA": {
+        "date": "Oct 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.3.0.SP1": {
+        "date": "Oct 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.3.0.GA": {
+        "date": "Oct 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.3.0.CR2": {
+        "date": "Oct 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.3.0.CR1": {
+        "date": "Oct 28, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.hibernate.hibernate-core",
     "name": "Hibernate Core",
     "description": "The core functionality of Hibernate",
@@ -2150,6 +2216,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.4.0.GA": {
+        "date": "Jan 06, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.3.2.GA": {
         "date": "May 22, 2008",
         "users": 0,
@@ -2216,6 +2288,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7": {
+        "date": "Jan 29, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6": {
         "date": "Nov 05, 2008",
         "users": 0,
@@ -2264,6 +2342,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7": {
+        "date": "Jan 29, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6": {
         "date": "Nov 05, 2008",
         "users": 0,
