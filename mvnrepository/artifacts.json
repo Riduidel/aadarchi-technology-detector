@@ -57,6 +57,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.9.15": {
+        "date": "Feb 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.9.14": {
         "date": "Dec 29, 2008",
         "users": 0,
@@ -207,6 +213,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.9.15": {
+        "date": "Feb 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.9.14": {
         "date": "Dec 29, 2008",
         "users": 0,
@@ -309,6 +321,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.108": {
+        "date": "Feb 28, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.107": {
         "date": "Jan 24, 2009",
         "users": 0,
@@ -523,7 +541,7 @@
   },
   {
     "coordinates": "commons-beanutils.commons-beanutils",
-    "name": "BeanUtils",
+    "name": "Commons BeanUtils",
     "description": "BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
     "tags": [
       "beans"
@@ -622,7 +640,7 @@
   },
   {
     "coordinates": "commons-cli.commons-cli",
-    "name": "CLI",
+    "name": "Commons CLI",
     "description": "Commons CLI provides a simple API for presenting, processing and validating a command line interface.",
     "tags": [
       "command",
@@ -668,7 +686,7 @@
   },
   {
     "coordinates": "commons-codec.commons-codec",
-    "name": "Codec",
+    "name": "Commons Codec",
     "description": "The codec package contains simple encoder and decoders for various formats such as Base64 and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
     "tags": [
       "decoding",
@@ -1648,6 +1666,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
+      },
+      "4.0": {
+        "date": "Feb 24, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
       }
     }
   },
@@ -1664,6 +1688,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0-alpha-2": {
+        "date": "Feb 05, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0-alpha-1": {
         "date": "Jan 07, 2009",
         "users": 0,
@@ -1724,6 +1754,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0.10": {
+        "date": "Feb 10, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.1": {
         "date": "May 07, 2006",
         "users": 0,
@@ -1778,6 +1814,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.1.0.0": {
+        "date": "Feb 19, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.0.9": {
         "date": "Jan 23, 2008",
         "users": 0,
@@ -1883,6 +1925,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.1.0.0": {
+        "date": "Feb 19, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.0.9": {
         "date": "Jan 23, 2008",
         "users": 0,
@@ -2264,6 +2312,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "20090211": {
+        "date": "Feb 26, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "20080701": {
         "date": "Jul 20, 2008",
         "users": 0,
@@ -2853,180 +2907,6 @@
         "interpolatedUsers": 0
       },
       "1.0-beta9": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0": {
-        "date": "Apr 30, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
-    "coordinates": "org.slf4j.slf4j-simple",
-    "name": "SLF4J Simple Binding",
-    "description": "SLF4J Simple binding",
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "1.5.6": {
-        "date": "Nov 21, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.5": {
-        "date": "Oct 17, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.4": {
-        "date": "Oct 16, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.3": {
-        "date": "Sep 12, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.2": {
-        "date": "Jun 09, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.0-M0": {
-        "date": "Jan 29, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.0": {
-        "date": "Feb 26, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.4.3": {
-        "date": "Aug 20, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.4.2": {
-        "date": "Jul 12, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.4.1": {
-        "date": "Jul 04, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.4.0": {
-        "date": "May 22, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.3.1": {
-        "date": "Apr 15, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.3.0": {
-        "date": "Feb 25, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.2": {
-        "date": "Jan 24, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.0-beta0": {
-        "date": "Sep 17, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.0-RC1": {
-        "date": "Nov 16, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.0-RC0": {
-        "date": "Nov 09, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.0": {
-        "date": "Dec 20, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0.1": {
-        "date": "Jul 02, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-rc5": {
-        "date": "Apr 30, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-rc3": {
-        "date": "Dec 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-rc2": {
-        "date": "Dec 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-rc1": {
-        "date": "Dec 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-beta9": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-beta7": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0-beta4": {
         "date": "Nov 08, 2005",
         "users": 0,
         "previousUsers": 0,
