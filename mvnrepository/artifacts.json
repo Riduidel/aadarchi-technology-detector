@@ -60,6 +60,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.9.16": {
+        "date": "Jul 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.9.15": {
         "date": "Feb 12, 2009",
         "users": 0,
@@ -219,6 +225,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.9.16": {
+        "date": "Jul 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.9.15": {
         "date": "Feb 12, 2009",
         "users": 0,
@@ -356,6 +368,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.116": {
+        "date": "Jul 18, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.115": {
         "date": "Jun 27, 2009",
         "users": 0,
@@ -2548,6 +2566,78 @@
     }
   },
   {
+    "coordinates": "org.mockito.mockito-all",
+    "name": "Mockito",
+    "description": "Mock objects library for java",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.8.0-rc2": {
+        "date": "Jun 18, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.8.0-rc1": {
+        "date": "Jun 10, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.8.0": {
+        "date": "Jul 23, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.7": {
+        "date": "Jan 29, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.6": {
+        "date": "Nov 05, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.5": {
+        "date": "Aug 10, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4": {
+        "date": "Jul 20, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3": {
+        "date": "Apr 29, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Mar 23, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Mar 06, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.mockito.mockito-core",
     "name": "Mockito",
     "description": "Mock objects library for java",
@@ -2557,6 +2647,24 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.8.0-rc2": {
+        "date": "Jun 18, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.8.0-rc1": {
+        "date": "Jun 10, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.8.0": {
+        "date": "Jul 23, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7": {
         "date": "Jan 29, 2009",
         "users": 0,
