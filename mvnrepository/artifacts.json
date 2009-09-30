@@ -380,6 +380,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.119": {
+        "date": "Sep 26, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.118": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.117": {
         "date": "Aug 09, 2009",
         "users": 0,
@@ -1774,6 +1786,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1-alpha1": {
+        "date": "Sep 10, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.1": {
         "date": "Jun 21, 2009",
         "users": 0,
@@ -2341,6 +2359,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5.2": {
+        "date": "Sep 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.1": {
         "date": "Jun 16, 2009",
         "users": 0,
@@ -2746,6 +2770,234 @@
     }
   },
   {
+    "coordinates": "org.scala-lang.scala-library",
+    "name": "scala-library",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "2.8.0.r18462-b20090811081019": {
+        "date": "Aug 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.6": {
+        "date": "Sep 10, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.5": {
+        "date": "Jun 02, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.4.final": {
+        "date": "Apr 24, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.4.RC1": {
+        "date": "Apr 24, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.4": {
+        "date": "Apr 24, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.3.RC2": {
+        "date": "Jan 08, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.3.RC1": {
+        "date": "Jan 06, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.3": {
+        "date": "Jan 14, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.2-rc6": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.2-rc3": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.2-rc2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.2-rc1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.1-rc2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.1-rc1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.0-rc3": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.0-rc2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.0-rc1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.7.0": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.1-rc2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.1-rc1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.0-RC3": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.0-RC2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.6.0": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.0-RC2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.0-RC1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.0": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.4.0-RC2": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.4.0-RC1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.4.0": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3.3": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3.1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.slf4j.jcl-over-slf4j",
     "name": "JCL 1.1.1 implemented over SLF4J",
     "description": "JCL 1.1.1 implementation over SLF4J",
@@ -2755,6 +3007,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.9-RC0": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.8": {
         "date": "Jun 11, 2009",
         "users": 0,
@@ -2809,6 +3067,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.9-RC0": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.8": {
         "date": "Jun 11, 2009",
         "users": 0,
@@ -2941,6 +3205,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.9-RC0": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.8": {
         "date": "Jun 11, 2009",
         "users": 0,
@@ -3127,6 +3397,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.9-RC0": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.8": {
         "date": "Jun 11, 2009",
         "users": 0,
@@ -3301,6 +3577,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.9-RC0": {
+        "date": "Sep 04, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.8": {
         "date": "Jun 11, 2009",
         "users": 0,
