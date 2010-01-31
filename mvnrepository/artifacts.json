@@ -411,6 +411,24 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2.128": {
+        "date": "Jan 30, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.127": {
+        "date": "Jan 15, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.126": {
+        "date": "Dec 18, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2.125": {
         "date": "Dec 06, 2009",
         "users": 0,
@@ -1499,6 +1517,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.2": {
+        "date": "Jan 07, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.1": {
         "date": "Oct 01, 2007",
         "users": 0,
@@ -1958,6 +1982,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0-alpha-6": {
+        "date": "Jan 06, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0-alpha-5": {
         "date": "Nov 23, 2009",
         "users": 0,
@@ -2432,12 +2462,21 @@
     "coordinates": "org.apache.velocity.velocity",
     "name": "Apache Velocity",
     "description": "Apache Velocity is a general purpose template engine.",
+    "tags": [
+      "apache"
+    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.6.3": {
+        "date": "Dec 14, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6.2": {
         "date": "Mar 18, 2009",
         "users": 0,
@@ -2873,6 +2912,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.8.2": {
+        "date": "Dec 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.8.1-rc1": {
         "date": "Nov 11, 2009",
         "users": 0,
@@ -2945,6 +2990,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.8.0.Beta1-RC8": {
+        "date": "Jan 18, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.8.0.Beta1-RC7": {
+        "date": "Jan 08, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.8.0.Beta1-RC6": {
         "date": "Dec 23, 2009",
         "users": 0,
@@ -2977,6 +3034,12 @@
       },
       "2.8.0.Beta1-RC1": {
         "date": "Nov 13, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.8.0.Beta1": {
+        "date": "Jan 27, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4048,6 +4111,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -4281,6 +4350,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -4562,6 +4637,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -4832,6 +4913,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -4892,6 +4979,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -4957,6 +5050,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
@@ -5226,6 +5325,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.0.RELEASE": {
+        "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC01": {
         "date": "Apr 22, 2009",
         "users": 0,
