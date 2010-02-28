@@ -381,6 +381,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.0": {
+        "date": "Feb 11, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.2.0": {
         "date": "Oct 07, 2009",
         "users": 0,
@@ -389,6 +395,12 @@
       },
       "2.1.0": {
         "date": "Oct 07, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.3": {
+        "date": "Feb 10, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -411,6 +423,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2.130": {
+        "date": "Feb 26, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.129": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2.128": {
         "date": "Jan 30, 2010",
         "users": 0,
@@ -1100,6 +1124,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.4": {
+        "date": "Feb 07, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3": {
+        "date": "Feb 07, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2.2": {
         "date": "Apr 04, 2007",
         "users": 0,
@@ -1231,6 +1267,12 @@
     "versions": {
       "20030203.000129": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5": {
+        "date": "Feb 25, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1634,7 +1676,7 @@
   {
     "coordinates": "junit.junit",
     "name": "JUnit",
-    "description": "JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.",
+    "description": "JUnit is a regression testing framework. It is used by the developer who implements unit tests in Java.",
     "tags": [
       "testing"
     ],
@@ -1644,6 +1686,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.8.1": {
+        "date": "Feb 25, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.7": {
         "date": "Aug 12, 2009",
         "users": 0,
@@ -2086,6 +2134,12 @@
       },
       "2.0.2": {
         "date": "May 07, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.11": {
+        "date": "Feb 12, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -2688,14 +2742,50 @@
   },
   {
     "coordinates": "org.hibernate.hibernate-core",
-    "name": "Hibernate Core",
-    "description": "The core functionality of Hibernate",
+    "name": "A Hibernate Core Module",
+    "description": "A module of the Hibernate Core project",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.5.0.Beta-1": {
+        "date": "Aug 20, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.0-CR-2": {
+        "date": "Feb 25, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.0-CR-1": {
+        "date": "Feb 10, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.0-Beta-4": {
+        "date": "Jan 29, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.0-Beta-3": {
+        "date": "Jan 14, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.0-Beta-2": {
+        "date": "Nov 02, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.3.2.GA": {
         "date": "Aug 21, 2009",
         "users": 0,
@@ -3338,6 +3428,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.5.11": {
+        "date": "Feb 25, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.10": {
         "date": "Dec 02, 2009",
         "users": 0,
@@ -3406,6 +3502,12 @@
       },
       "1.5.2": {
         "date": "Jun 09, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.5.11": {
+        "date": "Feb 25, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3556,6 +3658,12 @@
       },
       "1.5.2": {
         "date": "Jun 09, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.5.11": {
+        "date": "Feb 25, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3764,6 +3872,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.5.11": {
+        "date": "Feb 25, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.10": {
         "date": "Dec 02, 2009",
         "users": 0,
@@ -3956,6 +4070,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.5.11": {
+        "date": "Feb 25, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.10": {
         "date": "Dec 02, 2009",
         "users": 0,
@@ -4111,6 +4231,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -4350,6 +4476,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -4637,6 +4769,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -4913,6 +5051,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -4979,6 +5123,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -5050,6 +5200,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -5325,6 +5481,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.1.RELEASE": {
+        "date": "Feb 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
         "users": 0,
@@ -5588,7 +5750,7 @@
   {
     "coordinates": "org.testng.testng",
     "name": "TestNG",
-    "description": "TestNG is a testing framework inspired from JUnit and NUnit but introducing some new functionalities that make it more powerful and easier to use.",
+    "description": "TestNG is a testing framework.",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -5668,6 +5830,12 @@
       },
       "1.3.02": {
         "date": "Nov 19, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.01": {
+        "date": "Feb 03, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
