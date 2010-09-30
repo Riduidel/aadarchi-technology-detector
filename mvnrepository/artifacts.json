@@ -489,6 +489,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "r07": {
+        "date": "Sep 24, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "r06": {
         "date": "Jul 08, 2010",
         "users": 0,
@@ -572,6 +578,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2.143": {
+        "date": "Sep 18, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2.142": {
         "date": "Aug 31, 2010",
         "users": 0,
@@ -1892,6 +1904,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.6.2": {
+        "date": "Sep 13, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6.1": {
         "date": "Aug 08, 2010",
         "users": 0,
@@ -2198,6 +2216,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.0.3": {
+        "date": "Sep 15, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.2": {
+        "date": "Sep 02, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.1": {
         "date": "Dec 09, 2009",
         "users": 0,
@@ -2348,6 +2378,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0-beta-3": {
+        "date": "Aug 30, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0-beta-2": {
         "date": "Aug 07, 2010",
         "users": 0,
@@ -2543,6 +2579,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.2.1": {
+        "date": "Sep 29, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.2.0": {
         "date": "Aug 04, 2010",
         "users": 0,
@@ -2696,6 +2738,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.2.1": {
+        "date": "Sep 29, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.2.0": {
         "date": "Aug 04, 2010",
         "users": 0,
@@ -2939,6 +2987,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2.0": {
+        "date": "Sep 14, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.0": {
         "date": "Jan 02, 2010",
         "users": 0,
@@ -3043,13 +3097,19 @@
   {
     "coordinates": "org.hamcrest.hamcrest-core",
     "name": "Hamcrest Core",
-    "description": "",
+    "description": "This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2": {
+        "date": "Sep 22, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1": {
         "date": "Jul 18, 2007",
         "users": 0,
@@ -3068,6 +3128,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.2": {
+        "date": "Sep 22, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1": {
         "date": "Jul 18, 2007",
         "users": 0,
@@ -3092,6 +3158,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.6.0.CR2": {
+        "date": "Sep 29, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.6.0.CR1": {
+        "date": "Sep 15, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.6.0.Beta4": {
         "date": "Sep 01, 2010",
         "users": 0,
@@ -3112,6 +3190,12 @@
       },
       "3.6.0.Beta1": {
         "date": "Jul 21, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.6-Final": {
+        "date": "Sep 15, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3236,6 +3320,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.6.0.CR2": {
+        "date": "Sep 29, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.6.0.CR1": {
+        "date": "Sep 15, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.6.0.Beta4": {
         "date": "Sep 01, 2010",
         "users": 0,
@@ -3256,6 +3352,12 @@
       },
       "3.6.0.Beta1": {
         "date": "Jul 21, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.5.6-Final": {
+        "date": "Sep 15, 2010",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3557,96 +3659,6 @@
     }
   },
   {
-    "coordinates": "org.mockito.mockito-core",
-    "name": "Mockito",
-    "description": "Mock objects library for java",
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "1.8.5": {
-        "date": "May 25, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.4": {
-        "date": "Mar 17, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.3": {
-        "date": "Mar 07, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.2": {
-        "date": "Dec 12, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.1-rc1": {
-        "date": "Nov 11, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.1": {
-        "date": "Nov 21, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.0-rc2": {
-        "date": "Jun 18, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.0-rc1": {
-        "date": "Jun 10, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.8.0": {
-        "date": "Jul 23, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.7": {
-        "date": "Jan 29, 2009",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.6": {
-        "date": "Nov 05, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5": {
-        "date": "Aug 10, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.3": {
-        "date": "Apr 29, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "org.osgi.org.osgi.core",
     "name": "org.osgi.core",
     "description": "POM was created by Sonatype Nexus",
@@ -3692,6 +3704,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.8.1.RC2": {
+        "date": "Sep 30, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.8.1.RC1": {
+        "date": "Sep 21, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.8.0.r18462-b20090811081019": {
         "date": "Aug 12, 2009",
         "users": 0,
@@ -6815,39 +6839,6 @@
       },
       "4.4.7": {
         "date": "Jul 17, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
-    "coordinates": "oro.oro",
-    "name": "oro",
-    "description": "",
-    "tags": [
-      "regexp"
-    ],
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "2.0.8": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0.7": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0.6": {
-        "date": "Nov 08, 2005",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
