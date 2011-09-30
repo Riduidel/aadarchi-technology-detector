@@ -48,6 +48,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.9.30": {
+        "date": "Sep 20, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.9.3": {
         "date": "Mar 20, 2007",
         "users": 0,
@@ -287,6 +293,12 @@
       },
       "0.9.4": {
         "date": "Mar 29, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.9.30": {
+        "date": "Sep 20, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -608,6 +620,30 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
+      },
+      "10.0-rc3": {
+        "date": "Sep 23, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "10.0-rc2": {
+        "date": "Sep 19, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "10.0-rc1": {
+        "date": "Sep 09, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "10.0": {
+        "date": "Sep 28, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
       }
     }
   },
@@ -723,6 +759,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.160": {
+        "date": "Sep 11, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.3.159": {
         "date": "Aug 13, 2011",
         "users": 0,
@@ -1469,117 +1511,6 @@
     }
   },
   {
-    "coordinates": "commons-collections.commons-collections",
-    "name": "Commons Collections",
-    "description": "Types that extend and augment the Java Collections Framework.",
-    "tags": [
-      "collections"
-    ],
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "3.2.1": {
-        "date": "Apr 15, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "3.2": {
-        "date": "Jun 22, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "3.1": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "3.0-dev2": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "3.0": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "20040616": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "20040102.233541": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "20031027.000000": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "20030418.083655": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.1.1": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.1": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0.20020914.020858": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0.20020914.020746": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0.20020914.015953": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "2.0": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0": {
-        "date": "Nov 08, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "commons-dbcp.commons-dbcp",
     "name": "Commons DBCP",
     "description": "Commons Database Connection Pooling",
@@ -2318,106 +2249,6 @@
     }
   },
   {
-    "coordinates": "joda-time.joda-time",
-    "name": "Joda time",
-    "description": "Date and time library to replace JDK date handling",
-    "tags": [
-      "date",
-      "time"
-    ],
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "2.0": {
-        "date": "Jul 31, 2011",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.6.2": {
-        "date": "Sep 13, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.6.1": {
-        "date": "Aug 08, 2010",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.6": {
-        "date": "Dec 01, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.2": {
-        "date": "Jan 28, 2008",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5.1": {
-        "date": "Dec 06, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.5": {
-        "date": "Oct 30, 2007",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.4": {
-        "date": "Nov 16, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.3": {
-        "date": "Aug 26, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.2.1": {
-        "date": "Feb 13, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.2": {
-        "date": "Jan 10, 2006",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1": {
-        "date": "Nov 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.0": {
-        "date": "Nov 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "0.95": {
-        "date": "Nov 24, 2005",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "junit.junit",
     "name": "JUnit",
     "description": "JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.",
@@ -2492,6 +2323,12 @@
       },
       "4.2": {
         "date": "Feb 01, 2007",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.10": {
+        "date": "Sep 29, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -2767,6 +2604,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.2-alpha2": {
+        "date": "Sep 18, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2-alpha1": {
         "date": "Aug 14, 2011",
         "users": 0,
@@ -3583,6 +3426,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.0-beta3": {
+        "date": "Sep 02, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.3.0-beta2": {
         "date": "Aug 26, 2011",
         "users": 0,
@@ -3615,6 +3464,18 @@
       },
       "1.3.0-alpha5": {
         "date": "Jan 14, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.0-RC0": {
+        "date": "Sep 13, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3.0": {
+        "date": "Sep 23, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3856,6 +3717,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.CR4": {
+        "date": "Sep 29, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.CR3": {
+        "date": "Sep 15, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.CR2": {
         "date": "Sep 01, 2011",
         "users": 0,
@@ -4126,6 +3999,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.CR4": {
+        "date": "Sep 29, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.CR3": {
+        "date": "Sep 15, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.CR2": {
         "date": "Sep 01, 2011",
         "users": 0,
@@ -4396,6 +4281,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.CR4": {
+        "date": "Sep 29, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.CR3": {
+        "date": "Sep 15, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.CR2": {
         "date": "Sep 01, 2011",
         "users": 0,
@@ -5068,8 +4965,26 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.8.2.RC3": {
+        "date": "Sep 20, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.8.2.RC2": {
+        "date": "Sep 08, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.8.2.RC1": {
         "date": "Jul 28, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.8.2": {
+        "date": "Sep 27, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -6501,6 +6416,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC02": {
         "date": "Jun 18, 2010",
         "users": 0,
@@ -6778,6 +6699,12 @@
       },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7111,6 +7038,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC02": {
         "date": "Jun 18, 2010",
         "users": 0,
@@ -7432,6 +7365,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC02": {
         "date": "Jun 18, 2010",
         "users": 0,
@@ -7539,6 +7478,12 @@
       },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7652,6 +7597,12 @@
       },
       "3.0.0.RELEASE": {
         "date": "Dec 17, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7973,6 +7924,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.5.6.SEC03": {
+        "date": "Sep 09, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.6.SEC02": {
         "date": "Jun 18, 2010",
         "users": 0,
@@ -8243,6 +8200,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "6.2.1": {
+        "date": "Sep 08, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.2": {
         "date": "Aug 18, 2011",
         "users": 0,
