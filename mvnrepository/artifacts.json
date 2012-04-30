@@ -2,7 +2,7 @@
   {
     "coordinates": "ch.qos.logback.logback-classic",
     "name": "Logback Classic Module",
-    "description": "Logback: the reliable, generic, fast and flexible logging library for Java.",
+    "description": "logback-classic module",
     "tags": [
       "logging"
     ],
@@ -12,6 +12,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.2": {
+        "date": "Apr 26, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.1": {
         "date": "Mar 07, 2012",
         "users": 0,
@@ -273,6 +279,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.2": {
+        "date": "Apr 26, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.1": {
         "date": "Mar 07, 2012",
         "users": 0,
@@ -531,6 +543,42 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "0.7.6": {
+        "date": "Apr 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.7.5": {
+        "date": "Apr 24, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.7.4": {
+        "date": "Apr 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.7.3": {
+        "date": "Apr 20, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.7.2": {
+        "date": "Apr 09, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.7.1": {
+        "date": "Apr 07, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.7.0": {
         "date": "Mar 27, 2012",
         "users": 0,
@@ -695,6 +743,12 @@
       },
       "r03": {
         "date": "Apr 26, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "12.0-rc2": {
+        "date": "Apr 17, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -873,6 +927,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.166": {
+        "date": "Apr 08, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.3.165": {
         "date": "Mar 18, 2012",
         "users": 0,
@@ -1879,6 +1939,12 @@
     "versions": {
       "20030203.000550": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3": {
+        "date": "Apr 10, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3439,6 +3505,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "5.3.3": {
+        "date": "Apr 17, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.2": {
         "date": "Jan 29, 2012",
         "users": 0,
@@ -3642,6 +3714,12 @@
     "versions": {
       "5.3.3-rc-1": {
         "date": "Mar 20, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.3": {
+        "date": "Apr 18, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3949,6 +4027,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.5.6": {
+        "date": "Apr 27, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.5": {
         "date": "Mar 05, 2012",
         "users": 0,
@@ -4033,6 +4117,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.4.0-beta7": {
+        "date": "Apr 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.4.0-beta6": {
         "date": "Mar 30, 2012",
         "users": 0,
@@ -4095,6 +4185,12 @@
       },
       "1.4.0-alpha1": {
         "date": "Oct 07, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4.0": {
+        "date": "Apr 15, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4189,6 +4285,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "0.2.0-beta6": {
+        "date": "Apr 16, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.2.0-beta5": {
+        "date": "Apr 03, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.2.0-beta4": {
         "date": "Mar 29, 2012",
         "users": 0,
@@ -4336,6 +4444,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.2.5": {
+        "date": "Apr 13, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.2.4": {
         "date": "Mar 29, 2012",
         "users": 0,
@@ -4606,6 +4720,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.2.Final": {
+        "date": "Apr 05, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.1.2": {
+        "date": "Apr 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.1.Final": {
         "date": "Mar 08, 2012",
         "users": 0,
@@ -4948,6 +5074,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.2.Final": {
+        "date": "Apr 05, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.1.2": {
+        "date": "Apr 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.1.Final": {
         "date": "Mar 08, 2012",
         "users": 0,
@@ -5290,6 +5428,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.2.Final": {
+        "date": "Apr 05, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.1.2": {
+        "date": "Apr 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.1.Final": {
         "date": "Mar 08, 2012",
         "users": 0,
@@ -5931,7 +6081,7 @@
   {
     "coordinates": "org.osgi.org.osgi.core",
     "name": "osgi.core",
-    "description": "OSGi Service Platform Release 4 Version 4.3, Core Interfaces and Classes for use in compiling bundles.",
+    "description": "OSGi Service Platform Release 5 Version 5.0, Core Interfaces and Classes for use in compiling bundles.",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -6052,6 +6202,30 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.9.2-RC3": {
+        "date": "Apr 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.9.2-RC2": {
+        "date": "Mar 27, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.9.2-RC1": {
+        "date": "Mar 16, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.9.2": {
+        "date": "Apr 13, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.9.1.RC4": {
         "date": "Aug 24, 2011",
         "users": 0,
@@ -9575,6 +9749,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "6.5.2": {
+        "date": "Apr 20, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "6.5.1": {
+        "date": "Apr 07, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.4": {
         "date": "Feb 12, 2012",
         "users": 0,
