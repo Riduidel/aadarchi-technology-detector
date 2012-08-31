@@ -582,66 +582,6 @@
     }
   },
   {
-    "coordinates": "com.alibaba.fastjson",
-    "name": "fastjson",
-    "description": "Fastjson is a JSON processor (JSON parser + JSON generator) written in Java",
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "1.1.22": {
-        "date": "Jul 11, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.21": {
-        "date": "Jun 19, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.20": {
-        "date": "Jun 06, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.19": {
-        "date": "May 10, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.18": {
-        "date": "Apr 11, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.17": {
-        "date": "Mar 14, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.16": {
-        "date": "Mar 14, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "1.1.15": {
-        "date": "Feb 07, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "com.fasterxml.jackson.core.jackson-core",
     "name": "Jackson-core",
     "description": "Core Jackson abstractions, basic JSON streaming API implementation",
@@ -1055,6 +995,12 @@
       },
       "13.0-rc1": {
         "date": "Jun 26, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "13.0": {
+        "date": "Aug 02, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3883,6 +3829,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.3.5": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.4": {
+        "date": "Jul 09, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.3-rc-1": {
         "date": "Mar 20, 2012",
         "users": 0,
@@ -4084,6 +4042,60 @@
     }
   },
   {
+    "coordinates": "org.apache.tapestry.tapestry-javadoc",
+    "name": "tapestry-javadoc",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "5.3.5": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.4": {
+        "date": "Jul 09, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.3-rc-1": {
+        "date": "Mar 20, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.3": {
+        "date": "Apr 17, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.2": {
+        "date": "Jan 29, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.1": {
+        "date": "Dec 13, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3.0": {
+        "date": "Jun 17, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.apache.tapestry.tapestry-test",
     "name": "Tapestry Test Utilities",
     "description": "Test utilities needed by Tapestry",
@@ -4096,6 +4108,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.3.5": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.4": {
         "date": "Jul 09, 2012",
         "users": 0,
@@ -4429,6 +4447,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "6.0.0": {
+        "date": "Aug 23, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.5.8": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.7": {
         "date": "May 30, 2012",
         "users": 0,
@@ -4525,6 +4555,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.5.0-alpha4": {
+        "date": "Aug 18, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.5.0-alpha3": {
         "date": "Jul 21, 2012",
         "users": 0,
@@ -4711,6 +4747,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "0.2.0-beta9": {
+        "date": "Aug 22, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.2.0-beta8": {
         "date": "Jun 26, 2012",
         "users": 0,
@@ -4882,6 +4924,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3-beta2": {
+        "date": "Aug 29, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3-beta1": {
+        "date": "Aug 29, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.2.9": {
         "date": "May 29, 2012",
         "users": 0,
@@ -4926,6 +4980,36 @@
       },
       "2.2.2": {
         "date": "Mar 14, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.18": {
+        "date": "Aug 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.17": {
+        "date": "Aug 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.16": {
+        "date": "Aug 19, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.15": {
+        "date": "Aug 17, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.14": {
+        "date": "Aug 16, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -5104,6 +5188,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0-m06": {
+        "date": "Aug 09, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m05-2": {
+        "date": "Aug 03, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m05-1": {
         "date": "Jul 14, 2012",
         "users": 0,
@@ -5284,6 +5380,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.6.Final": {
+        "date": "Aug 08, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.5.SP1": {
         "date": "Jul 12, 2012",
         "users": 0,
@@ -5662,6 +5764,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.6.Final": {
+        "date": "Aug 08, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.5.SP1": {
         "date": "Jul 12, 2012",
         "users": 0,
@@ -6040,6 +6148,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.6.Final": {
+        "date": "Aug 08, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.5.SP1": {
         "date": "Jul 12, 2012",
         "users": 0,
@@ -6427,6 +6541,60 @@
     }
   },
   {
+    "coordinates": "org.javalite.activejdbc",
+    "name": "ActiveJDBC - Da Framework",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.4.3": {
+        "date": "Aug 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4.2": {
+        "date": "Jul 25, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4.1": {
+        "date": "May 29, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4": {
+        "date": "May 25, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.2": {
+        "date": "Apr 24, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.1": {
+        "date": "Apr 24, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Apr 22, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "org.javassist.javassist",
     "name": "Javassist",
     "description": "Javassist (JAVA programming ASSISTant) makes Java bytecode manipulation simple. It is a class library for editing bytecodes in Java.",
@@ -6786,6 +6954,12 @@
     "versions": {
       "0.9.3": {
         "date": "Mar 08, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.11.4": {
+        "date": "Aug 13, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7356,6 +7530,12 @@
       },
       "2.3.1": {
         "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.10.0-M7": {
+        "date": "Aug 21, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
