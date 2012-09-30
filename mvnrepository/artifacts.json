@@ -303,6 +303,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.7": {
+        "date": "Aug 23, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.6": {
         "date": "Jun 07, 2012",
         "users": 0,
@@ -582,6 +588,72 @@
     }
   },
   {
+    "coordinates": "com.alibaba.fastjson",
+    "name": "fastjson",
+    "description": "Fastjson is a JSON processor (JSON parser + JSON generator) written in Java",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.1.23": {
+        "date": "Aug 02, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.22": {
+        "date": "Jul 11, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.21": {
+        "date": "Jun 19, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.20": {
+        "date": "Jun 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.19": {
+        "date": "May 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.18": {
+        "date": "Apr 11, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.17": {
+        "date": "Mar 14, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.16": {
+        "date": "Mar 14, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.15": {
+        "date": "Feb 07, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "com.fasterxml.jackson.core.jackson-core",
     "name": "Jackson-core",
     "description": "Core Jackson abstractions, basic JSON streaming API implementation",
@@ -591,6 +663,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.6": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.5": {
         "date": "Jul 27, 2012",
         "users": 0,
@@ -651,6 +729,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.6": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.5": {
         "date": "Jul 27, 2012",
         "users": 0,
@@ -711,6 +795,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "0.8.6": {
+        "date": "Sep 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.8.5": {
+        "date": "Sep 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.8.4": {
         "date": "Jul 28, 2012",
         "users": 0,
@@ -983,6 +1079,12 @@
       },
       "r03": {
         "date": "Apr 26, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "13.0.1": {
+        "date": "Aug 28, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -1964,6 +2066,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.7": {
+        "date": "Sep 11, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6": {
         "date": "Dec 03, 2011",
         "users": 0,
@@ -2446,6 +2554,132 @@
       },
       "1.0": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "io.netty.netty-buffer",
+    "name": "Netty/Buffer",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "4.0.0.Alpha5": {
+        "date": "Sep 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha4": {
+        "date": "Sep 13, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha3": {
+        "date": "Aug 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha2": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha1": {
+        "date": "Jul 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "io.netty.netty-codec-http",
+    "name": "Netty/Codec/HTTP",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "4.0.0.Alpha5": {
+        "date": "Sep 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha4": {
+        "date": "Sep 13, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha3": {
+        "date": "Aug 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha2": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha1": {
+        "date": "Jul 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "io.netty.netty-common",
+    "name": "Netty/Common",
+    "description": "",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "4.0.0.Alpha5": {
+        "date": "Sep 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha4": {
+        "date": "Sep 13, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha3": {
+        "date": "Aug 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha2": {
+        "date": "Aug 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.0.Alpha1": {
+        "date": "Jul 10, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4924,6 +5158,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3-beta4": {
+        "date": "Sep 27, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3-beta3": {
+        "date": "Sep 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3-beta2": {
         "date": "Aug 29, 2012",
         "users": 0,
@@ -5188,6 +5434,30 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0-m08-1": {
+        "date": "Sep 26, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m08": {
+        "date": "Sep 21, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m07-1": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m07": {
+        "date": "Sep 05, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m06": {
         "date": "Aug 09, 2012",
         "users": 0,
@@ -5380,6 +5650,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.7.Final": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.6.Final": {
         "date": "Aug 08, 2012",
         "users": 0,
@@ -5764,6 +6040,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.7.Final": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.6.Final": {
         "date": "Aug 08, 2012",
         "users": 0,
@@ -6148,6 +6430,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.7.Final": {
+        "date": "Sep 06, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.6.Final": {
         "date": "Aug 08, 2012",
         "users": 0,
@@ -6550,6 +6838,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.4.5": {
+        "date": "Sep 04, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.4.4": {
+        "date": "Sep 02, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.4.3": {
         "date": "Aug 06, 2012",
         "users": 0,
@@ -10715,6 +11015,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "6.8": {
+        "date": "Sep 10, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.7": {
         "date": "Jul 15, 2012",
         "users": 0,
