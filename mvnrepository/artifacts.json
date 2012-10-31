@@ -12,6 +12,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.7": {
+        "date": "Aug 23, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.6": {
         "date": "Jun 07, 2012",
         "users": 0,
@@ -597,6 +603,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.24": {
+        "date": "Oct 11, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.23": {
         "date": "Aug 02, 2012",
         "users": 0,
@@ -795,6 +807,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "0.8.8": {
+        "date": "Oct 15, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.8.6": {
         "date": "Sep 04, 2012",
         "users": 0,
@@ -2570,6 +2588,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.Alpha6": {
+        "date": "Oct 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.Alpha5": {
         "date": "Sep 28, 2012",
         "users": 0,
@@ -2612,6 +2636,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.Alpha6": {
+        "date": "Oct 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.Alpha5": {
         "date": "Sep 28, 2012",
         "users": 0,
@@ -2654,6 +2684,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.Alpha6": {
+        "date": "Oct 28, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.Alpha5": {
         "date": "Sep 28, 2012",
         "users": 0,
@@ -2783,6 +2819,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.1-b02": {
+        "date": "Sep 07, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.1-b01": {
         "date": "Jul 05, 2012",
         "users": 0,
@@ -3685,6 +3727,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.2.2": {
+        "date": "Sep 18, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2.1": {
         "date": "Jun 10, 2012",
         "users": 0,
@@ -4276,60 +4324,6 @@
     }
   },
   {
-    "coordinates": "org.apache.tapestry.tapestry-javadoc",
-    "name": "tapestry-javadoc",
-    "description": "",
-    "ranking": 0,
-    "users": 0,
-    "previousUsers": 0,
-    "interpolatedUsers": 0,
-    "infered": true,
-    "versions": {
-      "5.3.5": {
-        "date": "Aug 21, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.4": {
-        "date": "Jul 09, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.3-rc-1": {
-        "date": "Mar 20, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.3": {
-        "date": "Apr 17, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.2": {
-        "date": "Jan 29, 2012",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.1": {
-        "date": "Dec 13, 2011",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      },
-      "5.3.0": {
-        "date": "Jun 17, 2011",
-        "users": 0,
-        "previousUsers": 0,
-        "interpolatedUsers": 0
-      }
-    }
-  },
-  {
     "coordinates": "org.apache.tapestry.tapestry-test",
     "name": "Tapestry Test Utilities",
     "description": "Test utilities needed by Tapestry",
@@ -4342,6 +4336,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.3.6": {
+        "date": "Oct 09, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.5": {
         "date": "Aug 21, 2012",
         "users": 0,
@@ -4663,6 +4663,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "6.1.0": {
+        "date": "Sep 26, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.0.0-beta3": {
         "date": "Jul 12, 2012",
         "users": 0,
@@ -5158,6 +5164,30 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3-beta8": {
+        "date": "Oct 31, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3-beta7": {
+        "date": "Oct 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3-beta6": {
+        "date": "Oct 17, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.3-beta5": {
+        "date": "Oct 02, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3-beta4": {
         "date": "Sep 27, 2012",
         "users": 0,
@@ -5226,6 +5256,12 @@
       },
       "2.2.2": {
         "date": "Mar 14, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.2.19": {
+        "date": "Oct 13, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -5434,6 +5470,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0-m09-1": {
+        "date": "Oct 31, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m09": {
+        "date": "Oct 15, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m08-1": {
         "date": "Sep 26, 2012",
         "users": 0,
@@ -5650,6 +5698,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.1.8.Final": {
+        "date": "Nov 01, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.1.7.Final": {
         "date": "Sep 06, 2012",
         "users": 0,
@@ -7210,6 +7264,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.3.1": {
+        "date": "Oct 30, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.0": {
         "date": "Jun 17, 2011",
         "users": 0,
@@ -7254,6 +7314,12 @@
     "versions": {
       "0.9.3": {
         "date": "Mar 08, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.11.6": {
+        "date": "Oct 29, 2012",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7878,6 +7944,96 @@
       },
       "2.10.0-M1": {
         "date": "Jan 19, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
+    "coordinates": "org.scalatest.scalatest",
+    "name": "ScalaTest",
+    "description": "ScalaTest is a free, open-source testing toolkit for Scala and Java programmers.",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.4.RC2": {
+        "date": "Apr 26, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.3": {
+        "date": "Feb 10, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2": {
+        "date": "Jul 17, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1": {
+        "date": "Jul 17, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.1": {
+        "date": "Apr 19, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0-RC1": {
+        "date": "Oct 06, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0": {
+        "date": "Oct 12, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.9.5": {
+        "date": "Aug 27, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.9.4": {
+        "date": "Mar 05, 2009",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.9.3": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.9.1": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.81": {
+        "date": "Nov 24, 2008",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.8": {
+        "date": "Nov 24, 2008",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
