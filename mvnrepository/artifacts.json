@@ -975,6 +975,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1119,6 +1125,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1263,6 +1275,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1419,6 +1437,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.3.0-beta7": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-beta6": {
         "date": "Nov 15, 2013",
         "users": 0,
@@ -1467,6 +1491,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1593,6 +1623,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1791,6 +1827,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.8.14": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.8.13": {
         "date": "Jul 01, 2013",
         "users": 0,
@@ -1917,6 +1959,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0.3": {
+        "date": "Dec 31, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.2": {
         "date": "Oct 03, 2013",
         "users": 0,
@@ -3156,6 +3204,66 @@
     }
   },
   {
+    "coordinates": "com.zaxxer.HikariCP",
+    "name": "HikariCP",
+    "description": "Ultimate JDBC Connection Pool",
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": true,
+    "versions": {
+      "1.2.1": {
+        "date": "Dec 06, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.9": {
+        "date": "Dec 05, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.8": {
+        "date": "Dec 02, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.7": {
+        "date": "Nov 13, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.6": {
+        "date": "Nov 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.5": {
+        "date": "Nov 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.4": {
+        "date": "Nov 08, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.3": {
+        "date": "Nov 04, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      }
+    }
+  },
+  {
     "coordinates": "commons-beanutils.commons-beanutils",
     "name": "Apache Commons BeanUtils",
     "description": "Apache Commons BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
@@ -3182,6 +3290,12 @@
       },
       "20020520": {
         "date": "Nov 08, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.9.0": {
+        "date": "Dec 07, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3340,6 +3454,12 @@
     "versions": {
       "20041127.091804": {
         "date": "Nov 24, 2005",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.9": {
+        "date": "Dec 21, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -3866,6 +3986,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.0.0.Alpha1": {
+        "date": "Dec 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.9.Final": {
         "date": "Sep 06, 2013",
         "users": 0,
@@ -3910,6 +4036,12 @@
       },
       "4.0.2.Final": {
         "date": "Jul 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.14.Final": {
+        "date": "Dec 22, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4088,6 +4220,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.0.0.Alpha1": {
+        "date": "Dec 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.9.Final": {
         "date": "Sep 06, 2013",
         "users": 0,
@@ -4132,6 +4270,12 @@
       },
       "4.0.2.Final": {
         "date": "Jul 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.14.Final": {
+        "date": "Dec 22, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4310,6 +4454,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.0.0.Alpha1": {
+        "date": "Dec 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.9.Final": {
         "date": "Sep 06, 2013",
         "users": 0,
@@ -4354,6 +4504,12 @@
       },
       "4.0.2.Final": {
         "date": "Jul 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.14.Final": {
+        "date": "Dec 22, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4568,8 +4724,38 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "1.0.0.Beta30": {
+        "date": "Dec 20, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.0.Beta3": {
         "date": "Jul 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.Beta29": {
+        "date": "Dec 20, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.Beta28": {
+        "date": "Dec 16, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.Beta27": {
+        "date": "Dec 10, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.Beta26": {
+        "date": "Dec 02, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -5927,6 +6113,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.2": {
+        "date": "Dec 28, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.1": {
         "date": "Nov 15, 2011",
         "users": 0,
@@ -6163,6 +6355,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.1": {
+        "date": "Dec 18, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3-beta2": {
         "date": "May 04, 2013",
         "users": 0,
@@ -8482,6 +8680,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.3.8": {
+        "date": "Dec 05, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.7": {
         "date": "Oct 30, 2013",
         "users": 0,
@@ -8896,6 +9100,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5": {
+        "date": "Dec 18, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.4.1": {
         "date": "Nov 08, 2013",
         "users": 0,
@@ -9100,6 +9310,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.5": {
+        "date": "Dec 18, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.4.1": {
         "date": "Nov 08, 2013",
         "users": 0,
@@ -9424,6 +9640,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.0.Final": {
+        "date": "Dec 16, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.0.CR2": {
+        "date": "Dec 05, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.0.CR1": {
         "date": "Nov 20, 2013",
         "users": 0,
@@ -9456,6 +9684,12 @@
       },
       "4.3.0.Beta1": {
         "date": "Apr 03, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.8.Final": {
+        "date": "Dec 04, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -9952,6 +10186,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.0.Final": {
+        "date": "Dec 16, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.0.CR2": {
+        "date": "Dec 05, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.0.CR1": {
         "date": "Nov 20, 2013",
         "users": 0,
@@ -9984,6 +10230,12 @@
       },
       "4.3.0.Beta1": {
         "date": "Apr 03, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.8.Final": {
+        "date": "Dec 04, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -10480,6 +10732,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.0.Final": {
+        "date": "Dec 16, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.0.CR2": {
+        "date": "Dec 05, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.0.CR1": {
         "date": "Nov 20, 2013",
         "users": 0,
@@ -10512,6 +10776,12 @@
       },
       "4.3.0.Beta1": {
         "date": "Apr 03, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.8.Final": {
+        "date": "Dec 04, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -11230,8 +11500,50 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.6.1910": {
+        "date": "Dec 26, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.6.179": {
         "date": "Sep 01, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1673": {
+        "date": "Dec 16, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1670": {
+        "date": "Dec 07, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1658": {
+        "date": "Dec 06, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1617": {
+        "date": "Dec 03, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1603": {
+        "date": "Dec 02, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "0.6.1590": {
+        "date": "Dec 02, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -11578,6 +11890,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.4.0": {
+        "date": "Dec 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0": {
         "date": "Nov 28, 2013",
         "users": 0,
@@ -12474,6 +12792,12 @@
       },
       "2.11.0-M1": {
         "date": "Jan 07, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.10.4-RC1": {
+        "date": "Dec 12, 2013",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -14037,6 +14361,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -14396,6 +14732,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -14803,6 +15151,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -15202,6 +15562,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -15391,6 +15763,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -15582,6 +15966,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
@@ -15977,6 +16373,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.0.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.6.RELEASE": {
+        "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.5.RELEASE": {
         "date": "Nov 07, 2013",
         "users": 0,
