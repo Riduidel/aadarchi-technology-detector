@@ -3,15 +3,24 @@
     "coordinates": "ch.qos.logback.logback-classic",
     "name": "Logback Classic Module",
     "description": "logback-classic module",
-    "tags": [
-      "logging"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.1": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.9": {
         "date": "Dec 04, 2012",
         "users": 0,
@@ -336,15 +345,24 @@
     "coordinates": "ch.qos.logback.logback-core",
     "name": "Logback Core Module",
     "description": "logback-core module",
-    "tags": [
-      "logging"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.1": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.1.0": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.9": {
         "date": "Dec 04, 2012",
         "users": 0,
@@ -675,6 +693,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.1.39": {
+        "date": "Feb 24, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.1.38": {
         "date": "Jan 03, 2014",
         "users": 0,
@@ -843,6 +867,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.2": {
+        "date": "Mar 01, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.1": {
         "date": "Jan 23, 2014",
         "users": 0,
@@ -987,6 +1017,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.2": {
+        "date": "Mar 01, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.1": {
         "date": "Dec 28, 2013",
         "users": 0,
@@ -1443,6 +1479,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.3.1": {
+        "date": "Feb 12, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.0-rc1": {
         "date": "Oct 26, 2013",
         "users": 0,
@@ -1963,7 +2005,7 @@
   },
   {
     "coordinates": "com.google.code.findbugs.jsr305",
-    "name": "FindBugs-jsr305",
+    "name": "FindBugs Jsr305",
     "description": "JSR305 Annotations for Findbugs",
     "ranking": 0,
     "users": 0,
@@ -2113,8 +2155,8 @@
   },
   {
     "coordinates": "com.google.guava.guava",
-    "name": "Guava (Google Common Libraries)",
-    "description": "Guava is a suite of core and expanded libraries that include utility classes, google\u0027s collections, io classes, and much much more. This project is a complete packaging of all the Guava libraries into a single jar. Individual portions of Guava can be used by downloading the appropriate module and its dependencies. Guava (complete) has only one code dependency - javax.annotation, per the JSR-305 spec.",
+    "name": "Guava: Google Core Libraries For Java",
+    "description": "Guava is a suite of core and expanded libraries that include utility classes, google\u0027s collections, io classes, and much much more. Guava has only one code dependency - javax.annotation, per the JSR-305 spec.",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -2153,6 +2195,24 @@
       },
       "r03": {
         "date": "Apr 26, 2010",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "16.0.1": {
+        "date": "Feb 03, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "16.0-rc1": {
+        "date": "Dec 19, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "16.0": {
+        "date": "Jan 17, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -2311,8 +2371,8 @@
   },
   {
     "coordinates": "com.google.inject.guice",
-    "name": "Google Guice - Core Library",
-    "description": "",
+    "name": "Google Guice Core Library",
+    "description": "Google Guice Core Library",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -3243,6 +3303,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.3.0": {
+        "date": "Feb 18, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.2.9": {
+        "date": "Feb 10, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.2.8": {
         "date": "Jan 22, 2014",
         "users": 0,
@@ -3339,9 +3411,6 @@
     "coordinates": "commons-beanutils.commons-beanutils",
     "name": "Apache Commons BeanUtils",
     "description": "Apache Commons BeanUtils provides an easy-to-use but flexible wrapper around reflection and introspection.",
-    "tags": [
-      "beans"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -3596,9 +3665,6 @@
     "coordinates": "commons-collections.commons-collections",
     "name": "Commons Collections",
     "description": "Types that extend and augment the Java Collections Framework.",
-    "tags": [
-      "collections"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -3707,9 +3773,6 @@
     "coordinates": "commons-dbcp.commons-dbcp",
     "name": "Commons DBCP",
     "description": "Commons Database Connection Pooling",
-    "tags": [
-      "pool"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -3800,9 +3863,6 @@
     "coordinates": "commons-io.commons-io",
     "name": "Commons IO",
     "description": "The Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
-    "tags": [
-      "io"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -3989,9 +4049,6 @@
     "coordinates": "commons-logging.commons-logging",
     "name": "Commons Logging",
     "description": "Commons Logging is a thin adapter allowing configurable bridging to other, well known logging systems.",
-    "tags": [
-      "logging"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -4114,6 +4171,18 @@
       },
       "4.0.2.Final": {
         "date": "Jul 17, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.17.Final": {
+        "date": "Feb 24, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.16.Final": {
+        "date": "Feb 20, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -4358,6 +4427,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.0.17.Final": {
+        "date": "Feb 24, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.16.Final": {
+        "date": "Feb 20, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.15.Final": {
         "date": "Jan 21, 2014",
         "users": 0,
@@ -4598,6 +4679,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.0.17.Final": {
+        "date": "Feb 24, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.16.Final": {
+        "date": "Feb 20, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.15.Final": {
         "date": "Jan 21, 2014",
         "users": 0,
@@ -4784,6 +4877,30 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.0.0.Final": {
+        "date": "Feb 10, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.CR5": {
+        "date": "Feb 08, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.CR4": {
+        "date": "Feb 06, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.0.0.CR3": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.0.0.CR2": {
         "date": "Jan 31, 2014",
         "users": 0,
@@ -5138,6 +5255,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.1RC1": {
+        "date": "Feb 26, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.1M5": {
         "date": "Jan 30, 2014",
         "users": 0,
@@ -5451,11 +5574,8 @@
   },
   {
     "coordinates": "javax.servlet.jstl",
-    "name": "jstl",
-    "description": "",
-    "tags": [
-      "web"
-    ],
+    "name": "Jstl",
+    "description": "Jstl",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -5533,10 +5653,7 @@
   {
     "coordinates": "javax.servlet.servlet-api",
     "name": "JavaServlet(TM) Specification",
-    "description": "",
-    "tags": [
-      "web"
-    ],
+    "description": "JavaServlet(TM) Specification",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -6000,12 +6117,9 @@
     }
   },
   {
-    "coordinates": "junit.junit",
+    "coordinates": "junit.junit.",
     "name": "JUnit",
     "description": "JUnit is a regression testing framework written by Erich Gamma and Kent Beck. It is used by the developer who implements unit tests in Java.",
-    "tags": [
-      "testing"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -6135,12 +6249,9 @@
     }
   },
   {
-    "coordinates": "log4j.log4j",
+    "coordinates": "log4j.log4j.",
     "name": "Apache Log4j",
     "description": "Apache Log4j 1.2",
-    "tags": [
-      "logging"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -6235,11 +6346,8 @@
   },
   {
     "coordinates": "mysql.mysql-connector-java",
-    "name": "MySQL java connector",
+    "name": "MySQL Java Connector",
     "description": "MySQL java connector",
-    "tags": [
-      "jdbc"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -6257,6 +6365,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.3": {
+        "date": "Feb 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.2.1": {
         "date": "Jan 05, 2014",
         "users": 0,
@@ -6501,16 +6615,18 @@
     "coordinates": "org.apache.httpcomponents.httpcore",
     "name": "Apache HttpCore",
     "description": "HttpComponents Core (blocking I/O)",
-    "tags": [
-      "apache",
-      "http"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.2": {
+        "date": "Feb 12, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.1": {
         "date": "Dec 18, 2013",
         "users": 0,
@@ -6709,6 +6825,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0-rc1": {
+        "date": "Feb 09, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-beta9": {
         "date": "Sep 14, 2013",
         "users": 0,
@@ -6787,6 +6909,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.0-rc1": {
+        "date": "Feb 09, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-beta9": {
         "date": "Sep 14, 2013",
         "users": 0,
@@ -6859,15 +6987,18 @@
     "coordinates": "org.apache.maven.maven-plugin-api",
     "name": "Maven Plugin API",
     "description": "The API for plugins - Mojos - development.",
-    "tags": [
-      "maven"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.2.1": {
+        "date": "Feb 14, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.1.1": {
         "date": "Sep 17, 2013",
         "users": 0,
@@ -7142,17 +7273,20 @@
   },
   {
     "coordinates": "org.apache.tapestry.tapestry-hibernate",
-    "name": "Tapestry/Hibernate Integration Library",
-    "description": "Provides support for simple CRUD applications built on top of Tapestry and Hibernate",
-    "tags": [
-      "apache"
-    ],
+    "name": "Tapestry Hibernate",
+    "description": "Tapestry Hibernate",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.4-beta-3": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.7": {
         "date": "Apr 24, 2013",
         "users": 0,
@@ -7203,6 +7337,12 @@
       },
       "5.3.0": {
         "date": "Jun 17, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3": {
+        "date": "Nov 16, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7387,6 +7527,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.4-beta-3": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.7": {
         "date": "Apr 24, 2013",
         "users": 0,
@@ -7445,17 +7591,20 @@
   },
   {
     "coordinates": "org.apache.tapestry.tapestry-test",
-    "name": "Tapestry Test Utilities",
-    "description": "Test utilities needed by Tapestry",
-    "tags": [
-      "apache"
-    ],
+    "name": "Tapestry Test",
+    "description": "Tapestry Test",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "5.4-beta-3": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "5.3.7": {
         "date": "Apr 24, 2013",
         "users": 0,
@@ -7506,6 +7655,12 @@
       },
       "5.3.0": {
         "date": "Jun 17, 2011",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "5.3": {
+        "date": "Nov 16, 2011",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -7708,9 +7863,6 @@
     "coordinates": "org.apache.velocity.velocity",
     "name": "Apache Velocity",
     "description": "Apache Velocity is a general purpose template engine.",
-    "tags": [
-      "apache"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -7839,6 +7991,12 @@
       },
       "6.2.0": {
         "date": "Oct 19, 2012",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "6.14.0": {
+        "date": "Feb 14, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -8023,6 +8181,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.6.0-beta2": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "1.6.0-beta1": {
+        "date": "Feb 14, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.6.0-alpha3": {
         "date": "Nov 23, 2013",
         "users": 0,
@@ -8503,9 +8673,6 @@
     "coordinates": "org.easymock.easymock",
     "name": "EasyMock",
     "description": "EasyMock provides an easy way to create Mock Objects for interfaces and classes generating them on the fly",
-    "tags": [
-      "mock"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -8584,6 +8751,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "9.1.3.v20140225": {
+        "date": "Feb 25, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "9.1.2.v20140210": {
+        "date": "Feb 10, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "9.1.1.v20140108": {
         "date": "Jan 08, 2014",
         "users": 0,
@@ -9292,6 +9471,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.6": {
+        "date": "Feb 18, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.1": {
         "date": "Jan 02, 2014",
         "users": 0,
@@ -9514,6 +9699,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "2.6": {
+        "date": "Feb 18, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.5.1": {
         "date": "Jan 02, 2014",
         "users": 0,
@@ -9856,6 +10047,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.3.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.2.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.1.Final": {
         "date": "Jan 22, 2014",
         "users": 0,
@@ -9910,6 +10113,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.2.9.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2.8.Final": {
         "date": "Dec 04, 2013",
         "users": 0,
@@ -9954,6 +10163,12 @@
       },
       "4.2.2.Final": {
         "date": "May 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.10.Final": {
+        "date": "Feb 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -10408,6 +10623,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.3.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.2.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.1.Final": {
         "date": "Jan 22, 2014",
         "users": 0,
@@ -10462,6 +10689,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.2.9.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2.8.Final": {
         "date": "Dec 04, 2013",
         "users": 0,
@@ -10506,6 +10739,12 @@
       },
       "4.2.2.Final": {
         "date": "May 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.10.Final": {
+        "date": "Feb 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -10960,6 +11199,18 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.3.3.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.3.2.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.3.1.Final": {
         "date": "Jan 22, 2014",
         "users": 0,
@@ -11014,6 +11265,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "4.2.9.Final": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.2.8.Final": {
         "date": "Dec 04, 2013",
         "users": 0,
@@ -11058,6 +11315,12 @@
       },
       "4.2.2.Final": {
         "date": "May 22, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.2.10.Final": {
+        "date": "Feb 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -11734,6 +11997,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "0.6.2451": {
+        "date": "Feb 25, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "0.6.22": {
         "date": "Aug 14, 2013",
         "users": 0,
@@ -12136,8 +12405,38 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "3.0.3": {
+        "date": "Feb 27, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.0.2": {
+        "date": "Feb 20, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.0.1": {
+        "date": "Feb 18, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.0.0-rc2": {
+        "date": "Feb 04, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "3.0.0-rc1": {
         "date": "Jan 31, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.0.0": {
+        "date": "Feb 14, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -12328,6 +12627,24 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "9.3-1101-jdbc41": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "9.3-1101-jdbc4": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "9.3-1101-jdbc3": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "9.3-1100-jdbc41": {
         "date": "Nov 01, 2013",
         "users": 0,
@@ -13024,6 +13341,18 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.11.0-RC1": {
+        "date": "Feb 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.11.0-M8": {
+        "date": "Jan 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.11.0-M7": {
         "date": "Nov 18, 2013",
         "users": 0,
@@ -13062,6 +13391,18 @@
       },
       "2.11.0-M1": {
         "date": "Jan 07, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.10.4-RC3": {
+        "date": "Feb 11, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.10.4-RC2": {
+        "date": "Jan 21, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -13324,6 +13665,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7.6": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7.5": {
         "date": "Mar 25, 2013",
         "users": 0,
@@ -13492,6 +13839,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7.6": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7.5": {
         "date": "Mar 25, 2013",
         "users": 0,
@@ -13738,6 +14091,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7.6": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7.5": {
         "date": "Mar 25, 2013",
         "users": 0,
@@ -14038,6 +14397,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7.6": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7.5": {
         "date": "Mar 25, 2013",
         "users": 0,
@@ -14326,6 +14691,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "1.7.6": {
+        "date": "Feb 05, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "1.7.5": {
         "date": "Mar 25, 2013",
         "users": 0,
@@ -14620,19 +14991,38 @@
     "coordinates": "org.springframework.spring-beans",
     "name": "Spring Beans",
     "description": "Spring Beans",
-    "tags": [
-      "framework",
-      "spring",
-      "web"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -14865,8 +15255,32 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0-rc2": {
+        "date": "Jul 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc1": {
+        "date": "Jun 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m5": {
+        "date": "Jun 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m4": {
         "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m3": {
+        "date": "Mar 10, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -14988,22 +15402,41 @@
     }
   },
   {
-    "coordinates": "org.springframework.spring-context",
+    "coordinates": "org.springframework.spring-context.",
     "name": "Spring Context",
     "description": "Spring Context",
-    "tags": [
-      "framework",
-      "spring",
-      "web"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -15236,8 +15669,32 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0-rc2": {
+        "date": "Jul 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc1": {
+        "date": "Jun 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m5": {
+        "date": "Jun 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m4": {
         "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m3": {
+        "date": "Mar 10, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -15410,19 +15867,38 @@
     "coordinates": "org.springframework.spring-core",
     "name": "Spring Core",
     "description": "Spring Core",
-    "tags": [
-      "framework",
-      "spring",
-      "web"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -15655,8 +16131,32 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0-rc2": {
+        "date": "Jul 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc1": {
+        "date": "Jun 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m5": {
+        "date": "Jun 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0-m4": {
         "date": "May 10, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m3": {
+        "date": "Mar 10, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -15823,17 +16323,38 @@
     "coordinates": "org.springframework.spring-test",
     "name": "Spring TestContext Framework",
     "description": "Spring TestContext Framework",
-    "tags": [
-      "spring"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -16021,20 +16542,41 @@
     }
   },
   {
-    "coordinates": "org.springframework.spring-tx",
+    "coordinates": "org.springframework.spring-tx.",
     "name": "Spring Transaction",
     "description": "Spring Transaction",
-    "tags": [
-      "spring"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -16225,19 +16767,38 @@
     "coordinates": "org.springframework.spring-web",
     "name": "Spring Web",
     "description": "Spring Web",
-    "tags": [
-      "framework",
-      "spring",
-      "web"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -16466,6 +17027,36 @@
       },
       "2.0.1": {
         "date": "Nov 25, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc2": {
+        "date": "Jul 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc1": {
+        "date": "Jun 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m5": {
+        "date": "Jun 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m4": {
+        "date": "Apr 23, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m3": {
+        "date": "Mar 10, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -16632,19 +17223,38 @@
     "coordinates": "org.springframework.spring-webmvc",
     "name": "Spring Web MVC",
     "description": "Spring Web MVC",
-    "tags": [
-      "framework",
-      "spring",
-      "web"
-    ],
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "4.0.2.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "4.0.1.RELEASE": {
+        "date": "Jan 28, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "4.0.0.RELEASE": {
         "date": "Dec 12, 2013",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.8.RELEASE": {
+        "date": "Feb 19, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "3.2.7.RELEASE": {
+        "date": "Jan 28, 2014",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -16873,6 +17483,36 @@
       },
       "2.0.1": {
         "date": "Nov 25, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc2": {
+        "date": "Jul 06, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-rc1": {
+        "date": "Jun 20, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m5": {
+        "date": "Jun 02, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m4": {
+        "date": "Apr 23, 2006",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0-m3": {
+        "date": "Mar 10, 2006",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -17045,6 +17685,12 @@
     "interpolatedUsers": 0,
     "infered": true,
     "versions": {
+      "6.8.8": {
+        "date": "Feb 22, 2014",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.8.7": {
         "date": "Sep 07, 2013",
         "users": 0,
@@ -17319,11 +17965,8 @@
   },
   {
     "coordinates": "oro.oro",
-    "name": "oro",
-    "description": "",
-    "tags": [
-      "regexp"
-    ],
+    "name": "Oro",
+    "description": "Oro",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
@@ -17352,11 +17995,8 @@
   },
   {
     "coordinates": "xml-apis.xml-apis",
-    "name": "XML Commons External Components XML APIs",
-    "description": "xml-commons provides an Apache-hosted set of DOM, SAX, and JAXP interfaces for use in other xml-based projects. Our hope is that we can standardize on both a common version and packaging scheme for these critical XML standards interfaces to make the lives of both our developers and users easier. The External Components portion of xml-commons contains interfaces that are defined by external standards organizations. For DOM, that\u0027s the W3C; for SAX it\u0027s David Megginson and sax.sourceforge.net; for JAXP it\u0027s Sun.",
-    "tags": [
-      "xml"
-    ],
+    "name": "Xml Apis",
+    "description": "Xml Apis",
     "ranking": 0,
     "users": 0,
     "previousUsers": 0,
