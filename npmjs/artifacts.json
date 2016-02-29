@@ -16,7 +16,7 @@
       "npm": "https://www.npmjs.com/package/Haraka",
       "repository": "https://github.com/haraka/Haraka"
     },
-    "downloads": 2339
+    "downloads": 1580
   },
   {
     "name": "address-rfc2821",
@@ -40,7 +40,7 @@
       "npm": "https://www.npmjs.com/package/address-rfc2821",
       "repository": "https://github.com/haraka/node-address-rfc2821"
     },
-    "downloads": 442
+    "downloads": 1047
   },
   {
     "name": "angular-expressions",
@@ -62,7 +62,7 @@
       "npm": "https://www.npmjs.com/package/angular-expressions",
       "repository": "https://github.com/peerigon/angular-expressions"
     },
-    "downloads": 1089
+    "downloads": 1345
   },
   {
     "name": "appium",
@@ -85,7 +85,7 @@
       "npm": "https://www.npmjs.com/package/appium",
       "repository": "https://github.com/appium/appium"
     },
-    "downloads": 133893
+    "downloads": 40915
   },
   {
     "name": "appium-safari-driver",
@@ -102,7 +102,25 @@
       "npm": "https://www.npmjs.com/package/appium-safari-driver",
       "repository": "https://github.com/appium/appium-safari-driver"
     },
-    "downloads": 70
+    "downloads": 61
+  },
+  {
+    "name": "appium-uiautomator2-driver",
+    "version": "3.5.5",
+    "description": "UiAutomator2 integration for Appium",
+    "keywords": [
+      "appium",
+      "uiautomator2",
+      "automated testing",
+      "android"
+    ],
+    "date": "2024-06-16T20:47:38.784Z",
+    "links": {
+      "homepage": "https://github.com/appium/appium-uiautomator2-driver#readme",
+      "npm": "https://www.npmjs.com/package/appium-uiautomator2-driver",
+      "repository": "https://github.com/appium/appium-uiautomator2-driver"
+    },
+    "downloads": 41
   },
   {
     "name": "array-includes",
@@ -126,7 +144,7 @@
       "npm": "https://www.npmjs.com/package/array-includes",
       "repository": "https://github.com/es-shims/array-includes"
     },
-    "downloads": 5673
+    "downloads": 5888
   },
   {
     "name": "array.from",
@@ -145,7 +163,7 @@
       "npm": "https://www.npmjs.com/package/array.from",
       "repository": "https://github.com/mathiasbynens/Array.from"
     },
-    "downloads": 41707
+    "downloads": 45728
   },
   {
     "name": "array.prototype.find",
@@ -165,7 +183,7 @@
       "npm": "https://www.npmjs.com/package/array.prototype.find",
       "repository": "https://github.com/paulmillr/Array.prototype.find"
     },
-    "downloads": 10260
+    "downloads": 11125
   },
   {
     "name": "autoprefixer",
@@ -185,7 +203,7 @@
       "npm": "https://www.npmjs.com/package/autoprefixer",
       "repository": "https://github.com/postcss/autoprefixer"
     },
-    "downloads": 1214834
+    "downloads": 1502077
   },
   {
     "name": "ava",
@@ -233,7 +251,7 @@
       "npm": "https://www.npmjs.com/package/ava",
       "repository": "https://github.com/avajs/ava"
     },
-    "downloads": 65423
+    "downloads": 78812
   },
   {
     "name": "babel-plugin-inferno",
@@ -254,7 +272,7 @@
       "npm": "https://www.npmjs.com/package/babel-plugin-inferno",
       "repository": "https://github.com/trueadm/babel-plugin-inferno"
     },
-    "downloads": 368
+    "downloads": 313
   },
   {
     "name": "backend-plus",
@@ -268,7 +286,7 @@
       "npm": "https://www.npmjs.com/package/backend-plus",
       "repository": "https://github.com/codenautas/backend-plus"
     },
-    "downloads": 37
+    "downloads": 278
   },
   {
     "name": "base62",
@@ -286,7 +304,7 @@
       "npm": "https://www.npmjs.com/package/base62",
       "repository": "https://github.com/base62/base62.js"
     },
-    "downloads": 1222327
+    "downloads": 1531251
   },
   {
     "name": "batch-replace",
@@ -310,7 +328,7 @@
       "npm": "https://www.npmjs.com/package/batch-replace",
       "repository": "https://github.com/peerigon/batch-replace"
     },
-    "downloads": 63
+    "downloads": 34
   },
   {
     "name": "bcrypt",
@@ -332,7 +350,7 @@
       "npm": "https://www.npmjs.com/package/bcrypt",
       "repository": "https://github.com/kelektiv/node.bcrypt.js"
     },
-    "downloads": 169135
+    "downloads": 195473
   },
   {
     "name": "bellajs",
@@ -351,7 +369,7 @@
       "npm": "https://www.npmjs.com/package/bellajs",
       "repository": "https://github.com/ndaidong/bellajs"
     },
-    "downloads": 986
+    "downloads": 652
   },
   {
     "name": "bfj",
@@ -378,7 +396,7 @@
       "npm": "https://www.npmjs.com/package/bfj",
       "repository": "https://gitlab.com/philbooth/bfj"
     },
-    "downloads": 1584
+    "downloads": 2759
   },
   {
     "name": "bitcore-mnemonic",
@@ -399,7 +417,7 @@
       "npm": "https://www.npmjs.com/package/bitcore-mnemonic",
       "repository": "https://github.com/bitpay/bitcore-mnemonic"
     },
-    "downloads": 1065
+    "downloads": 1004
   },
   {
     "name": "bl",
@@ -418,7 +436,7 @@
       "npm": "https://www.npmjs.com/package/bl",
       "repository": "https://github.com/rvagg/bl"
     },
-    "downloads": 9967779
+    "downloads": 10458123
   },
   {
     "name": "bole",
@@ -435,7 +453,7 @@
       "npm": "https://www.npmjs.com/package/bole",
       "repository": "https://github.com/rvagg/bole"
     },
-    "downloads": 8359
+    "downloads": 11363
   },
   {
     "name": "bourbon",
@@ -455,7 +473,7 @@
       "npm": "https://www.npmjs.com/package/bourbon",
       "repository": "https://github.com/thoughtbot/bourbon"
     },
-    "downloads": 116420
+    "downloads": 121049
   },
   {
     "name": "browser_fingerprint",
@@ -476,7 +494,7 @@
       "npm": "https://www.npmjs.com/package/browser_fingerprint",
       "repository": "https://github.com/actionhero/browser_fingerprint"
     },
-    "downloads": 1699
+    "downloads": 1802
   },
   {
     "name": "browserify-transform-tools",
@@ -494,7 +512,7 @@
       "npm": "https://www.npmjs.com/package/browserify-transform-tools",
       "repository": "https://github.com/benbria/browserify-transform-tools"
     },
-    "downloads": 218389
+    "downloads": 224355
   },
   {
     "name": "chai",
@@ -514,7 +532,7 @@
       "npm": "https://www.npmjs.com/package/chai",
       "repository": "https://github.com/chaijs/chai"
     },
-    "downloads": 1821481
+    "downloads": 2024699
   },
   {
     "name": "changelog-maker",
@@ -528,7 +546,25 @@
       "npm": "https://www.npmjs.com/package/changelog-maker",
       "repository": "https://github.com/nodejs/changelog-maker"
     },
-    "downloads": 1421
+    "downloads": 1228
+  },
+  {
+    "name": "chocolat",
+    "version": "1.1.2",
+    "description": "Responsive Lightbox Plugin",
+    "keywords": [
+      "lightbox",
+      "plugin",
+      "responsive"
+    ],
+    "date": "2023-12-17T11:18:38.262Z",
+    "links": {
+      "bugs": "https://github.com/nicolas-t/Chocolat/issues",
+      "homepage": "http://chocolat.insipi.de",
+      "npm": "https://www.npmjs.com/package/chocolat",
+      "repository": "https://github.com/nicolas-t/Chocolat"
+    },
+    "downloads": 77
   },
   {
     "name": "chrome-devtools-frontend",
@@ -548,7 +584,7 @@
       "npm": "https://www.npmjs.com/package/chrome-devtools-frontend",
       "repository": "https://github.com/ChromeDevTools/devtools-frontend"
     },
-    "downloads": 438
+    "downloads": 859
   },
   {
     "name": "clamscan",
@@ -571,7 +607,7 @@
       "npm": "https://www.npmjs.com/package/clamscan",
       "repository": "https://github.com/kylefarris/clamscan"
     },
-    "downloads": 1614
+    "downloads": 1424
   },
   {
     "name": "clean-deep",
@@ -589,7 +625,7 @@
       "npm": "https://www.npmjs.com/package/clean-deep",
       "repository": "https://github.com/nunofgs/clean-deep"
     },
-    "downloads": 354
+    "downloads": 657
   },
   {
     "name": "clownface",
@@ -607,7 +643,7 @@
       "npm": "https://www.npmjs.com/package/clownface",
       "repository": "https://github.com/rdf-ext/clownface"
     },
-    "downloads": 51
+    "downloads": 45
   },
   {
     "name": "color-parse",
@@ -628,7 +664,7 @@
       "npm": "https://www.npmjs.com/package/color-parse",
       "repository": "https://github.com/colorjs/color-parse"
     },
-    "downloads": 137
+    "downloads": 150
   },
   {
     "name": "commander",
@@ -651,7 +687,7 @@
       "npm": "https://www.npmjs.com/package/commander",
       "repository": "https://github.com/tj/commander.js"
     },
-    "downloads": 17115305
+    "downloads": 19190569
   },
   {
     "name": "connect-redis",
@@ -670,7 +706,7 @@
       "npm": "https://www.npmjs.com/package/connect-redis",
       "repository": "https://github.com/tj/connect-redis"
     },
-    "downloads": 176831
+    "downloads": 207941
   },
   {
     "name": "core-js",
@@ -729,7 +765,7 @@
       "npm": "https://www.npmjs.com/package/core-js",
       "repository": "https://github.com/zloirock/core-js"
     },
-    "downloads": 3710897
+    "downloads": 5820499
   },
   {
     "name": "countly-sdk-web",
@@ -747,7 +783,7 @@
       "npm": "https://www.npmjs.com/package/countly-sdk-web",
       "repository": "https://github.com/Countly/countly-sdk-web"
     },
-    "downloads": 81
+    "downloads": 36
   },
   {
     "name": "crowd-pulse-web-ui",
@@ -761,7 +797,7 @@
       "npm": "https://www.npmjs.com/package/crowd-pulse-web-ui",
       "repository": "https://github.com/frapontillo/crowd-pulse-web-ui"
     },
-    "downloads": 33
+    "downloads": 15
   },
   {
     "name": "css-declaration-sorter",
@@ -783,7 +819,7 @@
       "npm": "https://www.npmjs.com/package/css-declaration-sorter",
       "repository": "https://github.com/Siilwyn/css-declaration-sorter"
     },
-    "downloads": 178
+    "downloads": 1290
   },
   {
     "name": "css-font-face-src",
@@ -803,7 +839,7 @@
       "npm": "https://www.npmjs.com/package/css-font-face-src",
       "repository": "https://github.com/cburgmer/css-font-face-src"
     },
-    "downloads": 4837
+    "downloads": 6165
   },
   {
     "name": "cssstyle",
@@ -821,7 +857,7 @@
       "npm": "https://www.npmjs.com/package/cssstyle",
       "repository": "https://github.com/jsdom/cssstyle"
     },
-    "downloads": 746744
+    "downloads": 952907
   },
   {
     "name": "curlconverter",
@@ -841,7 +877,7 @@
       "npm": "https://www.npmjs.com/package/curlconverter",
       "repository": "https://github.com/curlconverter/curlconverter"
     },
-    "downloads": 434
+    "downloads": 395
   },
   {
     "name": "cytoscape",
@@ -870,7 +906,7 @@
       "npm": "https://www.npmjs.com/package/cytoscape",
       "repository": "https://github.com/cytoscape/cytoscape.js"
     },
-    "downloads": 2344
+    "downloads": 6124
   },
   {
     "name": "date",
@@ -892,7 +928,7 @@
       "npm": "https://www.npmjs.com/package/date",
       "repository": "https://github.com/es-shims/Date"
     },
-    "downloads": 200
+    "downloads": 231
   },
   {
     "name": "date-fns",
@@ -906,7 +942,7 @@
       "npm": "https://www.npmjs.com/package/date-fns",
       "repository": "https://github.com/date-fns/date-fns"
     },
-    "downloads": 1866
+    "downloads": 28250
   },
   {
     "name": "deep-equal",
@@ -923,7 +959,7 @@
       "npm": "https://www.npmjs.com/package/deep-equal",
       "repository": "https://github.com/inspect-js/node-deep-equal"
     },
-    "downloads": 3404071
+    "downloads": 3706269
   },
   {
     "name": "dependency-graph",
@@ -940,7 +976,7 @@
       "npm": "https://www.npmjs.com/package/dependency-graph",
       "repository": "https://github.com/jriecken/dependency-graph"
     },
-    "downloads": 23034
+    "downloads": 25571
   },
   {
     "name": "dnsimple",
@@ -960,7 +996,32 @@
       "npm": "https://www.npmjs.com/package/dnsimple",
       "repository": "https://github.com/dnsimple/dnsimple-node"
     },
-    "downloads": 85
+    "downloads": 99
+  },
+  {
+    "name": "docx",
+    "version": "8.5.0",
+    "description": "Easily generate .docx files with JS/TS with a nice declarative API. Works for Node and on the Browser.",
+    "keywords": [
+      "docx",
+      "office",
+      "word",
+      "generate",
+      "creator",
+      "create",
+      "document",
+      "doc",
+      "officegen",
+      "clippy"
+    ],
+    "date": "2023-12-31T14:36:33.832Z",
+    "links": {
+      "bugs": "https://github.com/dolanmiu/docx/issues",
+      "homepage": "https://docx.js.org",
+      "npm": "https://www.npmjs.com/package/docx",
+      "repository": "https://github.com/dolanmiu/docx"
+    },
+    "downloads": 23
   },
   {
     "name": "docxtemplater",
@@ -994,7 +1055,7 @@
       "npm": "https://www.npmjs.com/package/docxtemplater",
       "repository": "https://github.com/open-xml-templating/docxtemplater"
     },
-    "downloads": 3612
+    "downloads": 5549
   },
   {
     "name": "duplexify",
@@ -1016,7 +1077,7 @@
       "npm": "https://www.npmjs.com/package/duplexify",
       "repository": "https://github.com/mafintosh/duplexify"
     },
-    "downloads": 1944289
+    "downloads": 2276200
   },
   {
     "name": "ember-exam",
@@ -1032,7 +1093,7 @@
       "npm": "https://www.npmjs.com/package/ember-exam",
       "repository": "https://github.com/ember-cli/ember-exam"
     },
-    "downloads": 44
+    "downloads": 84
   },
   {
     "name": "emery",
@@ -1051,7 +1112,7 @@
       "npm": "https://www.npmjs.com/package/emery",
       "repository": "https://github.com/thinkmill/emery"
     },
-    "downloads": 20
+    "downloads": 8
   },
   {
     "name": "erroz",
@@ -1071,7 +1132,7 @@
       "npm": "https://www.npmjs.com/package/erroz",
       "repository": "https://github.com/peerigon/erroz"
     },
-    "downloads": 75
+    "downloads": 62
   },
   {
     "name": "eslint-config-airbnb",
@@ -1096,7 +1157,7 @@
       "npm": "https://www.npmjs.com/package/eslint-config-airbnb",
       "repository": "https://github.com/airbnb/javascript"
     },
-    "downloads": 275013
+    "downloads": 361042
   },
   {
     "name": "eslint-plugin-ember",
@@ -1119,7 +1180,7 @@
       "npm": "https://www.npmjs.com/package/eslint-plugin-ember",
       "repository": "https://github.com/ember-cli/eslint-plugin-ember"
     },
-    "downloads": 65
+    "downloads": 48
   },
   {
     "name": "eslint-plugin-qunit",
@@ -1137,7 +1198,7 @@
       "npm": "https://www.npmjs.com/package/eslint-plugin-qunit",
       "repository": "https://github.com/platinumazure/eslint-plugin-qunit"
     },
-    "downloads": 84
+    "downloads": 125
   },
   {
     "name": "eslint-plugin-security",
@@ -1155,7 +1216,7 @@
       "npm": "https://www.npmjs.com/package/eslint-plugin-security",
       "repository": "https://github.com/eslint-community/eslint-plugin-security"
     },
-    "downloads": 83
+    "downloads": 156
   },
   {
     "name": "express-fileupload",
@@ -1178,7 +1239,7 @@
       "npm": "https://www.npmjs.com/package/express-fileupload",
       "repository": "https://github.com/richardgirges/express-fileupload"
     },
-    "downloads": 311
+    "downloads": 501
   },
   {
     "name": "express-handlebars",
@@ -1200,7 +1261,7 @@
       "npm": "https://www.npmjs.com/package/express-handlebars",
       "repository": "https://github.com/express-handlebars/express-handlebars"
     },
-    "downloads": 105604
+    "downloads": 107248
   },
   {
     "name": "express-list-routes",
@@ -1223,7 +1284,7 @@
       "npm": "https://www.npmjs.com/package/express-list-routes",
       "repository": "https://github.com/labithiotis/express-list-routes"
     },
-    "downloads": 503
+    "downloads": 668
   },
   {
     "name": "fastq",
@@ -1242,7 +1303,7 @@
       "npm": "https://www.npmjs.com/package/fastq",
       "repository": "https://github.com/mcollina/fastq"
     },
-    "downloads": 412
+    "downloads": 440
   },
   {
     "name": "fetch-mock",
@@ -1263,7 +1324,27 @@
       "npm": "https://www.npmjs.com/package/fetch-mock",
       "repository": "https://github.com/wheresrhys/fetch-mock"
     },
-    "downloads": 9034
+    "downloads": 15060
+  },
+  {
+    "name": "fetch-retry",
+    "version": "6.0.0",
+    "description": "Extend any fetch library with retry functionality",
+    "keywords": [
+      "fetch",
+      "retry",
+      "http",
+      "retry",
+      "Fetch API"
+    ],
+    "date": "2024-03-17T16:24:19.135Z",
+    "links": {
+      "bugs": "https://github.com/jonbern/fetch-retry/issues",
+      "homepage": "https://github.com/jonbern/fetch-retry#readme",
+      "npm": "https://www.npmjs.com/package/fetch-retry",
+      "repository": "https://github.com/jonbern/fetch-retry"
+    },
+    "downloads": 101
   },
   {
     "name": "figlet",
@@ -1283,7 +1364,7 @@
       "npm": "https://www.npmjs.com/package/figlet",
       "repository": "https://github.com/patorjk/figlet.js"
     },
-    "downloads": 6347
+    "downloads": 9338
   },
   {
     "name": "fortune",
@@ -1303,7 +1384,7 @@
       "npm": "https://www.npmjs.com/package/fortune",
       "repository": "https://github.com/fortunejs/fortune"
     },
-    "downloads": 5685
+    "downloads": 10040
   },
   {
     "name": "frida",
@@ -1330,7 +1411,7 @@
       "npm": "https://www.npmjs.com/package/frida",
       "repository": "https://github.com/frida/frida-node"
     },
-    "downloads": 2725
+    "downloads": 1741
   },
   {
     "name": "function-bind",
@@ -1349,7 +1430,7 @@
       "npm": "https://www.npmjs.com/package/function-bind",
       "repository": "https://github.com/Raynos/function-bind"
     },
-    "downloads": 1372652
+    "downloads": 1531739
   },
   {
     "name": "function.prototype.name",
@@ -1372,7 +1453,7 @@
       "npm": "https://www.npmjs.com/package/function.prototype.name",
       "repository": "https://github.com/es-shims/Function.prototype.name"
     },
-    "downloads": 25
+    "downloads": 1737
   },
   {
     "name": "generator-jhipster",
@@ -1401,7 +1482,7 @@
       "npm": "https://www.npmjs.com/package/generator-jhipster",
       "repository": "https://github.com/jhipster/generator-jhipster"
     },
-    "downloads": 10657
+    "downloads": 13979
   },
   {
     "name": "github-scraper",
@@ -1415,7 +1496,7 @@
       "npm": "https://www.npmjs.com/package/github-scraper",
       "repository": "https://github.com/nelsonic/github-scraper"
     },
-    "downloads": 348
+    "downloads": 248
   },
   {
     "name": "gl",
@@ -1436,7 +1517,7 @@
       "npm": "https://www.npmjs.com/package/gl",
       "repository": "https://github.com/stackgl/headless-gl"
     },
-    "downloads": 919
+    "downloads": 834
   },
   {
     "name": "google-proto-files",
@@ -1456,7 +1537,7 @@
       "npm": "https://www.npmjs.com/package/google-proto-files",
       "repository": "https://github.com/googleapis/nodejs-proto-files"
     },
-    "downloads": 211
+    "downloads": 6348
   },
   {
     "name": "gridstack",
@@ -1485,7 +1566,7 @@
       "npm": "https://www.npmjs.com/package/gridstack",
       "repository": "https://github.com/gridstack/gridstack.js"
     },
-    "downloads": 660
+    "downloads": 914
   },
   {
     "name": "grunt-webpack",
@@ -1503,7 +1584,7 @@
       "npm": "https://www.npmjs.com/package/grunt-webpack",
       "repository": "https://github.com/webpack-contrib/grunt-webpack"
     },
-    "downloads": 54456
+    "downloads": 65999
   },
   {
     "name": "gtfs",
@@ -1523,7 +1604,7 @@
       "npm": "https://www.npmjs.com/package/gtfs",
       "repository": "https://github.com/blinktaginc/node-gtfs"
     },
-    "downloads": 409
+    "downloads": 340
   },
   {
     "name": "gulp-preprocess",
@@ -1550,7 +1631,7 @@
     "links": {
       "npm": "https://www.npmjs.com/package/gulp-preprocess"
     },
-    "downloads": 32772
+    "downloads": 28988
   },
   {
     "name": "hapi-auth-jwt2",
@@ -1570,7 +1651,7 @@
       "npm": "https://www.npmjs.com/package/hapi-auth-jwt2",
       "repository": "https://github.com/dwyl/hapi-auth-jwt2"
     },
-    "downloads": 9363
+    "downloads": 8555
   },
   {
     "name": "help-me",
@@ -1589,7 +1670,7 @@
       "npm": "https://www.npmjs.com/package/help-me",
       "repository": "https://github.com/mcollina/help-me"
     },
-    "downloads": 38947
+    "downloads": 42675
   },
   {
     "name": "http-auth-utils",
@@ -1612,7 +1693,7 @@
       "npm": "https://www.npmjs.com/package/http-auth-utils",
       "repository": "https://github.com/nfroidure/http-auth-utils"
     },
-    "downloads": 63
+    "downloads": 71
   },
   {
     "name": "indefinite",
@@ -1632,7 +1713,7 @@
       "npm": "https://www.npmjs.com/package/indefinite",
       "repository": "https://github.com/tandrewnichols/indefinite"
     },
-    "downloads": 49
+    "downloads": 25
   },
   {
     "name": "ionicons",
@@ -1657,7 +1738,7 @@
       "npm": "https://www.npmjs.com/package/ionicons",
       "repository": "https://github.com/ionic-team/ionicons"
     },
-    "downloads": 11675
+    "downloads": 14855
   },
   {
     "name": "is-accessor-descriptor",
@@ -1687,7 +1768,7 @@
       "npm": "https://www.npmjs.com/package/is-accessor-descriptor",
       "repository": "https://github.com/inspect-js/is-accessor-descriptor"
     },
-    "downloads": 11768
+    "downloads": 14458
   },
   {
     "name": "is-array-buffer",
@@ -1708,7 +1789,7 @@
       "npm": "https://www.npmjs.com/package/is-array-buffer",
       "repository": "https://github.com/inspect-js/is-array-buffer"
     },
-    "downloads": 36
+    "downloads": 23
   },
   {
     "name": "is-core-module",
@@ -1729,7 +1810,7 @@
       "npm": "https://www.npmjs.com/package/is-core-module",
       "repository": "https://github.com/inspect-js/is-core-module"
     },
-    "downloads": 74
+    "downloads": 69
   },
   {
     "name": "is-data-descriptor",
@@ -1759,7 +1840,7 @@
       "npm": "https://www.npmjs.com/package/is-data-descriptor",
       "repository": "https://github.com/inspect-js/is-data-descriptor"
     },
-    "downloads": 11781
+    "downloads": 14445
   },
   {
     "name": "is-descriptor",
@@ -1790,7 +1871,7 @@
       "npm": "https://www.npmjs.com/package/is-descriptor",
       "repository": "https://github.com/inspect-js/is-descriptor"
     },
-    "downloads": 11952
+    "downloads": 14690
   },
   {
     "name": "is-map",
@@ -1810,7 +1891,7 @@
       "npm": "https://www.npmjs.com/package/is-map",
       "repository": "https://github.com/inspect-js/is-map"
     },
-    "downloads": 26
+    "downloads": 24
   },
   {
     "name": "is-negative-zero",
@@ -1833,7 +1914,7 @@
       "npm": "https://www.npmjs.com/package/is-negative-zero",
       "repository": "https://github.com/inspect-js/is-negative-zero"
     },
-    "downloads": 310
+    "downloads": 221
   },
   {
     "name": "is-set",
@@ -1853,7 +1934,7 @@
       "npm": "https://www.npmjs.com/package/is-set",
       "repository": "https://github.com/inspect-js/is-set"
     },
-    "downloads": 20
+    "downloads": 8
   },
   {
     "name": "is-typed-array",
@@ -1886,7 +1967,7 @@
       "npm": "https://www.npmjs.com/package/is-typed-array",
       "repository": "https://github.com/inspect-js/is-typed-array"
     },
-    "downloads": 966
+    "downloads": 812
   },
   {
     "name": "is-weakmap",
@@ -1908,7 +1989,7 @@
       "npm": "https://www.npmjs.com/package/is-weakmap",
       "repository": "https://github.com/inspect-js/is-weakmap"
     },
-    "downloads": 26
+    "downloads": 19
   },
   {
     "name": "is-weakset",
@@ -1930,7 +2011,7 @@
       "npm": "https://www.npmjs.com/package/is-weakset",
       "repository": "https://github.com/inspect-js/is-weakset"
     },
-    "downloads": 30
+    "downloads": 12
   },
   {
     "name": "iso-639-1",
@@ -1952,7 +2033,7 @@
       "npm": "https://www.npmjs.com/package/iso-639-1",
       "repository": "https://github.com/meikidd/iso-639-1"
     },
-    "downloads": 329
+    "downloads": 593
   },
   {
     "name": "isvalid",
@@ -1976,7 +2057,7 @@
       "npm": "https://www.npmjs.com/package/isvalid",
       "repository": "https://github.com/trenskow/isvalid"
     },
-    "downloads": 855
+    "downloads": 1394
   },
   {
     "name": "jasmine-core",
@@ -1996,7 +2077,7 @@
       "npm": "https://www.npmjs.com/package/jasmine-core",
       "repository": "https://github.com/jasmine/jasmine"
     },
-    "downloads": 1114504
+    "downloads": 1267260
   },
   {
     "name": "js-xdr",
@@ -2010,7 +2091,7 @@
       "npm": "https://www.npmjs.com/package/js-xdr",
       "repository": "https://github.com/stellar/js-xdr"
     },
-    "downloads": 734
+    "downloads": 409
   },
   {
     "name": "json-stable-stringify",
@@ -2031,7 +2112,7 @@
       "npm": "https://www.npmjs.com/package/json-stable-stringify",
       "repository": "https://github.com/ljharb/json-stable-stringify"
     },
-    "downloads": 2854929
+    "downloads": 3410102
   },
   {
     "name": "jsoneditor",
@@ -2045,7 +2126,7 @@
       "npm": "https://www.npmjs.com/package/jsoneditor",
       "repository": "https://github.com/josdejong/jsoneditor"
     },
-    "downloads": 4667
+    "downloads": 4137
   },
   {
     "name": "jsrsasign",
@@ -2100,7 +2181,7 @@
       "npm": "https://www.npmjs.com/package/jsrsasign",
       "repository": "https://github.com/kjur/jsrsasign"
     },
-    "downloads": 10720
+    "downloads": 12818
   },
   {
     "name": "jstoxml",
@@ -2120,7 +2201,7 @@
     "links": {
       "npm": "https://www.npmjs.com/package/jstoxml"
     },
-    "downloads": 7516
+    "downloads": 8827
   },
   {
     "name": "jzz",
@@ -2139,7 +2220,7 @@
       "homepage": "https://jazz-soft.net",
       "npm": "https://www.npmjs.com/package/jzz"
     },
-    "downloads": 289
+    "downloads": 366
   },
   {
     "name": "levelgraph",
@@ -2159,7 +2240,7 @@
       "npm": "https://www.npmjs.com/package/levelgraph",
       "repository": "https://github.com/levelgraph/levelgraph"
     },
-    "downloads": 971
+    "downloads": 8210
   },
   {
     "name": "libqp",
@@ -2176,7 +2257,7 @@
       "npm": "https://www.npmjs.com/package/libqp",
       "repository": "https://github.com/nodemailer/libqp"
     },
-    "downloads": 309788
+    "downloads": 352953
   },
   {
     "name": "loglevel",
@@ -2195,7 +2276,7 @@
       "npm": "https://www.npmjs.com/package/loglevel",
       "repository": "https://github.com/pimterry/loglevel"
     },
-    "downloads": 17917
+    "downloads": 23830
   },
   {
     "name": "lokijs",
@@ -2218,7 +2299,7 @@
       "npm": "https://www.npmjs.com/package/lokijs",
       "repository": "https://github.com/techfort/LokiJS"
     },
-    "downloads": 5005
+    "downloads": 4317
   },
   {
     "name": "mappersmith",
@@ -2241,7 +2322,7 @@
       "npm": "https://www.npmjs.com/package/mappersmith",
       "repository": "https://github.com/tulios/mappersmith"
     },
-    "downloads": 414
+    "downloads": 317
   },
   {
     "name": "markdown-it-highlightjs",
@@ -2257,7 +2338,7 @@
       "npm": "https://www.npmjs.com/package/markdown-it-highlightjs",
       "repository": "https://github.com/valeriangalliat/markdown-it-highlightjs"
     },
-    "downloads": 129
+    "downloads": 197
   },
   {
     "name": "mediaelement",
@@ -2270,7 +2351,7 @@
       "npm": "https://www.npmjs.com/package/mediaelement",
       "repository": "https://github.com/mediaelement/mediaelement"
     },
-    "downloads": 333
+    "downloads": 373
   },
   {
     "name": "mediasoup",
@@ -2289,7 +2370,7 @@
       "npm": "https://www.npmjs.com/package/mediasoup",
       "repository": "https://github.com/versatica/mediasoup"
     },
-    "downloads": 17
+    "downloads": 106
   },
   {
     "name": "memjs",
@@ -2308,7 +2389,7 @@
       "npm": "https://www.npmjs.com/package/memjs",
       "repository": "https://github.com/memcachier/memjs"
     },
-    "downloads": 9865
+    "downloads": 8685
   },
   {
     "name": "mixpanel-browser",
@@ -2320,7 +2401,7 @@
       "bugs": "https://github.com/mixpanel/mixpanel-js/issues",
       "npm": "https://www.npmjs.com/package/mixpanel-browser"
     },
-    "downloads": 5485
+    "downloads": 7909
   },
   {
     "name": "ml-gsd",
@@ -2340,7 +2421,7 @@
       "npm": "https://www.npmjs.com/package/ml-gsd",
       "repository": "https://github.com/mljs/global-spectral-deconvolution"
     },
-    "downloads": 205
+    "downloads": 57
   },
   {
     "name": "ml-tree-similarity",
@@ -2353,7 +2434,7 @@
       "npm": "https://www.npmjs.com/package/ml-tree-similarity",
       "repository": "https://github.com/mljs/tree-similarity"
     },
-    "downloads": 31
+    "downloads": 32
   },
   {
     "name": "mocha",
@@ -2381,7 +2462,7 @@
       "npm": "https://www.npmjs.com/package/mocha",
       "repository": "https://github.com/mochajs/mocha"
     },
-    "downloads": 2722207
+    "downloads": 2927111
   },
   {
     "name": "modernizr-loader",
@@ -2399,7 +2480,7 @@
       "npm": "https://www.npmjs.com/package/modernizr-loader",
       "repository": "https://github.com/peerigon/modernizr-loader"
     },
-    "downloads": 2393
+    "downloads": 9905
   },
   {
     "name": "moment",
@@ -2423,7 +2504,7 @@
       "npm": "https://www.npmjs.com/package/moment",
       "repository": "https://github.com/moment/moment"
     },
-    "downloads": 3587729
+    "downloads": 4213358
   },
   {
     "name": "mongoose-sequence",
@@ -2442,7 +2523,7 @@
       "npm": "https://www.npmjs.com/package/mongoose-sequence",
       "repository": "https://github.com/ramiel/mongoose-sequence"
     },
-    "downloads": 181
+    "downloads": 248
   },
   {
     "name": "mqemitter",
@@ -2465,7 +2546,7 @@
       "npm": "https://www.npmjs.com/package/mqemitter",
       "repository": "https://github.com/mcollina/mqemitter"
     },
-    "downloads": 356
+    "downloads": 214
   },
   {
     "name": "needle",
@@ -2494,7 +2575,7 @@
       "npm": "https://www.npmjs.com/package/needle",
       "repository": "https://github.com/tomas/needle"
     },
-    "downloads": 334292
+    "downloads": 376194
   },
   {
     "name": "newrelic",
@@ -2515,7 +2596,7 @@
       "npm": "https://www.npmjs.com/package/newrelic",
       "repository": "https://github.com/newrelic/node-newrelic"
     },
-    "downloads": 393536
+    "downloads": 391085
   },
   {
     "name": "node-expat",
@@ -2536,7 +2617,7 @@
       "npm": "https://www.npmjs.com/package/node-expat",
       "repository": "https://github.com/astro/node-expat"
     },
-    "downloads": 69036
+    "downloads": 74288
   },
   {
     "name": "node-jt400",
@@ -2559,7 +2640,7 @@
       "npm": "https://www.npmjs.com/package/node-jt400",
       "repository": "https://github.com/tryggingamidstodin/node-jt400"
     },
-    "downloads": 280
+    "downloads": 287
   },
   {
     "name": "node-polyglot",
@@ -2580,7 +2661,7 @@
       "npm": "https://www.npmjs.com/package/node-polyglot",
       "repository": "https://github.com/airbnb/polyglot.js"
     },
-    "downloads": 26885
+    "downloads": 26246
   },
   {
     "name": "node-red-admin",
@@ -2594,7 +2675,7 @@
       "npm": "https://www.npmjs.com/package/node-red-admin",
       "repository": "https://github.com/node-red/node-red-admin"
     },
-    "downloads": 507
+    "downloads": 493
   },
   {
     "name": "node-resque",
@@ -2618,7 +2699,7 @@
       "npm": "https://www.npmjs.com/package/node-resque",
       "repository": "https://github.com/actionhero/node-resque"
     },
-    "downloads": 12350
+    "downloads": 12689
   },
   {
     "name": "npm",
@@ -2637,7 +2718,7 @@
       "npm": "https://www.npmjs.com/package/npm",
       "repository": "https://github.com/npm/cli"
     },
-    "downloads": 3653141
+    "downloads": 3955516
   },
   {
     "name": "npm-email-templates",
@@ -2653,7 +2734,7 @@
     "links": {
       "npm": "https://www.npmjs.com/package/npm-email-templates"
     },
-    "downloads": 1254
+    "downloads": 674
   },
   {
     "name": "object-inspect",
@@ -2673,7 +2754,7 @@
       "npm": "https://www.npmjs.com/package/object-inspect",
       "repository": "https://github.com/inspect-js/object-inspect"
     },
-    "downloads": 488384
+    "downloads": 565621
   },
   {
     "name": "object-is",
@@ -2697,7 +2778,7 @@
       "npm": "https://www.npmjs.com/package/object-is",
       "repository": "https://github.com/es-shims/object-is"
     },
-    "downloads": 1454
+    "downloads": 2085
   },
   {
     "name": "object.assign",
@@ -2723,7 +2804,7 @@
       "npm": "https://www.npmjs.com/package/object.assign",
       "repository": "https://github.com/ljharb/object.assign"
     },
-    "downloads": 193286
+    "downloads": 280552
   },
   {
     "name": "object.entries",
@@ -2751,7 +2832,7 @@
       "npm": "https://www.npmjs.com/package/object.entries",
       "repository": "https://github.com/es-shims/Object.entries"
     },
-    "downloads": 104339
+    "downloads": 138832
   },
   {
     "name": "object.getownpropertydescriptors",
@@ -2775,7 +2856,7 @@
       "npm": "https://www.npmjs.com/package/object.getownpropertydescriptors",
       "repository": "https://github.com/es-shims/object.getownpropertydescriptors"
     },
-    "downloads": 855
+    "downloads": 1112
   },
   {
     "name": "object.values",
@@ -2803,7 +2884,29 @@
       "npm": "https://www.npmjs.com/package/object.values",
       "repository": "https://github.com/es-shims/Object.values"
     },
-    "downloads": 34672
+    "downloads": 93531
+  },
+  {
+    "name": "parseint",
+    "version": "2.0.1",
+    "description": "An ES-spec-compliant `parseInt` shim/polyfill/replacement that works as far down as ES3",
+    "keywords": [
+      "parseInt",
+      "number",
+      "is-finite",
+      "log",
+      "shim",
+      "polyfill",
+      "es-shim",
+      "API"
+    ],
+    "date": "2024-03-04T16:16:40.721Z",
+    "links": {
+      "homepage": "https://github.com/es-shims/parseInt#readme",
+      "npm": "https://www.npmjs.com/package/parseint",
+      "repository": "https://github.com/es-shims/parseInt"
+    },
+    "downloads": 59
   },
   {
     "name": "parseuri",
@@ -2821,7 +2924,7 @@
       "npm": "https://www.npmjs.com/package/parseuri",
       "repository": "https://github.com/slevithan/parseuri"
     },
-    "downloads": 2369284
+    "downloads": 2622924
   },
   {
     "name": "phaser",
@@ -2846,7 +2949,7 @@
       "npm": "https://www.npmjs.com/package/phaser",
       "repository": "https://github.com/phaserjs/phaser"
     },
-    "downloads": 2460
+    "downloads": 1619
   },
   {
     "name": "pino",
@@ -2865,7 +2968,7 @@
       "npm": "https://www.npmjs.com/package/pino",
       "repository": "https://github.com/pinojs/pino"
     },
-    "downloads": 162
+    "downloads": 1302
   },
   {
     "name": "plop",
@@ -2888,7 +2991,7 @@
       "npm": "https://www.npmjs.com/package/plop",
       "repository": "https://github.com/plopjs/plop"
     },
-    "downloads": 987
+    "downloads": 1048
   },
   {
     "name": "pnpm",
@@ -2927,7 +3030,7 @@
       "npm": "https://www.npmjs.com/package/pnpm",
       "repository": "https://github.com/pnpm/pnpm"
     },
-    "downloads": 1840
+    "downloads": 1010
   },
   {
     "name": "postmark",
@@ -2941,7 +3044,7 @@
       "npm": "https://www.npmjs.com/package/postmark",
       "repository": "https://github.com/ActiveCampaign/postmark.js"
     },
-    "downloads": 9306
+    "downloads": 9647
   },
   {
     "name": "prismarine-nbt",
@@ -2958,7 +3061,7 @@
       "npm": "https://www.npmjs.com/package/prismarine-nbt",
       "repository": "https://github.com/prismarinejs/prismarine-nbt"
     },
-    "downloads": 407
+    "downloads": 506
   },
   {
     "name": "proj4",
@@ -2972,7 +3075,7 @@
       "npm": "https://www.npmjs.com/package/proj4",
       "repository": "https://github.com/proj4js/proj4js"
     },
-    "downloads": 8238
+    "downloads": 9656
   },
   {
     "name": "promise.prototype.finally",
@@ -2997,7 +3100,7 @@
       "npm": "https://www.npmjs.com/package/promise.prototype.finally",
       "repository": "https://github.com/es-shims/Promise.prototype.finally"
     },
-    "downloads": 23693
+    "downloads": 26758
   },
   {
     "name": "protobufjs",
@@ -3016,7 +3119,7 @@
       "npm": "https://www.npmjs.com/package/protobufjs",
       "repository": "https://github.com/protobufjs/protobuf.js"
     },
-    "downloads": 127023
+    "downloads": 181590
   },
   {
     "name": "qs",
@@ -3036,7 +3139,7 @@
       "npm": "https://www.npmjs.com/package/qs",
       "repository": "https://github.com/ljharb/qs"
     },
-    "downloads": 21677887
+    "downloads": 24446657
   },
   {
     "name": "quasar",
@@ -3062,7 +3165,7 @@
       "npm": "https://www.npmjs.com/package/quasar",
       "repository": "https://github.com/quasarframework/quasar"
     },
-    "downloads": 66
+    "downloads": 43
   },
   {
     "name": "ramda",
@@ -3088,7 +3191,7 @@
       "npm": "https://www.npmjs.com/package/ramda",
       "repository": "https://github.com/ramda/ramda"
     },
-    "downloads": 200523
+    "downloads": 233080
   },
   {
     "name": "rc-util",
@@ -3105,7 +3208,7 @@
       "npm": "https://www.npmjs.com/package/rc-util",
       "repository": "https://github.com/react-component/util"
     },
-    "downloads": 25255
+    "downloads": 32085
   },
   {
     "name": "rdf-ext",
@@ -3123,7 +3226,7 @@
       "npm": "https://www.npmjs.com/package/rdf-ext",
       "repository": "https://github.com/rdf-ext/rdf-ext"
     },
-    "downloads": 1286
+    "downloads": 841
   },
   {
     "name": "re2",
@@ -3142,7 +3245,7 @@
       "npm": "https://www.npmjs.com/package/re2",
       "repository": "https://github.com/uhop/node-re2"
     },
-    "downloads": 323
+    "downloads": 4070
   },
   {
     "name": "react-avatar-editor",
@@ -3164,7 +3267,7 @@
       "npm": "https://www.npmjs.com/package/react-avatar-editor",
       "repository": "https://github.com/mosch/react-avatar-editor"
     },
-    "downloads": 9325
+    "downloads": 8925
   },
   {
     "name": "react-bootstrap-typeahead",
@@ -3204,7 +3307,7 @@
       "npm": "https://www.npmjs.com/package/react-bootstrap-typeahead",
       "repository": "https://github.com/ericgio/react-bootstrap-typeahead"
     },
-    "downloads": 88
+    "downloads": 402
   },
   {
     "name": "react-calendar",
@@ -3224,7 +3327,7 @@
       "npm": "https://www.npmjs.com/package/react-calendar",
       "repository": "https://github.com/wojtekmaj/react-calendar"
     },
-    "downloads": 299
+    "downloads": 551
   },
   {
     "name": "react-clock",
@@ -3244,7 +3347,7 @@
       "npm": "https://www.npmjs.com/package/react-clock",
       "repository": "https://github.com/wojtekmaj/react-clock"
     },
-    "downloads": 90
+    "downloads": 41
   },
   {
     "name": "react-csv-downloader",
@@ -3263,7 +3366,7 @@
       "npm": "https://www.npmjs.com/package/react-csv-downloader",
       "repository": "https://github.com/dolezel/react-csv-downloader"
     },
-    "downloads": 42
+    "downloads": 25
   },
   {
     "name": "react-date-picker",
@@ -3283,7 +3386,7 @@
       "npm": "https://www.npmjs.com/package/react-date-picker",
       "repository": "https://github.com/wojtekmaj/react-date-picker"
     },
-    "downloads": 21523
+    "downloads": 29981
   },
   {
     "name": "react-datetime-picker",
@@ -3306,7 +3409,7 @@
       "npm": "https://www.npmjs.com/package/react-datetime-picker",
       "repository": "https://github.com/wojtekmaj/react-datetime-picker"
     },
-    "downloads": 16
+    "downloads": 8
   },
   {
     "name": "react-day-picker",
@@ -3320,7 +3423,7 @@
       "npm": "https://www.npmjs.com/package/react-day-picker",
       "repository": "https://github.com/gpbl/react-day-picker"
     },
-    "downloads": 18108
+    "downloads": 24939
   },
   {
     "name": "react-dropzone",
@@ -3339,7 +3442,7 @@
       "npm": "https://www.npmjs.com/package/react-dropzone",
       "repository": "https://github.com/react-dropzone/react-dropzone"
     },
-    "downloads": 39621
+    "downloads": 53518
   },
   {
     "name": "react-moment-proptypes",
@@ -3357,7 +3460,7 @@
       "npm": "https://www.npmjs.com/package/react-moment-proptypes",
       "repository": "https://github.com/CalebMorris/react-moment-proptypes"
     },
-    "downloads": 1055
+    "downloads": 1888
   },
   {
     "name": "react-native-device-info",
@@ -3380,7 +3483,7 @@
       "npm": "https://www.npmjs.com/package/react-native-device-info",
       "repository": "https://github.com/react-native-device-info/react-native-device-info"
     },
-    "downloads": 2387
+    "downloads": 5096
   },
   {
     "name": "react-native-webview",
@@ -3394,7 +3497,7 @@
       "npm": "https://www.npmjs.com/package/react-native-webview",
       "repository": "https://github.com/react-native-webview/react-native-webview"
     },
-    "downloads": 122
+    "downloads": 52
   },
   {
     "name": "react-pdf",
@@ -3412,7 +3515,7 @@
       "npm": "https://www.npmjs.com/package/react-pdf",
       "repository": "https://github.com/wojtekmaj/react-pdf"
     },
-    "downloads": 733
+    "downloads": 784
   },
   {
     "name": "react-time-picker",
@@ -3430,7 +3533,7 @@
       "npm": "https://www.npmjs.com/package/react-time-picker",
       "repository": "https://github.com/wojtekmaj/react-time-picker"
     },
-    "downloads": 1513
+    "downloads": 1895
   },
   {
     "name": "react-uploader",
@@ -3468,7 +3571,7 @@
       "npm": "https://www.npmjs.com/package/react-uploader",
       "repository": "https://github.com/bytescale/bytescale-upload-widget-react"
     },
-    "downloads": 23
+    "downloads": 10
   },
   {
     "name": "reactstrap",
@@ -3490,7 +3593,7 @@
       "npm": "https://www.npmjs.com/package/reactstrap",
       "repository": "https://github.com/reactstrap/reactstrap"
     },
-    "downloads": 116
+    "downloads": 1460
   },
   {
     "name": "redis-sessions",
@@ -3510,7 +3613,7 @@
       "npm": "https://www.npmjs.com/package/redis-sessions",
       "repository": "https://github.com/smrchy/redis-sessions"
     },
-    "downloads": 1472
+    "downloads": 1282
   },
   {
     "name": "reduce",
@@ -3524,7 +3627,7 @@
       "npm": "https://www.npmjs.com/package/reduce",
       "repository": "https://github.com/Raynos/reduce"
     },
-    "downloads": 931
+    "downloads": 1209
   },
   {
     "name": "regexp.prototype.flags",
@@ -3550,7 +3653,7 @@
       "npm": "https://www.npmjs.com/package/regexp.prototype.flags",
       "repository": "https://github.com/es-shims/RegExp.prototype.flags"
     },
-    "downloads": 76
+    "downloads": 889
   },
   {
     "name": "resolve",
@@ -3569,7 +3672,7 @@
       "npm": "https://www.npmjs.com/package/resolve",
       "repository": "https://github.com/browserify/resolve"
     },
-    "downloads": 7016312
+    "downloads": 7683152
   },
   {
     "name": "restructure",
@@ -3588,7 +3691,7 @@
       "npm": "https://www.npmjs.com/package/restructure",
       "repository": "https://github.com/devongovett/restructure"
     },
-    "downloads": 337
+    "downloads": 357
   },
   {
     "name": "rxjs",
@@ -3613,7 +3716,7 @@
       "npm": "https://www.npmjs.com/package/rxjs",
       "repository": "https://github.com/reactivex/rxjs"
     },
-    "downloads": 105056
+    "downloads": 200316
   },
   {
     "name": "sass-true",
@@ -3634,7 +3737,7 @@
       "npm": "https://www.npmjs.com/package/sass-true",
       "repository": "https://github.com/oddbird/true"
     },
-    "downloads": 823
+    "downloads": 644
   },
   {
     "name": "selfsigned",
@@ -3653,7 +3756,7 @@
       "npm": "https://www.npmjs.com/package/selfsigned",
       "repository": "https://github.com/jfromaniello/selfsigned"
     },
-    "downloads": 906
+    "downloads": 1293
   },
   {
     "name": "server",
@@ -3674,7 +3777,7 @@
       "npm": "https://www.npmjs.com/package/server",
       "repository": "https://github.com/franciscop/server"
     },
-    "downloads": 1142
+    "downloads": 716
   },
   {
     "name": "sharedb",
@@ -3688,7 +3791,7 @@
       "npm": "https://www.npmjs.com/package/sharedb",
       "repository": "https://github.com/share/sharedb"
     },
-    "downloads": 751
+    "downloads": 617
   },
   {
     "name": "sharedb-mongo",
@@ -3702,7 +3805,7 @@
       "npm": "https://www.npmjs.com/package/sharedb-mongo",
       "repository": "https://github.com/share/sharedb-mongo"
     },
-    "downloads": 399
+    "downloads": 253
   },
   {
     "name": "sharedb-redis-pubsub",
@@ -3716,7 +3819,7 @@
       "npm": "https://www.npmjs.com/package/sharedb-redis-pubsub",
       "repository": "https://github.com/share/sharedb-redis-pubsub"
     },
-    "downloads": 221
+    "downloads": 116
   },
   {
     "name": "shell-quote",
@@ -3735,7 +3838,7 @@
       "npm": "https://www.npmjs.com/package/shell-quote",
       "repository": "https://github.com/ljharb/shell-quote"
     },
-    "downloads": 1708397
+    "downloads": 1955662
   },
   {
     "name": "shifty",
@@ -3749,7 +3852,28 @@
       "npm": "https://www.npmjs.com/package/shifty",
       "repository": "https://github.com/jeremyckahn/shifty"
     },
-    "downloads": 4637
+    "downloads": 4666
+  },
+  {
+    "name": "simple-react-form",
+    "version": "4.0.6",
+    "description": "A library to make reusable form components in React and React Native",
+    "keywords": [
+      "react-component",
+      "react-native",
+      "ios",
+      "android",
+      "form",
+      "react"
+    ],
+    "date": "2024-04-15T15:48:50.372Z",
+    "links": {
+      "bugs": "https://github.com/nicolaslopezj/simple-react-form/issues",
+      "homepage": "https://github.com/nicolaslopezj/simple-react-form#readme",
+      "npm": "https://www.npmjs.com/package/simple-react-form",
+      "repository": "https://github.com/nicolaslopezj/simple-react-form"
+    },
+    "downloads": 263
   },
   {
     "name": "sparql-http-client",
@@ -3767,7 +3891,7 @@
       "npm": "https://www.npmjs.com/package/sparql-http-client",
       "repository": "https://github.com/rdf-ext/sparql-http-client"
     },
-    "downloads": 19
+    "downloads": 27
   },
   {
     "name": "ssh2",
@@ -3789,7 +3913,7 @@
       "npm": "https://www.npmjs.com/package/ssh2",
       "repository": "https://github.com/mscdex/ssh2"
     },
-    "downloads": 137494
+    "downloads": 173871
   },
   {
     "name": "static-eval",
@@ -3813,7 +3937,7 @@
       "npm": "https://www.npmjs.com/package/static-eval",
       "repository": "https://github.com/browserify/static-eval"
     },
-    "downloads": 186153
+    "downloads": 203703
   },
   {
     "name": "stream-string",
@@ -3830,7 +3954,7 @@
       "npm": "https://www.npmjs.com/package/stream-string",
       "repository": "https://github.com/jamescostian/stream-string"
     },
-    "downloads": 143
+    "downloads": 94
   },
   {
     "name": "string.fromcodepoint",
@@ -3850,7 +3974,7 @@
       "npm": "https://www.npmjs.com/package/string.fromcodepoint",
       "repository": "https://github.com/mathiasbynens/String.fromCodePoint"
     },
-    "downloads": 60063
+    "downloads": 75188
   },
   {
     "name": "string.prototype.at",
@@ -3876,7 +4000,7 @@
       "npm": "https://www.npmjs.com/package/string.prototype.at",
       "repository": "https://github.com/es-shims/String.prototype.at"
     },
-    "downloads": 87
+    "downloads": 53
   },
   {
     "name": "string.prototype.endswith",
@@ -3896,7 +4020,7 @@
       "npm": "https://www.npmjs.com/package/string.prototype.endswith",
       "repository": "https://github.com/mathiasbynens/String.prototype.endsWith"
     },
-    "downloads": 105797
+    "downloads": 108601
   },
   {
     "name": "string.prototype.padend",
@@ -3924,7 +4048,7 @@
       "npm": "https://www.npmjs.com/package/string.prototype.padend",
       "repository": "https://github.com/es-shims/String.prototype.padEnd"
     },
-    "downloads": 756
+    "downloads": 1064
   },
   {
     "name": "string.prototype.padstart",
@@ -3952,7 +4076,7 @@
       "npm": "https://www.npmjs.com/package/string.prototype.padstart",
       "repository": "https://github.com/es-shims/String.prototype.padStart"
     },
-    "downloads": 759
+    "downloads": 1138
   },
   {
     "name": "string.prototype.trim",
@@ -3974,7 +4098,7 @@
       "npm": "https://www.npmjs.com/package/string.prototype.trim",
       "repository": "https://github.com/es-shims/String.prototype.trim"
     },
-    "downloads": 140659
+    "downloads": 159685
   },
   {
     "name": "stripe",
@@ -3993,7 +4117,7 @@
       "npm": "https://www.npmjs.com/package/stripe",
       "repository": "https://github.com/stripe/stripe-node"
     },
-    "downloads": 73924
+    "downloads": 86652
   },
   {
     "name": "supertest",
@@ -4015,7 +4139,7 @@
       "npm": "https://www.npmjs.com/package/supertest",
       "repository": "https://github.com/ladjs/supertest"
     },
-    "downloads": 428911
+    "downloads": 470409
   },
   {
     "name": "tape",
@@ -4035,7 +4159,7 @@
       "npm": "https://www.npmjs.com/package/tape",
       "repository": "https://github.com/tape-testing/tape"
     },
-    "downloads": 926299
+    "downloads": 997981
   },
   {
     "name": "terminal-kit",
@@ -4075,7 +4199,7 @@
       "npm": "https://www.npmjs.com/package/terminal-kit",
       "repository": "https://github.com/cronvel/terminal-kit"
     },
-    "downloads": 4590
+    "downloads": 4610
   },
   {
     "name": "textdiff-create",
@@ -4095,7 +4219,7 @@
       "npm": "https://www.npmjs.com/package/textdiff-create",
       "repository": "https://github.com/icflorescu/textdiff-create"
     },
-    "downloads": 80
+    "downloads": 39
   },
   {
     "name": "textdiff-patch",
@@ -4114,7 +4238,7 @@
       "npm": "https://www.npmjs.com/package/textdiff-patch",
       "repository": "https://github.com/icflorescu/textdiff-patch"
     },
-    "downloads": 78
+    "downloads": 36
   },
   {
     "name": "through2-map",
@@ -4133,7 +4257,7 @@
       "npm": "https://www.npmjs.com/package/through2-map",
       "repository": "https://github.com/brycebaril/through2-map"
     },
-    "downloads": 13128
+    "downloads": 19787
   },
   {
     "name": "token-stream",
@@ -4147,7 +4271,7 @@
       "npm": "https://www.npmjs.com/package/token-stream",
       "repository": "https://github.com/pugjs/token-stream"
     },
-    "downloads": 12128
+    "downloads": 7954
   },
   {
     "name": "traverse",
@@ -4169,7 +4293,7 @@
       "npm": "https://www.npmjs.com/package/traverse",
       "repository": "https://github.com/ljharb/js-traverse"
     },
-    "downloads": 2409297
+    "downloads": 2119429
   },
   {
     "name": "trix",
@@ -4187,7 +4311,7 @@
       "npm": "https://www.npmjs.com/package/trix",
       "repository": "https://github.com/basecamp/trix"
     },
-    "downloads": 1553
+    "downloads": 2534
   },
   {
     "name": "typograf",
@@ -4207,7 +4331,7 @@
       "npm": "https://www.npmjs.com/package/typograf",
       "repository": "https://github.com/typograf/typograf"
     },
-    "downloads": 1200
+    "downloads": 1079
   },
   {
     "name": "unidecode",
@@ -4225,7 +4349,7 @@
       "npm": "https://www.npmjs.com/package/unidecode",
       "repository": "https://github.com/FGRibreau/node-unidecode"
     },
-    "downloads": 25741
+    "downloads": 26059
   },
   {
     "name": "uploader",
@@ -4256,7 +4380,7 @@
       "npm": "https://www.npmjs.com/package/uploader",
       "repository": "https://github.com/bytescale/bytescale-upload-widget"
     },
-    "downloads": 112
+    "downloads": 47
   },
   {
     "name": "urlgrey",
@@ -4273,7 +4397,7 @@
       "npm": "https://www.npmjs.com/package/urlgrey",
       "repository": "https://github.com/cainus/urlgrey"
     },
-    "downloads": 166758
+    "downloads": 179917
   },
   {
     "name": "usb",
@@ -4290,7 +4414,7 @@
       "npm": "https://www.npmjs.com/package/usb",
       "repository": "https://github.com/node-usb/node-usb"
     },
-    "downloads": 6953
+    "downloads": 7643
   },
   {
     "name": "utf8-byte-length",
@@ -4306,7 +4430,7 @@
       "npm": "https://www.npmjs.com/package/utf8-byte-length",
       "repository": "https://github.com/parshap/utf8-byte-length"
     },
-    "downloads": 15416
+    "downloads": 18822
   },
   {
     "name": "vega-lite",
@@ -4324,7 +4448,7 @@
       "npm": "https://www.npmjs.com/package/vega-lite",
       "repository": "https://github.com/vega/vega-lite"
     },
-    "downloads": 947
+    "downloads": 1296
   },
   {
     "name": "vexflow",
@@ -4344,7 +4468,7 @@
       "npm": "https://www.npmjs.com/package/vexflow",
       "repository": "https://github.com/0xfe/vexflow"
     },
-    "downloads": 639
+    "downloads": 638
   },
   {
     "name": "videojs-contrib-ads",
@@ -4361,7 +4485,7 @@
       "npm": "https://www.npmjs.com/package/videojs-contrib-ads",
       "repository": "https://github.com/videojs/videojs-contrib-ads"
     },
-    "downloads": 983
+    "downloads": 866
   },
   {
     "name": "videojs-playlist",
@@ -4379,7 +4503,7 @@
       "npm": "https://www.npmjs.com/package/videojs-playlist",
       "repository": "https://github.com/brightcove/videojs-playlist"
     },
-    "downloads": 463
+    "downloads": 517
   },
   {
     "name": "which-typed-array",
@@ -4412,7 +4536,7 @@
       "npm": "https://www.npmjs.com/package/which-typed-array",
       "repository": "https://github.com/inspect-js/which-typed-array"
     },
-    "downloads": 15
+    "downloads": 38
   },
   {
     "name": "xss",
@@ -4440,7 +4564,7 @@
       "npm": "https://www.npmjs.com/package/xss",
       "repository": "https://github.com/leizongmin/js-xss"
     },
-    "downloads": 18056
+    "downloads": 17359
   },
   {
     "name": "xy-parser",
@@ -4457,7 +4581,7 @@
       "npm": "https://www.npmjs.com/package/xy-parser",
       "repository": "https://github.com/cheminfo/xy-parser"
     },
-    "downloads": 70
+    "downloads": 36
   },
   {
     "name": "yjs",
@@ -4479,6 +4603,6 @@
       "npm": "https://www.npmjs.com/package/yjs",
       "repository": "https://github.com/yjs/yjs"
     },
-    "downloads": 1732
+    "downloads": 748
   }
 ]
