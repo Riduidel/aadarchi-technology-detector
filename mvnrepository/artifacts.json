@@ -61,7 +61,7 @@
         "date": "Mar 31, 2017",
         "users": 0,
         "previousUsers": 5434,
-        "interpolatedUsers": 6454
+        "interpolatedUsers": 6609
       },
       "1.2.2": {
         "date": "Mar 16, 2017",
@@ -535,7 +535,7 @@
         "date": "Mar 31, 2017",
         "users": 0,
         "previousUsers": 974,
-        "interpolatedUsers": 1175
+        "interpolatedUsers": 1206
       },
       "1.2.2": {
         "date": "Mar 16, 2017",
@@ -2118,7 +2118,7 @@
         "date": "Sep 22, 2018",
         "users": 0,
         "previousUsers": 1658,
-        "interpolatedUsers": 2267
+        "interpolatedUsers": 2329
       },
       "27.1.1": {
         "date": "Apr 05, 2018",
@@ -2982,7 +2982,7 @@
         "date": "May 16, 2019",
         "users": 0,
         "previousUsers": 77,
-        "interpolatedUsers": 893
+        "interpolatedUsers": 1017
       },
       "2.9.8": {
         "date": "Dec 16, 2018",
@@ -3030,7 +3030,7 @@
         "date": "Sep 21, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 263
+        "interpolatedUsers": 294
       },
       "2.9.1": {
         "date": "Sep 08, 2017",
@@ -3486,7 +3486,7 @@
         "date": "Nov 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 613
+        "interpolatedUsers": 675
       },
       "2.10.0.pr3": {
         "date": "Sep 17, 2019",
@@ -3498,7 +3498,7 @@
         "date": "Aug 31, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 299
+        "interpolatedUsers": 330
       },
       "2.10.0.pr1": {
         "date": "Jul 19, 2019",
@@ -3510,7 +3510,7 @@
         "date": "Sep 27, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 424
+        "interpolatedUsers": 455
       },
       "2.1.5": {
         "date": "May 03, 2013",
@@ -3626,7 +3626,7 @@
         "date": "May 16, 2019",
         "users": 0,
         "previousUsers": 220,
-        "interpolatedUsers": 748
+        "interpolatedUsers": 841
       },
       "2.9.8": {
         "date": "Dec 16, 2018",
@@ -3674,7 +3674,7 @@
         "date": "Sep 24, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 271
+        "interpolatedUsers": 302
       },
       "2.9.1": {
         "date": "Sep 08, 2017",
@@ -4136,7 +4136,7 @@
         "date": "Nov 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 320
+        "interpolatedUsers": 351
       },
       "2.10.0.pr3": {
         "date": "Sep 17, 2019",
@@ -4160,7 +4160,7 @@
         "date": "Sep 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 386
+        "interpolatedUsers": 448
       },
       "2.1.5": {
         "date": "May 03, 2013",
@@ -4284,31 +4284,31 @@
         "date": "Aug 06, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 851
+        "interpolatedUsers": 975
       },
       "2.9.9.2": {
         "date": "Jul 27, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 218
+        "interpolatedUsers": 249
       },
       "2.9.9.1": {
         "date": "Jul 03, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 199
+        "interpolatedUsers": 230
       },
       "2.9.9": {
         "date": "May 16, 2019",
         "users": 0,
         "previousUsers": 348,
-        "interpolatedUsers": 1626
+        "interpolatedUsers": 1843
       },
       "2.9.8": {
         "date": "Dec 16, 2018",
         "users": 0,
         "previousUsers": 2518,
-        "interpolatedUsers": 2958
+        "interpolatedUsers": 2989
       },
       "2.9.7": {
         "date": "Sep 19, 2018",
@@ -4350,13 +4350,13 @@
         "date": "Oct 19, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 368
+        "interpolatedUsers": 430
       },
       "2.9.10": {
         "date": "Sep 21, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 542
+        "interpolatedUsers": 604
       },
       "2.9.1": {
         "date": "Sep 08, 2017",
@@ -4932,7 +4932,7 @@
         "date": "Nov 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 901
+        "interpolatedUsers": 1056
       },
       "2.10.0.pr3": {
         "date": "Sep 17, 2019",
@@ -4944,7 +4944,7 @@
         "date": "Aug 31, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 329
+        "interpolatedUsers": 360
       },
       "2.10.0.pr1": {
         "date": "Jul 19, 2019",
@@ -4956,7 +4956,7 @@
         "date": "Sep 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 1023
+        "interpolatedUsers": 1178
       },
       "2.1.5": {
         "date": "May 03, 2013",
@@ -8100,6 +8100,12 @@
       "ICM"
     ],
     "versions": {
+      "1.2.0-alpha03": {
+        "date": "Dec 20, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 23
+      },
       "1.2.0-alpha02": {
         "date": "Nov 23, 2019",
         "users": 0,
@@ -8249,7 +8255,7 @@
         "date": "Mar 31, 2017",
         "users": 0,
         "previousUsers": 2197,
-        "interpolatedUsers": 2950
+        "interpolatedUsers": 3043
       },
       "3.0.1": {
         "date": "Oct 09, 2015",
@@ -8337,13 +8343,13 @@
         "date": "Oct 04, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 398
+        "interpolatedUsers": 460
       },
       "2.8.5": {
         "date": "May 22, 2018",
         "users": 0,
         "previousUsers": 1638,
-        "interpolatedUsers": 2655
+        "interpolatedUsers": 2810
       },
       "2.8.4": {
         "date": "May 01, 2018",
@@ -8575,7 +8581,7 @@
         "date": "Aug 29, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 722
+        "interpolatedUsers": 846
       },
       "28.1-android": {
         "date": "Aug 29, 2019",
@@ -8587,7 +8593,7 @@
         "date": "Jun 12, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 741
+        "interpolatedUsers": 865
       },
       "28.0-android": {
         "date": "Jun 12, 2019",
@@ -8599,7 +8605,7 @@
         "date": "Mar 08, 2019",
         "users": 0,
         "previousUsers": 846,
-        "interpolatedUsers": 1182
+        "interpolatedUsers": 1213
       },
       "27.1-android": {
         "date": "Mar 08, 2019",
@@ -8647,7 +8653,7 @@
         "date": "May 23, 2018",
         "users": 0,
         "previousUsers": 1107,
-        "interpolatedUsers": 1371
+        "interpolatedUsers": 1402
       },
       "25.1-android": {
         "date": "May 23, 2018",
@@ -9121,7 +9127,7 @@
         "date": "Oct 29, 2018",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 620
+        "interpolatedUsers": 651
       },
       "4.2.1": {
         "date": "Sep 20, 2018",
@@ -9340,6 +9346,12 @@
         "previousUsers": 133,
         "interpolatedUsers": 135
       },
+      "3.11.1": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 278
+      },
       "3.11.0-rc-2": {
         "date": "Nov 24, 2019",
         "users": 0,
@@ -9521,13 +9533,13 @@
         "date": "Oct 14, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 486
+        "interpolatedUsers": 517
       },
       "1.4.199": {
         "date": "Mar 13, 2019",
         "users": 0,
         "previousUsers": 214,
-        "interpolatedUsers": 441
+        "interpolatedUsers": 472
       },
       "1.4.198": {
         "date": "Feb 22, 2019",
@@ -10308,6 +10320,12 @@
       "Central"
     ],
     "versions": {
+      "0.97.0": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 34
+      },
       "0.96.0": {
         "date": "Nov 15, 2019",
         "users": 0,
@@ -11429,6 +11447,12 @@
       "Central"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 12
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -11536,6 +11560,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 12
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 12
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -12027,6 +12063,12 @@
       "SonatypePublic"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 30
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -12134,6 +12176,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 28
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 29
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 15
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -12609,6 +12663,12 @@
       "Central"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 12
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -12716,6 +12776,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 11
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 11
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 2
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -13233,6 +13305,12 @@
       "Central"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 32
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -13340,6 +13418,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 32
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 31
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -13770,6 +13860,12 @@
       "Central"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 28
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -13877,6 +13973,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 27
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 28
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 17
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -14379,6 +14487,12 @@
       "Central"
     ],
     "versions": {
+      "2.0.9": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 44
+      },
       "2.0.8": {
         "date": "Nov 27, 2019",
         "users": 0,
@@ -14486,6 +14600,18 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 44
+      },
+      "1.6.13": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 44
+      },
+      "1.6.12": {
+        "date": "Dec 30, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 29
       },
       "1.6.11": {
         "date": "Nov 28, 2019",
@@ -15208,6 +15334,12 @@
       "ICM"
     ],
     "versions": {
+      "4.3.0": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 43
+      },
       "4.2.2": {
         "date": "Oct 06, 2019",
         "users": 0,
@@ -15519,6 +15651,18 @@
       "ICM"
     ],
     "versions": {
+      "2.7.0": {
+        "date": "Dec 09, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 66
+      },
+      "2.6.3": {
+        "date": "Dec 09, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 23
+      },
       "2.6.2": {
         "date": "Sep 24, 2019",
         "users": 0,
@@ -16381,7 +16525,7 @@
         "date": "Aug 14, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 597
+        "interpolatedUsers": 628
       },
       "1.9.3": {
         "date": "Sep 21, 2016",
@@ -16657,11 +16801,17 @@
         "previousUsers": 103,
         "interpolatedUsers": 108
       },
+      "1.14": {
+        "date": "Dec 31, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 435
+      },
       "1.13": {
         "date": "Jul 23, 2019",
         "users": 0,
         "previousUsers": 434,
-        "interpolatedUsers": 697
+        "interpolatedUsers": 728
       },
       "1.12": {
         "date": "Feb 13, 2019",
@@ -16969,7 +17119,7 @@
         "date": "Oct 15, 2017",
         "users": 0,
         "previousUsers": 3107,
-        "interpolatedUsers": 4133
+        "interpolatedUsers": 4257
       },
       "2.5": {
         "date": "Apr 22, 2016",
@@ -17095,7 +17245,7 @@
         "date": "Jan 16, 2011",
         "users": 0,
         "previousUsers": 6662,
-        "interpolatedUsers": 6961
+        "interpolatedUsers": 6992
       },
       "2.5": {
         "date": "Feb 25, 2010",
@@ -17186,7 +17336,7 @@
         "date": "Jul 05, 2014",
         "users": 0,
         "previousUsers": 2559,
-        "interpolatedUsers": 2973
+        "interpolatedUsers": 3004
       },
       "1.1.3": {
         "date": "May 16, 2013",
@@ -17290,6 +17440,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 8
       },
+      "2.0.0-rc14": {
+        "date": "Dec 08, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
+      },
       "2.0.0-rc13": {
         "date": "Nov 21, 2019",
         "users": 0,
@@ -17325,6 +17481,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 8
+      },
+      "2.0.0": {
+        "date": "Dec 09, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 27
       },
       "1.3.9": {
         "date": "Feb 24, 2019",
@@ -17946,6 +18108,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0.0-rc14": {
+        "date": "Dec 08, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.0-rc13": {
         "date": "Nov 21, 2019",
         "users": 0,
@@ -17981,6 +18149,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
+      },
+      "2.0.0": {
+        "date": "Dec 09, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 3
       },
       "1.3.9": {
         "date": "Feb 24, 2019",
@@ -18602,6 +18776,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 0
       },
+      "2.0.0-rc14": {
+        "date": "Dec 08, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.0.0-rc13": {
         "date": "Nov 21, 2019",
         "users": 0,
@@ -18634,6 +18814,12 @@
       },
       "2.0.0-rc0+test8": {
         "date": "Mar 25, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "2.0.0": {
+        "date": "Dec 09, 2019",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 0
@@ -19226,6 +19412,12 @@
       "Central"
     ],
     "versions": {
+      "3.7.0": {
+        "date": "Jan 01, 2020",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 4
+      },
       "3.6.0": {
         "date": "Nov 03, 2019",
         "users": 0,
@@ -19650,6 +19842,12 @@
         "users": 0,
         "previousUsers": 98,
         "interpolatedUsers": 99
+      },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 51
       },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
@@ -20509,6 +20707,12 @@
         "previousUsers": 3,
         "interpolatedUsers": 3
       },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 4
+      },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
         "users": 0,
@@ -20902,6 +21106,12 @@
         "users": 0,
         "previousUsers": 21,
         "interpolatedUsers": 22
+      },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 40
       },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
@@ -21763,6 +21973,12 @@
         "previousUsers": 5,
         "interpolatedUsers": 5
       },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 5
+      },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
         "users": 0,
@@ -22582,6 +22798,12 @@
         "users": 0,
         "previousUsers": 165,
         "interpolatedUsers": 165
+      },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 50
       },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
@@ -23437,6 +23659,12 @@
         "previousUsers": 8,
         "interpolatedUsers": 8
       },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 8
+      },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
         "users": 0,
@@ -23804,6 +24032,12 @@
         "users": 0,
         "previousUsers": 5,
         "interpolatedUsers": 5
+      },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 6
       },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
@@ -24175,6 +24409,12 @@
         "users": 0,
         "previousUsers": 72,
         "interpolatedUsers": 73
+      },
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 22
       },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
@@ -24772,6 +25012,12 @@
       "FastConnect"
     ],
     "versions": {
+      "4.1.44.Final": {
+        "date": "Dec 18, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 15
+      },
       "4.1.43.Final": {
         "date": "Oct 24, 2019",
         "users": 0,
@@ -26489,6 +26735,12 @@
       "JCenter"
     ],
     "versions": {
+      "4.0.0-milestone4": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 72
+      },
       "4.0.0-milestone3": {
         "date": "Sep 19, 2019",
         "users": 0,
@@ -26943,6 +27195,12 @@
       "Redhat EA"
     ],
     "versions": {
+      "4.0.0-milestone4": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 27
+      },
       "4.0.0-milestone3": {
         "date": "Sep 19, 2019",
         "users": 0,
@@ -27277,7 +27535,7 @@
         "date": "Feb 21, 2018",
         "users": 0,
         "previousUsers": 122,
-        "interpolatedUsers": 838
+        "interpolatedUsers": 869
       },
       "1.3.1": {
         "date": "Sep 13, 2017",
@@ -27354,7 +27612,7 @@
         "date": "Oct 13, 2009",
         "users": 0,
         "previousUsers": 4046,
-        "interpolatedUsers": 4521
+        "interpolatedUsers": 4552
       }
     }
   },
@@ -27455,7 +27713,7 @@
         "date": "Apr 20, 2018",
         "users": 0,
         "previousUsers": 1266,
-        "interpolatedUsers": 1754
+        "interpolatedUsers": 1816
       },
       "4.0.0-b07": {
         "date": "Jun 02, 2017",
@@ -27509,7 +27767,7 @@
         "date": "Apr 25, 2013",
         "users": 0,
         "previousUsers": 6178,
-        "interpolatedUsers": 6675
+        "interpolatedUsers": 6768
       },
       "3.1-b09": {
         "date": "Apr 24, 2013",
@@ -27768,7 +28026,7 @@
         "date": "Dec 19, 2017",
         "users": 0,
         "previousUsers": 910,
-        "interpolatedUsers": 1463
+        "interpolatedUsers": 1494
       },
       "2.0.0.Final": {
         "date": "Aug 03, 2017",
@@ -27972,7 +28230,7 @@
         "date": "Oct 02, 2018",
         "users": 0,
         "previousUsers": 682,
-        "interpolatedUsers": 1255
+        "interpolatedUsers": 1286
       },
       "2.3.0-b170201.1204": {
         "date": "Feb 01, 2017",
@@ -28317,7 +28575,7 @@
         "date": "Oct 24, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 378
+        "interpolatedUsers": 409
       },
       "2.10.4": {
         "date": "Sep 20, 2019",
@@ -28562,6 +28820,12 @@
         "previousUsers": 58,
         "interpolatedUsers": 69
       },
+      "4.13": {
+        "date": "Jan 01, 2020",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 1459
+      },
       "4.12-beta-3": {
         "date": "Nov 09, 2014",
         "users": 0,
@@ -28584,7 +28848,7 @@
         "date": "Dec 04, 2014",
         "users": 0,
         "previousUsers": 45515,
-        "interpolatedUsers": 47042
+        "interpolatedUsers": 47600
       },
       "4.11-beta-1": {
         "date": "Oct 15, 2012",
@@ -28596,7 +28860,7 @@
         "date": "Nov 14, 2012",
         "users": 0,
         "previousUsers": 24460,
-        "interpolatedUsers": 24797
+        "interpolatedUsers": 24859
       },
       "4.10": {
         "date": "Sep 29, 2011",
@@ -28706,7 +28970,7 @@
         "date": "May 26, 2012",
         "users": 0,
         "previousUsers": 6932,
-        "interpolatedUsers": 7294
+        "interpolatedUsers": 7356
       },
       "1.2.16": {
         "date": "Mar 31, 2010",
@@ -28795,6 +29059,12 @@
         "users": 0,
         "previousUsers": 7,
         "interpolatedUsers": 7
+      },
+      "8.0.19": {
+        "date": "Dec 04, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 121
       },
       "8.0.18": {
         "date": "Sep 08, 2019",
@@ -29437,13 +29707,13 @@
         "date": "Apr 15, 2019",
         "users": 0,
         "previousUsers": 724,
-        "interpolatedUsers": 1611
+        "interpolatedUsers": 1735
       },
       "3.8.1": {
         "date": "Sep 19, 2018",
         "users": 0,
         "previousUsers": 2078,
-        "interpolatedUsers": 2421
+        "interpolatedUsers": 2483
       },
       "3.8": {
         "date": "Aug 16, 2018",
@@ -29557,7 +29827,7 @@
         "date": "Jun 11, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 521
+        "interpolatedUsers": 552
       },
       "4.5.8": {
         "date": "Mar 30, 2019",
@@ -29605,7 +29875,7 @@
         "date": "Sep 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 364
+        "interpolatedUsers": 426
       },
       "4.5.1": {
         "date": "Sep 11, 2015",
@@ -29940,7 +30210,7 @@
         "date": "Sep 03, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 262
+        "interpolatedUsers": 293
       },
       "4.4.11": {
         "date": "Jan 18, 2019",
@@ -30286,11 +30556,17 @@
         "previousUsers": 102,
         "interpolatedUsers": 103
       },
+      "2.13.0": {
+        "date": "Dec 12, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 243
+      },
       "2.12.1": {
         "date": "Aug 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 716
+        "interpolatedUsers": 809
       },
       "2.12.0": {
         "date": "Jun 29, 2019",
@@ -30533,11 +30809,17 @@
         "previousUsers": 153,
         "interpolatedUsers": 163
       },
+      "2.13.0": {
+        "date": "Dec 12, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 362
+      },
       "2.12.1": {
         "date": "Aug 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 567
+        "interpolatedUsers": 629
       },
       "2.12.0": {
         "date": "Jun 29, 2019",
@@ -30782,11 +31064,17 @@
         "previousUsers": 91,
         "interpolatedUsers": 101
       },
+      "2.13.0": {
+        "date": "Dec 12, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 238
+      },
       "2.12.1": {
         "date": "Aug 09, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 497
+        "interpolatedUsers": 559
       },
       "2.12.0": {
         "date": "Jun 29, 2019",
@@ -31287,7 +31575,7 @@
         "date": "Oct 29, 2018",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 462
+        "interpolatedUsers": 493
       },
       "3.5.2": {
         "date": "May 20, 2018",
@@ -33033,13 +33321,13 @@
         "date": "Oct 27, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 560
+        "interpolatedUsers": 591
       },
       "3.13.2": {
         "date": "Aug 04, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 353
+        "interpolatedUsers": 384
       },
       "3.13.1": {
         "date": "Jul 29, 2019",
@@ -33057,7 +33345,7 @@
         "date": "Mar 17, 2019",
         "users": 0,
         "previousUsers": 345,
-        "interpolatedUsers": 649
+        "interpolatedUsers": 680
       },
       "3.12.1": {
         "date": "Feb 28, 2019",
@@ -33494,7 +33782,7 @@
         "date": "Jan 19, 2016",
         "users": 0,
         "previousUsers": 3639,
-        "interpolatedUsers": 3826
+        "interpolatedUsers": 3857
       },
       "1.7.0-beta3": {
         "date": "May 13, 2015",
@@ -33968,7 +34256,7 @@
         "date": "Jun 06, 2019",
         "users": 0,
         "previousUsers": 1,
-        "interpolatedUsers": 905
+        "interpolatedUsers": 967
       },
       "1.10.0-beta8": {
         "date": "Nov 21, 2018",
@@ -34571,6 +34859,12 @@
         "users": 0,
         "previousUsers": 4,
         "interpolatedUsers": 4
+      },
+      "9.4.25.v20191220": {
+        "date": "Dec 20, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
       },
       "9.4.24.v20191120": {
         "date": "Nov 22, 2019",
@@ -36637,6 +36931,12 @@
       "JBoss 3rd-party"
     ],
     "versions": {
+      "2.3.3-b02": {
+        "date": "Dec 02, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
+      },
       "2.3.3-b01": {
         "date": "Oct 15, 2019",
         "users": 0,
@@ -36647,7 +36947,7 @@
         "date": "Jan 09, 2019",
         "users": 0,
         "previousUsers": 36,
-        "interpolatedUsers": 480
+        "interpolatedUsers": 511
       },
       "2.3.1": {
         "date": "Oct 02, 2018",
@@ -37823,6 +38123,12 @@
         "previousUsers": 0,
         "interpolatedUsers": 2
       },
+      "2.30": {
+        "date": "Jan 10, 2020",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.3.1": {
         "date": "Sep 27, 2013",
         "users": 0,
@@ -38706,7 +39012,7 @@
         "date": "Jul 09, 2012",
         "users": 0,
         "previousUsers": 4615,
-        "interpolatedUsers": 5115
+        "interpolatedUsers": 5146
       },
       "1.1": {
         "date": "Jul 18, 2007",
@@ -38792,7 +39098,7 @@
         "date": "Jul 09, 2012",
         "users": 0,
         "previousUsers": 2825,
-        "interpolatedUsers": 3293
+        "interpolatedUsers": 3324
       },
       "1.2.1": {
         "date": "Dec 22, 2010",
@@ -38938,6 +39244,12 @@
       "JCenter"
     ],
     "versions": {
+      "6.0.0.Alpha4": {
+        "date": "Dec 21, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.0.0.Alpha3": {
         "date": "Nov 24, 2019",
         "users": 0,
@@ -38997,6 +39309,12 @@
         "users": 0,
         "previousUsers": 14,
         "interpolatedUsers": 15
+      },
+      "5.4.10.Final": {
+        "date": "Dec 05, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 10
       },
       "5.4.1.Final": {
         "date": "Jan 20, 2019",
@@ -40188,6 +40506,12 @@
       "EBIPublic"
     ],
     "versions": {
+      "6.0.0.Alpha4": {
+        "date": "Dec 21, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.0.0.Alpha3": {
         "date": "Nov 24, 2019",
         "users": 0,
@@ -40247,6 +40571,12 @@
         "users": 0,
         "previousUsers": 447,
         "interpolatedUsers": 463
+      },
+      "5.4.10.Final": {
+        "date": "Dec 05, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 471
       },
       "5.4.1.Final": {
         "date": "Jan 20, 2019",
@@ -41431,6 +41761,12 @@
       "EBI"
     ],
     "versions": {
+      "6.0.0.Alpha4": {
+        "date": "Dec 21, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 1
+      },
       "6.0.0.Alpha3": {
         "date": "Nov 24, 2019",
         "users": 0,
@@ -41484,6 +41820,12 @@
         "users": 0,
         "previousUsers": 367,
         "interpolatedUsers": 370
+      },
+      "5.4.10.Final": {
+        "date": "Dec 05, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 385
       },
       "5.4.1.Final": {
         "date": "Jan 20, 2019",
@@ -42669,6 +43011,12 @@
       "Redhat GA"
     ],
     "versions": {
+      "6.0.0.Alpha4": {
+        "date": "Dec 21, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "6.0.0.Alpha3": {
         "date": "Nov 24, 2019",
         "users": 0,
@@ -42728,6 +43076,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 341
+      },
+      "5.4.10.Final": {
+        "date": "Dec 05, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 359
       },
       "5.4.1.Final": {
         "date": "Jan 20, 2019",
@@ -44186,7 +44540,7 @@
         "date": "Aug 22, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 719
+        "interpolatedUsers": 750
       },
       "1.3.41": {
         "date": "Jul 04, 2019",
@@ -44958,31 +45312,31 @@
         "date": "Nov 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 590
+        "interpolatedUsers": 683
       },
       "1.3.60": {
         "date": "Nov 14, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 258
+        "interpolatedUsers": 289
       },
       "1.3.50": {
         "date": "Aug 22, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 761
+        "interpolatedUsers": 885
       },
       "1.3.41": {
         "date": "Jul 04, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 395
+        "interpolatedUsers": 426
       },
       "1.3.40": {
         "date": "Jun 19, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 224
+        "interpolatedUsers": 255
       },
       "1.3.31": {
         "date": "Apr 25, 2019",
@@ -45799,19 +46153,19 @@
         "date": "Nov 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 791
+        "interpolatedUsers": 822
       },
       "1.3.60": {
         "date": "Nov 14, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 219
+        "interpolatedUsers": 250
       },
       "1.3.50": {
         "date": "Aug 22, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 608
+        "interpolatedUsers": 639
       },
       "1.3.41": {
         "date": "Jul 04, 2019",
@@ -46100,7 +46454,7 @@
         "date": "Nov 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 537
+        "interpolatedUsers": 568
       },
       "1.3.60": {
         "date": "Nov 14, 2019",
@@ -46112,7 +46466,7 @@
         "date": "Aug 22, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 471
+        "interpolatedUsers": 502
       },
       "1.3.41": {
         "date": "Jul 04, 2019",
@@ -46299,7 +46653,7 @@
         "date": "Nov 26, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 861
+        "interpolatedUsers": 892
       },
       "1.3.60": {
         "date": "Nov 14, 2019",
@@ -46311,7 +46665,7 @@
         "date": "Aug 22, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 752
+        "interpolatedUsers": 783
       },
       "1.3.41": {
         "date": "Jul 04, 2019",
@@ -46596,14 +46950,14 @@
       "Testing Frameworks"
     ],
     "tags": [
-      "testing",
       "junit",
+      "testing",
       "api"
     ],
     "ranking": 0,
     "users": 0,
-    "previousUsers": 4383,
-    "interpolatedUsers": 4682,
+    "previousUsers": 4682,
+    "interpolatedUsers": 8166,
     "infered": true,
     "repositories": [
       "Central",
@@ -46613,20 +46967,20 @@
       "5.6.0-M1": {
         "date": "Oct 21, 2019",
         "users": 0,
-        "previousUsers": 6,
-        "interpolatedUsers": 23
+        "previousUsers": 23,
+        "interpolatedUsers": 64
       },
       "5.5.2": {
         "date": "Sep 08, 2019",
         "users": 0,
-        "previousUsers": 374,
-        "interpolatedUsers": 515
+        "previousUsers": 591,
+        "interpolatedUsers": 621
       },
       "5.5.1": {
         "date": "Jul 20, 2019",
         "users": 0,
-        "previousUsers": 324,
-        "interpolatedUsers": 349
+        "previousUsers": 349,
+        "interpolatedUsers": 478
       },
       "5.5.0-RC2": {
         "date": "Jun 20, 2019",
@@ -46638,73 +46992,73 @@
         "date": "Jun 07, 2019",
         "users": 0,
         "previousUsers": 21,
-        "interpolatedUsers": 21
+        "interpolatedUsers": 22
       },
       "5.5.0-M1": {
         "date": "Mar 19, 2019",
         "users": 0,
-        "previousUsers": 29,
-        "interpolatedUsers": 30
+        "previousUsers": 30,
+        "interpolatedUsers": 31
       },
       "5.5.0": {
         "date": "Jun 30, 2019",
         "users": 0,
-        "previousUsers": 374,
-        "interpolatedUsers": 388
+        "previousUsers": 388,
+        "interpolatedUsers": 457
       },
       "5.4.2": {
         "date": "Apr 07, 2019",
         "users": 0,
-        "previousUsers": 458,
-        "interpolatedUsers": 492
+        "previousUsers": 492,
+        "interpolatedUsers": 625
       },
       "5.4.1": {
         "date": "Mar 17, 2019",
         "users": 0,
-        "previousUsers": 188,
-        "interpolatedUsers": 198
+        "previousUsers": 198,
+        "interpolatedUsers": 202
       },
       "5.4.0-RC2": {
         "date": "Jan 31, 2019",
         "users": 0,
         "previousUsers": 16,
-        "interpolatedUsers": 16
+        "interpolatedUsers": 17
       },
       "5.4.0-RC1": {
         "date": "Jan 24, 2019",
         "users": 0,
-        "previousUsers": 22,
-        "interpolatedUsers": 23
+        "previousUsers": 23,
+        "interpolatedUsers": 27
       },
       "5.4.0-M1": {
         "date": "Dec 23, 2018",
         "users": 0,
         "previousUsers": 35,
-        "interpolatedUsers": 35
+        "interpolatedUsers": 40
       },
       "5.4.0": {
         "date": "Feb 08, 2019",
         "users": 0,
-        "previousUsers": 641,
-        "interpolatedUsers": 644
+        "previousUsers": 644,
+        "interpolatedUsers": 726
       },
       "5.3.2": {
         "date": "Nov 25, 2018",
         "users": 0,
-        "previousUsers": 1060,
-        "interpolatedUsers": 1080
+        "previousUsers": 1080,
+        "interpolatedUsers": 1169
       },
       "5.3.1": {
         "date": "Sep 11, 2018",
         "users": 0,
-        "previousUsers": 1179,
-        "interpolatedUsers": 1187
+        "previousUsers": 1187,
+        "interpolatedUsers": 1282
       },
       "5.3.0-RC1": {
         "date": "Aug 13, 2018",
         "users": 0,
         "previousUsers": 10,
-        "interpolatedUsers": 10
+        "interpolatedUsers": 11
       },
       "5.3.0-M1": {
         "date": "Jun 24, 2018",
@@ -46715,8 +47069,8 @@
       "5.3.0": {
         "date": "Sep 03, 2018",
         "users": 0,
-        "previousUsers": 116,
-        "interpolatedUsers": 117
+        "previousUsers": 117,
+        "interpolatedUsers": 123
       },
       "5.2.0-RC1": {
         "date": "Apr 22, 2018",
@@ -46733,14 +47087,14 @@
       "5.2.0": {
         "date": "Apr 29, 2018",
         "users": 0,
-        "previousUsers": 888,
-        "interpolatedUsers": 890
+        "previousUsers": 890,
+        "interpolatedUsers": 961
       },
       "5.1.1": {
         "date": "Apr 08, 2018",
         "users": 0,
         "previousUsers": 156,
-        "interpolatedUsers": 156
+        "interpolatedUsers": 158
       },
       "5.1.0-RC1": {
         "date": "Feb 04, 2018",
@@ -46763,26 +47117,26 @@
       "5.1.0": {
         "date": "Feb 18, 2018",
         "users": 0,
-        "previousUsers": 465,
-        "interpolatedUsers": 473
+        "previousUsers": 473,
+        "interpolatedUsers": 515
       },
       "5.0.3": {
         "date": "Jan 15, 2018",
         "users": 0,
         "previousUsers": 93,
-        "interpolatedUsers": 93
+        "interpolatedUsers": 100
       },
       "5.0.2": {
         "date": "Nov 12, 2017",
         "users": 0,
-        "previousUsers": 202,
-        "interpolatedUsers": 203
+        "previousUsers": 203,
+        "interpolatedUsers": 222
       },
       "5.0.1": {
         "date": "Oct 03, 2017",
         "users": 0,
         "previousUsers": 101,
-        "interpolatedUsers": 101
+        "interpolatedUsers": 104
       },
       "5.0.0-RC3": {
         "date": "Aug 23, 2017",
@@ -46794,7 +47148,7 @@
         "date": "Jul 30, 2017",
         "users": 0,
         "previousUsers": 39,
-        "interpolatedUsers": 39
+        "interpolatedUsers": 40
       },
       "5.0.0-RC1": {
         "date": "Jul 30, 2017",
@@ -46818,13 +47172,13 @@
         "date": "Apr 01, 2017",
         "users": 0,
         "previousUsers": 109,
-        "interpolatedUsers": 109
+        "interpolatedUsers": 113
       },
       "5.0.0-M3": {
         "date": "Nov 30, 2016",
         "users": 0,
         "previousUsers": 65,
-        "interpolatedUsers": 65
+        "interpolatedUsers": 67
       },
       "5.0.0-M2": {
         "date": "Jul 23, 2016",
@@ -46841,8 +47195,8 @@
       "5.0.0": {
         "date": "Sep 10, 2017",
         "users": 0,
-        "previousUsers": 107,
-        "interpolatedUsers": 110
+        "previousUsers": 110,
+        "interpolatedUsers": 118
       }
     }
   },
@@ -46868,17 +47222,29 @@
       "ICM"
     ],
     "versions": {
+      "5.6.0-RC1": {
+        "date": "Jan 06, 2020",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 21
+      },
       "5.6.0-M1": {
         "date": "Oct 21, 2019",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 53
       },
+      "5.6.0": {
+        "date": "Jan 20, 2020",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 685
+      },
       "5.5.2": {
         "date": "Sep 08, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 763
+        "interpolatedUsers": 794
       },
       "5.5.1": {
         "date": "Jul 20, 2019",
@@ -47517,7 +47883,7 @@
         "date": "Dec 31, 2014",
         "users": 0,
         "previousUsers": 4183,
-        "interpolatedUsers": 4596
+        "interpolatedUsers": 4627
       },
       "1.10.18": {
         "date": "Dec 30, 2014",
@@ -47569,6 +47935,12 @@
       "Mockito"
     ],
     "versions": {
+      "3.2.4": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 488
+      },
       "3.2.0": {
         "date": "Nov 29, 2019",
         "users": 0,
@@ -47579,13 +47951,13 @@
         "date": "Oct 01, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 477
+        "interpolatedUsers": 508
       },
       "3.0.0": {
         "date": "Jul 08, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 721
+        "interpolatedUsers": 752
       },
       "2.9.0": {
         "date": "Aug 26, 2017",
@@ -47951,7 +48323,7 @@
         "date": "May 29, 2019",
         "users": 0,
         "previousUsers": 210,
-        "interpolatedUsers": 587
+        "interpolatedUsers": 649
       },
       "2.28.1": {
         "date": "May 28, 2019",
@@ -47999,7 +48371,7 @@
         "date": "Nov 20, 2018",
         "users": 0,
         "previousUsers": 1774,
-        "interpolatedUsers": 2038
+        "interpolatedUsers": 2069
       },
       "2.23.0": {
         "date": "Oct 05, 2018",
@@ -49175,7 +49547,7 @@
         "date": "Dec 31, 2014",
         "users": 0,
         "previousUsers": 4758,
-        "interpolatedUsers": 5177
+        "interpolatedUsers": 5208
       },
       "1.10.18": {
         "date": "Dec 30, 2014",
@@ -49287,6 +49659,12 @@
         "users": 0,
         "previousUsers": 3,
         "interpolatedUsers": 3
+      },
+      "3.12.0": {
+        "date": "Dec 10, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 9
       },
       "3.11.2": {
         "date": "Nov 05, 2019",
@@ -51014,6 +51392,24 @@
         "previousUsers": 19,
         "interpolatedUsers": 19
       },
+      "42.2.9.jre7": {
+        "date": "Dec 07, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 6
+      },
+      "42.2.9.jre6": {
+        "date": "Dec 07, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
+      "42.2.9": {
+        "date": "Dec 07, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 100
+      },
       "42.2.8.jre7": {
         "date": "Sep 13, 2019",
         "users": 0,
@@ -51298,7 +51694,7 @@
         "date": "May 07, 2019",
         "users": 0,
         "previousUsers": 850,
-        "interpolatedUsers": 1071
+        "interpolatedUsers": 1102
       },
       "1.18.6": {
         "date": "Feb 12, 2019",
@@ -51322,7 +51718,7 @@
         "date": "Sep 11, 2019",
         "users": 0,
         "previousUsers": 65,
-        "interpolatedUsers": 432
+        "interpolatedUsers": 525
       },
       "1.18.0": {
         "date": "Jun 04, 2018",
@@ -52643,7 +53039,7 @@
         "date": "Sep 18, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 1791
+        "interpolatedUsers": 2039
       },
       "2.13.0-RC3": {
         "date": "May 29, 2019",
@@ -52697,19 +53093,19 @@
         "date": "Jun 07, 2019",
         "users": 0,
         "previousUsers": 72,
-        "interpolatedUsers": 1416
+        "interpolatedUsers": 1571
       },
       "2.12.9": {
         "date": "Aug 05, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 729
+        "interpolatedUsers": 791
       },
       "2.12.8": {
         "date": "Dec 04, 2018",
         "users": 0,
         "previousUsers": 3590,
-        "interpolatedUsers": 4272
+        "interpolatedUsers": 4365
       },
       "2.12.7": {
         "date": "Sep 27, 2018",
@@ -52751,7 +53147,7 @@
         "date": "Sep 11, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 1899
+        "interpolatedUsers": 2178
       },
       "2.12.1": {
         "date": "Dec 05, 2016",
@@ -52865,7 +53261,7 @@
         "date": "Nov 03, 2017",
         "users": 0,
         "previousUsers": 4791,
-        "interpolatedUsers": 5382
+        "interpolatedUsers": 5475
       },
       "2.11.11": {
         "date": "Apr 13, 2017",
@@ -53330,7 +53726,7 @@
         "date": "Nov 30, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 442
+        "interpolatedUsers": 473
       },
       "3.0.8-RC5": {
         "date": "May 30, 2019",
@@ -53366,7 +53762,7 @@
         "date": "Jun 10, 2019",
         "users": 0,
         "previousUsers": 157,
-        "interpolatedUsers": 992
+        "interpolatedUsers": 1116
       },
       "3.0.7-RC1": {
         "date": "Mar 07, 2019",
@@ -54747,6 +55143,12 @@
         "previousUsers": 91,
         "interpolatedUsers": 91
       },
+      "1.7.30": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 650
+      },
       "1.7.3": {
         "date": "Mar 15, 2013",
         "users": 0,
@@ -55037,7 +55439,7 @@
         "date": "Oct 01, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 473
+        "interpolatedUsers": 504
       },
       "2.0.0-alpha0": {
         "date": "Jun 13, 2019",
@@ -55123,6 +55525,12 @@
         "previousUsers": 185,
         "interpolatedUsers": 185
       },
+      "1.7.30": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 2089
+      },
       "1.7.3": {
         "date": "Mar 15, 2013",
         "users": 0,
@@ -55133,13 +55541,13 @@
         "date": "Oct 31, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 506
+        "interpolatedUsers": 599
       },
       "1.7.28": {
         "date": "Aug 10, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 839
+        "interpolatedUsers": 932
       },
       "1.7.27": {
         "date": "Aug 06, 2019",
@@ -55151,13 +55559,13 @@
         "date": "Feb 19, 2019",
         "users": 0,
         "previousUsers": 1985,
-        "interpolatedUsers": 3075
+        "interpolatedUsers": 3199
       },
       "1.7.25": {
         "date": "Mar 16, 2017",
         "users": 0,
         "previousUsers": 10664,
-        "interpolatedUsers": 11774
+        "interpolatedUsers": 11898
       },
       "1.7.24": {
         "date": "Feb 24, 2017",
@@ -55181,7 +55589,7 @@
         "date": "Apr 04, 2016",
         "users": 0,
         "previousUsers": 5114,
-        "interpolatedUsers": 5295
+        "interpolatedUsers": 5326
       },
       "1.7.20": {
         "date": "Mar 29, 2016",
@@ -55574,6 +55982,12 @@
         "users": 0,
         "previousUsers": 5,
         "interpolatedUsers": 5
+      },
+      "1.7.30": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 276
       },
       "1.7.3": {
         "date": "Mar 15, 2013",
@@ -56083,6 +56497,12 @@
         "previousUsers": 28,
         "interpolatedUsers": 28
       },
+      "1.7.30": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 762
+      },
       "1.7.3": {
         "date": "Mar 15, 2013",
         "users": 0,
@@ -56117,7 +56537,7 @@
         "date": "Mar 16, 2017",
         "users": 0,
         "previousUsers": 1388,
-        "interpolatedUsers": 1998
+        "interpolatedUsers": 2029
       },
       "1.7.24": {
         "date": "Feb 24, 2017",
@@ -56577,6 +56997,12 @@
         "previousUsers": 27,
         "interpolatedUsers": 27
       },
+      "1.7.30": {
+        "date": "Dec 16, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 639
+      },
       "1.7.3": {
         "date": "Mar 15, 2013",
         "users": 0,
@@ -56611,7 +57037,7 @@
         "date": "Mar 16, 2017",
         "users": 0,
         "previousUsers": 2269,
-        "interpolatedUsers": 2476
+        "interpolatedUsers": 2507
       },
       "1.7.24": {
         "date": "Feb 24, 2017",
@@ -56997,6 +57423,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 595
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -57056,6 +57488,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 459
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 56
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -57556,6 +57994,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 260
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -57615,6 +58059,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 133
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 64
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -58020,6 +58470,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 242
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -58079,6 +58535,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 418
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 65
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -58581,6 +59043,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 36
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -58640,6 +59108,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 36
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 8
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -59139,6 +59613,12 @@
       "SpringFramework"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 6
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -59198,6 +59678,12 @@
         "users": 0,
         "previousUsers": 6,
         "interpolatedUsers": 7
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 1
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -59699,6 +60185,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 40
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -59758,6 +60250,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 17
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 10
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -60254,6 +60752,12 @@
       "Spring Release"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -60313,6 +60817,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 1
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 0
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -60707,6 +61217,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 296
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -60766,6 +61282,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 678
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 67
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -61263,6 +61785,12 @@
       "SpringFramework"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 6
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -61322,6 +61850,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 5
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 3
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -61726,6 +62260,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 493
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -61778,13 +62318,19 @@
         "date": "Feb 15, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 510
+        "interpolatedUsers": 541
       },
       "2.1.2.RELEASE": {
         "date": "Jan 12, 2019",
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 510
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 50
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -62282,6 +62828,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "2.2.2.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 27
+      },
       "2.2.1.RELEASE": {
         "date": "Nov 06, 2019",
         "users": 0,
@@ -62341,6 +62893,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 24
+      },
+      "2.1.11.RELEASE": {
+        "date": "Dec 06, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 4
       },
       "2.1.10.RELEASE": {
         "date": "Nov 06, 2019",
@@ -62454,6 +63012,12 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 473
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -62513,6 +63077,12 @@
         "users": 0,
         "previousUsers": 72,
         "interpolatedUsers": 76
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 57
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -63445,6 +64015,12 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 565
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -63485,7 +64061,7 @@
         "date": "Feb 13, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 477
+        "interpolatedUsers": 508
       },
       "5.1.4.RELEASE": {
         "date": "Jan 09, 2019",
@@ -63504,6 +64080,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 157
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 71
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -64484,11 +65066,17 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 497
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
         "previousUsers": 0,
-        "interpolatedUsers": 193
+        "interpolatedUsers": 224
       },
       "5.2.0.RELEASE": {
         "date": "Sep 30, 2019",
@@ -64543,6 +65131,12 @@
         "users": 0,
         "previousUsers": 111,
         "interpolatedUsers": 130
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 82
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -65517,6 +66111,12 @@
       "Alfresco"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 145
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -65576,6 +66176,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 144
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 42
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -66316,6 +66922,12 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 424
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -66375,6 +66987,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 43
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 19
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -67118,6 +67736,12 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 544
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -67177,6 +67801,12 @@
         "users": 0,
         "previousUsers": 111,
         "interpolatedUsers": 123
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 39
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -68153,6 +68783,12 @@
       "Cambridge"
     ],
     "versions": {
+      "5.2.2.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 410
+      },
       "5.2.1.RELEASE": {
         "date": "Nov 02, 2019",
         "users": 0,
@@ -68212,6 +68848,12 @@
         "users": 0,
         "previousUsers": 0,
         "interpolatedUsers": 49
+      },
+      "5.1.12.RELEASE": {
+        "date": "Dec 03, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 18
       },
       "5.1.11.RELEASE": {
         "date": "Nov 02, 2019",
@@ -69185,6 +69827,12 @@
       "Mulesoft"
     ],
     "versions": {
+      "7.1.0": {
+        "date": "Dec 24, 2019",
+        "users": 0,
+        "previousUsers": 0,
+        "interpolatedUsers": 472
+      },
       "7.0.0-beta7": {
         "date": "Jun 30, 2019",
         "users": 0,
@@ -69411,7 +70059,7 @@
         "date": "Apr 09, 2018",
         "users": 0,
         "previousUsers": 771,
-        "interpolatedUsers": 1006
+        "interpolatedUsers": 1037
       },
       "6.14.2": {
         "date": "Feb 04, 2018",
