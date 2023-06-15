@@ -45,7 +45,8 @@ npm run test
 
 👤 **Riduidel & Helielzel**
 
-* Github: [@kefranabg](https://github.com/kefranabg)
+* Github: [@Riduidel](https://github.com/riduidel)
+* Github: [@Helielzel](https://github.com/helielzel)
 
 ## 🤝 Contributing
 
