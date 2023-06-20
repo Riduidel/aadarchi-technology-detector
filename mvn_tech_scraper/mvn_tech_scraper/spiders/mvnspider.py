@@ -2,8 +2,6 @@ import scrapy
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
-#api key : 933ff5de-cd0f-4c71-ae93-ed565aefacfa
-
 class createMvnSPider(CrawlSpider):
     name = "mvnSpider"
     allowed_domains = "mvnrepository.com"
@@ -18,9 +16,9 @@ class createMvnSPider(CrawlSpider):
         
     )
 
-    def parse_categories():
+    def parse_categories(self, response):
         yield {
-
+            "categories": response.css("ul.box-content").get()
         }
 
 

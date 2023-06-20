@@ -25,6 +25,7 @@
 
 ```sh
 scrapy crawl mvnSpider -> The actual project
+scrapy crawl mvnSpider -o [filename].json -> Output in Json file
 scrapy shell "https://mvnrepository.com/" -> Test by yourself
 ```
 
