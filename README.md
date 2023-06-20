@@ -19,27 +19,16 @@
 ### 🏠 [Homepage](https://github.com/Riduidel/aadarchi-technology-detector)
 
 ## Prerequisites
-
-- npm >=5.5.0
-- node >=9.3.0
-
-## Install
-
-```sh
-npm install
-```
+- sudo apt update 
+- Install Python3 : sudo apt install python3 (Ubuntu)
+- Install Scrapy : sudo apt install --assume-yes python3-scrapy (Ubuntu) https://www.makeuseof.com/install-python-ubuntu/
 
 ## Usage
 
 ```sh
-npm run start
+scrapy shell "https://mvnrepository.com/"
 ```
 
-## Run tests
-
-```sh
-npm run test
-```
 
 ## Author
 
@@ -58,7 +47,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2023 [Riduidel & Helielzel](https://github.com/kefranabg).<br />
+Copyright © 2023 [Riduidel & Helielzel](https://github.com/Helielzel).<br />
 This project is [MIT](https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE) licensed.
 
 ***
