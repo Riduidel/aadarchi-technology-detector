@@ -50,9 +50,10 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'mvn_tech_scraper.middlewares.MvnTechScraperDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    'mvn_tech_scraper.middlewares.MvnTechScraperDownloaderMiddleware': 543,
+    'scrapy_cloudflare_middleware.middlewares.CloudFlareMiddleware': 560,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
