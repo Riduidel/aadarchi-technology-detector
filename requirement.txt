@@ -1,0 +1,5 @@
+In order to make this Python script work, you need to have both Python3 and Scrapy (2.5.1) installed.
+When it's done, you can launch the spider with the command :
+-> scrapy crawl mvnSpider
+
+In the project folder to get a .json file containing all technologies that matters for aadarchi.
