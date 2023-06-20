@@ -24,7 +24,8 @@
 ## Usage
 
 ```sh
-scrapy shell "https://mvnrepository.com/"
+scrapy crawl mvnSpider -> The actual project
+scrapy shell "https://mvnrepository.com/" -> Test by yourself
 ```
 
 
