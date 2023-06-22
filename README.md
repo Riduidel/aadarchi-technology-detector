@@ -12,21 +12,19 @@
   </a>
 </p>
 
-> A Python and Java project linked to aadarchi which aims to detect technologies present on stackoverflow tags and in mvnrepository categories, using a python scraper and a restAPI
+> A Python and Java project linked to aadarchi which aims to detect technologies present on stackoverflow tags and in mvnrepository categories, using Playwright and a restAPI for stackoverflow
 
 ### 🏠 [Homepage](https://github.com/Riduidel/aadarchi-technology-detector)
 
 ## Prerequisites
 - sudo apt update 
 - Install Python3 : sudo apt install python3 (Ubuntu)
-- Install Scrapy : sudo apt install --assume-yes python3-scrapy (Ubuntu) https://www.makeuseof.com/install-python-ubuntu/
-
+- Install Playwright for Python : pip install pytest-playwright & playwright install -> https://playwright.dev/python/docs/intro
 ## Usage
 
 ```sh
-scrapy crawl mvnSpider -> The actual project
-scrapy crawl mvnSpider -o [filename].json -> Output in Json file
-scrapy shell "https://mvnrepository.com/" -> Test by yourself
+#### TO UPDATE ####
+pytest
 ```
 
 
