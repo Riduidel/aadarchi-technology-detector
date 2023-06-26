@@ -23,8 +23,13 @@
 ## Usage
 
 ```sh
+<<<<<<< HEAD
 #### TO UPDATE ####
 pytest
+=======
+scrapy crawl mvnSpider -> The actual project
+scrapy shell "https://mvnrepository.com/" -> Test by yourself
+>>>>>>> parent of 9e83fe1 (update readme and add response.css method)
 ```
 
 
