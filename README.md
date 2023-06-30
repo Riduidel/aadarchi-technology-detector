@@ -23,8 +23,7 @@
 ## Usage
 
 ```sh
-#### TO UPDATE ####
-pytest
+python3 maven_playwright.py
 ```
 
 
