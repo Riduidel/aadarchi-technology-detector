@@ -27,6 +27,8 @@ def get_html_code():
         sleep(2)
         #page.wait_for_selector("div.content")
         
+        #différencier html avant /après
+        
         while True:
             popular_techs = page.inner_text("div.content").split("\n")
             dico_tech = from_text_to_tech_dict(popular_techs, dico_tech)
@@ -39,16 +41,22 @@ def get_html_code():
             
             # Cloudflare protection - Work in progress
             if page.title() == "Just a moment...":
-                if page.get_by_text("Verify you are human") == True:
-                    print("AAAAAAAAAHAHAHAHHA")
+                # while page.is_visible("Verify you are human") == True:
+                #     print("toujours pas")
+                #     sleep(1)
+                # print("ça y est")
+                if page.get_by_role("checkbox").is_enabled():
+                    print("Button available")
+                else:
+                    print(page.get_by_role("checkbox").is_enabled())
                 try:
-                    sleep(3)
                     page.get_by_role("checkbox").set_checked(True)
                 except:
                     print("Captcha didn't work")
                     pass
                 sleep(3)    
                 try:
+                    #cf-chl-widget-qu2wo
                     page.frame_locator("iframe").get_by_title("Widget containing a Cloudflare security challenge").check()
                     page.frame_locator("iframe").get_by_title("Widget containing a Cloudflare security challenge").click()
                     page.frame_locator("iframe").get_by_text("Verify you are human").click()
