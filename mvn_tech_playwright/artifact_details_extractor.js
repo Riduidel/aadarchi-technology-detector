@@ -1,8 +1,28 @@
-function extract_details_of(artifact) {
+function extract_artifact_details() {
+    function toUrl(url) {
+        return url.startsWith("https://") ? url : 
+            url.startsWith("/") ? "https://"+document.domain+url : window.location.href.split('?')[0]+url
+    }
+    artifact = {}
     const main = document.querySelector("div.content")
-    const logo = main.querySelector("im.im-logo")
+    const headerLinks = main.querySelectorAll("h2.im-title a")
+    for(const link of headerLinks) {
+        if(!artifact.hasOwnProperty("name")) {
+            artifact["name"]=link.innerText
+            artifact["page"] = document.URL
+        } else if(!artifact.hasOwnProperty("usages")) {
+            artifact["usages"]=link.querySelector("b").innerText
+        }
+    }
+    // There may be empty elements due to adblockers
+    if(main.querySelector("div.im-description")) {
+        artifact["description"] = main.querySelector("div.im-description").innerText
+    }
+//    artifact["coordinates"] = document.querySelector("div.breadcrumb").innerText.replaceAll(" ", "").replace("Home»", "").replaceAll("»", ".")
+    artifact["coordinates"] = document.location.pathname.substring("/artifact/".length).split("/").join(".")
+    const logo = main.querySelector("img.im-logo")
     if(logo) {
-        artifact["logo"] = logo.getAttribute("src")
+        artifact["logo"] = toUrl(logo.getAttribute("src"))
     }
     // First table should contain some details (license, categories, and so on)
     const artifact_details = main.querySelector("table.grid")
@@ -30,7 +50,7 @@ function extract_details_of(artifact) {
         if(relocation && relocation.querySelectorAll("td").length==1) {
             links = Array.from(relocation.querySelectorAll("a"))
             artifact["relocation"] = {
-                "page": links[links.length-1].getAttribute("href"),
+                "page": toUrl(links[links.length-1].getAttribute("href")),
                 "coordinates": links.map(element => element.innerText).join(".")
             }
         }
@@ -57,14 +77,3 @@ function extract_details_of(artifact) {
     console.log("extracted details of artifact", artifact)
     return artifact
 }
-
-/*
-augmented = extract_details_of({
-    "name": "test", 
-    "page": "nope", 
-    "usages": "none", 
-    "description": "...", 
-    "coordinates": "lost", 
-    "license": "WTFPL"
-})
-*/
