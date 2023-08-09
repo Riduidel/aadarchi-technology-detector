@@ -71,13 +71,20 @@ def get_popular_libs(browser_tab, page_index):
 #        popular_artifacts[artifact["coordinates"]] = artifact
         while artifact:
             augmented = augment_artifact(browser_tab, artifact)
-            popular_artifacts[artifact["coordinates"]] = augmented
+            if "Central" in augmented["repositories"]:
+                popular_artifacts[artifact["coordinates"]] = augmented
+            else:
+                logger.error("Maven central does not contains artifact %s. It will be ignored", augmented["name"])
             if "relocation" in augmented:
                 logger.info("artifact %s has been relocated as %s"%(artifact["coordinates"], augmented["relocation"]["coordinates"]))
-                relocated = artifact.copy()
-                relocated["page"] = augmented["relocation"]["page"]
-                relocated["coordinates"] = augmented["relocation"]["coordinates"]
-                artifact = relocated
+                if augmented["relocation"]["coordinates"] in popular_artifacts:
+                    logger.info("But we already know relocated artifact %s! So nothing to do"%(augmented["relocation"]["coordinates"]))
+                    artifact = False
+                else:
+                    relocated = artifact.copy()
+                    relocated["page"] = augmented["relocation"]["page"]
+                    relocated["coordinates"] = augmented["relocation"]["coordinates"]
+                    artifact = relocated
             else:
                 artifact = False
     # Notice we don't get any version here!
@@ -88,21 +95,23 @@ def get_popular_artifacts():
     popular_artifacts = dict()
 
     with sync_playwright() as plwr:
-        browser = plwr.chromium.launch(headless=False)
-        context = browser.new_context(
-#            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.2227.0 Safari/537.36'
-        )
-        context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-        browser_tab = context.new_page()
-        stealth_sync(browser_tab)
-        for page_index in range(1, 20):
-            popular_artifacts_on_page = get_popular_libs(browser_tab, page_index)
-            popular_artifacts = popular_artifacts | popular_artifacts_on_page
-            logger.info("We know the %s most popular Maven Artifacts!", len(popular_artifacts))
-        browser.close()
-    popular_artifacts
+        try:
+            browser = plwr.chromium.launch(headless=False)
+            context = browser.new_context(
+    #            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.2227.0 Safari/537.36'
+            )
+            context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+            browser_tab = context.new_page()
+            stealth_sync(browser_tab)
+            for page_index in range(1, 20):
+                popular_artifacts_on_page = get_popular_libs(browser_tab, page_index)
+                popular_artifacts = popular_artifacts | popular_artifacts_on_page
+                logger.info("We know the %s most popular Maven Artifacts!", len(popular_artifacts))
+            browser.close()
+        except KeyboardInterrupt:
+            logger.fatal("Interrupted by keyboard, finalizing writing")
+    return popular_artifacts
 
 if __name__ == "__main__":
     artifacts = get_popular_artifacts()
-    with open("%s/%s"%(parent_path, 'popular_artifacts.json'), 'w') as file:
-        file.write(json.dumps(artifacts))
+    print(json.dumps(artifacts))

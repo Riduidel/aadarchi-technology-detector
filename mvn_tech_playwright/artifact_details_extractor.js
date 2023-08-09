@@ -23,11 +23,11 @@ function extract_details_of(artifact) {
     // All of which are table.grid below some specifc elements ...
     if(main.querySelector("div table.grid")) {
         // There may be a relocation table
-        relocation = main.querySelector("div table.grid")
+        relocation = main.querySelector("div[style*=\"align-content\"] table.grid")
         // Beware: this can match the versions table. To avoid that, we count the column number
         // if greater than 1, we give up
         // Unfortunatly
-        if(relocation.querySelectorAll("td").length==1) {
+        if(relocation && relocation.querySelectorAll("td").length==1) {
             links = Array.from(relocation.querySelectorAll("a"))
             artifact["relocation"] = {
                 "page": links[links.length-1].getAttribute("href"),
@@ -36,6 +36,12 @@ function extract_details_of(artifact) {
         }
     }
 
+    // Process exposing repositories (which will allow us a nice hack)
+    // beware! All repositories don't contain all versions, and we use as reference the first repository
+    const filter = /(.*) \(\d+\)$/
+    artifact["repositories"] = Array.from(main.querySelectorAll("#snippets ul.tabs li"))
+        .map(element => element.innerText)
+        .map(text =>  text.match(filter)[1])
     // Now process known versions
     versionsTable = main.querySelector("table.versions").querySelector("tbody") 
     artifact["versions"] = Array.from(versionsTable.children)
@@ -51,13 +57,14 @@ function extract_details_of(artifact) {
     console.log("extracted details of artifact", artifact)
     return artifact
 }
+
 /*
-extract_details_of({
-    "name": "Guava", 
-    "page": "/artifact/com.google.guava/guava", 
-    "usages": "35,020", 
+augmented = extract_details_of({
+    "name": "test", 
+    "page": "nope", 
+    "usages": "none", 
     "description": "...", 
-    "coordinates": "com.google.guava.guava", 
-    "license": "EPL"
+    "coordinates": "lost", 
+    "license": "WTFPL"
 })
 */
