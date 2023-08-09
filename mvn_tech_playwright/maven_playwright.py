@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from playwright.sync_api import sync_playwright
+from playwright_stealth import stealth_sync
 from time import sleep
 import re
 import json
@@ -17,10 +18,15 @@ ch.setFormatter(formatter)
 
 logger.addHandler(ch)
 
-with open("%s/%s"%(parent_path, 'artifacts_list_extractor.js'), 'r') as file:
-    ARTIFACTS_LIST_EXTRACTOR = file.read().rstrip()
-with open("%s/%s"%(parent_path, 'artifact_details_extractor.js'), 'r') as file:
-    ARTIFACT_DETAILS_EXTRACTOR = file.read().rstrip()
+def ARTIFACTS_LIST_EXTRACTOR():
+    with open("%s/%s"%(parent_path, 'artifacts_list_extractor.js'), 'r') as file:
+        return file.read()
+
+def ARTIFACT_DETAILS_EXTRACTOR():
+    with open("%s/%s"%(parent_path, 'artifact_details_extractor.js'), 'r') as file:
+        return file.read()
+
+SERVER = "mvnrepository.com"
 
 def validate_cloudflare(browser_tab):
     ''' If we see cloudflare page, validate it, otherwise let's just go through'''
@@ -38,30 +44,42 @@ def validate_cloudflare(browser_tab):
 
 def augment_artifact(browser_tab, artifact):
     ''' Augment known details from artifact with all known versions, some artifact redirections, categories, and so on'''
-    page_to_load = "https://mvnrepository.com/%s"%(artifact["page"])
+    page_to_load = "https://%s%s"%(SERVER, artifact["page"])
     logger.info("Loading page %s"%page_to_load)
     browser_tab.goto(page_to_load)
     validate_cloudflare(browser_tab)
     # Now we're on artifact page, let's read all details
-    return browser_tab.evaluate(ARTIFACT_DETAILS_EXTRACTOR, artifact)
+    script = ARTIFACT_DETAILS_EXTRACTOR()
+    return browser_tab.evaluate(script, artifact)
 
 def get_popular_libs(browser_tab, page_index):
     ''' Get popular libs from the given page.
     To get the libs, we run some JS script that will parse details from the page
     '''
     popular_artifacts = {}
-    page_to_load = "https://mvnrepository.com/popular?p=%s"%(page_index)
+    page_to_load = "https://%s/popular?p=%s"%(SERVER, page_index)
     logger.info("Loading page %s"%page_to_load)
     browser_tab.goto(page_to_load)
     validate_cloudflare(browser_tab)
     # Mind you, goto automagically wait for page to load, so we're good!
     # Now get all techs in page. And mind you, the easiest way to do that is to run some JS that will generate
     # a JSON String containing the data we want
-    infos = browser_tab.evaluate(ARTIFACTS_LIST_EXTRACTOR)
+    script = ARTIFACTS_LIST_EXTRACTOR()
+    infos = browser_tab.evaluate(script)
     for artifact in infos:
         # For each artifact, extract more informations from artifact home page
-        popular_artifacts[artifact["coordinates"]] = artifact
-#        popular_artifacts[artifact["coordinates"]] = augment_artifact(browser_tab, artifact)
+#        popular_artifacts[artifact["coordinates"]] = artifact
+        while artifact:
+            augmented = augment_artifact(browser_tab, artifact)
+            popular_artifacts[artifact["coordinates"]] = augmented
+            if "relocation" in augmented:
+                logger.info("artifact %s has been relocated as %s"%(artifact["coordinates"], augmented["relocation"]["coordinates"]))
+                relocated = artifact.copy()
+                relocated["page"] = augmented["relocation"]["page"]
+                relocated["coordinates"] = augmented["relocation"]["coordinates"]
+                artifact = relocated
+            else:
+                artifact = False
     # Notice we don't get any version here!
     return popular_artifacts
     
@@ -71,13 +89,20 @@ def get_popular_artifacts():
 
     with sync_playwright() as plwr:
         browser = plwr.chromium.launch(headless=False)
-        browser_tab = browser.new_page()
-        for page_index in range(1, 50):
+        context = browser.new_context(
+#            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.2227.0 Safari/537.36'
+        )
+        context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        browser_tab = context.new_page()
+        stealth_sync(browser_tab)
+        for page_index in range(1, 20):
             popular_artifacts_on_page = get_popular_libs(browser_tab, page_index)
             popular_artifacts = popular_artifacts | popular_artifacts_on_page
             logger.info("We know the %s most popular Maven Artifacts!", len(popular_artifacts))
         browser.close()
-    print(json.dumps(popular_artifacts))
+    popular_artifacts
 
 if __name__ == "__main__":
-    get_popular_artifacts()
+    artifacts = get_popular_artifacts()
+    with open("%s/%s"%(parent_path, 'popular_artifacts.json'), 'w') as file:
+        file.write(json.dumps(artifacts))

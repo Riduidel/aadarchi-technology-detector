@@ -22,10 +22,13 @@ function extract_libraries() {
                 .map((node) => node.innerText)
                 .join(".")
             node["coordinates"] = coordinates
-            node["license"] = coordinatesAndLicense.querySelector(".im-lic").innerText
+            if(coordinatesAndLicense.querySelector(".im-lic")) {
+                node["license"] = coordinatesAndLicense.querySelector(".im-lic").innerText
+            }
         }
         if(Object.keys(node).length)
             result.push(node)
     })
+    console.log("extracted artifacts", result)
     return result
 }
