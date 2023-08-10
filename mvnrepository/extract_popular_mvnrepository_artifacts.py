@@ -88,7 +88,7 @@ def get_popular_artifacts():
                         popular_artifacts_urls.append(artifact_infos["relocation"]["page"])
         browser.close()
         # Notice we don't get any version here!
-        return sorted(popular_artifacts)
+        return dict(sorted(popular_artifacts.items()))
 
 if __name__ == "__main__":
     artifacts = get_popular_artifacts()
