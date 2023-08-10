@@ -2,6 +2,7 @@
 from playwright.sync_api import sync_playwright
 from playwright_stealth import stealth_sync
 from time import sleep
+import sys
 import re
 import json
 import logging
