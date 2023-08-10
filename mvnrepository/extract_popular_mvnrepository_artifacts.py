@@ -2,6 +2,7 @@
 from playwright.sync_api import sync_playwright
 from playwright_stealth import stealth_sync
 from time import sleep
+import sys
 import re
 import json
 import logging
@@ -11,7 +12,7 @@ parent_path = pathlib.Path(__file__).parent.resolve()
 logger = logging.getLogger('mvnrepository')
 logger.setLevel(logging.INFO)
 
-ch = logging.StreamHandler()
+ch = logging.StreamHandler(stream=sys.stderr)
 ch.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
@@ -88,8 +89,9 @@ def get_popular_artifacts():
                         popular_artifacts_urls.append(artifact_infos["relocation"]["page"])
         browser.close()
         # Notice we don't get any version here!
-        return popular_artifacts
+        return dict(sorted(popular_artifacts.items()))
 
 if __name__ == "__main__":
     artifacts = get_popular_artifacts()
-    print(json.dumps(artifacts))
+    with open("%s/artifacts.json"%(javascript_file), 'w') as file:
+        json.dump(artifacts, file, indent=4)
