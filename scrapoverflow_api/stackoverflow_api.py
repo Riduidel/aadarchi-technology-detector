@@ -1,81 +1,83 @@
 import requests
 import json
+import urllib.parse
 
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import BackendApplicationClient
-from requests.auth import HTTPBasicAuth
+import re
+import logging
+import sys
 
-from pprint import pprint
-
-def get_tag_description(tech, api_key):
-    api_url = "https://api.stackexchange.com/2.3/tags/" + tech + "/wikis?site=stackoverflow&key=" + api_key
+def get_tag_infos(tech, api_key):
+    api_url = "https://api.stackexchange.com/2.3/tags/" +  urllib.parse.quote(tech) + "/wikis?site=stackoverflow" + "&filter=!nNPvSNMavg" + "&key=" + api_key
+    to_return = list()
+    
+    logging.info("Fetching description and link for %s tag", tech)
     try:
         response = requests.get(api_url)
         response.raise_for_status()
         data = response.json()
     except requests.exceptions.RequestException as e:
-        print("Request error for description :", e)
+        logging.error("Request error for %s tag description :", tech, e)
         return None
     
-    for elem in data["items"]:
-        try:
-            return elem["excerpt"]
-        except:
-            return "No description"
+    for elem in data.get("items", []):
+        if elem.get("excerpt", None) is not None:
+            to_return.append(elem["excerpt"])
+        else:
+            to_return.append("No description found for " + tech)
 
-#TESTING : just to avoid going too far on requests
-def load_json_file():
-    with open("output.json", 'r') as file:
-        json_data = json.load(file)
-    return json_data
+        link = re.search(r'<a\s+href=[\'"]?(https?://[^\'" >]+)', elem["body"])
+        if link == None:
+            to_return.append("No link found for " + tech) 
+            logging.info("No description found for %s tag", tech)
+        else:
+            to_return.append(link.group(0).strip('<a href='))
+    return to_return
 
 def get_technology_tags(api_key):
-    #REMEMBER TO REMOVE THE KEY
-    api_url = "https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow&pagesize=10"
+    api_url = "https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow&pagesize=100"
     has_more = True
     page = 1
     all_technology_tags = []
 
     while has_more:
+        logging.info("[PAGE] - Currently on page %d", page)
         try:
             response = requests.get(api_url + f'&page={page}' + "&key=" + api_key)
-            
             response.raise_for_status()
             data = response.json()
         except requests.exceptions.RequestException as e:
-            print("Request error in get_technology_tags", e)
+            logging.error("Request error in get_technology_tags: %s", e)
             return None
-        
-        #Only when testing with local json file
-        #data = load_json_file()
 
         for tag in data['items']:
+            logging.info("Processing %s tag", tag["name"])
+            infos = get_tag_infos(tag['name'].strip(" "), api_key)
+
             tag_info = {
                     'name': tag['name'],
-                    'count': tag['count'],
-                    'description' : get_tag_description(tag['name'].strip(" "), api_key)
+                    'popularity': tag['count'],
+                    'description' : infos[0],
+                    'link' : infos[1]
             }
             all_technology_tags.append(tag_info)
         has_more = data["has_more"]            
-        
-        ##############change later#############
-        if page == 1:
-            break
-        ###########################
+        logging.info("[INFO] - Quota remaining : " + str(data["quota_remaining"]))
         page += 1
 
     return all_technology_tags
 
-def main():
-    f = open("key.txt", "r")
-    api_infos = f.readlines()
-    print(api_infos[0])
-    technology_tags = get_technology_tags(api_infos[0])
+def main(argv):
+    logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO)
+    technology_tags = get_technology_tags(argv)
 
-    if technology_tags is not None:
-        for tag in technology_tags:
-            #print(tag["name"], "- Number of questions:", tag["count"], " - description: ")
-            print(tag["name"], "- Number of questions:", tag["count"], " - description: ", tag["description"])
+    # if technology_tags is not None:
+    #    for tag in technology_tags:
+    #        print(tag["name"], "- Number of questions:", tag["popularity"], " - description: ", tag["description"], tag["link"])
+    with open('technologies.json', 'w') as fp:
+        json.dump(technology_tags, fp, indent=4)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <API_KEY>")
+        sys.exit(1)
+    main(sys.argv[1])
