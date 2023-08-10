@@ -3,6 +3,12 @@ on:
   schedule:
     - cron '0 0 * * 0'
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "useless field"
+        type: string
+        default: "empty"
+        required: false
 jobs:
   test:
     timeout-minutes: 60
