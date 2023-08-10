@@ -93,4 +93,5 @@ def get_popular_artifacts():
 
 if __name__ == "__main__":
     artifacts = get_popular_artifacts()
-    print(json.dumps(artifacts))
+    with open("%s/artifacts.json"%(javascript_file), 'w') as file:
+        json.dump(artifacts, file, indent=4)
