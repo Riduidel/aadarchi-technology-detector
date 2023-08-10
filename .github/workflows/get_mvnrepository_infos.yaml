@@ -26,8 +26,10 @@ jobs:
       run: |
         git config --global user.name '🤖 GitHub Action'
         git config --global user.email 'Riduidel@users.noreply.github.com'
+        git stash
         git fetch
         git checkout reports
+        git stash apply
         git add mvnrepository/artifacts.json
         # The git diff is used to make sure we commit only whn things changes
         git diff-index --quiet HEAD || git commit -am "mvnrepository 🤖 GitHub Action detected changes in popular artifacts"
