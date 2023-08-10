@@ -11,7 +11,7 @@ parent_path = pathlib.Path(__file__).parent.resolve()
 logger = logging.getLogger('mvnrepository')
 logger.setLevel(logging.INFO)
 
-ch = logging.StreamHandler()
+ch = logging.StreamHandler(stream=sys.stderr)
 ch.setLevel(logging.INFO)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 ch.setFormatter(formatter)
