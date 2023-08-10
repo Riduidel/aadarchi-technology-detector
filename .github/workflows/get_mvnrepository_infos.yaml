@@ -18,7 +18,7 @@ jobs:
       run: python -m playwright install --with-deps
     - name: Run mvnrepository extraction code
     # xcfb is needed since we have some UI selector elements
-      run: xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py > mvnrepository.json
+      run: xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py >> mvnrepository.json
     - name: Archive mvnrepository popular artifacts
       uses: actions/upload-artifact@v3
       with:
