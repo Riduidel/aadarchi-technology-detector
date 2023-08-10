@@ -1,5 +1,8 @@
 name: mvnrepository
-on: workflow_dispatch
+on:
+  schedule:
+    - cron '0 0 * * 0'
+  workflow_dispatch:
 jobs:
   test:
     timeout-minutes: 60
