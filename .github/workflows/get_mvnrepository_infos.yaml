@@ -32,8 +32,8 @@ jobs:
         echo "Switching to another branch"
         git fetch
         git checkout reports --force
-        echo "Applying stash"
-        git stash apply
+        echo "Applying stash, this will generate conflicts"
+        git stash apply || true
         echo "Resolving stash-induced conflict"
         git checkout --theirs -- mvnrepository/artifacts.json
         git add mvnrepository/artifacts.json
