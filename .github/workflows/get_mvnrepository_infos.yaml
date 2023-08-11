@@ -31,7 +31,7 @@ jobs:
         git fetch
         git checkout reports --force
         git stash apply
-        git add mvnrepository/artifacts.json
+        git checkout --theirs -- mvnrepository/artifacts.json
         # The git diff is used to make sure we commit only whn things changes
         git diff-index --quiet HEAD || git commit -am "mvnrepository 🤖 GitHub Action detected changes in popular artifacts"
         git push
