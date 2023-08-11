@@ -21,23 +21,17 @@ jobs:
       run: python -m playwright install --with-deps
     - name: Run mvnrepository extraction code
     # xcfb is needed since we have some UI selector elements
-      run: xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py
-    - name: Commit mvnrepository/artifacts.json
       run: |
-        git config --global user.name '🤖 GitHub Action'
-        git config --global user.email 'Riduidel@users.noreply.github.com'
-        echo "Creating stash"
-        git add mvnrepository/artifacts.json
-        git stash
-        echo "Switching to another branch"
-        git fetch
-        git checkout reports --force
-        echo "Applying stash, this will generate conflicts"
-        git stash apply || true
-        echo "Resolving stash-induced conflict"
-        git checkout --theirs -- mvnrepository/artifacts.json
-        git add mvnrepository/artifacts.json
-        echo "Commiting"
-        # The git diff is used to make sure we commit only whn things changes
-        git diff-index --quiet HEAD || git commit -am "mvnrepository 🤖 GitHub Action detected changes in popular artifacts"
-        git push
+        xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py
+        mv mvnrepository/artifacts.json target/artifacts.json
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: reports
+        FOLDER: target
+        TARGET_DIR: mvnrepository
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        MESSAGE: Updated mvnrepository infos
+        COMMIT-NAME: 🤖 GitHub Action
+        COMMIT_EMAIL: get_mvnrepository_infos.yaml@github.actions
