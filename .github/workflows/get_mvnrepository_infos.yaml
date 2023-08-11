@@ -23,6 +23,7 @@ jobs:
     # xcfb is needed since we have some UI selector elements
       run: |
         xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py
+        mkdir target
         mv mvnrepository/artifacts.json target/artifacts.json
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
