@@ -93,5 +93,6 @@ def get_popular_artifacts():
 
 if __name__ == "__main__":
     artifacts = get_popular_artifacts()
+    # The subdirectory is used for pushing to another branch with ease
     with open("%s/artifacts.json"%(parent_path), 'w') as file:
         json.dump(artifacts, file, indent=4)
