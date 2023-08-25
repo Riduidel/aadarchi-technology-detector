@@ -19,11 +19,12 @@
 ## Prerequisites
 - sudo apt update 
 - Install Python3 : sudo apt install python3 (Ubuntu)
-- Install Playwright for Python : pip install pytest-playwright & playwright install -> https://playwright.dev/python/docs/intro
+- pip install -r requirements.txt
+
 ## Usage
 
 ```sh
-python3 maven_playwright.py
+scrapoverflow_api / python3 stackoverflow_api.py "api_key"
 ```
 
 
