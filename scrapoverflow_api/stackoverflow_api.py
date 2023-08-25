@@ -60,7 +60,7 @@ def process_tag(api_key, tag):
     return tag_info
 
 def get_technology_tags(api_key):
-    api_url = "https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow&pagesize=20"
+    api_url = "https://api.stackexchange.com/2.3/tags?order=desc&sort=popular&site=stackoverflow&pagesize=100"
     page = 1
     all_technology_tags = []
 
@@ -94,7 +94,6 @@ def main(api_key):
     if technology_tags is not None:
         with open('technologies.json', 'w') as fp:
             json.dump(technology_tags, fp, indent=4)
-
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python script.py <API_KEY>")
