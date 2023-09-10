@@ -314,6 +314,7 @@
             "ICM"
         ],
         "versions": {
+            "2.0.40": "Sep 03, 2023",
             "2.0.39": "Aug 14, 2023",
             "2.0.38": "Jul 29, 2023",
             "2.0.37": "Jul 22, 2023",
@@ -663,6 +664,8 @@
             "Central"
         ],
         "versions": {
+            "2.0.40": "Sep 03, 2023",
+            "2.0.40.android4": "Sep 03, 2023",
             "2.0.39": "Aug 14, 2023",
             "2.0.39.android4": "Aug 14, 2023",
             "2.0.38": "Jul 29, 2023",
@@ -2115,103 +2118,6 @@
             "r03": "Apr 26, 2010"
         }
     },
-    "com.google.gwt.gwt-user": {
-        "name": "GWT User",
-        "page": "https://mvnrepository.com/artifact/com.google.gwt/gwt-user",
-        "description": "GWT User",
-        "coordinates": "com.google.gwt.gwt-user",
-        "logo": "https://mvnrepository.com/img/ed10ce953e25c2e167693ca409ec6694",
-        "categories": [
-            "Web Frameworks"
-        ],
-        "tags": [
-            "gwt",
-            "google",
-            "framework",
-            "web",
-            "ui"
-        ],
-        "relocation": {
-            "page": "https://mvnrepository.com/artifact/org.gwtproject/",
-            "coordinates": "org.gwtproject."
-        },
-        "repositories": [
-            "Central",
-            "Spring Plugins",
-            "Jahia",
-            "Redhat GA",
-            "Redhat EA",
-            "JBoss 3rd-party",
-            "JBoss Public",
-            "Grails Core",
-            "PentahoOmni",
-            "Geomajas",
-            "XWiki Externals",
-            "OpenNMS",
-            "Vaadin Flow",
-            "Rescarta Pub",
-            "Nuxeo",
-            "OpenMind",
-            "ICM"
-        ],
-        "versions": {
-            "2.10.0": "Jun 23, 2022",
-            "2.9.0": "May 13, 2020",
-            "2.9.0-RC1": "Apr 10, 2020",
-            "2.8.2": "Oct 18, 2017",
-            "2.8.1": "Apr 18, 2017",
-            "2.8.0": "Oct 19, 2016",
-            "2.8.0-rc3": "Sep 29, 2016",
-            "2.8.0-rc2": "Aug 12, 2016",
-            "2.8.0-rc1": "Jul 28, 2016",
-            "2.8.0-beta1": "Dec 03, 2015",
-            "2.7.0": "Nov 20, 2014",
-            "2.7.0-rc1": "Oct 29, 2014",
-            "2.7.0-beta1": "Oct 18, 2014",
-            "2.6.1": "May 09, 2014",
-            "2.6.1-rc2": "Apr 29, 2014",
-            "2.6.1-rc1": "Apr 29, 2014",
-            "2.6.0": "Jan 23, 2014",
-            "2.6.0-rc4": "Jan 09, 2014",
-            "2.6.0-rc3": "Dec 04, 2013",
-            "2.6.0-rc2": "Dec 02, 2013",
-            "2.6.0-rc1": "Nov 07, 2013",
-            "2.5.1": "Mar 11, 2013",
-            "2.5.1-rc1": "Feb 05, 2013",
-            "2.5.0": "Oct 25, 2012",
-            "2.5.0-rc2": "Oct 03, 2012",
-            "2.5.0-rc1": "Jun 27, 2012",
-            "2.4.0": "Sep 08, 2011",
-            "2.4.0-rc1": "Jul 22, 2011",
-            "2.3.0": "May 03, 2011",
-            "2.2.0": "Feb 12, 2011",
-            "2.2-rc1": "Jan 27, 2011",
-            "2.1.1": "Dec 17, 2010",
-            "2.1.1-rc1": "Dec 10, 2010",
-            "2.1.0": "Oct 27, 2010",
-            "2.0.4": "Jul 16, 2010",
-            "2.0.3": "Mar 02, 2010",
-            "2.0.2": "Feb 17, 2010",
-            "2.0.1": "Feb 05, 2010",
-            "2.0.0": "Dec 11, 2009",
-            "2.0.0-ms1": "Oct 08, 2009",
-            "2.0.0-rc1": "Nov 24, 2009",
-            "1.7.1": "Sep 29, 2009",
-            "1.7.0": "Jul 15, 2009",
-            "1.6.4": "Apr 08, 2009",
-            "1.6.3": "Mar 31, 2009",
-            "1.6.2": "Mar 22, 2009",
-            "1.6.1": "Feb 25, 2009",
-            "1.6.0": "Feb 05, 2009",
-            "1.5.3": "Oct 20, 2008",
-            "1.5.2": "Sep 01, 2008",
-            "1.5.1": "Aug 11, 2008",
-            "1.5-RC1": "May 29, 2008",
-            "1.5-M2": "May 13, 2008",
-            "1.4.62": "Mar 18, 2008",
-            "1.4.60": "Sep 17, 2007"
-        }
-    },
     "com.google.inject.guice": {
         "name": "Google Guice Core Library",
         "page": "https://mvnrepository.com/artifact/com.google.inject/guice",
@@ -2284,6 +2190,7 @@
         "versions": {
             "4.0.0-rc-2": "Jul 21, 2020",
             "4.0.0-rc-1": "Jul 21, 2020",
+            "3.24.3": "Sep 08, 2023",
             "3.24.2": "Aug 26, 2023",
             "3.24.1": "Aug 18, 2023",
             "3.24.0": "Aug 09, 2023",
@@ -3560,6 +3467,7 @@
         "repositories": [
             "Central",
             "Spring Plugins",
+            "Redhat GA",
             "Redhat EA",
             "Geomajas",
             "ICM"
@@ -4210,6 +4118,7 @@
             "ICM"
         ],
         "versions": {
+            "5.3.2": "Sep 08, 2023",
             "5.3.1": "Jun 16, 2023",
             "5.3.0": "Nov 18, 2022",
             "5.2.1": "Nov 18, 2022",
@@ -4382,6 +4291,40 @@
             "1.5.2": "Aug 05, 2015",
             "1.5.1": "Aug 03, 2015",
             "1.5.0": "Jun 06, 2015"
+        }
+    },
+    "jakarta.annotation.jakarta.annotation-api": {
+        "name": "Jakarta Annotations API",
+        "page": "https://mvnrepository.com/artifact/jakarta.annotation/jakarta.annotation-api",
+        "description": "Jakarta Annotations API",
+        "coordinates": "jakarta.annotation.jakarta.annotation-api",
+        "logo": "https://mvnrepository.com/img/71d37dcc6b771b27847a555e499b3441",
+        "categories": [
+            "Annotation Libraries",
+            "Java Specifications"
+        ],
+        "tags": [
+            "jakarta",
+            "standard",
+            "annotations",
+            "metadata",
+            "api",
+            "specs"
+        ],
+        "repositories": [
+            "Central",
+            "Redhat GA",
+            "Redhat EA"
+        ],
+        "versions": {
+            "2.1.1": "Jun 15, 2022",
+            "2.1.0": "Mar 31, 2022",
+            "2.1.0-B1": "Sep 15, 2021",
+            "2.0.0": "Nov 05, 2020",
+            "2.0.0-RC1": "Jan 20, 2020",
+            "1.3.5": "Aug 30, 2019",
+            "1.3.4": "Jan 09, 2019",
+            "1.3.3": "Oct 29, 2018"
         }
     },
     "jakarta.enterprise.jakarta.enterprise.cdi-api": {
@@ -5458,7 +5401,7 @@
     "org.apache.commons.commons-compress": {
         "name": "Apache Commons Compress",
         "page": "https://mvnrepository.com/artifact/org.apache.commons/commons-compress",
-        "description": "Apache Commons Compress software defines an API for working with compression and archive formats. These include: bzip2, gzip, pack200, lzma, xz, Snappy, traditional Unix Compress, DEFLATE, DEFLATE64, LZ4, Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.",
+        "description": "Apache Commons Compress defines an API for working with compression and archive formats. These include: bzip2, gzip, pack200, lzma, xz, Snappy, traditional Unix Compress, DEFLATE, DEFLATE64, LZ4, Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.",
         "coordinates": "org.apache.commons.commons-compress",
         "logo": "https://mvnrepository.com/img/546dde4a7f51b5b6daa64e9f8f58a8bc",
         "categories": [
@@ -5481,6 +5424,7 @@
             "JumpPilot"
         ],
         "versions": {
+            "1.24.0": "Sep 09, 2023",
             "1.23.0": "Mar 22, 2023",
             "1.22": "Oct 31, 2022",
             "1.21": "Jul 12, 2021",
@@ -7031,6 +6975,7 @@
             "ICM"
         ],
         "versions": {
+            "1.9.20.1": "Sep 04, 2023",
             "1.9.20": "Aug 16, 2023",
             "1.9.19": "Dec 21, 2022",
             "1.9.9.1": "Mar 31, 2022",
@@ -7111,6 +7056,7 @@
             "ICM"
         ],
         "versions": {
+            "1.9.20.1": "Sep 04, 2023",
             "1.9.20": "Aug 16, 2023",
             "1.9.19": "Dec 21, 2022",
             "1.9.9.1": "Mar 31, 2022",
@@ -7270,6 +7216,7 @@
         ],
         "repositories": [
             "Central",
+            "Redhat GA",
             "ICM"
         ],
         "versions": {
@@ -9573,7 +9520,8 @@
             "testing"
         ],
         "repositories": [
-            "Central"
+            "Central",
+            "Redhat GA"
         ],
         "versions": {
             "2.2": "Oct 16, 2019",
@@ -10924,6 +10872,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11056,6 +11005,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11215,7 +11165,7 @@
     "org.jetbrains.kotlin.kotlin-stdlib": {
         "name": "Kotlin Stdlib",
         "page": "https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib",
-        "description": "Kotlin Standard Library for JVM",
+        "description": "Kotlin Standard Library",
         "coordinates": "org.jetbrains.kotlin.kotlin-stdlib",
         "logo": "https://mvnrepository.com/img/9b6bd8ed0cac279f3914a347588bd803",
         "categories": [
@@ -11241,6 +11191,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11452,7 +11403,7 @@
     "org.jetbrains.kotlin.kotlin-stdlib-common": {
         "name": "Kotlin Stdlib Common",
         "page": "https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-common",
-        "description": "Kotlin Common Standard Library",
+        "description": "Kotlin Common Standard Library (legacy, use kotlin-stdlib instead)",
         "coordinates": "org.jetbrains.kotlin.kotlin-stdlib-common",
         "logo": "https://mvnrepository.com/img/9b6bd8ed0cac279f3914a347588bd803",
         "categories": [
@@ -11476,6 +11427,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11619,6 +11571,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11745,6 +11698,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -11866,6 +11820,7 @@
             "Kotlin EAP"
         ],
         "versions": {
+            "1.9.20-Beta": "Sep 07, 2023",
             "1.9.10": "Aug 23, 2023",
             "1.9.0": "Jul 06, 2023",
             "1.9.0-RC": "Jun 19, 2023",
@@ -14118,7 +14073,7 @@
             "Central"
         ],
         "versions": {
-            "1.13.2": "640",
+            "1.13.2": "649",
             "1.13.1": "599",
             "1.13.0": "734",
             "1.12.0": "572",
@@ -14211,7 +14166,7 @@
             "Central"
         ],
         "versions": {
-            "1.13.2": "633",
+            "1.13.2": "642",
             "1.13.1": "557",
             "1.13.0": "705",
             "1.12.0": "529",
@@ -14363,6 +14318,7 @@
             "JCenter"
         ],
         "versions": {
+            "2.13.12": "Sep 06, 2023",
             "2.13.11": "Jun 02, 2023",
             "2.13.11-M2": "May 18, 2023",
             "2.13.11-M1": "Mar 06, 2023",
@@ -14589,6 +14545,7 @@
             "ICM"
         ],
         "versions": {
+            "2.13.12": "Sep 06, 2023",
             "2.13.11": "Jun 02, 2023",
             "2.13.11-M2": "May 18, 2023",
             "2.13.11-M1": "Mar 06, 2023",
@@ -14723,6 +14680,9 @@
             "Central"
         ],
         "versions": {
+            "3.4.0-RC1-bin-20230907-08...": "Central",
+            "3.4.0-RC1-bin-20230906-5e...": "Central",
+            "3.4.0-RC1-bin-20230904-6d...": "Central",
             "3.4.0-RC1-bin-20230901-89...": "Central",
             "3.4.0-RC1-bin-20230831-4c...": "Central",
             "3.4.0-RC1-bin-20230830-45...": "Central",
@@ -14790,6 +14750,7 @@
             "3.3.2-RC1-bin-20230601-88...": "Central",
             "3.3.2-RC1-bin-20230531-d0...": "Central",
             "3.3.2-RC1-bin-20230530-28...": "Central",
+            "3.3.1": "Central",
             "3.3.1-RC7": "Central",
             "3.3.1-RC6": "Central",
             "3.3.1-RC5": "Central",
@@ -15635,6 +15596,7 @@
             "3.3.0-SNAP4": "",
             "3.3.0-SNAP3": "",
             "3.3.0-SNAP2": "",
+            "3.2.17": "",
             "3.2.16": "",
             "3.2.15": "",
             "3.2.14": "",
@@ -15928,6 +15890,7 @@
             "Central"
         ],
         "versions": {
+            "2.0.11": "",
             "2.0.10": "",
             "2.0.8": "",
             "2.0.7": "",
@@ -16007,6 +15970,8 @@
             "ICM"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16111,6 +16076,8 @@
             "JBoss 3rd-party"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16219,6 +16186,8 @@
             "ICM"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16333,6 +16302,8 @@
             "ICM"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16430,9 +16401,9 @@
         }
     },
     "org.slf4j.slf4j-jdk14": {
-        "name": "SLF4J JDK14 Binding",
+        "name": "SLF4J JDK14 Provider",
         "page": "https://mvnrepository.com/artifact/org.slf4j/slf4j-jdk14",
-        "description": "SLF4J JDK14 Binding",
+        "description": "SLF4J JDK14 Provider",
         "coordinates": "org.slf4j.slf4j-jdk14",
         "logo": "https://mvnrepository.com/img/ebaccb6488ec3cd6879842fb30407555",
         "categories": [
@@ -16450,6 +16421,8 @@
             "JBoss 3rd-party"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16583,6 +16556,8 @@
             "ICM"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 12, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16687,9 +16662,9 @@
         }
     },
     "org.slf4j.slf4j-reload4j": {
-        "name": "SLF4J Reload4j Binding",
+        "name": "SLF4J Reload4j Provider",
         "page": "https://mvnrepository.com/artifact/org.slf4j/slf4j-reload4j",
-        "description": "SLF4J Reload4j Binding",
+        "description": "SLF4J Reload4j Provider",
         "coordinates": "org.slf4j.slf4j-reload4j",
         "logo": "https://mvnrepository.com/img/ebaccb6488ec3cd6879842fb30407555",
         "tags": [
@@ -16700,6 +16675,8 @@
             "Central"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
@@ -16719,7 +16696,7 @@
         }
     },
     "org.slf4j.slf4j-simple": {
-        "name": "SLF4J Simple Binding",
+        "name": "SLF4J Simple Provider",
         "page": "https://mvnrepository.com/artifact/org.slf4j/slf4j-simple",
         "description": "Binding/provider for SLF4J, which outputs all events to System.err. Only messages of level INFO and higher are printed.",
         "coordinates": "org.slf4j.slf4j-simple",
@@ -16739,6 +16716,8 @@
             "ICM"
         ],
         "versions": {
+            "2.0.9": "Sep 03, 2023",
+            "2.0.8": "Sep 03, 2023",
             "2.0.7": "Mar 17, 2023",
             "2.0.6": "Dec 13, 2022",
             "2.0.5": "Nov 25, 2022",
