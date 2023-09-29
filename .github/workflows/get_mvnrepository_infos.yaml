@@ -17,7 +17,7 @@ jobs:
       with: 
         path: aadarchi-technology-detector
     - name: Clone TechEmpower benchmarks repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: TechEmpower/FrameworkBenchmarks
         ref: master
