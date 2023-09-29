@@ -4,13 +4,23 @@ on:
     - cron: '0 6 * * 0'
   workflow_dispatch:
 jobs:
-  test:
+  read_mvn_repository:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3
+    - name: Clone local repository locally
+      uses: actions/checkout@v3
+      with: 
+        path: aadarchi-technology-detector
+    - name: Clone TechEmpower benchmarks repository
+      uses: actions/checkout@v2
+      with:
+        repository: TechEmpower/FrameworkBenchmarks
+        ref: master
+        path: FrameworkBenchmarks
+        clean: false
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -21,14 +31,6 @@ jobs:
         pip install -r requirements.txt
     - name: Ensure browsers are installed
       run: python -m playwright install --with-deps
-    - name: Clone TechEmpower benchmarks repository
-      uses: actions/checkout@v2
-      with:
-        repository: TechEmpower/FrameworkBenchmarks
-        ref: master
-        path: ..
-        clean: false
-
     - name: Set up JDK 11
       uses: actions/setup-java@v3
       with:
@@ -40,9 +42,9 @@ jobs:
     - name: Run mvnrepository extraction code
     # xcfb is needed since we have some UI selector elements
       run: |
-        xvfb-run python mvnrepository/extract_popular_mvnrepository_artifacts.py
+        xvfb-run python aadarchi-technology-detector/mvnrepository/extract_popular_mvnrepository_artifacts.py
         mkdir target
-        mv mvnrepository/artifacts.json target/artifacts.json
+        mv aadarchi-technology-detector/mvnrepository/artifacts.json target/artifacts.json
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:
