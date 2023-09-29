@@ -58,13 +58,28 @@ def identify_interesting_artifact_dependencies_in(framework_path):
                     logger.info("found interesting dependency {}".format(dependency))
     return returned
 
+def find_frameworks_folder_in(folder):
+    '''
+    If the given folder contains the FrameworkBenchmarks/frameworks folder, return it.
+    Otherwise test with parent.
+    If folder is null, throw a ValueError
+    '''
+    returned = os.path.join(folder,"FrameworkBenchmarks/frameworks")
+    if os.path.isdir(returned):
+        return returned
+    elif not folder:
+        raise ValueError("couldn't find framewok folder")
+    else:
+        return find_frameworks_folder_in(os.path.dirname(folder))
+
+
 def identify_interesting_artifacts_in_techempower():
     '''
     Identify interesting artifacts in **local** clone of techempower frameworks (git@github.com:TechEmpower/FrameworkBenchmarks.git)
     For this to work optimally, the associated git repo must be in main branch
     '''
     interesting_artifacts_urls = []
-    frameworks_folder = "../FrameworkBenchmarks/frameworks"
+    frameworks_folder = find_frameworks_folder_in(os.path.dirname(__file__))
     files_and_dirs = os.listdir(frameworks_folder)
     if not files_and_dirs:
         logger.error("There must be a problem : frameworks folder {} seems to be empty".format(os.path.abspath(frameworks_folder)))
@@ -127,7 +142,7 @@ def load_local_artifacts(browser_tab):
     '''
     Load a list of artifacts from a local file.
     '''
-    if os.path.isfile(output_file):
+    if os.path.isfile("interesting_artifacts.json"):
         with open(output_file, 'r') as file:
             return file.read().splitlines()
     return []
@@ -138,9 +153,9 @@ def locate_interesting_artifacts(browser_tab):
     (techempower benchmarks, medium clone, ...)
     '''
     interesting_artifacts_urls = []
-    interesting_artifacts_urls.extend(locate_popular_artifacts(browser_tab))
-    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
     interesting_artifacts_urls.extend(load_local_artifacts(browser_tab))
+    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
+    interesting_artifacts_urls.extend(locate_popular_artifacts(browser_tab))
 # Now we have a big list full of duplicates, dedup!
     return list(set(interesting_artifacts_urls))
 
