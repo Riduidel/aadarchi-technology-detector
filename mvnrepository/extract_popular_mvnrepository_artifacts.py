@@ -43,10 +43,19 @@ def identify_interesting_artifact_dependencies_in(framework_path):
     logger.info("Will run command {} in folder {}".format(
         command, framework_path))
     if not os.path.isfile(output_file):
-        subprocess.run(command,
-            check=False,
-            shell=True,
-            cwd=framework_path)
+        def run_in_maven(command):
+            return subprocess.run(command,
+                check=False,
+                shell=True,
+                cwd=framework_path)
+        execution_result = run_in_maven(command)
+        if execution_result.returncode!=0:
+            # We will try to install the project, then rerun the command
+            run_in_maven("mvn install")
+            # Then rerun command (and hope for the result to be ok)
+            execution_result = run_in_maven(command)
+            if execution_result.returncode!=0:
+                logger.error("Unable to compile %s to have valid dependencies", framework_path)
     returned = []
     # Now the command has run, it is time to load the results
     if os.path.isfile(output_file):
