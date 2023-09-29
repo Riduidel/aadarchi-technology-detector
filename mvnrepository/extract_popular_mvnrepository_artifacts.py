@@ -42,7 +42,7 @@ def identify_interesting_artifact_dependencies_in(framework_path):
     command = "mvn dependency:list -DexcludeTransitive -DoutputFile={}".format(output_file)
     logger.info("Will run command {} in folder {}".format(
         command, framework_path))
-    if not output_file:
+    if not os.path.isfile(output_file):
         subprocess.run(command,
             check=False,
             shell=True,
