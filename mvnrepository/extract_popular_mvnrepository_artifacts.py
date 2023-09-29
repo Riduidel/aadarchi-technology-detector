@@ -107,14 +107,19 @@ def identify_interesting_artifacts(browser_tab):
 def load_artifact(browser_tab, page_to_load):
     ''' Augment known details from artifact with all known versions, some artifact redirections, categories, and so on'''
     logger.debug("processing artifact %s", page_to_load)
-    response = browser_tab.goto(page_to_load)
-    if response.status<300:
-        # Now we're on artifact page, let's read all details
-        script = load_javascript("artifact_details_extractor.js")
-        return browser_tab.evaluate(script)
-    else:
-        logger.error("Unable to process artifact %s due to %s", page_to_load, response.status_text)
-        return None
+    tries = 0
+    while tries<5:
+        try:
+            response = browser_tab.goto(page_to_load)
+            if response.status<300:
+                # Now we're on artifact page, let's read all details
+                script = load_javascript("artifact_details_extractor.js")
+                return browser_tab.evaluate(script)
+            else:
+                logger.error("Unable to process artifact %s due to %s", page_to_load, response.status_text)
+                return None
+        except Error:
+            tries = tries+1
 
 def locate_popular_artifacts(browser_tab, page_to_load="https://%s/popular"%(SERVER)):
     '''
