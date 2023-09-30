@@ -26,8 +26,11 @@ def load_javascript(javascript_file):
         return file.read()
 
 SERVER = "mvnrepository.com"
+def identify_interesting_artifact_dependencies_in_gradle_project(framework_path):
+    logger.error("TODO implement gradle project analysis for %s", framework_path)
+    return []
 
-def identify_interesting_artifact_dependencies_in(framework_path):
+def identify_interesting_artifact_dependencies_in_maven_project(framework_path):
     '''
     Load interesting dependencies of given pom.
     You know how to do it the easiest way? By gently asking the dependencies maven plugin!
@@ -103,9 +106,11 @@ def identify_interesting_artifacts_in_techempower():
                     logger.info("Now exploring {}".format(os.path.abspath(framework_full_path)))
                     # Now we have a framework path, if it is has a maven pom, everything is cool
                     if os.path.exists(framework_full_path+"/pom.xml"):
-                        interesting_artifacts_urls.extend(identify_interesting_artifact_dependencies_in(framework_full_path))
+                        interesting_artifacts_urls.extend(identify_interesting_artifact_dependencies_in_maven_project(framework_full_path))
+                    elif os.path.exists(framework_full_path+"/build.gradle"):
+                        interesting_artifacts_urls.extend(identify_interesting_artifact_dependencies_in_gradle_project(framework_full_path))
                     else:
-                        logger.error("Pretty sure {} uses Gradle. How to parse infos in?")
+                        logger.error("Pretty sure %s uses Gradle. How to parse infos in?", framework_full_path)
     return interesting_artifacts_urls
 
 def identify_interesting_artifacts(browser_tab):
@@ -156,7 +161,7 @@ def load_local_artifacts(browser_tab):
     '''
     Load a list of artifacts from a local file.
     '''
-    if os.path.isfile("interesting_artifacts.json"):
+    if os.path.isfile("interesting_artifacts.txt"):
         with open(output_file, 'r') as file:
             return file.read().splitlines()
     return []
