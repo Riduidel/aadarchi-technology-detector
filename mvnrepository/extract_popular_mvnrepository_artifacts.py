@@ -161,8 +161,9 @@ def load_local_artifacts(browser_tab):
     '''
     Load a list of artifacts from a local file.
     '''
-    if os.path.isfile("interesting_artifacts.txt"):
-        with open(output_file, 'r') as file:
+    interesting_local_artifacts = os.path.join(os.path.dirname(__file__), "interesting_artifacts.txt")
+    if os.path.isfile(interesting_local_artifacts):
+        with open(interesting_local_artifacts, 'r') as file:
             return file.read().splitlines()
     return []
 
