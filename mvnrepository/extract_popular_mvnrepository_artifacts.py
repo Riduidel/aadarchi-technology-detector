@@ -189,8 +189,8 @@ def locate_interesting_artifacts(browser_tab):
     returns a list of ArtifactInformations
     '''
     interesting_artifacts_urls = []
-#    interesting_artifacts_urls.extend(load_local_artifacts(browser_tab))
-#    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
+    interesting_artifacts_urls.extend(load_local_artifacts(browser_tab))
+    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
     interesting_artifacts_urls.extend(locate_popular_artifacts(browser_tab))
 # Now we have a big list full of duplicates, dedup!
     return list(set(interesting_artifacts_urls))
