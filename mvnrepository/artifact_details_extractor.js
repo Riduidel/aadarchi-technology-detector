@@ -50,7 +50,10 @@ function extract_artifact_details() {
         if(relocation && relocation.querySelectorAll("td").length==1) {
             links = Array.from(relocation.querySelectorAll("a"))
             artifact["relocation"] = {
-                "page": toUrl(links[links.length-1].getAttribute("href")),
+                "page": {
+                    groupId: links[0].text,
+                    artifactId: links[1].text
+                },
                 "coordinates": links.map(element => element.innerText).join(".")
             }
         }

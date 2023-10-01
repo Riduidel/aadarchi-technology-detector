@@ -21,11 +21,41 @@ ch.setFormatter(formatter)
 
 logger.addHandler(ch)
 
+SERVER = "mvnrepository.com"
+
+class ArtifactInformations:
+    # The artifact group id. Should never be null
+    groupId=None
+    # The artifact id, which should never be null
+    artifactId=None
+
+    def __init__(self, **kwargs):
+        if 'groupId' in kwargs:
+            self.groupId = kwargs['groupId']
+        if 'artifactId' in kwargs:
+            self.artifactId = kwargs['artifactId']
+    def to_json(self, browser_tab):
+        ''' Augment known details from artifact with all known versions, some artifact redirections, categories, and so on'''
+        page_to_load = f"https://{SERVER}/artifact/{self.groupId}/{self.artifactId}"
+        logger.debug("processing artifact %s", page_to_load)
+        tries = 0
+        while tries<5:
+            try:
+                response = browser_tab.goto(page_to_load)
+                if response.status<300:
+                    # Now we're on artifact page, let's read all details
+                    script = load_javascript("artifact_details_extractor.js")
+                    return browser_tab.evaluate(script)
+                else:
+                    logger.error("Unable to process artifact %s due to %s", page_to_load, response.status_text)
+                    return None
+            except Error:
+                tries = tries+1
+
 def load_javascript(javascript_file):
     with open("%s/%s"%(parent_path, javascript_file), 'r') as file:
         return file.read()
 
-SERVER = "mvnrepository.com"
 def identify_interesting_artifact_dependencies_in_gradle_project(framework_path):
     logger.error("TODO implement gradle project analysis for %s", framework_path)
     return []
@@ -66,7 +96,7 @@ def identify_interesting_artifact_dependencies_in_maven_project(framework_path):
             command_result = file.read()
             if command_result:
                 for dependency in re.findall("\s+([^:^\s]+):([^:^\s]+):", command_result):
-                    returned.append("https://{}/artifact/{}/{}".format(SERVER, dependency[0], dependency[1]))
+                    returned.append(ArtifactInformations(groupId=dependency[0], artifactId=dependency[1]))
                     logger.info("found interesting dependency {}".format(dependency))
     return returned
 
@@ -118,23 +148,6 @@ def identify_interesting_artifacts(browser_tab):
     interesting_artifacts_urls.extend(identify_interesting_artifacts_in_techempower())
     return interesting_artifacts_urls
 
-def load_artifact(browser_tab, page_to_load):
-    ''' Augment known details from artifact with all known versions, some artifact redirections, categories, and so on'''
-    logger.debug("processing artifact %s", page_to_load)
-    tries = 0
-    while tries<5:
-        try:
-            response = browser_tab.goto(page_to_load)
-            if response.status<300:
-                # Now we're on artifact page, let's read all details
-                script = load_javascript("artifact_details_extractor.js")
-                return browser_tab.evaluate(script)
-            else:
-                logger.error("Unable to process artifact %s due to %s", page_to_load, response.status_text)
-                return None
-        except Error:
-            tries = tries+1
-
 def locate_popular_artifacts(browser_tab, page_to_load="https://%s/popular"%(SERVER)):
     '''
     To get popular artifacts, we start from an initial page and navigate the next button as long as it is not grayed out.
@@ -147,14 +160,12 @@ def locate_popular_artifacts(browser_tab, page_to_load="https://%s/popular"%(SER
         logger.info("Loading page %s"%page_to_load)
         browser_tab.goto(page_to_load)
         page_infos = browser_tab.evaluate(script)
-        popular_artifacts_urls.extend(page_infos["data"])
+        for artifact in page_infos["data"]:
+            popular_artifacts_urls.append(ArtifactInformations(**artifact))
         if "next" in page_infos["page"] and page_infos["page"]["next"]:
             page_to_load = page_infos["page"]["next"]
         else:
             page_to_load = None
-    for url in popular_artifacts_urls:
-        if not "mvnrepository" in url:
-            logger.warning("The url %s is not complete during parsing lists. How is it even possible?", url)
     return popular_artifacts_urls
 
 def load_local_artifacts(browser_tab):
@@ -164,17 +175,22 @@ def load_local_artifacts(browser_tab):
     interesting_local_artifacts = os.path.join(os.path.dirname(__file__), "interesting_artifacts.txt")
     if os.path.isfile(interesting_local_artifacts):
         with open(interesting_local_artifacts, 'r') as file:
-            return file.read().splitlines()
+            returned = []
+            file_contents = file.read()
+            for dependency in re.findall("artifact/([^/]+)/([^/]+)/", file_contents):
+                returned.append(ArtifactInformations(groupId=dependency[0], artifactId=dependency[1]))
     return []
 
 def locate_interesting_artifacts(browser_tab):
     '''
     Combines both the mvn repository popular artifacts and some interesting projects 
     (techempower benchmarks, medium clone, ...)
+
+    returns a list of ArtifactInformations
     '''
     interesting_artifacts_urls = []
-    interesting_artifacts_urls.extend(load_local_artifacts(browser_tab))
-    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
+#    interesting_artifacts_urls.extend(load_local_artifacts(browser_tab))
+#    interesting_artifacts_urls.extend(identify_interesting_artifacts(browser_tab))
     interesting_artifacts_urls.extend(locate_popular_artifacts(browser_tab))
 # Now we have a big list full of duplicates, dedup!
     return list(set(interesting_artifacts_urls))
@@ -194,13 +210,11 @@ def get_popular_artifacts():
         popular_artifacts_urls = popular_artifacts_urls_reference.copy()
         # Now we have the artifact urls, it's time to transform that into artifacts infos
         while popular_artifacts_urls:
-            url = popular_artifacts_urls.pop()
+            artifact = popular_artifacts_urls.pop()
             if len(popular_artifacts_urls)%10==0:
                 logger.info("%d artifacts remaining.", len(popular_artifacts_urls))
-            if not "mvnrepository" in url:
-                logger.warning("The url %s is not complete for detailled analysis. How is it even possible?", url)
             # For each artifact, extract more informations from artifact home page
-            artifact_infos = load_artifact(browser_tab, url)
+            artifact_infos = artifact.to_json(browser_tab)
             if artifact_infos:
                 if "Central" in artifact_infos["repositories"]:
                     popular_artifacts[artifact_infos["coordinates"]] = artifact_infos
@@ -212,7 +226,7 @@ def get_popular_artifacts():
                             logger.warning("artifact %s (see %s) has an invalid relocation definition, it will be ignored", 
                                 artifact_infos["name"], artifact_infos["page"])
                         else:
-                            popular_artifacts_urls.append(artifact_infos["relocation"]["page"])
+                            popular_artifacts_urls.append(ArtifactInformations(**artifact_infos["relocation"]["page"]))
         browser.close()
         # Notice we don't get any version here!
         return dict(sorted(popular_artifacts.items()))
