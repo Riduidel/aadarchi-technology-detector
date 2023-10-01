@@ -1,17 +1,18 @@
 function locate_artifacts_urls() {
-    /**
-     * Locate in an mvnrepository page the list of artifact urls and the pagination infos
-     */
     function toUrl(url) {
         return url.startsWith("https://") ? url : 
             url.startsWith("/") ? "https://"+document.domain+url : window.location.href.split('?')[0]+url
     }
     const main = document.querySelector(".content")
-    const artifacts = Array.from(main.querySelectorAll(".im-title a"))
-        // This filters out the usage
-        .filter(link => link.getAttribute("class")==null)
-        .map(link => link.getAttribute("href"))
-        .map(url => toUrl(url))
+    function toMap(paragraph) {
+        links = paragraph.querySelectorAll("a")
+        return {
+            groupId: links[0].text,
+            artifactId: links[1].text
+        }
+    }
+    const artifacts = Array.from(main.querySelectorAll(".im-subtitle"))
+        .map(paragraph => toMap(paragraph))
 
     const nav = main.querySelector("ul.search-nav")
     const pages = nav.querySelectorAll("li")
