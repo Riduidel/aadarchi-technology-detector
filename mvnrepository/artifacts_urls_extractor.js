@@ -4,15 +4,12 @@ function locate_artifacts_urls() {
             url.startsWith("/") ? "https://"+document.domain+url : window.location.href.split('?')[0]+url
     }
     const main = document.querySelector(".content")
-    function toMap(paragraph) {
-        links = paragraph.querySelectorAll("a")
-        return {
-            groupId: links[0].text,
-            artifactId: links[1].text
-        }
-    }
     const artifacts = Array.from(main.querySelectorAll(".im-subtitle"))
-        .map(paragraph => toMap(paragraph))
+        .map(paragraph => paragraph.innerText)
+        .map(text => text.substring(0, text.indexOf("\n")))
+        .map(text => text.split(" "))
+        .filter(array => array.length>2)
+        .map(function(array) { return {"groupId":array[0], "artifactId":array[array.length-1]}})
 
     const nav = main.querySelector("ul.search-nav")
     const pages = nav.querySelectorAll("li")

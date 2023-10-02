@@ -1,0 +1,12 @@
+[
+{ "groupId": "io.quarkus"},
+{ "groupId": "com.fizzed", "artifactId": "rocker-runtime"},
+{ "groupId": "com.google.guava", "artifactId": "guava"},
+{ "groupId": "io.netty", "artifactId": "netty-buffer"},
+{ "groupId": "io.netty", "artifactId": "netty-common"},
+{ "groupId": "io.netty", "artifactId": "netty-transport-native-epoll"},
+{ "groupId": "io.vertx", "artifactId": "vertx-core"},
+{ "groupId": "io.vertx", "artifactId": "vertx-web-templ-rocker"},
+{ "groupId": "org.hibernate.orm", "artifactId": "hibernate-core"},
+{ "groupId": "org.hibernate.reactive", "artifactId": "hibernate-reactive-core"}
+]
