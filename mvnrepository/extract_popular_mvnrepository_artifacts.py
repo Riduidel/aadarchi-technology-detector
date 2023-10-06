@@ -94,7 +94,7 @@ class Loader:
             self.browser_tab.goto(page_to_load)
             page_infos = self.browser_tab.evaluate(script)
             if not page_infos["data"]:
-                raise ValueError(f"Page {page_to_load} has empty data {page_infos}")
+                logger.warning(f"Page {page_to_load} has empty data {page_infos}")
             for artifact in page_infos["data"]:
                 popular_artifacts_urls.append(ArtifactInformations(**artifact))
             if "next" in page_infos["page"] and page_infos["page"]["next"]:
