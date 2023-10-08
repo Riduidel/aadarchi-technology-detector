@@ -29,20 +29,21 @@ function extract_artifact_details() {
     // Yeah, there is a bad TBODY in that table
     for(row of artifact_details.children[0].children) {
         header_cell = row.children[0].innerText.toLowerCase()
-        value_cell = Array.from(row.children[1].children).map(node => node.innerText)+""
         if(header_cell=="categories") {
             artifact["categories"] = Array.from(row.children[1].children).map(node => node.innerText)
         } else if(header_cell=="tags") {
-            artifact["tags"] = value_cell
+            artifact["tags"] = Array.from(row.children[1].children).map(node => node.innerText)
         } else if(header_cell=="ranking") {
             re = /#(\d+) in/g
+            value_cell = Array.from(row.children[1].children).map(node => node.innerText)+""
             if(result = re.exec(value_cell)) {
                 artifact["ranking"] = result[1]
             } else {
                 console.log("no match found in text "+value_cell)
             }
         } else if(header_cell=="used by") {
-            artifact["users"] = value_cell.substring(0, value_cell.indexOf(" "))
+            value_cell = Array.from(row.children[1].children).map(node => node.innerText)+""
+            artifact["users"] = value_cell.substring(0, value_cell.indexOf(" ")).replace(",", "")
         } else {
             console.log(header_cell+" cell not processed")
         }
