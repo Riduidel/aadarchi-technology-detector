@@ -123,7 +123,10 @@ class LocalFile(Loader):
                     else:
                         groupId = a["groupId"]
                         artifacts_of_group = self.load_page_list(f"https://{SERVER}/artifact/{groupId}")
-                        returned.extend(artifacts_of_group)
+                        for artifact in artifacts_of_group:
+                            # We may find artifacts of subgroups, which we do not want
+                            if artifact.groupId==groupId:
+                                returned.append(artifact)
         return returned
 
 class TechEmpower(Loader):
