@@ -31,7 +31,7 @@ function extract_artifact_details() {
         header_cell = row.children[0].innerText.toLowerCase()
         value_cell = Array.from(row.children[1].children).map(node => node.innerText)+""
         if(header_cell=="categories") {
-            artifact["categories"] = Array.from(row.children[1].children)
+            artifact["categories"] = Array.from(row.children[1].children).map(node => node.innerText)
         } else if(header_cell=="tags") {
             artifact["tags"] = value_cell
         } else if(header_cell=="ranking") {
