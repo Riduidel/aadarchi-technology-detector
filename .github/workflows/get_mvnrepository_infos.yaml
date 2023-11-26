@@ -33,8 +33,9 @@ jobs:
       run: |
         sudo apt update
         sudo apt install curl -y
-        sudo curl -Ls https://sh.jbang.dev | bash -s - app setup
-        source ~/.bashrc
+        curl -s "https://get.sdkman.io" | bash
+        source ~/.bash_profile
+        sdk install jbang
     - name: Ensure jbang is available
       run: |
         jbang --help
