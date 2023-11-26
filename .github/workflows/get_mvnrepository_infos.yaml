@@ -38,9 +38,6 @@ jobs:
         sdk help
         sdk install jbang
         jbang --help
-    - name: Run mvnrepository extraction code
-    # xcfb is needed since we have some UI selector elements
-      run: |
         cd aadarchi-technology-detector/mvnrepository/
         xvfb-run jbang ExtractPopularMvnRepositoryArtifacts.java
         mkdir target
