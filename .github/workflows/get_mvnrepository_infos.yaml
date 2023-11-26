@@ -29,12 +29,14 @@ jobs:
         distribution: adopt
         java-version: 17
         cache: 'maven'
-    - name: Setup JBang
+    - name: Setup SDKMan
       run: |
         sudo apt update
         sudo apt install curl -y
         curl -s "https://get.sdkman.io" | bash
-        source ~/.bash_profile
+        source "/home/runner/.sdkman/bin/sdkman-init.sh"
+    - name: Setup JBang
+      run: |
         sdk install jbang
     - name: Ensure jbang is available
       run: |
