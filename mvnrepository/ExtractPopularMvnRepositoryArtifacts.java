@@ -306,7 +306,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	        	FileUtils.write(cachedArtifacts.toFile(), json, "UTF-8");
         	}
         	Collection allDetails = obtainAllDetails(context, allArtifactInformations);
-	        logger.info("Exporting artifacts to " + output);
+	        logger.info("Exporting artifacts to " + output.toAbsolutePath().toFile().getAbsolutePath());
 	        FileUtils.write(output.toFile(), gson.toJson(allDetails), "UTF-8");
 	        logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), output));
         }
