@@ -29,21 +29,15 @@ jobs:
         distribution: adopt
         java-version: 17
         cache: 'maven'
-    - name: Setup SDKMan
+    - name: Run everything in the same step
       run: |
         sudo apt update
         sudo apt install curl -y
         curl -s "https://get.sdkman.io" | bash
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
         sdk help
-    - name: Setup JBang
-      run: |
         sdk install jbang
-    - name: Ensure jbang is available
-      run: |
         jbang --help
-    - name: Ensure we have both directories locally
-      run: tree -d -L 3
     - name: Run mvnrepository extraction code
     # xcfb is needed since we have some UI selector elements
       run: |
