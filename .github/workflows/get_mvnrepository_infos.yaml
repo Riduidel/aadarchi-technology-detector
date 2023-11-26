@@ -35,6 +35,9 @@ jobs:
         sudo apt install curl -y
         sudo curl -Ls https://sh.jbang.dev | bash -s - app setup
         source ~/.bashrc
+    - name: Ensure jbang is available
+      run: |
+        jbang --help
     - name: Ensure we have both directories locally
       run: tree -d -L 3
     - name: Run mvnrepository extraction code
