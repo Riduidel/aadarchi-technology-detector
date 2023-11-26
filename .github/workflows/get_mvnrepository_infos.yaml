@@ -34,6 +34,7 @@ jobs:
         sudo apt update
         sudo apt install curl -y
         sudo curl -Ls https://sh.jbang.dev | bash -s - app setup
+        source ~/.bashrc
     - name: Ensure we have both directories locally
       run: tree -d -L 3
     - name: Run mvnrepository extraction code
