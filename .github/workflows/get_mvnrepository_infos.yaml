@@ -35,6 +35,7 @@ jobs:
         sudo apt install curl -y
         curl -s "https://get.sdkman.io" | bash
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
+        sdk help
     - name: Setup JBang
       run: |
         sdk install jbang
