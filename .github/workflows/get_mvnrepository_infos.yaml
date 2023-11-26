@@ -31,9 +31,9 @@ jobs:
         cache: 'maven'
     - name: Setup JBang
       run: |
-        apt update
-        apt install curl -y
-        curl -Ls https://sh.jbang.dev | bash -s - app setup
+        sudo apt update
+        sudo apt install curl -y
+        sudo curl -Ls https://sh.jbang.dev | bash -s - app setup
     - name: Ensure we have both directories locally
       run: tree -d -L 3
     - name: Run mvnrepository extraction code
