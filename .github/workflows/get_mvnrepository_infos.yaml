@@ -40,6 +40,7 @@ jobs:
         jbang --help
         cd aadarchi-technology-detector/mvnrepository/
         xvfb-run jbang ExtractPopularMvnRepositoryArtifacts.java
+        cd ../..
         mkdir target
         mv aadarchi-technology-detector/mvnrepository/artifacts.json target/artifacts.json
     - name: Deploy
