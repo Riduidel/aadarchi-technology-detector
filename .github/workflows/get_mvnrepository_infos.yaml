@@ -23,8 +23,6 @@ jobs:
         ref: master
         path: FrameworkBenchmarks
         clean: false
-    - name: Ensure browsers are installed
-      run: cd aadarchi-technology-detector/ && python -m playwright install --with-deps
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
