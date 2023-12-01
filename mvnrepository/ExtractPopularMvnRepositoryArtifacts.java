@@ -55,12 +55,9 @@ import picocli.CommandLine.Option;
 class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
 
-	private static boolean RUNNING_ON_WINDOWS;
-
 	private static String artifactsDetailsExtractor;
 	
 	static {
-		RUNNING_ON_WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
 		var file = new File("artifact_details_extractor.js");
 		try {
 			artifactsDetailsExtractor = FileUtils.readFileToString(file, "UTF-8");
@@ -273,10 +270,6 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-	/**
-	 * Contains pat of this very script
-	 */
-	private File currentFile;
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
         System.exit(exitCode);
@@ -284,21 +277,20 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-    	this.currentFile = new File(getClass().getProtectionDomain().getCodeSource().getLocation()
-    		    .toURI());
         try (Playwright playwright = Playwright.create()) {
         	BrowserContext context = createPlaywrightContext(playwright);
-        	var detailsPage = newPage(context);
+        	// An empty browser page used to make sure the browser window doesn't move over time
+        	var emptyPage = newPage(context);
         	logger.info("Reading popular artifacts from multiple sources");
         	List<ArtifactInformations> allArtifactInformations = null;
         	if(cachedArtifacts.toFile().exists()) {
         		var json = FileUtils.readFileToString(cachedArtifacts.toFile(), "UTF-8");
-        		allArtifactInformations = gson.fromJson(artifactsDetailsExtractor, new TypeToken<List<ArtifactInformations>>() {});
+        		allArtifactInformations = gson.fromJson(json, new TypeToken<List<ArtifactInformations>>() {});
         	} else {
 	        	// Get the loaders
 	        	allArtifactInformations = fetchArtifactInformations(context, 
 	        			Arrays.asList(
-	        					new LocalFileArtifactLoader(localInterestingArtifacts),
+//	        					new LocalFileArtifactLoader(localInterestingArtifacts),
 	        					new PopularArtifactLoader(),
 	        					new TechEmpowerArtifactLoader(techEmpowerFrameworks)
 										));
@@ -412,6 +404,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     			);
     	BrowserContext context = chromium.newContext();
     	context.addInitScript("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})");
+    	context.setDefaultTimeout(0);
     	return context;
 	}
 }
