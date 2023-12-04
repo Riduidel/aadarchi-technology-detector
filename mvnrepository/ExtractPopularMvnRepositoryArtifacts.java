@@ -195,6 +195,15 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 					.map(d -> new ArtifactInformations(d.getGroupId(), d.getArtifactId()))
 					.peek(a -> logger.info("read artifact "+a))
 					.forEach(a -> returned.add(a));
+				// If pom has submodules, also explore them
+				// (that could get us rid of the interesting_artifacts thingie
+				mavenProject.getModel().getModules().stream()
+					.forEach(module -> {
+						var modulePom = new File(new File(pomFile.getParentFile(), module), "pom.xml");
+						if(modulePom.exists()) {
+							returned.addAll(identifyInterestingDependenciesInMaven(modulePom));
+						}
+					});
 			} catch (IOException | XmlPullParserException e) {
 				logger.log(Level.SEVERE, e, () -> String.format("unable to get informations from pom %s", pomFile));
 			}
