@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
@@ -55,17 +56,6 @@ import picocli.CommandLine.Option;
 class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
 
-	private static String artifactsDetailsExtractor;
-	
-	static {
-		var file = new File("artifact_details_extractor.js");
-		try {
-			artifactsDetailsExtractor = FileUtils.readFileToString(file, "UTF-8");
-		} catch (IOException e) {
-			throw new UnsupportedOperationException(String.format("Unable to load script from %s",  file.getAbsolutePath()), e);
-		}
-	}
-	
 	public static class ArtifactInformations implements Comparable<ArtifactInformations> {
 
 		public final String groupId;
@@ -279,6 +269,9 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+	private String artifactDetailsExtractor;
+
+
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
         System.exit(exitCode);
@@ -399,11 +392,23 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		Map pageInfos = null;
 		if(response.status()<300) {
 			logger.info(String.format("Reading details of %s", url));
-			pageInfos = ((Map) page.evaluate(artifactsDetailsExtractor));
+			pageInfos = ((Map) page.evaluate(getArtifactDetailsExtractor()));
 		} else {
 			logger.warning(String.format("Failed to load %s, status is %s", url, response.status()));
 		}
 		return Optional.ofNullable(pageInfos);
+	}
+
+	private String getArtifactDetailsExtractor() {
+		if(artifactDetailsExtractor==null) {
+			File extractor = new File(String.format("artifact_details_extractor.js"));
+			try {
+				artifactDetailsExtractor = FileUtils.readFileToString(extractor, "UTF-8");
+			} catch (IOException e) {
+				throw new UnsupportedOperationException("can't read file");
+			}
+		}
+		return artifactDetailsExtractor;
 	}
 
 	private BrowserContext createPlaywrightContext(Playwright playwright) {
