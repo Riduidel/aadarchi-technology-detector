@@ -366,9 +366,15 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 			List<ExtractPopularMvnRepositoryArtifacts.ArtifactInformations> allArtifactInformations) throws IOException {
     	Git git = Git.open(gitHistory.toFile());
     	// First thing first, fill our cache with all remote infos we can have
-    	allArtifactInformations.stream()
-    		.forEach(Throwing.consumer(
-    				artifact -> cacheHistoryOf(context, artifact)));
+    	var everythingIsDownloaded = allArtifactInformations.stream()
+    		.map(Throwing.function(
+    				artifact -> cacheHistoryOf(context, artifact)))
+    		.reduce(true, (acc, value) -> acc && value);
+    	if(everythingIsDownloaded) {
+    		logger.info("Now we can start aggregating data");
+    	} else {
+    		logger.warning("Not all informations were downloaded, you'll have to retry");
+    	}
 	}
 
     /**
@@ -516,7 +522,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 			String url) {
 		Response response = page.navigate(url, new NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
 		Map pageInfos = null;
-		if(response.status()<300) {
+		if(response!=null && response.status()<300) {
 			logger.info(String.format("Reading details of %s", url));
 			pageInfos = ((Map) page.evaluate(getArtifactDetailsExtractor()));
 		} else {
