@@ -6,9 +6,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Path;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -24,22 +34,26 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.eclipse.jgit.api.Git;
 
 import com.github.fge.lambdas.Throwing;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.Response;
+import com.microsoft.playwright.options.WaitUntilState;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -51,12 +65,22 @@ import picocli.CommandLine.Option;
 //DEPS com.github.fge:throwing-lambdas:0.5.0
 //DEPS org.apache.commons:commons-lang3:3.13.0
 //DEPS org.apache.maven:maven-project:2.2.1
+//DEPS org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r
+
 @Command(name = "ExtractPuploarMvnRepositoryArtifacts", mixinStandardHelpOptions = true, version = "ExtractPuploarMvnRepositoryArtifacts 0.1",
         description = "ExtractPuploarMvnRepositoryArtifacts made with jbang")
 class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
+	public static DateFormat INTERNET_ARCHIVE_DATE_FORMAT = new SimpleDateFormat("YYYYMMDDHHmmss");
 
-	public static class ArtifactInformations implements Comparable<ArtifactInformations> {
+	record ArchivePoint(String urlkey, 
+    		Date timestamp, 
+    		String original, 
+    		String digest,
+    		String length) {
+	}
+
+	public class ArtifactInformations implements Comparable<ArtifactInformations> {
 
 		public final String groupId;
 		public final String artifactId;
@@ -95,6 +119,12 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 					.append(artifactId, o.artifactId)
 					.toComparison();
 		}
+		String getArtifactUrl(String mvnRepositoryServer) {
+			return String.format("%s/artifact/%s/%s", mvnRepositoryServer, 
+					groupId,
+					artifactId);
+		}
+
 	}
 	
 	public abstract class ArtifactLoader {
@@ -231,7 +261,6 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		public Set<ArtifactInformations> loadArtifacts(Page page) throws IOException {
 			// Read the reference file
 			var text = FileUtils.readFileToString(referenceFile.toFile(), "UTF-8");
-			Gson gson = new Gson();
 			List<Map<String, String>> entries = gson.fromJson(text, List.class);
 			Set<ArtifactInformations> returned = new HashSet<ArtifactInformations>();
 			entries.forEach(artifact -> returned.addAll(getArtifactInformations(page, artifact)));
@@ -260,12 +289,25 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "interesting_artifacts.json")
     private Path localInterestingArtifacts;
 
-    @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", defaultValue = "../../FrameworkBenchmarks/frameworks")
+    @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
+    		defaultValue = "../../FrameworkBenchmarks/frameworks")
     private Path techEmpowerFrameworks;
-    @Option(names = {"--searched-artifacts-cache"}, description = "List of already searched artifacts", defaultValue = "cached_artifacts.json")
+    @Option(names = {"--searched-artifacts-cache"}, description = "List of already searched artifacts", 
+    		defaultValue = "cached_artifacts.json")
     private Path cachedArtifacts;
-    @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", defaultValue = "https://mvnrepository.com")
+    @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
+    		defaultValue = "https://mvnrepository.com")
     private String mvnRepositoryServer;
+    @Option(names = {"--generate-history"}, description ="Generate an history branch with commits for each month")
+    boolean generateHistory;
+    @Option(names = {"--git-folder"}, description = "The output folder where data will be written", 
+    		defaultValue = "../history")
+    private Path gitHistory;
+    @Option(names = {"--cache-folder"}, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", 
+    		defaultValue = "../.cache")
+    private Path cache;
+    private File captures;
+    private File indices;
 
 	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -279,6 +321,8 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
+    	captures = new File(cache.toFile(), "captures");
+    	indices = new File(cache.toFile(), "indices");
         try (Playwright playwright = Playwright.create()) {
         	BrowserContext context = createPlaywrightContext(playwright);
         	// An empty browser page used to make sure the browser window doesn't move over time
@@ -299,15 +343,119 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	        	var json = gson.toJson(allArtifactInformations);
 	        	FileUtils.write(cachedArtifacts.toFile(), json, "UTF-8");
         	}
-        	Collection allDetails = obtainAllDetails(context, allArtifactInformations);
-	        logger.info("Exporting artifacts to " + output.toAbsolutePath().toFile().getAbsolutePath());
-	        FileUtils.write(output.toFile(), gson.toJson(allDetails), "UTF-8");
-	        logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), output));
+        	if(generateHistory) {
+        		generateHistoryFor(context, allArtifactInformations);
+        	} else {
+	        	Collection allDetails = obtainAllDetails(context, allArtifactInformations);
+		        logger.info("Exporting artifacts to " + output.toAbsolutePath().toFile().getAbsolutePath());
+		        FileUtils.write(output.toFile(), gson.toJson(allDetails), "UTF-8");
+		        logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), output));
+        	}
         }
         return 0;
     }
   
-    private List<ArtifactInformations> findRelocated(Map artifactInformations) {
+    /**
+     * Subverts all this class mechanism to generate a complete git history for all
+     * monthly statistics of all the given artifacts.
+     * @param context
+     * @param allArtifactInformations
+     * @throws IOException 
+     */
+    private void generateHistoryFor(BrowserContext context,
+			List<ExtractPopularMvnRepositoryArtifacts.ArtifactInformations> allArtifactInformations) throws IOException {
+    	Git git = Git.open(gitHistory.toFile());
+    	// First thing first, fill our cache with all remote infos we can have
+    	allArtifactInformations.stream()
+    		.forEach(Throwing.consumer(
+    				artifact -> cacheHistoryOf(context, artifact)));
+	}
+
+    /**
+     * Obtain the artifact history and cache it locally
+     * @param context
+     * @param artifact
+     * @return true if all entries have been processed successfully (files are present on machine for each entry)
+     * @throws URISyntaxException 
+     * @throws InterruptedException 
+     * @throws IOException 
+     */
+	private Boolean cacheHistoryOf(BrowserContext context,
+			ExtractPopularMvnRepositoryArtifacts.ArtifactInformations artifact) throws IOException, InterruptedException, URISyntaxException {
+		var history = getArtifactHistoryOnCDX(artifact);
+		try (Page page = newPage(context)) {
+			return history.stream()
+			.map(
+					archivePoint -> {
+						File destination = FileUtils.getFile(captures, 
+								(archivePoint.timestamp.getYear()+1900)+"", 
+								(archivePoint.timestamp.getMonth()+1)+"",
+								archivePoint.timestamp.getDay()+"",
+								artifact.groupId+"."+artifact.artifactId+".json");
+						if(destination.exists()) {
+							return true;
+						} else {
+							var url = String.format("https://web.archive.org/web/%s/%s", 
+									INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp),
+									artifact.getArtifactUrl(mvnRepositoryServer));
+							try {
+								var details = addDetails(page, url);
+								details.ifPresent(Throwing.consumer(
+										map -> {
+									var json = gson.toJson(map);
+									FileUtils.write(destination, json, "UTF-8");
+								}));
+								return true;
+							} catch(PlaywrightException e) {
+								logger.log(Level.WARNING, 
+										String.format("Unable to add cache entry %s due to %s", archivePoint, e.getMessage()));
+								return false;
+							}
+						}
+			})
+			.reduce(true, (acc, value) -> acc && value);
+		}
+	}
+
+	private List<ArchivePoint> getArtifactHistoryOnCDX(ExtractPopularMvnRepositoryArtifacts.ArtifactInformations artifact) throws IOException, InterruptedException, URISyntaxException {
+		File cache = new File(indices, artifact.groupId+"."+artifact.artifactId+".json");
+		String url = String.format("http://web.archive.org/cdx/search/cdx"
+				+ "?filter=statuscode:200" // We take only valid archive.org captures
+				+ "&output=json"
+				+ "&collapse=timestamp:6" // We look at the month scale
+				+ "&url=%s", artifact.getArtifactUrl(mvnRepositoryServer));
+		if(!cache.exists()) {
+			// Run request
+			try {
+				HttpClient client = HttpClient.newHttpClient();
+				HttpResponse<String> response = client.send(HttpRequest.newBuilder(new URI(url))
+						.build(), BodyHandlers.ofString());
+				if(response.statusCode()<300) {
+					String text = response.body();
+					FileUtils.write(cache, text, "UTF-8");
+				} else {
+					throw new UnsupportedOperationException(String.format("Can't get content from webarchive with status code %d", response.statusCode()));
+				}
+			} catch(IOException e) {
+				logger.log(Level.WARNING,
+						String.format("Couldn't get history for %s due to %s", artifact, e.getMessage()));
+				return Arrays.asList();
+			}
+		}
+		String text = FileUtils.readFileToString(cache, "UTF-8");
+		return gson.fromJson(text, new TypeToken<List<List<String>>>() {}).stream()
+				.filter(row -> !row.get(0).equals("urlkey"))
+				.map(Throwing.function(
+						row -> new ArchivePoint(row.get(0), 
+						INTERNET_ARCHIVE_DATE_FORMAT.parse(row.get(1)), // TO DATE
+						row.get(2),
+						row.get(5),
+						row.get(6))))
+				.sorted(Comparator.comparing(ArchivePoint::timestamp))
+				.collect(Collectors.toList());
+	}
+
+	private List<ArtifactInformations> findRelocated(Map artifactInformations) {
     	if(artifactInformations.containsKey("relocation")) {
     		Map relocation = (Map) artifactInformations.get("relocation");
     		Map<String, String> page = (Map<String, String>) relocation.get("page");
@@ -328,7 +476,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 				.flatMap(artifactInformations -> {
 					Page page = newPage(context);
 					try {
-						Optional<Map> details = addDetails(page, artifactInformations);
+						Optional<Map> details = addDetails(page, artifactInformations.getArtifactUrl(mvnRepositoryServer));
 						details.stream()
 							.forEach(d -> resolvedArtifacts.put(artifactInformations, d));
 						return details.stream();
@@ -364,31 +512,9 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		}
 	}
 
-	/**
-	 * Creates a correctly configured page
-	 * @param context
-	 * @return
-	 */
-	private Page newPage(BrowserContext context) {
-		Page created = context.newPage();
-		created.onConsoleMessage(message -> {
-			Level level = switch(message.type()) {
-			case "debug" -> Level.FINE;
-			case "warning" -> Level.WARNING;
-			case "error" -> Level.SEVERE;
-			default -> Level.INFO;
-			};
-			logger.logp(level, "Playwright", message.location(), () -> message.text());
-		});
-		return created;
-	}
-
 	private Optional<Map> addDetails(Page page,
-			ArtifactInformations artifactInformations) {
-		var url = String.format("%s/artifact/%s/%s", mvnRepositoryServer, 
-				artifactInformations.groupId,
-				artifactInformations.artifactId);
-		Response response = page.navigate(url);
+			String url) {
+		Response response = page.navigate(url, new NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
 		Map pageInfos = null;
 		if(response.status()<300) {
 			logger.info(String.format("Reading details of %s", url));
@@ -416,9 +542,34 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     			new BrowserType.LaunchOptions()
     				.setHeadless(false)
     			);
-    	BrowserContext context = chromium.newContext();
+    	BrowserContext context = chromium.newContext(new NewContextOptions()
+    			.setJavaScriptEnabled(false));
+		// Disable all resources coming from any domain that is not
+		// mvnrepository or wayback machine
+//		context.route(url -> !(url.contains("mvnrepository.com") || url.contains("web.archive.com")), 
+//				route -> route.abort());
     	context.addInitScript("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})");
     	context.setDefaultTimeout(0);
     	return context;
+	}
+
+
+	/**
+	 * Creates a correctly configured page
+	 * @param context
+	 * @return
+	 */
+	private Page newPage(BrowserContext context) {
+		Page created = context.newPage();
+		created.onConsoleMessage(message -> {
+			Level level = switch(message.type()) {
+			case "debug" -> Level.FINE;
+			case "warning" -> Level.WARNING;
+			case "error" -> Level.SEVERE;
+			default -> Level.INFO;
+			};
+			logger.logp(level, "Playwright", message.location(), () -> message.text());
+		});
+		return created;
 	}
 }
