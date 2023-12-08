@@ -3,7 +3,12 @@ function extract_artifact_details() {
         if(usages.includes(" ")) {
             usages = usages.substring(0, usages.indexOf(" "))
         }
-        return Number(usages.replace(",", ""))
+        if(usages) {
+            usages = usages.replace(",", "")
+        } else {
+            usages = "0"
+        }
+        return Number(usages)
     }
     /**
      * Given an element (which *must* be a table) and an artifact, read all the versions from the table and put them
@@ -245,7 +250,7 @@ function extract_artifact_details() {
     var storage = {}
     var analyzedElement = null
     var usedCallback = null
-    var artifact = {}
+    var artifact = {"users": 0}
     const path = document.location.pathname
     artifact["coordinates"] = path.substring(path.indexOf("/artifact/")+"/artifact/".length).split("/").join(".")
     if(document.querySelector("div.content")) {
