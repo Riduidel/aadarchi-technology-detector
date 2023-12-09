@@ -171,7 +171,6 @@ function extract_artifact_details() {
                 if(element.tagName.toLowerCase()=="table") {
                     Array.from(element.children[0].children).forEach(tr => {
                         const name = tr.children[0].innerText
-                        const value = tr.children[1].innerText
                         switch (name) {
                             case "License":
                             case "Categories":
@@ -189,7 +188,9 @@ function extract_artifact_details() {
                     
                             case "Used By":
                                 const usages = tr.children[1].innerText
-                                artifact["users"] = parseUsageString(usages)
+                                if(!isNaN(usages)) {
+                                    artifact["users"] = parseUsageString(usages)
+                                }
                                 break;
                             default:
                                 break;
@@ -223,7 +224,9 @@ function extract_artifact_details() {
                         }
                         if(element.querySelector(".im-usage")) {
                             const usages = element.querySelector(".im-usage").innerText
-                            artifact["users"] = parseUsageString(usages)
+                            if(!isNaN(usages)) {
+                                artifact["users"] = parseUsageString(usages)
+                            }
                         }
                         if(element.querySelector("h2 a")) {
                             artifact["name"] = element.querySelector("h2 a").innerText
@@ -250,8 +253,8 @@ function extract_artifact_details() {
     var storage = {}
     var analyzedElement = null
     var usedCallback = null
-    var artifact = {"users": 0}
     const path = document.location.pathname
+    artifact = {}
     artifact["coordinates"] = path.substring(path.indexOf("/artifact/")+"/artifact/".length).split("/").join(".")
     if(document.querySelector("div.content")) {
         analyzedElement = document.querySelector("div.content")
