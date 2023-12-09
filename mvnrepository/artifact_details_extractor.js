@@ -18,7 +18,7 @@ function extract_artifact_details() {
      * @param {*} artifact 
      */
     function readWhateverVersionTable(versionsTable, artifact) {
-        console.log("Using ", arguments.callee.name, " for ", versionsTable, "to fill", artifact)
+        console.debug("Using ", arguments.callee.name, " for ", versionsTable, "to fill", artifact)
         if(versionsTable.tagName.toLowerCase()!="table") {
             throw "Can't read versions from element "+versionsTable+" in page "+document.location
         }
@@ -74,7 +74,7 @@ function extract_artifact_details() {
     }
     function get2009StartCallback() {
         const read2009Versions =  function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="table") {
                     readWhateverVersionTable(element, artifact)
@@ -87,7 +87,7 @@ function extract_artifact_details() {
             if(!storage.hasOwnProperty(arguments.callee.name)) {
                 storage[arguments.callee.name]={"inTags": false}
             }
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="h3") {
                     return read2009Versions
@@ -107,7 +107,7 @@ function extract_artifact_details() {
             return read2009Tags
         }
         const read2009Name = function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="h3") {
                     artifact["name"] = element.innerText
@@ -122,7 +122,7 @@ function extract_artifact_details() {
     }
     function get2023StartCallback() {
         const read2023Versions =  function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="div") {
                     if(element.querySelector("#snippets ul.tabs li")) {
@@ -145,7 +145,7 @@ function extract_artifact_details() {
         }
         // Can be tested on https://mvnrepository.com/artifact/junit/junit
         const read2023Relocation = function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="div") {
                     const relocation = element.querySelector("table.grid td")
@@ -166,7 +166,7 @@ function extract_artifact_details() {
             return read2023Relocation
         }
         const read2023LicenseCategoryTable = function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="table") {
                     Array.from(element.children[0].children).forEach(tr => {
@@ -201,7 +201,7 @@ function extract_artifact_details() {
             return read2023LicenseCategoryTable
         }
         const read2015Tags = function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="div") {
                     artifact["tags"] = Array.from(element.querySelectorAll("a"))
@@ -212,7 +212,7 @@ function extract_artifact_details() {
             return read2015Tags
         }
         const read2023Name = function(element, artifact) {
-            console.log("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
+            console.debug("Using ", arguments.callee.name, " for ", element, "to fill", artifact)
             if(element.nodeType==1) {
                 if(element.tagName.toLowerCase()=="div") {
                     if(element.className.includes("breadcrumb")) {
