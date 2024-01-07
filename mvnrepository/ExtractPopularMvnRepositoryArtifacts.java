@@ -603,12 +603,12 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		}
 	    private void writeArtifactListAtDate(Git git, LocalDate date,
 				SortedSet<ArtifactDetails> value) throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
-	    	logger.info(String.format("Writing %d artifacts of %s", value.size(), MVNREPOSITORY_DATE_FORMAT_WITH_DAY.format(date)));
 	    	// First, write the artifact in its own folder
 	    	File datedFilePath = getDatedFilePath(artifactsLists, date, "artifacts");
+	    	logger.info(String.format("Writing %d artifacts of %s into %s", value.size(), MVNREPOSITORY_DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
 			FileUtils.write(datedFilePath, 
 	    			gson.toJson(value), "UTF-8");
-	    	File artifacts = new File(gitHistory.toFile(), "artifacts.json");
+	    	File artifacts = new File(new File(gitHistory.toFile(), "mvnrepository"), "artifacts.json");
 	    	FileUtils.copyFile(datedFilePath, artifacts);
 	    	// Then create a commit in the history repository
 	    	ZoneId systemZoneId = ZoneId.systemDefault();
@@ -616,9 +616,15 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 			PersonIdent commiter = new PersonIdent("🤖 MvnRepository History Builder", 
 					"get_mvnrepository_infos.yaml@history",
 	    			commitInstant, systemZoneId);
-	    	git.commit()
+			git.add()
+				.addFilepattern("mvnrepository/artifacts.json")
+				.call();
+			git.commit()
 	    		.setAuthor(commiter)
 	    		.setCommitter(commiter)
+	    		.setAll(true)
+//	    		.setOnly("mvnrepository/artifacts.json")
+//	    		.setAllowEmpty(false)
 	    		.setMessage(String.format("Historical artifacts of %s, %d artifacts known at this date", 
 	    				MVNREPOSITORY_DATE_FORMAT_WITH_DAY.format(date), value.size()))
 	    		.call()
