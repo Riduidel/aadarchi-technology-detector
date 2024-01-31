@@ -12,20 +12,53 @@
   </a>
 </p>
 
-> A Python and Java project linked to aadarchi which aims to detect technologies present on stackoverflow tags and in mvnrepository categories, using Playwright and a restAPI for stackoverflow
+> A Java project linked to aadarchi which aims to detect notable technologies in a variety of languages
 
 ### 🏠 [Homepage](https://github.com/Riduidel/aadarchi-technology-detector)
 
 ## Prerequisites
-- sudo apt update 
-- Install Python3 : sudo apt install python3 (Ubuntu)
-- Install Playwright for Python : pip install pytest-playwright & playwright install -> https://playwright.dev/python/docs/intro
+
+. Install [jbang](https://www.jbang.dev/)
+. Clone [TechEmpower frameworks](https://github.com/TechEmpower/FrameworkBenchmarks/) repository beside this repository
+
 ## Usage
 
-```sh
-python3 maven_playwright.py
+### Fetching data from reports branches
+
+This repository provides for each observed repository one branch containing in a given folder the file
+aggregating all informations.
+
+#### Available sources
+
+| Source website    | Branch name           | Path of artifacts file(s)    |
+| ----------------- | --------------------- | ---------------------------- |
+| mvnrepository.com | reports_mvnrepository | mvnrepository/artifacts.json |
+
+If you take a look at these branches, 
+in each of them, you'll find one commit per week (or per month for history).
+
+### Command line
+
+Each process can be run on your machine to validate everything is good
+
+#### MvnRepository
+
+```
+cd mvnrepository
+jbang ExtractPopularMvnRepositorytArtifacts.java
 ```
 
+It will produce an `artifacts.json` file with the artifacts usage count at the time the command is run
+
+##### Extract MvnRepository
+Thanks to the Internet Wayback Machine, it is possible to get the whole history for mvn repository by running the command
+
+```
+jbang ExtractPopularMvnRepositorytArtifacts.java --generate-history
+```
+
+This will fetch the whole history for MvnRepository and generate in a branch called history one commit for each month since the first capture available at https://archive.org.
+This code is kept for tracability reason, to make sure the history fetching process is reproducable, but should not be run.
 
 ## Author
 
