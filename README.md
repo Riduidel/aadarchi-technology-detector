@@ -35,7 +35,61 @@ aggregating all informations.
 | mvnrepository.com | reports_mvnrepository | mvnrepository/artifacts.json |
 
 If you take a look at these branches, 
-in each of them, you'll find one commit per week (or per month for history).
+in each of them, you'll find one commit per month.
+
+### Produced file format
+
+Each scrapper should produce a file with this structure
+
+```
+[
+  // A list of artifacts
+  {
+    // Artifact coordinates (depending upon the artifact type)
+    "coordinates": "androidx.annotation.annotation",
+    // Artifact visible name
+    "name": "Annotation",
+    // Artifact description (optionnal, but highly recommended)
+    "description": "Provides source annotations for tooling and readability.",
+    // Artifact licenses (optionnal)
+    "license": [
+      "Apache 2.0"
+    ],
+    // Artifact categories (optionnal)
+    "categories": [
+      "Annotation Libraries"
+    ],
+    // Artifact tags (optionnal)
+    "tags": [
+      "android",
+      "annotations",
+      "metadata"
+    ],
+    // Artifact ranking in registry (1 is the most important artifact - optionnal)
+    "ranking": "114",
+    // Artifact users number (optionnal)
+    "users": 4307,
+    // Number of downloads of this artifact
+    "downloads": "-1",
+    // Artifact repositories (optionnal)
+    "repositories": [
+      "Google",
+      "SciJava Public"
+    ],
+    // Artifact versions (optionnal, but highly recommended)
+    "versions": {
+      // Each version has a number
+      "1.8.0-alpha01": {
+        // usage count for this version
+        "usages": "3",
+        // version release date
+        "date": "Feb 21, 2024",
+        // users count for this version
+        "users": 3
+      },
+...
+```
+
 
 ### Command line
 
