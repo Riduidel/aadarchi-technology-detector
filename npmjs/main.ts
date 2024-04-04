@@ -1,4 +1,7 @@
 import { Artifact, Registry } from "./types";
+import { writeFile } from "fs";
+
+const artifactFilePathName = "./artifacts.json";
 
 // A list of packages, used to test the script
 const stub = [
@@ -143,8 +146,13 @@ const main = async () => {
   if (fetchedPackages) {
     const artifacts = buildArtifacts(fetchedPackages);
     artifacts && (await updateAllDownloadCounters(artifacts));
-
-    console.log(JSON.stringify(artifacts));
+    writeFile(artifactFilePathName, JSON.stringify(artifacts), (error) => {
+      if (error) {
+        console.log("An error has occurred ", error);
+        return;
+      }
+      console.log("Data written successfully to disk");
+    });
   } else {
     console.log("Error on fetcinh packages");
   }
