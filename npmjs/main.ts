@@ -38,13 +38,13 @@ const responsesToJSON = <T>(responses: Response[]) =>
  *   ...
  * }
  */
-const formatVersions = (versions: Registry.Versions) =>
+const formatVersions = (versions: Registry.Versions, times: Registry.Time) =>
   Object.fromEntries(
     Object.keys(versions).map<[string, Artifact.Version]>((version) => [
       version,
       {
         usages: "#NA",
-        date: "",
+        date: times?.[version] ?? "",
         users: 0,
         downloads: 0,
       },
@@ -53,8 +53,16 @@ const formatVersions = (versions: Registry.Versions) =>
 
 /** Format a package registry to a package artifact */
 const formatPackage = (registryPackage: Registry.Package): Artifact.Package => {
-  const { name, description, license, keywords, users, versions, repository } =
-    registryPackage;
+  const {
+    name,
+    description,
+    license,
+    keywords,
+    users,
+    versions,
+    repository,
+    time,
+  } = registryPackage;
 
   return {
     coordinates: name,
@@ -67,7 +75,7 @@ const formatPackage = (registryPackage: Registry.Package): Artifact.Package => {
     downloads: 0,
     repositories: repository ? [repository.type] : [],
     categories: [],
-    versions: formatVersions(versions),
+    versions: formatVersions(versions, time),
   };
 };
 

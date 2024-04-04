@@ -73,6 +73,7 @@ export namespace Registry {
   export interface Time {
     modified: string;
     created: string;
+    [version: string]: string;
   }
 
   export interface DownloadsCounter {
