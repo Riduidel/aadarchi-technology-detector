@@ -52,29 +52,23 @@ const formatVersions = (versions: Registry.Versions) =>
   );
 
 /** Format a package registry to a package artifact */
-const formatPackage = (
-  registryPackage: Registry.Package
-): Artifact.Package | undefined => {
+const formatPackage = (registryPackage: Registry.Package): Artifact.Package => {
   const { name, description, license, keywords, users, versions, repository } =
     registryPackage;
 
-  try {
-    return {
-      coordinates: name,
-      name,
-      description,
-      license: [license],
-      tags: keywords,
-      ranking: "#NA",
-      users: Object.keys(users).length,
-      downloads: 0,
-      repositories: repository ? [repository.type] : [],
-      categories: [],
-      versions: formatVersions(versions),
-    };
-  } catch {
-    console.error("Could not format package", name);
-  }
+  return {
+    coordinates: name,
+    name,
+    description,
+    license: [license],
+    tags: keywords,
+    ranking: "#NA",
+    users: Object.keys(users).length,
+    downloads: 0,
+    repositories: repository ? [repository.type] : [],
+    categories: [],
+    versions: formatVersions(versions),
+  };
 };
 
 /**
@@ -110,6 +104,29 @@ const fetchPackages = (urlList: string[]) =>
 const buildArtifacts = (registeryPackageList: Registry.Package[]) =>
   registeryPackageList.map(formatPackage);
 
+const updateAllDownloadCounters = async (artifactList: Artifact.Package[]) => {
+  const responses = await Promise.all(
+    artifactList.map(({ name }) =>
+      fetch(`https://api.npmjs.org/versions/${name}/last-week`)
+    )
+  ).then((responses) =>
+    // We use only successfull response
+    responsesToJSON<Registry.DownloadsCounter>(
+      responses.filter((response) => response.status === 200)
+    )
+  );
+
+  responses.forEach((response, index) => {
+    const artifact = artifactList[index];
+
+    Object.entries(response.downloads).forEach(([version, downloadsCount]) => {
+      if (artifact.versions?.[version] !== undefined) {
+        artifact.versions[version].downloads = downloadsCount;
+      }
+    });
+  });
+};
+
 const main = async () => {
   const urls = buildUrlsToFetch(stub);
 
@@ -117,6 +134,7 @@ const main = async () => {
 
   if (fetchedPackages) {
     const artifacts = buildArtifacts(fetchedPackages);
+    artifacts && (await updateAllDownloadCounters(artifacts));
 
     console.log(JSON.stringify(artifacts));
   } else {

@@ -74,6 +74,14 @@ export namespace Registry {
     modified: string;
     created: string;
   }
+
+  export interface DownloadsCounter {
+    package: string;
+    /** Counters of download per version  */
+    downloads: {
+      [version: string]: number;
+    };
+  }
 }
 
 export namespace Artifact {
