@@ -1,161 +1,116 @@
-import { Artifact, Registry } from "./types";
-import { writeFile } from "fs";
+import sites from "./sites_crawler/sites.json";
+import {
+  getDownloadForPackagesNotScoped,
+  getDownloadForPackagesScoped,
+  getPackagesDetail,
+  getPopularPackages,
+} from "./npmJS";
+import { processBulk, saveAsJSONFile, downloadLog, detailLog } from "./utils";
+import getCrawledPackages from "./sites_crawler/getCrawledPackages";
+import { Artifact } from "./types";
 
-const artifactFilePathName = "./artifacts.json";
-
-// A list of packages, used to test the script
-const stub = [
-  "react",
-  "moment",
-  "redux",
-  "lodash",
-  "tototototototototo", // does not exist, used to test error handling
-  "express",
-  "koa",
-  "koa-router",
-  "koa-bodyparser",
-];
-
-/**
- * transform a promise response to a json object
- * @param {response} response a promise response
- * @returns a JSON object
- */
-const responseToJSON = async (response: Response) => response.json();
-
-/**
- * transform a list of promises responses to a list of json objects
- * @param {response} responses a list of promises responses
- * @returns a list of JSON objects
- */
-const responsesToJSON = <T>(responses: Response[]) =>
-  Promise.all<T>(responses.map(responseToJSON));
-
-/**
- * Format the versions of a package
- * @param {versions} versions an object of versions
- * @returns a pseudo list of versions:
- * {
- *   "1.0.0": { usage: NaN, date: null, users: NaN },
- *   "1.0.1": { usage: NaN, date: null, users: NaN },
- *   ...
- * }
- */
-const formatVersions = (versions: Registry.Versions, times: Registry.Time) =>
-  Object.fromEntries(
-    Object.keys(versions).map<[string, Artifact.Version]>((version) => [
-      version,
-      {
-        usages: "#NA",
-        date: times?.[version] ?? "",
-        users: 0,
-        downloads: 0,
-      },
-    ])
-  );
-
-/** Format a package registry to a package artifact */
-const formatPackage = (registryPackage: Registry.Package): Artifact.Package => {
-  const {
-    name,
-    description,
-    license,
-    keywords,
-    users,
-    versions,
-    repository,
-    time,
-  } = registryPackage;
-
-  return {
-    coordinates: name,
-    name,
-    description,
-    license: [license],
-    tags: keywords,
-    ranking: "#NA",
-    users: Object.keys(users).length,
-    downloads: 0,
-    repositories: repository ? [repository.type] : [],
-    categories: [],
-    versions: formatVersions(versions, time),
-  };
-};
-
-/**
- * Build the urls to fetch the packages
- * @param {string[]} packages a list of packages
- * @returns a list of urls to fetch
- */
-const buildUrlsToFetch = (packageCodeList: string[]) =>
-  packageCodeList.map(
-    (packageCode) => `https://registry.npmjs.com/${packageCode}`
-  );
-
-/**
- * Fetch the packages
- * @param {string[]} urls a list of urls to fetch
- * @returns a list of packages
- */
-const fetchPackages = (urlList: string[]) =>
-  Promise.all(urlList.map((url) => fetch(url)))
-    .then((responses) =>
-      // We use only successfull response
-      responsesToJSON<Registry.Package>(
-        responses.filter((response) => response.status === 200)
-      )
-    )
-    .catch((error) => console.error("Error while fetching packages:", error));
-
-/**
- * Build the artifacts
- * @param {Object[]} packages a list of packages
- * @returns a list of artifacts
- */
-const buildArtifacts = (registeryPackageList: Registry.Package[]) =>
-  registeryPackageList.map(formatPackage);
-
-const updateAllDownloadCounters = async (artifactList: Artifact.Package[]) => {
-  const responses = await Promise.all(
-    artifactList.map(({ name }) =>
-      fetch(`https://api.npmjs.org/versions/${name}/last-week`)
-    )
-  ).then((responses) =>
-    // We use only successfull response
-    responsesToJSON<Registry.DownloadsCounter>(
-      responses.filter((response) => response.status === 200)
-    )
-  );
-
-  responses.forEach((response, index) => {
-    const artifact = artifactList[index];
-
-    Object.entries(response.downloads).forEach(([version, downloadsCount]) => {
-      if (artifact.versions?.[version] !== undefined) {
-        artifact.versions[version].downloads = downloadsCount;
-      }
-    });
-  });
-};
+const fromFile = false;
 
 const main = async () => {
-  const urls = buildUrlsToFetch(stub);
+  /**
+   * Top 1000 most popular packages downloaded last month in NPMJS
+   * The result is format is the target format (detailled)
+   */
+  const popularPackages = await getPopularPackages();
 
-  const fetchedPackages = await fetchPackages(urls);
+  /**
+   * List of all packages found in codebases repo
+   * The result is not detailled
+   */
+  const crawledPackages: string[] = await getCrawledPackages(fromFile, sites);
 
-  if (fetchedPackages) {
-    const artifacts = buildArtifacts(fetchedPackages);
-    artifacts && (await updateAllDownloadCounters(artifacts));
-    writeFile(artifactFilePathName, JSON.stringify(artifacts), (error) => {
-      if (error) {
-        console.log("An error has occurred ", error);
-        return;
-      }
-      console.log("Data written successfully to disk");
-    });
-  } else {
-    console.log("Error on fetcinh packages");
-  }
+  /** List of codebases packages not in Top1000 */
+  const packageNameList = crawledPackages.filter(
+    (name: string) => !popularPackages.hasOwnProperty(name)
+  );
+
+  const otherPackagesWithDetail = await processBulk({
+    items: packageNameList,
+    nb: 100,
+    process: getPackagesDetail,
+    log: detailLog,
+  });
+
+  const allPackages = {
+    ...popularPackages,
+    ...otherPackagesWithDetail,
+  };
+
+  /** List of all packages we have to fetch the download counts */
+  const allPackagesList = Object.values(allPackages);
+
+  /**
+   * We split the packages in 2 parts : scoped pacgakes, with format @packagename/scope
+   * and not scoped with format packageName
+   *
+   * This split is done to use call npmjs api in bulk moden which is limited to 128 packages for NOT scoped package
+   */
+
+  const scopedPackages = allPackagesList.filter(({ name }) =>
+    name.includes("@")
+  );
+  const notScopedPackages = allPackagesList.filter(
+    ({ name }) => !name.includes("@")
+  );
+
+  const downloadForPackagesNotscoped = await processBulk({
+    items: notScopedPackages,
+    nb: 127,
+    process: getDownloadForPackagesNotScoped,
+    log: downloadLog,
+  });
+
+  const downloadForPackagesScoped = await processBulk({
+    items: scopedPackages,
+    nb: 100,
+    process: getDownloadForPackagesScoped,
+    log: downloadLog,
+  });
+
+  const downloadForAllPackages = {
+    ...downloadForPackagesNotscoped,
+    ...downloadForPackagesScoped,
+  };
+
+  Object.values(allPackages).forEach(
+    (packageDetail) =>
+      (packageDetail.downloads =
+        downloadForAllPackages[packageDetail.name] ?? 0)
+  );
+
+  saveAsJSONFile("packagesWithCounters", downloadForAllPackages);
+  saveAsJSONFile("artifact", allPackages);
+
+  const OK = "\x1b[32mOK\x1b[0m";
+  const KO = "\x1b[33mKO\x1b[0m";
+
+  console.table({
+    "Top 1000 Most Popular in NPMJS": {
+      status: Object.keys(popularPackages).length === 1000 ? OK : KO,
+      value: Object.keys(popularPackages).length,
+      detail: "",
+    },
+    "Crawled sites": {
+      status: Object.keys(crawledPackages).length > 0 ? OK : KO,
+      value: Object.keys(crawledPackages).length,
+      detail: Object.keys(sites).join(","),
+    },
+    "Get downloads on Scoped Packages": {
+      status: Object.keys(downloadForPackagesScoped).length > 0 ? OK : KO,
+      value: Object.keys(downloadForPackagesScoped).length,
+      detail: "",
+    },
+    "Get downloads on Not Scoped Packages": {
+      status: Object.keys(downloadForPackagesNotscoped).length > 0 ? OK : KO,
+      value: Object.keys(downloadForPackagesNotscoped).length,
+      detail: "",
+    },
+  });
 };
 
 // In order to test, you can run the following command:

@@ -1,4 +1,13 @@
 export namespace Registry {
+  export interface Popular {
+    objects: {
+      package: Package;
+      flags: any;
+      score: any;
+      searchScore: number;
+    }[];
+  }
+
   export interface Package {
     _id: string;
     _rev: string;
@@ -77,6 +86,12 @@ export namespace Registry {
   }
 
   export interface DownloadsCounter {
+    downloads: number;
+    start: string;
+    end: string;
+    package: string;
+  }
+  export interface DownloadsCounterPerVersion {
     package: string;
     /** Counters of download per version  */
     downloads: {
@@ -86,6 +101,10 @@ export namespace Registry {
 }
 
 export namespace Artifact {
+  export interface Root {
+    [packageName: string]: Package;
+  }
+
   export interface Package {
     coordinates: string;
     name: string;
@@ -97,7 +116,7 @@ export namespace Artifact {
     users: number;
     downloads: number;
     repositories: string[];
-    versions: Versions;
+    versions?: Versions;
   }
 
   export interface Versions {
