@@ -26,9 +26,10 @@ export const getPopularPackages = async () => {
  */
 export const getPackagesDetail = async (packageList: string[]) =>
   await Promise.all(
-    packageList.map((packageCode) =>
-      fetch(`https://registry.npmjs.com/${packageCode}`)
-    )
+    packageList.map(async (packageCode) => {
+      await Bun.sleep(10000);
+      return fetch(`https://registry.npmjs.com/${packageCode}`);
+    })
   )
     .then(responsesToJSON<Registry.Package>)
     .then((responses) => {

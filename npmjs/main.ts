@@ -83,8 +83,12 @@ const main = async () => {
         downloadForAllPackages[packageDetail.name] ?? 0)
   );
 
+  const sortedPackages = (Object.keys(allPackages) as Array<string>)
+    .sort()
+    .reduce((r: any, k: string) => ((r[k] = allPackages[k]), r), {});
+
   saveAsJSONFile("packagesWithCounters", downloadForAllPackages);
-  saveAsJSONFile("artifact", allPackages);
+  saveAsJSONFile("artifact", sortedPackages);
 
   const OK = "\x1b[32mOK\x1b[0m";
   const KO = "\x1b[33mKO\x1b[0m";
