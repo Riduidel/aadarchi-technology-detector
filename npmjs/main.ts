@@ -8,7 +8,7 @@ import {
 import { processBulk, saveAsJSONFile, downloadLog, detailLog } from "./utils";
 import getCrawledPackages from "./sites_crawler/getCrawledPackages";
 
-const fromFile = true;
+const fromFile = false;
 
 const main = async () => {
   /**
