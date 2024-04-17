@@ -20,16 +20,43 @@ export const getPopularPackages = async () => {
   );
 };
 
+const myFetch = (url: string, options?: RequestInit): Promise<Response> =>
+  new Promise<Response>(async (resolve) => {
+    let bool = false;
+    let response: Response = new Response();
+    while (!bool) {
+      // console.log(`🔍 ${url}`);
+      response = await fetch(url, options);
+      if (response.status === 200) {
+        bool = true;
+      } else if (response.status === 404) {
+        bool = true;
+      } else if (response.status === 429) {
+        console.log(
+          `⏲️  waiting ${Number(
+            response.headers.get("retry-after")
+          )}s for ${url}`
+        );
+        await new Promise((resolve) =>
+          setTimeout(
+            () => resolve(""),
+            Number(response.headers.get("retry-after")) * 1000
+          )
+        );
+      }
+    }
+    resolve(response);
+  });
+
 /**
  * Get the detail of each package given in param
  * The result is formatted to our own artifcat format
  */
 export const getPackagesDetail = async (packageList: string[]) =>
   await Promise.all(
-    packageList.map(async (packageCode) => {
-      await Bun.sleep(10000);
-      return fetch(`https://registry.npmjs.com/${packageCode}`);
-    })
+    packageList.map(async (packageCode) =>
+      myFetch(`https://registry.npmjs.com/${packageCode}`)
+    )
   )
     .then(responsesToJSON<Registry.Package>)
     .then((responses) => {
@@ -47,8 +74,7 @@ export const getDownloadForPackagesNotScoped: GetDownloadFor = async (
   const bulkPackagesQueryParam = packageList.map(({ name }) => name).join(",");
   const url = `https://api.npmjs.org/downloads/point/last-month/${bulkPackagesQueryParam}`;
 
-  const promises = [fetch(url)];
-  return fetch(url)
+  return myFetch(url)
     .then(
       (response) =>
         responseToJSON(response) as Promise<{
@@ -74,7 +100,7 @@ export const getDownloadForPackagesScoped: GetDownloadFor = async (
   packageList
 ) => {
   const promises = packageList.map((packageDetail) =>
-    fetch(
+    myFetch(
       `https://api.npmjs.org/downloads/point/last-month/${packageDetail.name}`
     )
   );
@@ -102,7 +128,7 @@ const fetchTop1000 = async () => {
       `https://registry.npmjs.com/-/v1/search?text=not:unstable&popularity=1.0&from=${251}&size=${250}`,
       `https://registry.npmjs.com/-/v1/search?text=not:unstable&popularity=1.0&from=${501}&size=${250}`,
       `https://registry.npmjs.com/-/v1/search?text=not:unstable&popularity=1.0&from=${751}&size=${250}`,
-    ].map((url) => fetch(url))
+    ].map((url) => myFetch(url))
   )
     .then(responsesToJSON<Registry.Popular>)
     .then((responses) =>

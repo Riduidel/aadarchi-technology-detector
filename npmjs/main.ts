@@ -7,9 +7,8 @@ import {
 } from "./npmJS";
 import { processBulk, saveAsJSONFile, downloadLog, detailLog } from "./utils";
 import getCrawledPackages from "./sites_crawler/getCrawledPackages";
-import { Artifact } from "./types";
 
-const fromFile = false;
+const fromFile = true;
 
 const main = async () => {
   /**
