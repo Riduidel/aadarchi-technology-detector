@@ -3,7 +3,8 @@
     "selector": "h2 a.Link |> prepend:https://github.com",
     "pages": [
       "https://github.com/trending/typescript?since=monthly",
-      "https://github.com/trending/javascript?since=monthly"
+      "https://github.com/trending/javascript?since=monthly",
+      "https://github.com/trending/php?since=monthly"
     ]
   },
   "codebase.show": {

@@ -6,6 +6,7 @@ export const getPackageInfo = async (
   packageName: string,
   withDownloadCounter: boolean = false
 ): Promise<Artifact.Root> => {
+  console.log(`🎣 https://registry.npmjs.com/${packageName}`);
   const response = await fetch(`https://registry.npmjs.com/${packageName}`);
   if (response.status !== 200)
     throw new Error(`Could not find package ${packageName}`);
