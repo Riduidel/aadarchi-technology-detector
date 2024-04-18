@@ -1,5 +1,4 @@
 import { Artifact } from "../artifact.type";
-import { deepMerge } from "../utils";
 import { getDownloadCount } from "./getDownloadCount";
 import { getPackageInfo } from "./getPackageInfo";
 import { Registry } from "./types";
