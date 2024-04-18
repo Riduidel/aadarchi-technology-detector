@@ -1,0 +1,18 @@
+{
+  "github/trendings": {
+    "selector": "h2 a.Link |> prepend:https://github.com",
+    "pages": [
+      "https://github.com/trending/typescript?since=monthly",
+      "https://github.com/trending/javascript?since=monthly"
+    ]
+  },
+  "codebase.show": {
+    "selector": "a[href^='https://github.com'] > div |> parent",
+    "pages": [
+      "https://codebase.show/projects/realworld?category=frontend",
+      "https://codebase.show/projects/realworld?category=backend",
+      "https://codebase.show/projects/realworld?category=fullstack",
+      "https://codebase.show/projects/todomvc"
+    ]
+  }
+}

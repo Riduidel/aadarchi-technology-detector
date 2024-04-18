@@ -27,6 +27,8 @@ export namespace Registry {
     require?: Require;
     suggest?: Generic;
     provide?: Generic;
+    downloads?: Downloads;
+    versions?: Versions;
   }
 
   export interface Author {
@@ -66,6 +68,20 @@ export namespace Registry {
 
   export interface Require {
     php?: string;
+  }
+
+  export interface Downloads {
+    total?: number;
+    daily?: number;
+    monthly?: number;
+  }
+
+  export interface Versions {
+    [namespace: string]: Version;
+  }
+
+  export interface Version {
+    license?: string[];
   }
 }
 
