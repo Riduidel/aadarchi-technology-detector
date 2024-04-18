@@ -1,5 +1,10 @@
-export const saveJson = async (name: string, json) =>
+import { Artifact } from "./artifact.type";
+
+export const saveJson = async (name: string, json: any) =>
   Bun.write(name, JSON.stringify(json));
+
+export const loadJson = async (name: string): Promise<any> =>
+  await Bun.file(name).json();
 
 export const myFetch = (
   url: string,

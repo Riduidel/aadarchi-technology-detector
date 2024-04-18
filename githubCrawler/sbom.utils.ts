@@ -21,3 +21,8 @@ export const sortLibrairiesByLanguages = (
     php,
   };
 };
+
+export const cleanLibraries = (libraries: string[]) =>
+  libraries.filter(
+    (lib) => !lib.startsWith("action:") && lib.indexOf("../") === -1
+  );

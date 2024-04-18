@@ -2,7 +2,10 @@ import { Artifact } from "../artifact.type";
 import { getDownloadCount } from "./getDownloadCount";
 import { getPackageInfo } from "./getPackageInfo";
 
-export const getBulkPackagesInfo = async (packageNames: string[]) => {
+export const getBulkPackagesInfo = async (
+  packageNames: string[],
+  withDownloads: boolean = false
+) => {
   const promises: Promise<Artifact.Root>[] = [];
   packageNames.forEach((name) => {
     promises.push(
@@ -25,9 +28,11 @@ export const getBulkPackagesInfo = async (packageNames: string[]) => {
   const packagesNames = [...Object.keys(packagesInfos)].map((n) =>
     n.replace("npm:", "")
   );
-  const downloads = await getDownloadCount(packagesNames);
-  for (const name in downloads) {
-    packagesInfos[name].downloads = downloads[name];
+  if (withDownloads) {
+    const downloads = await getDownloadCount(packagesNames);
+    for (const name in downloads) {
+      packagesInfos[name].downloads = downloads[name];
+    }
   }
   return packagesInfos;
 };
