@@ -1,7 +1,8 @@
 import { SBOM, SBOMLanguages } from "./sbom.types";
 
-export const getLibrairiesFromSBOM = (sboms: SBOM[]) => {
+export const getLibrairiesFromSBOM = (sboms: SBOM[] | null[]) => {
   // the first one is the current repository
+  if (sboms == null || sboms?.length === 0) return [];
   return Array.from(new Set(sboms.slice(1).map((sb) => sb.name))).sort();
 };
 

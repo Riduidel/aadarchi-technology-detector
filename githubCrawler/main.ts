@@ -15,19 +15,40 @@ import { getBulkPackagesInfo as PHPgetBulkPackagesInfo } from "./packagistorg/ge
 
 console.log("Start analysis");
 console.log("🔍 Top 1000 PHP packages 🐘");
-// const phpPackages = await topPHPPackages();
+const phpPackages = await topPHPPackages();
 
 console.log("🔍 Top 1000 JS packages 🟡");
-// const jsPackages = await topJSPackages();
+const jsPackages = await topJSPackages();
 
 console.log("🔍 Analyse some sites to fetch most used repositories");
-// const githubRepositories = await getGithubRepositories(sites);
-// console.log(githubRepositories);
+const githubRepositories = await getGithubRepositories(sites);
 
-const sbom = await getSBOM("https://github.com/PrestaShop/PrestaShop");
-const sbomLibs = sortLibrairiesByLanguages(getLibrairiesFromSBOM(sbom));
+const promises: Promise<string[]>[] = [];
+githubRepositories.forEach((repo) => {
+  promises.push(
+    new Promise(async (resolve) => {
+      console.log(`📂 Analyse ${repo}`);
+      const sbom = await getSBOM(repo);
+      if (sbom) resolve(getLibrairiesFromSBOM(sbom));
+      else resolve([]);
+    })
+  );
+});
+
+const sbomLibs = Array.from(
+  new Set(
+    (await Promise.all(promises)).reduce((acc, val) => {
+      return [...acc, ...val];
+    }, [])
+  )
+);
+console.log(`🔍 Sorting ${sbomLibs.length} libraries`);
+
+const sbomLibsPerLanguages = sortLibrairiesByLanguages(sbomLibs);
 
 saveJson("outputs/artifact.json", {
-  ...JSgetBulkPackagesInfo(sbomLibs.npm),
-  ...PHPgetBulkPackagesInfo(sbomLibs.php),
+  ...phpPackages,
+  ...jsPackages,
+  ...(await JSgetBulkPackagesInfo(sbomLibsPerLanguages.npm)),
+  ...(await PHPgetBulkPackagesInfo(sbomLibsPerLanguages.php)),
 });

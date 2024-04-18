@@ -6,12 +6,14 @@ export const getBulkPackagesInfo = async (packageNames: string[]) => {
   packageNames.forEach((name) => {
     promises.push(
       new Promise(async (resolve) => {
-        const pkgInfo = await getPackageInfo(name);
-        if (pkgInfo) resolve(pkgInfo);
-        else
+        try {
+          const pkgInfo = await getPackageInfo(name);
+          if (pkgInfo) resolve(pkgInfo);
+        } catch (e) {
           resolve({
             [`composer:${name}`]: { name },
           } as Artifact.Root);
+        }
       })
     );
   });
