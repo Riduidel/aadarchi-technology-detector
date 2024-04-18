@@ -1,8 +1,10 @@
 import { Artifact } from "../artifact.type";
+import { deepMerge } from "../utils";
+import { getDownloadCount } from "./getDownloadCount";
 import { getPackageInfo } from "./getPackageInfo";
 import { Registry } from "./types";
 
-export const top1000 = async (): Promise<Artifact.Root[]> => {
+export const top1000 = async (): Promise<Artifact.Root> => {
   let pages: string[] = [];
   for (let i = 0; i < 4; i++)
     pages.push(
@@ -12,17 +14,34 @@ export const top1000 = async (): Promise<Artifact.Root[]> => {
     );
   const responses = await Promise.all(pages.map((url) => fetch(url)));
   const jsons = await Promise.all(responses.map((r) => r.json()));
-  return await Promise.all(
-    jsons.flatMap((pkgs) =>
-      (pkgs as Registry.Popular).objects.map(async (pkg) => {
-        const pkgInfo = await getPackageInfo(pkg.package.name);
-        if (pkgInfo) return pkgInfo;
-        return {
-          coordinates: pkg.package.name,
-          name: pkg.package.name,
-          description: pkg.package.description || "",
-        };
-      })
-    )
+  const promises: Promise<Artifact.Root>[] = [];
+  jsons.forEach(({ objects }) =>
+    objects.forEach((pkg: Registry.PopularObject) => {
+      promises.push(
+        new Promise(async (resolve) => {
+          const pkgInfo = await getPackageInfo(pkg.package.name);
+          if (pkgInfo) resolve(pkgInfo);
+          else
+            resolve({
+              [`npm:${pkg.package.name}`]: {
+                name: pkg.package.name,
+                description: pkg.package.description || "",
+              },
+            } as Artifact.Root);
+        })
+      );
+    })
   );
+  const packagesInfos = (await Promise.all(promises)).reduce((acc, val) => {
+    return { ...acc, ...val };
+  }, {});
+  // npmjs doesn't provide the download counter when fetching populars, so we need to add it ourselves
+  const packagesNames = [...Object.keys(packagesInfos)].map((n) =>
+    n.replace("npm:", "")
+  );
+  const downloads = await getDownloadCount(packagesNames);
+  for (const name in downloads) {
+    packagesInfos[name].downloads = downloads[name];
+  }
+  return packagesInfos;
 };

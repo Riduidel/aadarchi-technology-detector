@@ -1,11 +1,13 @@
 export namespace Registry {
   export interface Popular {
-    objects: {
-      package: Package;
-      flags: any;
-      score: any;
-      searchScore: number;
-    }[];
+    objects: PopularObject[];
+  }
+
+  export interface PopularObject {
+    package: Package;
+    flags: any;
+    score: any;
+    searchScore: number;
   }
 
   export interface Package {
@@ -85,6 +87,9 @@ export namespace Registry {
     [version: string]: string;
   }
 
+  export interface BulkDownloadsCounter {
+    [package: string]: DownloadsCounter;
+  }
   export interface DownloadsCounter {
     downloads: number;
     start: string;
@@ -98,4 +103,8 @@ export namespace Registry {
       [version: string]: number;
     };
   }
+}
+
+export interface DownloadCounter {
+  [packageName: string]: number;
 }
