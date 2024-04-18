@@ -24,5 +24,5 @@ export const sortLibrairiesByLanguages = (
 
 export const cleanLibraries = (libraries: string[]) =>
   libraries.filter(
-    (lib) => !lib.startsWith("action:") && lib.indexOf("../") === -1
+    (lib) => !lib.startsWith("actions:") && lib.indexOf("../") === -1
   );
