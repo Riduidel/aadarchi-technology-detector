@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@playwright/test": "^1.43.0",
+    "date-fns": "^3.6.0",
     "playwright": "^1.43.0"
   },
   "devDependencies": {
