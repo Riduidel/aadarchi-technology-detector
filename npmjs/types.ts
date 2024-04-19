@@ -20,7 +20,7 @@ export namespace Registry {
     versions: Versions;
     readme: string;
     maintainers?: MaintainersEntityOrAuthorOrNpmUser[] | null;
-    time: Time;
+    time: Record<string, string>;
     author: MaintainersEntityOrAuthorOrNpmUser;
     /** the license of the package */
     license: string;
@@ -117,6 +117,7 @@ export namespace Artifact {
     downloads: number;
     repositories: string[];
     versions?: Versions;
+    time?: Record<string, string>;
   }
 
   export interface Versions {

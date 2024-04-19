@@ -171,5 +171,6 @@ const formatPackage = (registryPackage: Registry.Package): Artifact.Package => {
     downloads: 0,
     repositories: repository?.type ? [repository.type] : [],
     categories: [],
+    //time: { created: time.created ?? "2015-01-01" },
   };
 };
