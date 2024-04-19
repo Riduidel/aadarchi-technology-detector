@@ -9,7 +9,7 @@ export const apiToDTO = (
 
   return {
     [`npm:${name}`]: {
-      coordinates: name,
+      coordinates: `npm:${name}`,
       name,
       description,
       license: license ? [license] : [],

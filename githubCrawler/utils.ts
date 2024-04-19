@@ -1,5 +1,3 @@
-import { Artifact } from "./artifact.type";
-
 export const saveJson = async (name: string, json: any) =>
   Bun.write(name, JSON.stringify(json));
 

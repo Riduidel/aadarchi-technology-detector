@@ -54,7 +54,7 @@ if (useCache) {
   sbomLibs = await loadJson("tmp/sbom-libs.json");
 } else {
   const promises: Promise<string[]>[] = [];
-  githubRepositories.forEach((repo) => {
+  githubRepositories.forEach((repo: string) => {
     promises.push(
       new Promise(async (resolve) => {
         // console.log(`📂 Analyse ${repo}`);

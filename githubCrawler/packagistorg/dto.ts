@@ -7,7 +7,7 @@ export const apiToDTO = (registryPackage: Registry.Package): Artifact.Root => {
   if (versions) version = versions[Object.keys(versions)[0]];
   return {
     [`composer:${name}`]: {
-      coordinates: name,
+      coordinates: `composer:${name}`,
       name,
       description,
       license: version.license,
