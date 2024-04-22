@@ -13,7 +13,8 @@
     "@playwright/test": "^1.43.0",
     "csv-simple-parser": "^1.0.3",
     "octokit": "^3.2.0",
-    "playwright": "^1.43.0"
+    "playwright": "^1.43.0",
+    "pretty-ms": "^9.0.0"
   },
   "devDependencies": {
     "@types/bun": "^1.0.12",

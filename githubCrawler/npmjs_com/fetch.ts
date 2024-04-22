@@ -6,7 +6,8 @@ const NpmJsFetch = async (
   sbomPackages: string[],
   useCache: boolean = false
 ) => {
-  console.log("🔍 Top 1000 JS packages 🟡");
+  console.log("🔍 Analyse npmjs.com 🟡");
+  console.log("  🏅 Top 1000");
   let jsPackages;
   if (useCache) {
     jsPackages = await loadJson("tmp/jsPackages.json");
@@ -14,11 +15,12 @@ const NpmJsFetch = async (
     jsPackages = await top1000();
     saveJson("tmp/jsPackages.json", jsPackages);
   }
+  console.log("  📋 SBOM JS packages");
   return {
     ...jsPackages,
     ...(await getBulkPackagesInfo(sbomPackages, {
       withDownloads: true,
-      withScopedDownloads: false,
+      withScopedDownloads: false, // too much queries
     })),
   };
 };

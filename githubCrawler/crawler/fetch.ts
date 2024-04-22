@@ -6,9 +6,9 @@ import {
 import { loadJson, saveJson } from "../utils";
 import getGithubRepositories from "./getGithubRepositories";
 import { getSBOM } from "./getSBOM";
-import sites from "./sites.json";
+import { Sites } from "./types";
 
-const fetchSBOM = async (useCache: boolean) => {
+const fetchSBOM = async (sites: Sites, useCache: boolean) => {
   console.log("🔍 Analyse some sites to fetch most used repositories");
   let githubRepositories;
   if (useCache) {

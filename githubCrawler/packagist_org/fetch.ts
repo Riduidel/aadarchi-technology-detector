@@ -6,7 +6,8 @@ const PackagistOrgFetch = async (
   sbomPackages: string[],
   useCache: boolean = false
 ) => {
-  console.log("🔍 Top 1000 PHP packages 🐘");
+  console.log("🔍 Analyse packagist.org 🐘");
+  console.log("  🏅 Top 1000");
   let phpPackages;
   if (useCache) {
     phpPackages = await loadJson("tmp/phpPackages.json");
@@ -14,6 +15,7 @@ const PackagistOrgFetch = async (
     phpPackages = await top1000();
     saveJson("tmp/phpPackages.json", phpPackages);
   }
+  console.log("  📋 SBOM PHP packages");
   return {
     ...phpPackages,
     ...(await getBulkPackagesInfo(sbomPackages)),
