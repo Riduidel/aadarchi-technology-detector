@@ -1,3 +1,10 @@
+# Github crawler
+
+## Requirements
+
+- Bun: `curl -fsSL https://bun.sh/install | bash`
+- SQLite3
+
 ## How to add a site to crawl?
 
 In the `sites.json` file, you can add new sites by adding an object with the following properties:
