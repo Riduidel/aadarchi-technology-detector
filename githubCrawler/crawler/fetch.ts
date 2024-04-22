@@ -17,7 +17,7 @@ const fetchSBOM = async (useCache: boolean) => {
     githubRepositories = await getGithubRepositories(sites);
     saveJson("tmp/githubRepositories.json", githubRepositories);
   }
-  console.log(`🏴‍☠️ found ${githubRepositories.length} repositories`);
+  console.log(`📦 found ${githubRepositories.length} repositories`);
 
   let sbomLibs;
   if (useCache) {
