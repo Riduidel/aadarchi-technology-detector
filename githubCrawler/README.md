@@ -5,6 +5,20 @@
 - Bun: `curl -fsSL https://bun.sh/install | bash`
 - SQLite3
 
+## Installation
+
+`bun install`
+
+Create a `.env` file a this root, containing your github token:
+
+```
+GITHUB_TOKEN=
+```
+
+## Run
+
+`bun crawl`
+
 ## How to add a site to crawl?
 
 In the `sites.json` file, you can add new sites by adding an object with the following properties:

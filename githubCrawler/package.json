@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "dev": "bun main.ts",
+    "crawl": "bun main.ts",
     "postinstall": "bunx playwright install --with-deps chromium"
   },
   "author": "",
