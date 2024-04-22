@@ -2,7 +2,7 @@ import {
   cleanLibraries,
   getLibrairiesFromSBOM,
   sortLibrairiesByLanguages,
-} from "../sbom.utils";
+} from "./sbom.utils";
 import { loadJson, saveJson } from "../utils";
 import getGithubRepositories from "./getGithubRepositories";
 import { getSBOM } from "./getSBOM";

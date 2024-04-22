@@ -17,4 +17,11 @@ export type SBOM = {
 export type SBOMLanguages = {
   npm: string[];
   php: string[];
+  rust: string[];
+};
+
+export type SBOMLibs = {
+  npm: string[];
+  php: string[];
+  rust: string[];
 };

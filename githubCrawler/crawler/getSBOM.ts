@@ -1,5 +1,5 @@
 import { Octokit } from "octokit";
-import { SBOM } from "../sbom.types";
+import { SBOM } from "./sbom.types";
 
 export const getSBOM = async (
   repositoryUrl: string
