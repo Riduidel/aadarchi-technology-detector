@@ -5,9 +5,9 @@
 
 import { saveJson } from "./utils";
 import fetchSBOM from "./crawler/fetch";
-import PackagistOrgFetch from "./packagistorg/fetch";
-import NpmJsFetch from "./npmjscom/fetch";
-import CratesIoFetch from "./cratesio/fetch";
+// import PackagistOrgFetch from "./packagist_org/fetch";
+// import NpmJsFetch from "./npmjs_com/fetch";
+import CratesIoFetch from "./crates_io/fetch";
 
 const useCache = true;
 
