@@ -15,7 +15,7 @@ const NpmJsFetch = async (
     jsPackages = await top1000();
     saveJson("tmp/jsPackages.json", jsPackages);
   }
-  console.log("  📋 SBOM JS packages");
+  console.log(`  📋 SBOM ${sbomPackages.length} packages`);
   return {
     ...jsPackages,
     ...(await getBulkPackagesInfo(sbomPackages, {

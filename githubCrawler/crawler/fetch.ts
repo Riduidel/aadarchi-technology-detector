@@ -27,7 +27,7 @@ const fetchSBOM = async (sites: Sites, useCache: boolean) => {
     githubRepositories.forEach((repo: string) => {
       promises.push(
         new Promise(async (resolve) => {
-          // console.log(`📂 Analyse ${repo}`);
+          // console.log(`  📂 Analyse ${repo}`);
           const sbom = await getSBOM(repo);
           if (sbom) resolve(getLibrairiesFromSBOM(sbom));
           else resolve([]);

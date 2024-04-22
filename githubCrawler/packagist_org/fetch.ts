@@ -15,7 +15,7 @@ const PackagistOrgFetch = async (
     phpPackages = await top1000();
     saveJson("tmp/phpPackages.json", phpPackages);
   }
-  console.log("  📋 SBOM PHP packages");
+  console.log(`  📋 SBOM ${sbomPackages.length} packages`);
   return {
     ...phpPackages,
     ...(await getBulkPackagesInfo(sbomPackages)),

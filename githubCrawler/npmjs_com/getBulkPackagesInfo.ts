@@ -9,7 +9,7 @@ export const getBulkPackagesInfo = async (
     withDownloads: false,
     withScopedDownloads: false,
   }
-) => {
+): Promise<Artifact.Root> => {
   const { withDownloads, withScopedDownloads } = options;
   const promises: Promise<Artifact.Root>[] = [];
   packageNames.forEach((name) => {

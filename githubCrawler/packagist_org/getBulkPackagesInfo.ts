@@ -1,7 +1,9 @@
 import { Artifact } from "../artifact.type";
 import getPackageInfo from "./getPackageInfo";
 
-export const getBulkPackagesInfo = async (packageNames: string[]) => {
+export const getBulkPackagesInfo = async (
+  packageNames: string[]
+): Promise<Artifact.Root> => {
   const promises: Promise<Artifact.Root>[] = [];
   packageNames.forEach((name) => {
     promises.push(
