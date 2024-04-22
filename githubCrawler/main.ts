@@ -84,5 +84,8 @@ saveJson("outputs/artifact.json", {
   ...phpPackages,
   ...(await PHPgetBulkPackagesInfo(sbomLibsPerLanguages.php)),
   ...jsPackages,
-  ...(await JSgetBulkPackagesInfo(sbomLibsPerLanguages.npm)),
+  ...(await JSgetBulkPackagesInfo(sbomLibsPerLanguages.npm, {
+    withDownloads: true,
+    withScopedDownloads: false,
+  })),
 });

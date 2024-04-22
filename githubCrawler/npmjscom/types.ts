@@ -108,3 +108,8 @@ export namespace Registry {
 export interface DownloadCounter {
   [packageName: string]: number;
 }
+
+export interface GetBulkPackagesOptions {
+  withDownloads?: boolean;
+  withScopedDownloads?: boolean;
+}

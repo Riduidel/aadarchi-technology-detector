@@ -2,7 +2,8 @@ import { myFetch } from "../utils";
 import { DownloadCounter, Registry } from "./types";
 
 export const getDownloadCount = async (
-  packageNames: string[]
+  packageNames: string[],
+  withScoped: boolean = false
 ): Promise<DownloadCounter> => {
   const scopedNames: string[] = [];
   const unscopedNames: string[] = [];
@@ -14,6 +15,23 @@ export const getDownloadCount = async (
     unscopedDownloads.push(unscopedNames.splice(0, 100));
   }
   const promises: Promise<DownloadCounter>[] = [];
+  if (withScoped) {
+    promises.push(
+      ...scopedNames.flatMap(
+        async (name): Promise<DownloadCounter> =>
+          new Promise(async (resolve) => {
+            const response = await myFetch(
+              `https://api.npmjs.org/downloads/point/last-month/${name}`
+            );
+            resolve({
+              [`npm:${name}`]: (
+                (await response.json()) as Registry.DownloadsCounter
+              ).downloads,
+            });
+          })
+      )
+    );
+  }
   promises.push(
     ...unscopedDownloads.flatMap(
       (bulk): Promise<DownloadCounter> =>
@@ -32,19 +50,6 @@ export const getDownloadCount = async (
               return { ...acc, ...val };
             }, {});
           resolve(res);
-        })
-    ),
-    ...scopedNames.flatMap(
-      async (name): Promise<DownloadCounter> =>
-        new Promise(async (resolve) => {
-          const response = await myFetch(
-            `https://api.npmjs.org/downloads/point/last-month/${name}`
-          );
-          resolve({
-            [`npm:${name}`]: (
-              (await response.json()) as Registry.DownloadsCounter
-            ).downloads,
-          });
         })
     )
   );
