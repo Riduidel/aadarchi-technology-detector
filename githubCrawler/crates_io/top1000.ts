@@ -8,7 +8,7 @@ const fetchTop1000 = async (db: Database): Promise<Artifact.Root> => {
   const top1000downloads = db
     .query(
       `
-      SELECT crates.id, crates.name, crates.description, crate_downloads.downloads
+      SELECT crates.id, crates.name, crates.description, CAST(crate_downloads.downloads AS INTEGER) as dl
       FROM crate_downloads 
       INNER JOIN crates ON crate_downloads.crate_id = crates.id
       ORDER BY dl DESC LIMIT 1000

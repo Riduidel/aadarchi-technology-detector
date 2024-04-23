@@ -23,30 +23,6 @@ const tables: genType = {
     "max_upload_size",
     "max_features",
   ],
-  version_downloads: [
-    "version_id",
-    "downloads",
-    "counted",
-    "date",
-    "processed",
-  ],
-  versions: [
-    "id",
-    "crate_id",
-    "num",
-    "updated_at",
-    "created_at",
-    "downloads",
-    "features",
-    "yanked",
-    "license",
-    "crate_size",
-    "published_by",
-    "checksum",
-    "links",
-    "rust_version",
-    "semver_no_prerelease",
-  ],
 };
 
 const noImports: genType = {
@@ -62,8 +38,6 @@ const noImports: genType = {
     "max_features",
   ],
   keywords: ["crates_cnt", "created_at"],
-  version_downloads: ["counted", "processed"],
-  versions: ["id", "crate_id", "created_at", "downloads", "license"],
 };
 
 const keys: genType = {
@@ -71,8 +45,6 @@ const keys: genType = {
   crates_keywords: ["crate_id", "keyword_id"],
   keywords: ["id"],
   crates: ["id"],
-  version_downloads: ["version_id", "date"],
-  versions: ["id", "crate_id"],
 };
 
 const schema = async () => {
