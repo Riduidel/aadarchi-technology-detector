@@ -9,15 +9,17 @@ const CratesIoFetch = async (
 ) => {
   console.log("🔍 Analyse crates.io 🦀");
   if (!useCache) await generateDB();
+  /*
   const db = new Database("tmp/cratesio.sqlite", { readonly: true });
   console.log("  🏅 Top 1000");
   const top1000 = await fetchTop1000(db);
   console.log(`  📋 SBOM ${sbomPackages.length} packages`);
   const sboms = await getBulkPackagesInfo(sbomPackages, db);
   db.close();
+  */
   return {
-    ...top1000,
-    ...sboms,
+    //...top1000,
+    //...sboms,
   };
 };
 

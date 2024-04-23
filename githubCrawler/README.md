@@ -7,7 +7,9 @@
 
 ## Installation
 
-`bun install`
+```
+bun install
+```
 
 Create a `.env` file a this root, containing your github token:
 
@@ -17,7 +19,15 @@ GITHUB_TOKEN=
 
 ## Run
 
-`bun crawl`
+```
+bun crawl
+```
+
+In the `.env` you can set an option to use cache to avoid crawling github and sites:
+
+```
+USE_CACHE=true
+```
 
 ## How to add a site to crawl?
 

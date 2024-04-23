@@ -11,7 +11,7 @@ const getBulkPackagesInfo = async (
   const res = db
     .query(
       `
-        SELECT crates.id, crates.name, crates.description, CAST(crate_downloads.downloads as integer) as dl
+        SELECT crates.id, crates.name, crates.description, crate_downloads.downloads
         FROM crate_downloads 
         INNER JOIN crates ON crate_downloads.crate_id = crates.id
         WHERE crates.name IN ($name)
