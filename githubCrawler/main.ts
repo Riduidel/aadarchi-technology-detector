@@ -18,9 +18,9 @@ const start = performance.now();
 const sbomLibsPerLanguages = await fetchSBOM(sites, useCache);
 
 saveJson("outputs/artifact.json", {
-  // ...(await PackagistOrgFetch(sbomLibsPerLanguages.php, useCache)),
-  // ...(await NpmJsFetch(sbomLibsPerLanguages.npm, useCache)),
-  ...(await CratesIoFetch(sbomLibsPerLanguages.rust, false)),
+  ...(await PackagistOrgFetch(sbomLibsPerLanguages.php, useCache)),
+  ...(await NpmJsFetch(sbomLibsPerLanguages.npm, useCache)),
+  ...(await CratesIoFetch(sbomLibsPerLanguages.rust, useCache)),
 });
 
 console.log(
