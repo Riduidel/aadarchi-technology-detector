@@ -100,23 +100,23 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 			DateTimeFormatter.ofPattern("uuuuMMddHHmmss", Locale.US)
 				.withZone(ZoneId.from(ZoneOffset.UTC))
 				;
-	public static DateTimeFormatter MVNREPOSITORY_DATE_FORMAT_WITH_DAY =
+	public static DateTimeFormatter DATE_FORMAT_WITH_DAY =
 			new DateTimeFormatterBuilder()
 				.appendPattern("MMM dd, yyyy")
 				.parseCaseInsensitive()
 				.toFormatter(Locale.ENGLISH)
 				;
-	public static DateTimeFormatter MVNREPOSITORY_DATE_FORMAT_WITH_MONTH_ONLY =
+	public static DateTimeFormatter DATE_FORMAT_WITH_MONTH_ONLY =
 			new DateTimeFormatterBuilder()
 				.appendPattern("MMM, yyyy")
 			 	.parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
 				.parseCaseInsensitive()
 				.toFormatter(Locale.ENGLISH)
 				;
-	public static DateTimeFormatter MVNREPOSITORY_DATE_FORMAT =
+	public static DateTimeFormatter DATE_FORMAT =
 			new DateTimeFormatterBuilder()
-				.appendOptional(MVNREPOSITORY_DATE_FORMAT_WITH_DAY)
-				.appendOptional(MVNREPOSITORY_DATE_FORMAT_WITH_MONTH_ONLY)
+				.appendOptional(DATE_FORMAT_WITH_DAY)
+				.appendOptional(DATE_FORMAT_WITH_MONTH_ONLY)
 				.parseCaseInsensitive()
 				.toFormatter(Locale.ENGLISH)
 				;
@@ -424,7 +424,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     			if(parsableDate.startsWith("(")) {
     				parsableDate = parsableDate.substring(1, parsableDate.length()-1);
     			}
-    			parsedDate = Optional.ofNullable(LocalDate.parse(parsableDate, MVNREPOSITORY_DATE_FORMAT));
+    			parsedDate = Optional.ofNullable(LocalDate.parse(parsableDate, DATE_FORMAT));
     		}
     		return parsedDate.get();
     	}
@@ -605,7 +605,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 				SortedSet<ArtifactDetails> value) throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
 	    	// First, write the artifact in its own folder
 	    	File datedFilePath = getDatedFilePath(artifactsLists, date, "artifacts");
-	    	logger.info(String.format("Writing %d artifacts of %s into %s", value.size(), MVNREPOSITORY_DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
+	    	logger.info(String.format("Writing %d artifacts of %s into %s", value.size(), DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
 			FileUtils.write(datedFilePath, 
 	    			gson.toJson(value), "UTF-8");
 	    	File artifacts = new File(new File(gitHistory.toFile(), "mvnrepository"), "artifacts.json");
@@ -626,7 +626,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 //	    		.setOnly("mvnrepository/artifacts.json")
 //	    		.setAllowEmpty(false)
 	    		.setMessage(String.format("Historical artifacts of %s, %d artifacts known at this date", 
-	    				MVNREPOSITORY_DATE_FORMAT_WITH_DAY.format(date), value.size()))
+	    				DATE_FORMAT_WITH_DAY.format(date), value.size()))
 	    		.call()
 	    		;
 		}

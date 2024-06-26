@@ -33,6 +33,7 @@ aggregating all informations.
 | Source website    | Branch name           | Path of artifacts file(s)    |
 | ----------------- | --------------------- | ---------------------------- |
 | mvnrepository.com | reports_mvnrepository | mvnrepository/artifacts.json |
+| npmjs.com         | reports_npmjs         | npmjs/artifacts.json         |
 
 If you take a look at these branches, 
 in each of them, you'll find one commit per month.
@@ -113,6 +114,13 @@ jbang ExtractPopularMvnRepositorytArtifacts.java --generate-history
 
 This will fetch the whole history for MvnRepository and generate in a branch called history one commit for each month since the first capture available at https://archive.org.
 This code is kept for tracability reason, to make sure the history fetching process is reproducable, but should not be run.
+
+## Architecture
+
+Each extractor **must** be written using Java/JBang
+(it's easy, fast, and make code easily runnable through GitHub Actions).
+Each extractor **must** provide a `--generate-history` flag that will generate an history covering at least the last ten years.
+Each extractor **must** write this history to a branch (ideally the `reports` one).
 
 ## Author
 
