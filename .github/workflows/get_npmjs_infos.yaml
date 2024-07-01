@@ -30,7 +30,7 @@ jobs:
         jbang --help
         cd npmjs/
         jbang ExtractPopularNpmjsArtifacts.java
-        cd ../..
+        cd ..
         mkdir target
         mv npmjs/artifacts.json target/artifacts.json
     - name: Deploy
