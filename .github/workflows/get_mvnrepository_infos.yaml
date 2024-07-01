@@ -28,7 +28,6 @@ jobs:
       with:
         distribution: adopt
         java-version: 17
-        cache: 'maven'
     - name: Run everything in the same step
       run: |
         sudo apt update

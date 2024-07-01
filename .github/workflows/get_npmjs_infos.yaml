@@ -1,4 +1,4 @@
-name: mvnrepository
+name: npmjs
 on:
   push:
     branches: [ main ]
@@ -14,14 +14,11 @@ jobs:
     steps:
     - name: Clone local repository locally
       uses: actions/checkout@v3
-      with: 
-        path: aadarchi-technology-detector
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
         distribution: adopt
         java-version: 17
-        cache: 'maven'
     - name: Run everything in the same step
       run: |
         sudo apt update
@@ -31,8 +28,8 @@ jobs:
         sdk help
         sdk install jbang
         jbang --help
-        cd aadarchi-technology-detector/npmjs/
-        xvfb-run jbang ExtractPopularNpmjsArtifacts.java
+        cd npmjs/
+        jbang ExtractPopularNpmjsArtifacts.java
         cd ../..
         mkdir target
         mv aadarchi-technology-detector/npmjs/artifacts.json target/artifacts.json
