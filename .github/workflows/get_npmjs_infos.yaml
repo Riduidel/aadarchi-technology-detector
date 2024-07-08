@@ -27,12 +27,8 @@ jobs:
         source "/home/runner/.sdkman/bin/sdkman-init.sh"
         sdk help
         sdk install jbang
-        jbang --help
-        cd npmjs/
-        jbang ExtractPopularNpmjsArtifacts.java
-        cd ..
         mkdir target
-        mv npmjs/artifacts.json target/artifacts.json
+        jbang scripts/ExtractPopularNpmjsArtifacts.java --output target/artifacts.json
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:
