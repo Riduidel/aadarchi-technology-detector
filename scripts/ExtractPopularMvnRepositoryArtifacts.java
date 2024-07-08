@@ -181,7 +181,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		private static String artifactsUrlExtractor;
 		
 		static {
-			var file = new File("artifacts_urls_extractor.js");
+			var file = new File("resources/mvnrepository/artifacts_urls_extractor.js");
 			try {
 				artifactsUrlExtractor = FileUtils.readFileToString(file, "UTF-8");
 			} catch (IOException e) {
@@ -336,7 +336,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     @Option(names= {"-o", "--output"}, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
     private Path output;
 
-    @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "interesting_artifacts.json")
+    @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "resources/mvnrepository/interesting_artifacts.json")
     private Path localInterestingArtifacts;
 
     @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
@@ -617,7 +617,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 					"get_mvnrepository_infos.yaml@history",
 	    			commitInstant, systemZoneId);
 			git.add()
-				.addFilepattern("mvnrepository/artifacts.json")
+				.addFilepattern("resources/mvnrepository/artifacts.json")
 				.call();
 			git.commit()
 	    		.setAuthor(commiter)
@@ -951,7 +951,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
 	private String getArtifactDetailsExtractor() {
 		if(artifactDetailsExtractor==null) {
-			File extractor = new File(String.format("artifact_details_extractor.js"));
+			File extractor = new File(String.format("resources/mvnrepository/artifact_details_extractor.js"));
 			try {
 				artifactDetailsExtractor = FileUtils.readFileToString(extractor, "UTF-8");
 			} catch (IOException e) {

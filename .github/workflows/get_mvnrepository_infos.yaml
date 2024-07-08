@@ -37,11 +37,11 @@ jobs:
         sdk help
         sdk install jbang
         jbang --help
-        cd aadarchi-technology-detector/mvnrepository/
+        cd aadarchi-technology-detector/scripts/
         xvfb-run jbang ExtractPopularMvnRepositoryArtifacts.java
         cd ../..
         mkdir target
-        mv aadarchi-technology-detector/mvnrepository/artifacts.json target/artifacts.json
+        mv aadarchi-technology-detector/scripts/artifacts.json target/artifacts.json
     - name: Deploy
       uses: s0/git-publish-subdir-action@develop
       env:
