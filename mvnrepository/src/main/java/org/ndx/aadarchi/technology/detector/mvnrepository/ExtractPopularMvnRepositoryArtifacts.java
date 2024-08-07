@@ -15,11 +15,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -27,7 +22,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
@@ -46,8 +40,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.maven.artifact.versioning.ArtifactVersion;
-import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
@@ -61,6 +53,9 @@ import org.eclipse.jgit.api.errors.ServiceUnavailableException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.Formats;
+import org.ndx.aadarchi.technology.detector.model.VersionDetails;
 
 import com.github.fge.lambdas.Throwing;
 import com.google.gson.Gson;
@@ -85,31 +80,6 @@ import picocli.CommandLine.Option;
         description = "ExtractPuploarMvnRepositoryArtifacts made with jbang")
 class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
-	public static DateTimeFormatter INTERNET_ARCHIVE_DATE_FORMAT =
-			DateTimeFormatter.ofPattern("uuuuMMddHHmmss", Locale.US)
-				.withZone(ZoneId.from(ZoneOffset.UTC))
-				;
-	public static DateTimeFormatter DATE_FORMAT_WITH_DAY =
-			new DateTimeFormatterBuilder()
-				.appendPattern("MMM dd, yyyy")
-				.parseCaseInsensitive()
-				.toFormatter(Locale.ENGLISH)
-				;
-	public static DateTimeFormatter DATE_FORMAT_WITH_MONTH_ONLY =
-			new DateTimeFormatterBuilder()
-				.appendPattern("MMM, yyyy")
-			 	.parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-				.parseCaseInsensitive()
-				.toFormatter(Locale.ENGLISH)
-				;
-	public static DateTimeFormatter DATE_FORMAT =
-			new DateTimeFormatterBuilder()
-				.appendOptional(DATE_FORMAT_WITH_DAY)
-				.appendOptional(DATE_FORMAT_WITH_MONTH_ONLY)
-				.parseCaseInsensitive()
-				.toFormatter(Locale.ENGLISH)
-				;
-
 	record ArchivePoint(String urlkey, 
     		LocalDateTime timestamp, 
     		String original, 
@@ -400,151 +370,6 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
         return 0;
     }
     
-    static class VersionDetails {
-    	String usages;
-    	String date;
-    	int users;
-    	int previousUsers;
-    	int interpolatedUsers;
-    	transient Optional<LocalDate> parsedDate;
-    	public LocalDate getParsedDate() {
-    		if(parsedDate==null) {
-    			String parsableDate = date.trim();
-    			if(parsableDate.startsWith("(")) {
-    				parsableDate = parsableDate.substring(1, parsableDate.length()-1);
-    			}
-    			parsedDate = Optional.ofNullable(LocalDate.parse(parsableDate, DATE_FORMAT));
-    		}
-    		return parsedDate.get();
-    	}
-    }
-    
-    record ArtifactDetails(String coordinates,
-    		String name,
-    		String description,
-    		List<String> licenses,
-    		List<String> categories,
-    		List<String> tags,
-    		int ranking,
-    		int users,
-    		int previousUsers,
-    		int interpolatedUsers,
-    		boolean infered,
-    		List<String> repositories,
-    		Map<String, VersionDetails> versions) implements Comparable<ArtifactDetails>{
-
-    	/**
-    	 * This method creates an **infered** artifact details from this one and an optional previous one.
-    	 * @param currentData 
-    	 * @param thisDate date at which this artifact details have been generated
-    	 * @param inferredMonth target month
-    	 * @param dataBefore optional (so, nullable) previous artifact details
-    	 * @param beforeDate optional (so, nullable) date of previous artifact details
-    	 * 
-    	 * @return
-    	 */
-		public ArtifactDetails inferDataPoint(
-				ArtifactDetails currentData, LocalDate thisDate,
-				LocalDate inferredMonth,
-				LocalDate beforeDate,
-				ArtifactDetails dataBefore) {
-			return new ArtifactDetails(
-					coordinates, 
-					name, 
-					description, 
-					licenses, 
-					categories, 
-					tags, 
-					ranking, 
-					0,
-					dataBefore==null ? 0 : dataBefore.users==0 ? dataBefore.previousUsers : dataBefore.users,
-					interpolateUsers(users, thisDate, dataBefore==null ? 0 : dataBefore.users, beforeDate, thisDate),
-					true,
-					repositories, 
-					versionsUpTo(currentData.versions, thisDate, inferredMonth, beforeDate, dataBefore));
-		}
-
-		/**
-		 * Generate map of versions from existing ones
-		 * When possible, usage of version will be "correctly" computed
-		 * @param versions2 
-		 * @param inferredMonth the month at which we want that usage
-		 * @param beforeDate the optional (maybe nullable) date of the previous data point
-		 * @param dataBefore the potional (maybe nullable) previous data point
-		 * @return a map of previous versions
-		 */
-		private Map<String, VersionDetails> versionsUpTo(
-				Map<String, VersionDetails> currentVersions, LocalDate thisDate, LocalDate inferredMonth,
-				LocalDate beforeDate, ArtifactDetails dataBefore) {
-			return versions.entrySet().stream()
-					// Only keep versions older that inferredMonth
-					.filter(entry -> entry.getValue().date!=null)
-					.filter(entry -> entry.getValue().getParsedDate().compareTo(inferredMonth)<=0)
-					.filter(entry -> currentVersions.containsKey(entry.getKey()))
-					.filter(entry -> currentVersions.get(entry.getKey())!=null)
-					.collect(Collectors.toMap(Entry::getKey, 
-							entry -> computePreviousVersionFor(currentVersions.get(entry.getKey()),  entry.getValue(), thisDate, inferredMonth, beforeDate, 
-									dataBefore==null? null : 
-										dataBefore.versions == null ? null :
-											dataBefore.versions.containsKey(entry.getKey()) ?
-													dataBefore.versions.get(entry.getKey()) : null
-										),
-							(a, b) -> a,
-							() -> new TreeMap<String, VersionDetails>(new ByArtifactVersionComparator().reversed())))
-					;
-		}
-		
-		private static class ByArtifactVersionComparator implements Comparator<String> {
-
-			@Override
-			public int compare(String o1, String o2) {
-				ArtifactVersion a1 = new DefaultArtifactVersion(o1);
-				ArtifactVersion a2 = new DefaultArtifactVersion(o1);
-				int returned = a1.compareTo(a2);
-				if(returned==0) {
-					returned = o1.compareTo(o2);
-				}
-				return returned;
-			}
-			
-		}
-
-		private VersionDetails computePreviousVersionFor(VersionDetails current, VersionDetails value, LocalDate currentDate,
-				LocalDate inferredMonth, LocalDate beforeDate, VersionDetails versionBefore) {
-			VersionDetails returned = new VersionDetails();
-			returned.date = current.date;
-			returned.previousUsers = versionBefore==null ? 0 : versionBefore.users;
-			returned.interpolatedUsers = interpolateUsers(value.users, currentDate, 
-					returned.previousUsers, beforeDate, inferredMonth);
-			return returned;
-		}
-
-		/**
-		 * Uses classic linear interpolation
-		 * if (yb-ya)/(xb-xa)=(yb-yc)/(xb-xc)
-		 * then (yb-ya)/(xb-xa)*(xb-xc)=(yb-yc)
-		 * and so yc=yb-(yb-ya)/(xb-xa)*(xb-xc)
-		 * @param toUsers yb
-		 * @param toDate xb
-		 * @param fromUsers ya
-		 * @param fromDate xa
-		 * @param targetDate xc
-		 * @return
-		 */
-		private int interpolateUsers(int toUsers, LocalDate toDate, 
-				int fromUsers, LocalDate fromDate, LocalDate targetDate) {
-			long xb_xa = ChronoUnit.DAYS.between(fromDate, toDate);
-			long xb_xc = ChronoUnit.DAYS.between(targetDate, toDate);
-			long yb_ya = toUsers-fromUsers;
-			return (int) (toUsers-yb_ya/xb_xa*xb_xc);
-		}
-
-		@Override
-		public int compareTo(ExtractPopularMvnRepositoryArtifacts.ArtifactDetails o) {
-			return coordinates().compareTo(o.coordinates());
-		}
-	}
-  
     private class HistoryBuilder {
 		HttpClient client = HttpClient.newHttpClient();
 	    /**
@@ -570,7 +395,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	    				.map(e -> String.format("%s -> %d captures", e.getKey(), e.getValue().size()))
 	    				.collect(Collectors.joining("\n"))
 	    				);
-	    	List<ArtifactDetails> allArtifactsDetails = (List<ExtractPopularMvnRepositoryArtifacts.ArtifactDetails>) gson.fromJson(
+	    	List<ArtifactDetails> allArtifactsDetails = (List<ArtifactDetails>) gson.fromJson(
 	    			FileUtils.readFileToString(output.toFile(), "UTF-8"),
 	    			TypeToken.getParameterized(List.class, ArtifactDetails.class));
 	    	// Move history details from the future to the past for the whole timeline
@@ -594,7 +419,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 				SortedSet<ArtifactDetails> value) throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
 	    	// First, write the artifact in its own folder
 	    	File datedFilePath = getDatedFilePath(artifactsLists, date, "artifacts");
-	    	logger.info(String.format("Writing %d artifacts of %s into %s", value.size(), DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
+	    	logger.info(String.format("Writing %d artifacts of %s into %s", value.size(), Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
 			FileUtils.write(datedFilePath, 
 	    			gson.toJson(value), "UTF-8");
 	    	File artifacts = new File(new File(gitHistory.toFile(), "mvnrepository"), "artifacts.json");
@@ -615,7 +440,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 //	    		.setOnly("mvnrepository/artifacts.json")
 //	    		.setAllowEmpty(false)
 	    		.setMessage(String.format("Historical artifacts of %s, %d artifacts known at this date", 
-	    				DATE_FORMAT_WITH_DAY.format(date), value.size()))
+	    				Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()))
 	    		.call()
 	    		;
 		}
@@ -666,29 +491,15 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 	    	ArtifactDetails newDetails = null;
 	    	capturesHistory.forEach((date, file) -> copyDatesInto(details, date, file));
 		}
+	    /**
+	     * Copy the versions date from the details object into the oldDetails object (which will obviously be changed)
+	     */
 	    private void copyDatesInto(ArtifactDetails details, LocalDate date, File file) {
     		try {
 	    		ArtifactDetails oldDetails = gson.fromJson(FileUtils.readFileToString(file, "UTF-8"), ArtifactDetails.class);
-    			boolean changed = false;
-    			Set<String> oldVersions = new LinkedHashSet<>(oldDetails.versions.keySet());
-    			Map<String, VersionDetails> updatedVersions = new LinkedHashMap<>();
-    			for(String version : oldVersions) {
-    				if(details.versions.containsKey(version) && oldDetails.versions.containsKey(version)) {
-	    				VersionDetails newVersion = details.versions.get(version);
-	    				VersionDetails oldVersion = oldDetails.versions.get(version);
-	    				if(!newVersion.date.equals(oldVersion.date)) {
-	    					VersionDetails changedVersion = new VersionDetails();
-	    					changedVersion.date = newVersion.date;
-	    					changedVersion.usages = oldVersion.usages;
-	    					changedVersion.users = oldVersion.users;
-	    					oldVersion = changedVersion;
-	    					changed = true;
-	    				}
-	    				updatedVersions.put(version, oldVersion);
-    				}
-    			}
-    			if(changed) {
-    				ArtifactDetails changedDetails = new ArtifactDetails(oldDetails.coordinates, oldDetails.name, oldDetails.description, oldDetails.licenses, oldDetails.categories, oldDetails.tags, oldDetails.ranking, oldDetails.users, oldDetails.previousUsers, oldDetails.interpolatedUsers, oldDetails.infered, oldDetails.repositories, updatedVersions);
+    			Optional<ArtifactDetails> changedDetailsOptiona = oldDetails.copyDatesFrom(details);
+    			if(changedDetailsOptiona.isPresent()) {
+    				ArtifactDetails changedDetails = changedDetailsOptiona.get();
     				FileUtils.write(file, gson.toJson(changedDetails), "UTF-8");
     				oldDetails = changedDetails;
     			}
@@ -732,7 +543,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     		ArtifactDetails dataBefore = null;
     		ArtifactDetails dataAfter = null;
     		Optional<ArtifactDetails> currentData = currentArtifacts.stream()
-    				.filter(a -> a.coordinates().equals(artifact.toCoordinates()))
+    				.filter(a -> a.coordinates.equals(artifact.toCoordinates()))
     				.findFirst();
     		if(currentData.isEmpty())
     			return Optional.empty();
@@ -804,7 +615,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 					}
 				}
 				var url = String.format("https://web.archive.org/web/%s/%s", 
-						INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp),
+						Formats.INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp),
 						artifact.getArtifactUrl(mvnRepositoryServer));
 				try (Page page = newPage(context)){
 					
@@ -859,7 +670,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 					.filter(row -> !row.get(0).equals("urlkey"))
 					.map(Throwing.function(
 							row -> new ArchivePoint(row.get(0), 
-							LocalDateTime.parse(row.get(1), INTERNET_ARCHIVE_DATE_FORMAT),
+							LocalDateTime.parse(row.get(1), Formats.INTERNET_ARCHIVE_DATE_FORMAT),
 							row.get(2),
 							row.get(5),
 							row.get(6))))

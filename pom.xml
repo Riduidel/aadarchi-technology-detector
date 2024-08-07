@@ -104,6 +104,16 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.5.0</version>
+                </plugin>
+                <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.2.5</version>
                     <configuration>
@@ -192,4 +202,58 @@
         <system>GitHub</system>
         <url>https://github.com/Riduidel/aadarchi-technology-detector/issues</url>
     </issueManagement>
+    <profiles>
+        <profile>
+            <id>Generate extractor jar (unless for the model, that's the reason of the activation property)</id>
+            <activation>
+                <file>
+                    <missing>src/main/java/org/ndx/aadarchi/technology/detector/model/ArtifactDetails.java</missing>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.github.kerwin612</groupId>
+                        <artifactId>findclass-maven-plugin</artifactId>
+                        <version>0.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>Find main class</id>
+                                <goals>
+                                    <goal>find</goal>
+                                </goals>
+                                <configuration>
+                                    <methodKeyMatch>public static void .*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
+                                    <firstFound>true</firstFound>
+                                    <outputPropertyName>extractor.main.class</outputPropertyName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>Generate jar with dependencies</id>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <archive>
+                                        <manifest>
+                                            <mainClass>${extractor.main.class}</mainClass>
+                                        </manifest>
+                                    </archive>
+                                    <descriptorRefs>
+                                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                                    </descriptorRefs>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

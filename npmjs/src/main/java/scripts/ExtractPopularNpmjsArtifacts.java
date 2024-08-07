@@ -13,7 +13,6 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -23,7 +22,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,6 +39,8 @@ import org.eclipse.jgit.api.errors.ServiceUnavailableException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.github.fge.lambdas.Throwing;
 import com.google.gson.Gson;
@@ -79,7 +79,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 
     public interface ArtifactLoader {
 
-		public default List<ArtifactInformations> loadArtifacts() throws Exception {
+		public default List<ArtifactDetails> loadArtifacts() throws Exception {
 			File cachedArtifacts = getCachedArtifactsFile();
 			if(cachedArtifacts.lastModified()<System.currentTimeMillis()-(1000*60*60*24)) {
 				cachedArtifacts.delete();
@@ -90,38 +90,12 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 			return readArtifacts(cachedArtifacts);
 		}
 
-		public List<ArtifactInformations> doLoadArtifacts() throws Exception;
+		public List<ArtifactDetails> doLoadArtifacts() throws Exception;
 
 		public File getCachedArtifactsFile();
 		
 	}
 
-	public static class ArtifactInformations {
-		public String name;
-		public String version;
-		public String description;
-		public List<String> keywords = new ArrayList<String>();
-		public String date;
-		public Map<String, String> links = new TreeMap<String, String>();
-		public long downloads;
-		@Override
-		public String toString() {
-			return "ArtifactInformations [name=" + name + ", version=" + version + ", keywords=" + keywords + "]";
-		}
-		public ArtifactInformations withDownloads(
-				ExtractPopularNpmjsArtifacts.DownloadCount jsonResponse) {
-			ExtractPopularNpmjsArtifacts.ArtifactInformations returned = new ArtifactInformations();
-			returned.name = name;
-			returned.version = version;
-			returned.description = description;
-			returned.keywords = new ArrayList<String>(keywords);
-			returned.date = date;
-			returned.links = new TreeMap<String, String>(links);
-			returned.downloads = jsonResponse.downloads;
-			return returned;
-		}
-	}
-	
 	public class PopularNpmArtifacts implements ArtifactLoader {
 		private File cachedArtifacts = new File(cache.toFile(), "popularNpmArtifacts.json");
 		public static final List<String> POPULAR_ARTIFACTS_PAGES = 
@@ -132,7 +106,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 		
 		public static class PackageResponse {
 			@SerializedName("package")
-			public ArtifactInformations artifact;
+			public ArtifactDetails artifact;
 		}
 		
 		public static class NpmJsResponse {
@@ -142,18 +116,18 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 		}
 
 		@Override
-		public List<ArtifactInformations> doLoadArtifacts() throws IOException, InterruptedException {
+		public List<ArtifactDetails> doLoadArtifacts() throws IOException, InterruptedException {
 			return POPULAR_ARTIFACTS_PAGES.stream()
 				.map(Throwing.function(this::doLoadArtifactsFrom))
 				.flatMap(List::stream)
 				.collect(Collectors.toList());
 		}
 		
-		List<ArtifactInformations> doLoadArtifactsFrom(String url) throws IOException, InterruptedException {
+		List<ArtifactDetails> doLoadArtifactsFrom(String url) throws IOException, InterruptedException {
 			HttpRequest request = HttpRequest.newBuilder(URI.create(url)).build();
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 			NpmJsResponse jsonResponse = gson.fromJson(response.body(), new TypeToken<NpmJsResponse>() {});
-			List<ExtractPopularNpmjsArtifacts.ArtifactInformations> returned = jsonResponse.objects.stream()
+			List<ArtifactDetails> returned = jsonResponse.objects.stream()
 					.map(a -> a.artifact)
 					.collect(Collectors.toList());
 	        return returned;
@@ -167,13 +141,13 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 		
 	}
     
-	private Set<ArtifactInformations> fetchArtifactInformations(
+	private Set<ArtifactDetails> fetchArtifactInformations(
 			List<ArtifactLoader> sources) {
 		return sources.stream()
 			.map(Throwing.function(source -> source.loadArtifacts()))
 			.flatMap(artifactInformationsSet -> artifactInformationsSet.stream())
 			.peek(artifactInformations -> logger.info(String.format("found artifact %s", artifactInformations)))
-			.sorted(Comparator.comparing((ArtifactInformations a) -> a.name))
+			.sorted(Comparator.comparing((ArtifactDetails a) -> a.name))
 			.collect(Collectors.toSet());
 	}
 
@@ -191,7 +165,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 					.toFormatter(Locale.ENGLISH)
 					;
 
-		public void generateHistoryFor(Collection<ArtifactInformations> allDetails) throws IOException {
+		public void generateHistoryFor(Collection<ArtifactDetails> allDetails) throws IOException {
 			logger.info("Opening git repository at "+gitHistory.toFile().getAbsolutePath());
 	    	Git git = Git.open(gitHistory.toFile());
 	    	LocalDate initial = LocalDate.of(2010, 1, 1);
@@ -199,7 +173,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 	    	Map<LocalDate, File> aggregatedStatuses = initial.datesUntil(LocalDate.now(), Period.ofMonths(1))
 	    		.map(Throwing.function(month -> Map.entry(month, generateHistoryAtMonth(allDetails, month))))
 	    		.filter(Throwing.predicate(entry -> {
-	    			Collection<ArtifactInformations> infos = readArtifacts(entry.getValue());
+	    			Collection<ArtifactDetails> infos = readArtifacts(entry.getValue());
 	    			return !infos.isEmpty();
 	    		}))
 //	    		.forEach(entry -> logger.info("Got downloads at "+entry.getKey()))
@@ -215,7 +189,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 	    private void writeArtifactListAtDate(Git git, LocalDate date,
 				File datedFilePath) throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
 	    	logger.info("Creating commit at "+date);
-			Collection<ArtifactInformations> infos = readArtifacts(datedFilePath);
+			Collection<ArtifactDetails> infos = readArtifacts(datedFilePath);
 	    	File artifacts = new File(new File(gitHistory.toFile(), "npmjs"), "artifacts.json");
 	    	FileUtils.copyFile(datedFilePath, artifacts);
 	    	// Then create a commit in the history repository
@@ -247,7 +221,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 					"artifacts.json");
 		}
 
-		private File  generateHistoryAtMonth(Collection<ExtractPopularNpmjsArtifacts.ArtifactInformations> allDetails,
+		private File  generateHistoryAtMonth(Collection<ArtifactDetails> allDetails,
 				LocalDate month) throws IOException {
 			File destination = getDatedFilePath(new File(cache.toFile(), "captures"), month);
 			if(!destination.exists()) {
@@ -256,7 +230,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 						format.format(month),
 						format.format(month.withDayOfMonth(month.getMonth().length(month.isLeapYear())))
 						);
-				Collection<ExtractPopularNpmjsArtifacts.ArtifactInformations> atMonth = getAllDownloadsForPeriod(allDetails, monthlySearch);
+				Collection<ArtifactDetails> atMonth = getAllDownloadsForPeriod(allDetails, monthlySearch);
 		        writeArtifacts(atMonth, destination);
 
 			}
@@ -267,7 +241,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-    	Collection<ArtifactInformations> allDetails = fetchArtifactInformations(Arrays.asList(
+    	Collection<ArtifactDetails> allDetails = fetchArtifactInformations(Arrays.asList(
     			// Way to much complicated
 //    			new CodebaseShowArtifacts(),
     			new PopularNpmArtifacts()));
@@ -283,11 +257,11 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
         return 0;
     }
 
-    static List<ArtifactInformations> readArtifacts(File file) throws IOException {
+    static List<ArtifactDetails> readArtifacts(File file) throws IOException {
     	return gson.fromJson(FileUtils.readFileToString(file, "UTF-8"),
-				new TypeToken<List<ArtifactInformations>>() {});
+				new TypeToken<List<ArtifactDetails>>() {});
     }
-	static void writeArtifacts(Collection<ArtifactInformations> allDetails, File file) throws IOException {
+	static void writeArtifacts(Collection<ArtifactDetails> allDetails, File file) throws IOException {
 		logger.info("Exporting artifacts to " + file.getAbsolutePath());
 		FileUtils.write(file, gson.toJson(allDetails), "UTF-8");
 		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));
@@ -300,14 +274,14 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 	 * @return list of artifacts having at least one download on this period
 	 * @throws IOException
 	 */
-	private Collection<ArtifactInformations> getAllDownloadsForPeriod(Collection<ArtifactInformations> artifactsToQuery, String period) throws IOException {
+	private Collection<ArtifactDetails> getAllDownloadsForPeriod(Collection<ArtifactDetails> artifactsToQuery, String period) throws IOException {
 		// Now get download count for last month
     	return artifactsToQuery.stream()
     		// Do not use parallel, cause the download count api is quite cautious on load and will fast put an hauld on our queries
 //    		.parallel()
     		.map(Throwing.function(artifact -> countDownloadsOf(artifact, period)))
     		.filter(artifact -> artifact.downloads>0)
-			.sorted(Comparator.comparing((ArtifactInformations a) -> a.name))
+			.sorted(Comparator.comparing((ArtifactDetails a) -> a.name))
     		.collect(Collectors.toList());
 	}
     
@@ -326,7 +300,7 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
      * @throws InterruptedException 
      * @throws IOException 
      */
-	private ArtifactInformations countDownloadsOf(ExtractPopularNpmjsArtifacts.ArtifactInformations artifact, String period) throws IOException, InterruptedException {
+	private ArtifactDetails countDownloadsOf(ArtifactDetails artifact, String period) throws IOException, InterruptedException {
 		logger.info(String.format("Getting downloads counts of %s for period %s", 
 				artifact.name, period));
 		int status = 1000;
@@ -337,7 +311,9 @@ class ExtractPopularNpmjsArtifacts implements Callable<Integer> {
 				HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 				status = response.statusCode();
 				DownloadCount jsonResponse = gson.fromJson(response.body(), new TypeToken<DownloadCount>() {});
-				return artifact.withDownloads(jsonResponse);
+				return ArtifactDetailsBuilder.toBuilder(artifact)
+				.downloads(jsonResponse.downloads)
+				.build();
 			} catch(Exception e) {
 				logger.log(Level.WARNING, "Seems like we were hit by an error. Let's wait some time and retry latter ...");
 				synchronized(this) {
