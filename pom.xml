@@ -85,6 +85,16 @@
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-project</artifactId>
                 <version>2.2.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>backport-util-concurrent</groupId>
+                        <artifactId>backport-util-concurrent</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jgit</groupId>
@@ -144,6 +154,24 @@
             </plugins>
         </pluginManagement>
         <plugins>
+                    <plugin>
+                        <groupId>io.github.kerwin612</groupId>
+                        <artifactId>findclass-maven-plugin</artifactId>
+                        <version>0.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>Find main class</id>
+                                <goals>
+                                    <goal>find</goal>
+                                </goals>
+                                <configuration>
+                                    <methodKeyMatch>public static void .*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
+                                    <firstFound>true</firstFound>
+                                    <outputPropertyName>extractor.main.class</outputPropertyName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -204,6 +232,9 @@
     </issueManagement>
     <profiles>
         <profile>
+            <id>execute</id>
+            </profile>
+        <profile>
             <id>Generate extractor jar (unless for the model, that's the reason of the activation property)</id>
             <activation>
                 <file>
@@ -212,24 +243,6 @@
             </activation>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>io.github.kerwin612</groupId>
-                        <artifactId>findclass-maven-plugin</artifactId>
-                        <version>0.0.2</version>
-                        <executions>
-                            <execution>
-                                <id>Find main class</id>
-                                <goals>
-                                    <goal>find</goal>
-                                </goals>
-                                <configuration>
-                                    <methodKeyMatch>public static void .*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
-                                    <firstFound>true</firstFound>
-                                    <outputPropertyName>extractor.main.class</outputPropertyName>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <executions>

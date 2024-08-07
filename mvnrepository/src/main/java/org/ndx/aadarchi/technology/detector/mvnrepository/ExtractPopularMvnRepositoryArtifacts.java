@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
@@ -140,11 +141,11 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 		private static String artifactsUrlExtractor;
 		
 		static {
-			var file = new File("resources/mvnrepository/artifacts_urls_extractor.js");
 			try {
-				artifactsUrlExtractor = FileUtils.readFileToString(file, "UTF-8");
+				artifactsUrlExtractor = IOUtils.toString(ArtifactLoader.class.getClassLoader().getResourceAsStream("artifacts_urls_extractor.js"), "UTF-8");
 			} catch (IOException e) {
-				throw new UnsupportedOperationException(String.format("Unable to load script from %s",  file.getAbsolutePath()), e);
+				throw new UnsupportedOperationException(String.format("Unable to load script from %s", 
+						ArtifactLoader.class.getClassLoader().getResource("artifacts_urls_extractor.js")), e);
 			}
 		}
 
@@ -295,8 +296,8 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     @Option(names= {"-o", "--output"}, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
     private Path output;
 
-    @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "resources/mvnrepository/interesting_artifacts.json")
-    private Path localInterestingArtifacts;
+//    @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "interesting_artifacts.json")
+//    private Path localInterestingArtifacts;
 
     @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
     		defaultValue = "../../FrameworkBenchmarks/frameworks")
@@ -751,9 +752,8 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 
 	private String getArtifactDetailsExtractor() {
 		if(artifactDetailsExtractor==null) {
-			File extractor = new File(String.format("resources/mvnrepository/artifact_details_extractor.js"));
 			try {
-				artifactDetailsExtractor = FileUtils.readFileToString(extractor, "UTF-8");
+				artifactDetailsExtractor = IOUtils.toString(ArtifactLoader.class.getClassLoader().getResourceAsStream("artifact_details_extractor.js"), "UTF-8");
 			} catch (IOException e) {
 				throw new UnsupportedOperationException("can't read file");
 			}
