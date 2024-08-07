@@ -5,7 +5,6 @@
 //DEPS com.github.fge:throwing-lambdas:0.5.0
 //DEPS org.apache.commons:commons-lang3:3.13.0
 //DEPS org.eclipse.jgit:org.eclipse.jgit:6.7.0.202309050840-r
-//SOURCES
 
 import java.io.File;
 import java.io.IOException;
