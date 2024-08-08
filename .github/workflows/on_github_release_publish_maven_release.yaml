@@ -4,6 +4,10 @@ on:
   release:
     types:
       - created
+  push:
+    branches:
+    - "bugs/27_cant_create_package"
+  
 
 jobs:
   publish:
@@ -18,13 +22,18 @@ jobs:
         with:
           owner: Riduidel
           repo: aadarchi-technology-detector
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: adopt
-          java-version: 21
-          cache: 'maven'
-      - name: Publish package
-        run: "mvn --batch-mode deploy -Drelease={{steps.release_number.outputs.release}}"
+      - name: Show next version number
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: "{{steps.release_number.outputs.release}}"
+        run:  echo "Next version will be $VERSION"
+
+#      - uses: actions/checkout@v4
+#      - uses: actions/setup-java@v4
+#        with:
+#          distribution: adopt
+#          java-version: 21
+#          cache: 'maven'
+#      - name: Publish package
+#        run: "mvn --batch-mode deploy -Drelease={{steps.release_number.outputs.release}}"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
