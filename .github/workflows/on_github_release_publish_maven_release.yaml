@@ -29,7 +29,7 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Publish package
-        run: "mvn --batch-mode deploy -Drelease=$VERSION"
+        run: "mvn --batch-mode deploy -Drevision=$VERSION"
         env:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
