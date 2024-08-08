@@ -40,7 +40,7 @@ jobs:
               {
                 "id":"central",
                 "url":"https://repo1.maven.org/maven2",
-              }
+              },
               {
                 "id":"github",
                 "name":"github",
