@@ -35,10 +35,11 @@ jobs:
         with:
           override: true
           githubServer: true
-      - name: Download artifact in current folder
-        run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
-        env:
-          VERSION: "${{steps.version.outputs.release}}"
+      - run: echo ~/.m2/settings.xml
+#      - name: Download artifact in current folder
+#        run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
+#        env:
+#          VERSION: "${{steps.version.outputs.release}}"
 #    - name: Clone TechEmpower benchmarks repository
 #      uses: actions/checkout@v3
 #      with:
