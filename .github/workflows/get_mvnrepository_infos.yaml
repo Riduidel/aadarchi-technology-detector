@@ -58,7 +58,9 @@ jobs:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: ls
+      - name: WHAT
+        shell: bash
+        run: ls
 
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
