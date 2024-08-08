@@ -4,13 +4,10 @@ on:
   pull_request:
     types:
       - closed
-  push:
-    branches:
-      - bugfixes/29_tag_number_doesnt_seems_giid
 
 jobs:
   if_merged:
-#    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     # Courtesy of https://stackoverflow.com/a/74955554/15619
     steps:
@@ -31,11 +28,11 @@ jobs:
           PREVIOUS: "${{steps.version.outputs.current-version}}"
           NEXT: "${{steps.version.outputs.version}}"
 
-#      - name: Create release
-#        id: create_release_id
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ steps.next.outputs.version }}
-#          release_name: Release ${{ steps.next.outputs.version }}
+      - name: Create release
+        id: create_release_id
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
