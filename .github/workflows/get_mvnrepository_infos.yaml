@@ -52,20 +52,21 @@ jobs:
                 "snapshots":{"enabled":true}
               }
             ]
-      - run: cat ~/.m2/settings.xml
       - name: Download artifact in current folder
         run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar:jar-with-dependencies
         env:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: ls
 
-#    - name: Clone TechEmpower benchmarks repository
-#      uses: actions/checkout@v3
-#      with:
-#        repository: TechEmpower/FrameworkBenchmarks
-#        ref: master
-#        path: FrameworkBenchmarks
-#        clean: false
+      - name: Clone TechEmpower benchmarks repository
+        uses: actions/checkout@v4
+        with:
+          repository: TechEmpower/FrameworkBenchmarks
+          ref: master
+          path: FrameworkBenchmarks
+          clean: false
+          fetch-depth: 0
 #    - name: Run everything in the same step
 #      run: |
 #        sudo apt update
