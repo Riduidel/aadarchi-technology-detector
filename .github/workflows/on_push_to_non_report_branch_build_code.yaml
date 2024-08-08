@@ -1,0 +1,29 @@
+name: On push on any non-report branch build
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: adopt
+          java-version: 21
+          cache: 'maven'
+      # We can't reinstall more than once.
+      # Well, it will be funny
+      # So we will abuse artifacts
+      - name: Build package
+        run: mvn --batch-mode install
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
