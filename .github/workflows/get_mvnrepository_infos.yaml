@@ -54,11 +54,12 @@ jobs:
             ]
       - name: Download artifact in current folder
         run: |
-          mvn dependency:copy 
-            -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar:jar-with-dependencies
-            -DoutputDirectory=.
-            -DstripClassifier=true
+          mvn dependency:copy \
+            -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar:jar-with-dependencies \
+            -DoutputDirectory=. \
+            -DstripClassifier=true \
             -DstripVersion=true
+
         env:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
