@@ -4,6 +4,9 @@ on:
   pull_request:
     types:
       - closed
+  push:
+    branches:
+      - bugfixes/29_tag_number_doesnt_seems_giid
 
 jobs:
   if_merged:
@@ -29,12 +32,16 @@ jobs:
         uses: 'WyriHaximus/github-action-next-release-version@1.0.0'
         with:
           version: ${{ steps.previoustag.outputs.tag }}
-
-      - name: Create release
-        id: create_release_id
-        uses: actions/create-release@v1
+      - run: echo "previous version is $PREVIOUS next version is $NEXT"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.next.outputs.version }}
-          release_name: Release ${{ steps.next.outputs.version }}
+          PREVIOUS: "${{steps.previoustag.outputs.tag}}"
+          NEXT: "${{steps.next.outputs.version}}"
+
+#      - name: Create release
+#        id: create_release_id
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ steps.next.outputs.version }}
+#          release_name: Release ${{ steps.next.outputs.version }}
