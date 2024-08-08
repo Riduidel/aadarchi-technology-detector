@@ -23,18 +23,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           latest: true
-      - name: Show next version number
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: adopt
+          java-version: 21
+          cache: 'maven'
+      - name: Publish package
+        run: "mvn --batch-mode deploy -Drelease=$VERSION"
         env:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
-        run:  echo "Next version will be $VERSION" 
-
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-java@v4
-#        with:
-#          distribution: adopt
-#          java-version: 21
-#          cache: 'maven'
-#      - name: Publish package
-#        run: "mvn --batch-mode deploy -Drelease={{steps.release_number.outputs.release}}"
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
