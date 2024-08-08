@@ -28,8 +28,8 @@ jobs:
 
       - run: echo "previous version is $PREVIOUS next version is $NEXT"
         env:
-          PREVIOUS: "${{steps.previoustag.outputs.current-version}}"
-          NEXT: "${{steps.next.outputs.version}}"
+          PREVIOUS: "${{steps.version.outputs.current-version}}"
+          NEXT: "${{steps.version.outputs.version}}"
 
 #      - name: Create release
 #        id: create_release_id
