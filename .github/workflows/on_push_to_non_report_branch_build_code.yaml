@@ -1,6 +1,3 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
 name: On push on any non-report branch build
 
 on:
@@ -26,7 +23,7 @@ jobs:
       # We can't reinstall more than once.
       # Well, it will be funny
       # So we will abuse artifacts
-      - name: Publish package
+      - name: Build package
         run: mvn --batch-mode install
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
