@@ -5,6 +5,8 @@ on:
     types:
       - created
   
+permissions:
+  contents: write
 
 jobs:
   publish:
@@ -31,3 +33,8 @@ jobs:
         env:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Also push binaries to release
+        uses: AButler/upload-release-assets@v3.0
+        with:
+          files: "**/jar-with-dependencies.jar"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
