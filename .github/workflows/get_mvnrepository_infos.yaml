@@ -60,7 +60,7 @@ jobs:
 
       - name: WHAT
         shell: bash
-        run: ls
+        run: echo $(ls)
 
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
