@@ -25,7 +25,7 @@ jobs:
           latest: true
       - name: Show next version number
         env:
-          VERSION: "{{steps.release_number.outputs.tag_name}}"
+          VERSION: "${{steps.release_number.outputs.tag_name}}"
         run:  echo "Next version will be $VERSION" 
 
 #      - uses: actions/checkout@v4
