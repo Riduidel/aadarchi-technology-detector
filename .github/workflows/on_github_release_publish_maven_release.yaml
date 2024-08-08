@@ -4,9 +4,6 @@ on:
   release:
     types:
       - created
-  push:
-    branches:
-    - "bugs/27_cant_create_package"
   
 
 jobs:
