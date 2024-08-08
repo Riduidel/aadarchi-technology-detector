@@ -64,9 +64,6 @@ jobs:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: WHAT
-        run: ls -la
-
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
         with:
@@ -75,15 +72,24 @@ jobs:
           path: FrameworkBenchmarks
           clean: false
           fetch-depth: 0
-#    - name: Run everything in the same step
-#      run: |
-#        sudo apt update
-#        sudo apt install curl -y
-#        cd aadarchi-technology-detector/scripts/
-#        xvfb-run jbang ExtractPopularMvnRepositoryArtifacts.java
-#        cd ../..
-#        mkdir target
-#        mv aadarchi-technology-detector/scripts/artifacts.json target/artifacts.json
+
+      - name: WHAT
+        run: ls -la
+
+      - name: Run everything in the same step
+        run: |
+          sudo apt update
+          sudo apt install curl -y
+          xvfb-run java -jar mvnrepository-$VERSION-jar-with-dependencies.jar
+          ls -la
+          mkdir target
+          mv aadarchi-technology-detector/scripts/artifacts.json target/artifacts.json
+        env:
+          VERSION: "${{steps.version.outputs.release}}"
+
+      - name: WHAAAAAT
+        run: ls -la
+
 #    - name: Deploy
 #      uses: s0/git-publish-subdir-action@develop
 #      env:
