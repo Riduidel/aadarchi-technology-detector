@@ -27,7 +27,10 @@ jobs:
           distribution: adopt
           java-version: 21
           cache: 'maven'
+      # We can't reinstall more than once.
+      # Well, it will be funny
+      # So we will abuse artifacts
       - name: Publish package
-        run: mvn --batch-mode deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mvn --batch-mode install
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
