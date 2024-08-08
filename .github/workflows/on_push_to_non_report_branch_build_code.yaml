@@ -5,7 +5,11 @@ name: On push on any non-report branch build
 
 on:
   push:
-    branches: [ main, "!report*" ]
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
