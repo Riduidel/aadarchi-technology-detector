@@ -27,7 +27,8 @@ jobs:
         with:
           distribution: adopt
           java-version: 21
-          cache: maven
+          # We can't use cache for maven, since there will be no pom here
+#          cache: maven
       # The mess with the settings is due to the fact that we push our artifacts to github packages, instead of maven central
       - name: Configure maven to use github packages
         uses: s4u/maven-settings-action@v3.0.0
