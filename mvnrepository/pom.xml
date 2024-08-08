@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.ndx.aadarchi.technology-detector</groupId>
         <artifactId>parent</artifactId>
-        <version>master</version>
+        <version>${revision}</version>
     </parent>
     <artifactId>mvnrepository</artifactId>
     <description>An extractor able to get data from mvnrepository</description>

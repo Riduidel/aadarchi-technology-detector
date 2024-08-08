@@ -11,6 +11,7 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 **/.gradle/*
+.flattened-pom.xml
 
 # End of https://www.gitignore.io/api/maven
 
@@ -131,4 +132,3 @@ fabric.properties
 **/.gitignore
 .idea/
 .cache/
-archetype/src/main/resources/archetype-resources/.github/workflows/on_push_on_master_deploy_build.yml
