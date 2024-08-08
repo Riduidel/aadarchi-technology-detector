@@ -35,12 +35,24 @@ jobs:
         with:
           override: true
           githubServer: true
-          repositories: '[{"id":"github","name":"github","url":"https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector","snapshots":{"enabled":true}}]'
+          repositories: |
+            [
+              {
+                "id":"central",
+                "url":"https://repo1.maven.org/maven2",
+              }
+              {
+                "id":"github",
+                "name":"github",
+                "url":"https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector",
+                "snapshots":{"enabled":true}
+              }
+            ]'
       - run: cat ~/.m2/settings.xml
-#      - name: Download artifact in current folder
-#        run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
-#        env:
-#          VERSION: "${{steps.version.outputs.release}}"
+      - name: Download artifact in current folder
+        run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
+        env:
+          VERSION: "${{steps.version.outputs.release}}"
 #    - name: Clone TechEmpower benchmarks repository
 #      uses: actions/checkout@v3
 #      with:
