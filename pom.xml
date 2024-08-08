@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-    	<!-- This version number makes no sense, cause it has to be changed in GitHub Actions (see on_release_build_version.yaml) -->
+        <!-- This version number makes no sense, cause it has to be changed in GitHub Actions (see on_release_build_version.yaml) -->
         <revision>local-SNAPSHOT</revision>
         <java.version>21</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -31,16 +31,6 @@
                 <groupId>com.github.fge</groupId>
                 <artifactId>throwing-lambdas</artifactId>
                 <version>0.5.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.fge</groupId>
-                <artifactId>throwing-lambdas</artifactId>
-                <version>0.5.0</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.10.1</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -58,25 +48,9 @@
                 <version>2.15.0</version>
             </dependency>
             <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>2.15.0</version>
-            </dependency>
-            <dependency>
                 <groupId>info.picocli</groupId>
                 <artifactId>picocli</artifactId>
                 <version>4.6.3</version>
-            </dependency>
-
-            <dependency>
-                <groupId>info.picocli</groupId>
-                <artifactId>picocli</artifactId>
-                <version>4.6.3</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>3.13.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -97,11 +71,6 @@
                         <artifactId>backport-util-concurrent</artifactId>
                     </exclusion>
                 </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.jgit</groupId>
-                <artifactId>org.eclipse.jgit</artifactId>
-                <version>6.7.0.202309050840-r</version>
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jgit</groupId>
