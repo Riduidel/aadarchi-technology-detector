@@ -17,7 +17,7 @@
     </modules>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -114,6 +114,11 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
                     <version>3.6.0</version>
@@ -154,24 +159,24 @@
             </plugins>
         </pluginManagement>
         <plugins>
-                    <plugin>
-                        <groupId>io.github.kerwin612</groupId>
-                        <artifactId>findclass-maven-plugin</artifactId>
-                        <version>0.0.2</version>
-                        <executions>
-                            <execution>
-                                <id>Find main class</id>
-                                <goals>
-                                    <goal>find</goal>
-                                </goals>
-                                <configuration>
-                                    <methodKeyMatch>public static void .*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
-                                    <firstFound>true</firstFound>
-                                    <outputPropertyName>extractor.main.class</outputPropertyName>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
+            <plugin>
+                <groupId>io.github.kerwin612</groupId>
+                <artifactId>findclass-maven-plugin</artifactId>
+                <version>0.0.2</version>
+                <executions>
+                    <execution>
+                        <id>Find main class</id>
+                        <goals>
+                            <goal>find</goal>
+                        </goals>
+                        <configuration>
+                            <methodKeyMatch>public static void .*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
+                            <firstFound>true</firstFound>
+                            <outputPropertyName>extractor.main.class</outputPropertyName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
@@ -230,10 +235,17 @@
         <system>GitHub</system>
         <url>https://github.com/Riduidel/aadarchi-technology-detector/issues</url>
     </issueManagement>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector</url>
+        </repository>
+    </distributionManagement>
     <profiles>
         <profile>
             <id>execute</id>
-            </profile>
+        </profile>
         <profile>
             <id>Generate extractor jar (unless for the model, that's the reason of the activation property)</id>
             <activation>
@@ -269,11 +281,4 @@
             </build>
         </profile>
     </profiles>
-      <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector</url>
-    </repository>
-  </distributionManagement>
 </project>
