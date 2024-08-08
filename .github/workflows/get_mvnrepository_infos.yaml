@@ -57,6 +57,7 @@ jobs:
         env:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - run: ls
 
       - name: Clone TechEmpower benchmarks repository
@@ -71,11 +72,6 @@ jobs:
 #      run: |
 #        sudo apt update
 #        sudo apt install curl -y
-#        curl -s "https://get.sdkman.io" | bash
-#        source "/home/runner/.sdkman/bin/sdkman-init.sh"
-#        sdk help
-#        sdk install jbang
-#        jbang --help
 #        cd aadarchi-technology-detector/scripts/
 #        xvfb-run jbang ExtractPopularMvnRepositoryArtifacts.java
 #        cd ../..
