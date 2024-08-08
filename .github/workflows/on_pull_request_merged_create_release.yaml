@@ -10,7 +10,7 @@ on:
 
 jobs:
   if_merged:
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     # Courtesy of https://stackoverflow.com/a/74955554/15619
     steps:
