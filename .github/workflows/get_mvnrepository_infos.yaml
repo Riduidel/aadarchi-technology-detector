@@ -47,7 +47,7 @@ jobs:
                 "url":"https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector",
                 "snapshots":{"enabled":true}
               }
-            ]'
+            ]
       - run: cat ~/.m2/settings.xml
       - name: Download artifact in current folder
         run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
