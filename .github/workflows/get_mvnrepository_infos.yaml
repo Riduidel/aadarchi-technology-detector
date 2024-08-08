@@ -59,8 +59,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: WHAT
-        shell: bash
-        run: echo $(ls)
+        run: echo "$(ls)"
 
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
