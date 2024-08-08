@@ -35,7 +35,7 @@ jobs:
         with:
           override: true
           githubServer: true
-      - run: echo ~/.m2/settings.xml
+      - run: cat ~/.m2/settings.xml
 #      - name: Download artifact in current folder
 #        run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION:jar-with-dependencies
 #        env:
