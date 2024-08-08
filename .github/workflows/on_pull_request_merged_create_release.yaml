@@ -16,19 +16,17 @@ jobs:
         with:
           fetch-depth: 0 # required for github-action-get-previous-tag
 
-      - name: Get Previous tag
-        id: previoustag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1.4.0'
-        with:
-          fallback: 1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
       - name: Get next version
-        id: next
-        uses: 'WyriHaximus/github-action-next-release-version@1.0.0'
+        uses: reecetech/version-increment@2024.4.3
+        id: version
         with:
-          version: ${{ steps.previoustag.outputs.tag }}
+          scheme: calver
+          increment: patch
+
+      - run: echo "previous version is $PREVIOUS next version is $NEXT"
+        env:
+          PREVIOUS: "${{steps.version.outputs.current-version}}"
+          NEXT: "${{steps.version.outputs.version}}"
 
       - name: Create release
         id: create_release_id
@@ -36,5 +34,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.next.outputs.version }}
-          release_name: Release ${{ steps.next.outputs.version }}
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
