@@ -5,6 +5,10 @@ on:
     types:
       - closed
 
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   if_merged:
     if: github.event.pull_request.merged == true
@@ -20,7 +24,7 @@ jobs:
         uses: reecetech/version-increment@2024.4.3
         id: version
         with:
-          scheme: calver
+          scheme: semver
           increment: patch
 
       - run: echo "previous version is $PREVIOUS next version is $NEXT"
