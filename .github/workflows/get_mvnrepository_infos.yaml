@@ -6,6 +6,10 @@ on:
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:
+
+permissions:
+  packages: read
+
 jobs:
   read_mvn_repository:
     timeout-minutes: 60
@@ -53,6 +57,8 @@ jobs:
         run: mvn dependency:get -Dartifact=org.ndx.aadarchi.technology-detector:mvnrepository:$VERSION
         env:
           VERSION: "${{steps.version.outputs.release}}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 #    - name: Clone TechEmpower benchmarks repository
 #      uses: actions/checkout@v3
 #      with:
