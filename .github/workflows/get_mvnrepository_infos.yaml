@@ -6,6 +6,10 @@ on:
 
 permissions:
   packages: read
+# Allow only one concurrent run
+concurrency:
+  group: "npmjs"
+  cancel-in-progress: true
 
 jobs:
   read_mvn_repository:
