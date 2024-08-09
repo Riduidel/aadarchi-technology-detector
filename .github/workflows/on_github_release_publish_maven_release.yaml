@@ -36,5 +36,5 @@ jobs:
       - name: Also push binaries to release
         uses: AButler/upload-release-assets@v3.0
         with:
-          files: "**/jar-with-dependencies.jar"
+          files: "**/*jar-with-dependencies.jar"
           repo-token: ${{ secrets.GITHUB_TOKEN }}
