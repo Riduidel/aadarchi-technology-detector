@@ -34,7 +34,8 @@ jobs:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Also push binaries to release
-        uses: AButler/upload-release-assets@v3.0
+        uses: alexellis/upload-assets@0.4.0
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
-          files: "**/*jar-with-dependencies.jar"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          asset_paths: '["./mvnrepository/target/mvnrepository*jar-with-dependencies.jar", "./npmjs/target/npmjs*jar-with-dependencies.jar"]'
