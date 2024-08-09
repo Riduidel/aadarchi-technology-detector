@@ -70,9 +70,7 @@ jobs:
 
       - name: Run everything in the same step
         run: |
-          sudo apt update
-          sudo apt install curl -y
-          xvfb-run java -jar npmjs-$VERSION-jar-with-dependencies.jar
+          java -jar npmjs-$VERSION-jar-with-dependencies.jar
           ls -la
           mkdir target
           mv artifacts.json target/artifacts.json
