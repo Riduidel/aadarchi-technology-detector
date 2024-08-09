@@ -84,7 +84,7 @@ jobs:
             --techempower-frameworks-local-clone FrameworkBenchmarks/frameworks
           ls -la
           mkdir target
-          mv aadarchi-technology-detector/scripts/artifacts.json target/artifacts.json
+          mv artifacts.json target/artifacts.json
         env:
           VERSION: "${{steps.version.outputs.release}}"
 
