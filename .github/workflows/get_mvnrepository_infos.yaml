@@ -80,7 +80,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt install curl -y
-          xvfb-run java -jar mvnrepository-$VERSION-jar-with-dependencies.jar
+          xvfb-run java -jar mvnrepository-$VERSION-jar-with-dependencies.jar \
+            --techempower-frameworks-local-clone FrameworkBenchmarks/frameworks
           ls -la
           mkdir target
           mv aadarchi-technology-detector/scripts/artifacts.json target/artifacts.json
