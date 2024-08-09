@@ -6,11 +6,16 @@ on:
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:
+
 permissions:
   packages: read
+# Allow only one concurrent run
+concurrency:
+  group: "npmjs"
+  cancel-in-progress: true
 
 jobs:
-  read_mvn_repository:
+  read_npmjs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
