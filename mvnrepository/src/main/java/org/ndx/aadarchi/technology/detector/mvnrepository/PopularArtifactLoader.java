@@ -3,6 +3,8 @@ package org.ndx.aadarchi.technology.detector.mvnrepository;
 import java.io.IOException;
 import java.util.Set;
 
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+
 import com.microsoft.playwright.Page;
 
 /**
@@ -23,7 +25,7 @@ public class PopularArtifactLoader extends ArtifactLoader {
 	}
 
 	@Override
-	public Set<ArtifactInformations> loadArtifacts(Page page)
+	public Set<ArtifactDetails> loadArtifacts(Page page)
 			throws IOException {
 		return loadPageList(page, String.format("%s/popular", this.extractPopularMvnRepositoryArtifacts.mvnRepositoryServer));
 	}

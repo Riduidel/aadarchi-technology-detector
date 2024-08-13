@@ -43,12 +43,4 @@ public class ArtifactInformations implements Comparable<ArtifactInformations> {
 				.append(artifactId, o.artifactId)
 				.toComparison();
 	}
-	String toCoordinates() {
-		return groupId+"."+artifactId;
-	}
-	String getArtifactUrl(String mvnRepositoryServer) {
-		return String.format("%s/artifact/%s/%s", mvnRepositoryServer, 
-				groupId,
-				artifactId);
-	}
 }

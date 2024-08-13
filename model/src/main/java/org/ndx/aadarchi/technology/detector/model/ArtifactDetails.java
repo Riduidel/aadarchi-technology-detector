@@ -2,38 +2,47 @@ package org.ndx.aadarchi.technology.detector.model;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
 
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
-	public final String coordinates;
-	public final String name;
-	public final String description;
-	public final List<String> licenses;
-	public final List<String> categories;
-	public final List<String> tags;
-	public final long downloads;
-	public final int ranking;
-	public final int users;
-	public final int previousUsers;
-	public final int interpolatedUsers;
-	public final boolean infered;
-	public final List<String> repositories;
-	public final Map<String, VersionDetails> versions;
+	
+	
+	public static ArtifactDetails toArtifactDetails(Map values) {
+		return null;
+	}
+	
+	private String coordinates;
+	private String name;
+	private String description;
+	private List<String> licenses;
+	private List<String> categories;
+	private List<String> tags;
+	private long downloads;
+	private int ranking;
+	private int users;
+	private int previousUsers;
+	private int interpolatedUsers;
+	private boolean infered;
+	private List<String> repositories;
+	private Map<String, VersionDetails> versions;
+	
+	public ArtifactDetails() {}
 
 	public ArtifactDetails(
 			String coordinates, 
@@ -105,7 +114,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			LocalDate beforeDate, ArtifactDetails dataBefore) {
 		return versions.entrySet().stream()
 				// Only keep versions older that inferredMonth
-				.filter(entry -> entry.getValue().date!=null)
+				.filter(entry -> entry.getValue().getDate()!=null)
 				.filter(entry -> entry.getValue().getParsedDate(Formats.MVN_DATE_FORMAT).compareTo(inferredMonth)<=0)
 				.filter(entry -> currentVersions.containsKey(entry.getKey()))
 				.filter(entry -> currentVersions.get(entry.getKey())!=null)
@@ -138,11 +147,11 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	private VersionDetails computePreviousVersionFor(VersionDetails current, VersionDetails value, LocalDate currentDate,
 			LocalDate inferredMonth, LocalDate beforeDate, VersionDetails versionBefore) {
-		VersionDetails returned = new VersionDetails();
-		returned.date = current.date;
-		returned.previousUsers = versionBefore==null ? 0 : versionBefore.users;
-		returned.interpolatedUsers = interpolateUsers(value.users, currentDate, 
-				returned.previousUsers, beforeDate, inferredMonth);
+		VersionDetails returned = VersionDetailsBuilder.toBuilder(versionBefore)
+			.previousUsers(versionBefore==null ? 0 : versionBefore.getUsers())
+			.build();
+		returned.setPreviousUsers(interpolateUsers(value.getUsers(), currentDate, 
+				returned.getPreviousUsers(), beforeDate, inferredMonth));
 		return returned;
 	}
 
@@ -185,12 +194,10 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			if(details.versions.containsKey(version) && versions.containsKey(version)) {
 				VersionDetails newVersion = details.versions.get(version);
 				VersionDetails oldVersion = versions.get(version);
-				if(!newVersion.date.equals(oldVersion.date)) {
-					VersionDetails changedVersion = new VersionDetails();
-					changedVersion.date = newVersion.date;
-					changedVersion.usages = oldVersion.usages;
-					changedVersion.users = oldVersion.users;
-					oldVersion = changedVersion;
+				if(!newVersion.getDate().equals(oldVersion.getDate())) {
+					oldVersion = VersionDetailsBuilder.toBuilder(oldVersion)
+							.date(newVersion.getDate())
+							.build();
 					changed = true;
 				}
 				updatedVersions.put(version, oldVersion);
@@ -205,5 +212,122 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		} else {
 			return Optional.empty();
 		}
+	}
+
+	public Artifact toArtifact() {
+		String[] split = coordinates.split(":");
+		return new FakeArtifact(split[0], split[1]);
+	}
+
+	public String getCoordinates() {
+		return coordinates;
+	}
+
+	public void setCoordinates(String coordinates) {
+		this.coordinates = coordinates;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public List<String> getLicenses() {
+		return licenses;
+	}
+
+	public void setLicenses(List<String> licenses) {
+		this.licenses = licenses;
+	}
+
+	public List<String> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<String> categories) {
+		this.categories = categories;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
+	public long getDownloads() {
+		return downloads;
+	}
+
+	public void setDownloads(long downloads) {
+		this.downloads = downloads;
+	}
+
+	public int getRanking() {
+		return ranking;
+	}
+
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+
+	public int getPreviousUsers() {
+		return previousUsers;
+	}
+
+	public void setPreviousUsers(int previousUsers) {
+		this.previousUsers = previousUsers;
+	}
+
+	public int getInterpolatedUsers() {
+		return interpolatedUsers;
+	}
+
+	public void setInterpolatedUsers(int interpolatedUsers) {
+		this.interpolatedUsers = interpolatedUsers;
+	}
+
+	public boolean isInfered() {
+		return infered;
+	}
+
+	public void setInfered(boolean infered) {
+		this.infered = infered;
+	}
+
+	public List<String> getRepositories() {
+		return repositories;
+	}
+
+	public void setRepositories(List<String> repositories) {
+		this.repositories = repositories;
+	}
+
+	public Map<String, VersionDetails> getVersions() {
+		return versions;
+	}
+
+	public void setVersions(Map<String, VersionDetails> versions) {
+		this.versions = versions;
+	}
+
+	public int getUsers() {
+		return users;
+	}
+
+	public void setUsers(int users) {
+		this.users = users;
 	}
 }

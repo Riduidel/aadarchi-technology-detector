@@ -13,9 +13,9 @@ public interface ArtifactLoader {
 			cachedArtifacts.delete();
 		}
 		if(!cachedArtifacts.exists()) {
-			ExtractPopularNpmjsArtifacts.writeArtifacts(doLoadArtifacts(), cachedArtifacts);
+			ExtractPopularNpmjsArtifacts.writeToFile(doLoadArtifacts(), cachedArtifacts);
 		}
-		return ExtractPopularNpmjsArtifacts.readArtifacts(cachedArtifacts);
+		return ExtractPopularNpmjsArtifacts.readFromFile(cachedArtifacts);
 	}
 
 	public List<ArtifactDetails> doLoadArtifacts() throws Exception;

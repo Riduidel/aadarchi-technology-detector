@@ -1,1558 +1,3503 @@
 [
   {
-    "groupId": "androidx.annotation",
-    "artifactId": "annotation"
-  },
-  {
-    "groupId": "androidx.appcompat",
-    "artifactId": "appcompat"
-  },
-  {
-    "groupId": "androidx.constraintlayout",
-    "artifactId": "constraintlayout"
-  },
-  {
-    "groupId": "androidx.core",
-    "artifactId": "core-ktx"
-  },
-  {
-    "groupId": "androidx.recyclerview",
-    "artifactId": "recyclerview"
-  },
-  {
-    "groupId": "ch.qos.logback",
-    "artifactId": "logback-classic"
-  },
-  {
-    "groupId": "ch.qos.logback",
-    "artifactId": "logback-classic"
-  },
-  {
-    "groupId": "ch.qos.logback",
-    "artifactId": "logback-core"
-  },
-  {
-    "groupId": "clojure-complete",
-    "artifactId": "clojure-complete"
-  },
-  {
-    "groupId": "cn.hserver",
-    "artifactId": "hserver"
-  },
-  {
-    "groupId": "cn.hserver",
-    "artifactId": "hserver-plugin-web"
-  },
-  {
-    "groupId": "cn.ibaijia",
-    "artifactId": "isocket-nio"
-  },
-  {
-    "groupId": "com.alibaba",
-    "artifactId": "fastjson"
-  },
-  {
-    "groupId": "com.alibaba",
-    "artifactId": "fastjson"
-  },
-  {
-    "groupId": "com.alibaba.fastjson2",
-    "artifactId": "fastjson2"
-  },
-  {
-    "groupId": "com.android.support",
-    "artifactId": "appcompat-v7"
-  },
-  {
-    "groupId": "com.android.support",
-    "artifactId": "design"
-  },
-  {
-    "groupId": "com.android.support",
-    "artifactId": "recyclerview-v7"
-  },
-  {
-    "groupId": "com.android.support",
-    "artifactId": "support-annotations"
-  },
-  {
-    "groupId": "com.android.support",
-    "artifactId": "support-v4"
-  },
-  {
-    "groupId": "com.dslplatform",
-    "artifactId": "dsl-json"
-  },
-  {
-    "groupId": "com.dslplatform",
-    "artifactId": "dsl-json-java8"
-  },
-  {
-    "groupId": "com.dslplatform",
-    "artifactId": "dsl-json-processor"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-annotations"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-annotations"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-core"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-core"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-databind"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.core",
-    "artifactId": "jackson-databind"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.dataformat",
-    "artifactId": "jackson-dataformat-xml"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.dataformat",
-    "artifactId": "jackson-dataformat-yaml"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.datatype",
-    "artifactId": "jackson-datatype-jdk8"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.datatype",
-    "artifactId": "jackson-datatype-jsr310"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.module",
-    "artifactId": "jackson-module-afterburner"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.module",
-    "artifactId": "jackson-module-blackbird"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.module",
-    "artifactId": "jackson-module-jaxb-annotations"
-  },
-  {
-    "groupId": "com.fasterxml.jackson.module",
-    "artifactId": "jackson-module-kotlin"
-  },
-  {
-    "groupId": "com.firenio",
-    "artifactId": "firenio-all"
-  },
-  {
-    "groupId": "com.fizzed",
-    "artifactId": "rocker-compiler"
-  },
-  {
-    "groupId": "com.fizzed",
-    "artifactId": "rocker-runtime"
-  },
-  {
-    "groupId": "com.github.ben-manes.caffeine",
-    "artifactId": "caffeine"
-  },
-  {
-    "groupId": "com.github.ben-manes.caffeine",
-    "artifactId": "caffeine"
-  },
-  {
-    "groupId": "com.github.bumptech.glide",
-    "artifactId": "glide"
-  },
-  {
-    "groupId": "com.github.davidmoten",
-    "artifactId": "rxjava2-jdbc"
-  },
-  {
-    "groupId": "com.github.httl",
-    "artifactId": "httl"
-  },
-  {
-    "groupId": "com.github.spullara.mustache.java",
-    "artifactId": "compiler"
-  },
-  {
-    "groupId": "com.github.yuyenews",
-    "artifactId": "Magician"
-  },
-  {
-    "groupId": "com.github.yuyenews",
-    "artifactId": "Martian"
-  },
-  {
-    "groupId": "com.github.zhong-j-yu",
-    "artifactId": "bayou"
-  },
-  {
-    "groupId": "com.google.android.material",
-    "artifactId": "material"
-  },
-  {
-    "groupId": "com.google.auto.service",
-    "artifactId": "auto-service"
-  },
-  {
-    "groupId": "com.google.code.findbugs",
-    "artifactId": "jsr305"
-  },
-  {
-    "groupId": "com.google.code.gson",
-    "artifactId": "gson"
-  },
-  {
-    "groupId": "com.google.code.gson",
-    "artifactId": "gson"
-  },
-  {
-    "groupId": "com.google.guava",
-    "artifactId": "guava"
-  },
-  {
-    "groupId": "com.google.guava",
-    "artifactId": "guava"
-  },
-  {
-    "groupId": "com.google.inject",
-    "artifactId": "guice"
-  },
-  {
-    "groupId": "com.google.protobuf",
-    "artifactId": "protobuf-java"
-  },
-  {
-    "groupId": "com.googlecode.json-simple",
-    "artifactId": "json-simple"
-  },
-  {
-    "groupId": "com.h2database",
-    "artifactId": "h2"
-  },
-  {
-    "groupId": "com.h2database",
-    "artifactId": "h2"
-  },
-  {
-    "groupId": "com.hellokaton",
-    "artifactId": "anima"
-  },
-  {
-    "groupId": "com.hellokaton",
-    "artifactId": "blade-core"
-  },
-  {
-    "groupId": "com.hellokaton",
-    "artifactId": "blade-template-jetbrick"
-  },
-  {
-    "groupId": "com.javanut",
-    "artifactId": "greenlightning"
-  },
-  {
-    "groupId": "com.jsoniter",
-    "artifactId": "jsoniter"
-  },
-  {
-    "groupId": "com.linecorp.armeria",
-    "artifactId": "armeria"
-  },
-  {
-    "groupId": "com.lmax",
-    "artifactId": "disruptor"
-  },
-  {
-    "groupId": "com.mysql",
-    "artifactId": "mysql-connector-j"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "config"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "exception"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "handler"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "server"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "service"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "status"
-  },
-  {
-    "groupId": "com.networknt",
-    "artifactId": "utility"
-  },
-  {
-    "groupId": "com.simplyti.cloud",
-    "artifactId": "simple-server-di-guice"
-  },
-  {
-    "groupId": "com.sparkjava",
-    "artifactId": "spark-core"
-  },
-  {
-    "groupId": "com.sparkjava",
-    "artifactId": "spark-template-mustache"
-  },
-  {
-    "groupId": "com.squareup.okhttp3",
-    "artifactId": "logging-interceptor"
-  },
-  {
-    "groupId": "com.squareup.okhttp3",
-    "artifactId": "okhttp"
-  },
-  {
-    "groupId": "com.squareup.retrofit2",
-    "artifactId": "converter-gson"
-  },
-  {
-    "groupId": "com.squareup.retrofit2",
-    "artifactId": "retrofit"
-  },
-  {
-    "groupId": "com.strategicgains",
-    "artifactId": "RestExpress"
-  },
-  {
-    "groupId": "com.strategicgains.repoexpress",
-    "artifactId": "repoexpress-mongodb"
-  },
-  {
-    "groupId": "com.sun.xml.bind",
-    "artifactId": "jaxb-impl"
-  },
-  {
-    "groupId": "com.typesafe",
-    "artifactId": "config"
-  },
-  {
-    "groupId": "com.zaxxer",
-    "artifactId": "HikariCP"
-  },
-  {
-    "groupId": "com.zaxxer",
-    "artifactId": "HikariCP"
-  },
-  {
-    "groupId": "commons-beanutils",
-    "artifactId": "commons-beanutils"
-  },
-  {
-    "groupId": "commons-cli",
-    "artifactId": "commons-cli"
-  },
-  {
-    "groupId": "commons-cli",
-    "artifactId": "commons-cli"
-  },
-  {
-    "groupId": "commons-codec",
-    "artifactId": "commons-codec"
-  },
-  {
-    "groupId": "commons-collections",
-    "artifactId": "commons-collections"
-  },
-  {
-    "groupId": "commons-dbcp",
-    "artifactId": "commons-dbcp"
-  },
-  {
-    "groupId": "commons-fileupload",
-    "artifactId": "commons-fileupload"
-  },
-  {
-    "groupId": "commons-httpclient",
-    "artifactId": "commons-httpclient"
-  },
-  {
-    "groupId": "commons-io",
-    "artifactId": "commons-io"
-  },
-  {
-    "groupId": "commons-lang",
-    "artifactId": "commons-lang"
-  },
-  {
-    "groupId": "commons-logging",
-    "artifactId": "commons-logging"
-  },
-  {
-    "groupId": "curacao",
-    "artifactId": "curacao"
-  },
-  {
-    "groupId": "curacao",
-    "artifactId": "curacao-gson"
-  },
-  {
-    "groupId": "dom4j",
-    "artifactId": "dom4j"
-  },
-  {
-    "groupId": "gg.jte",
-    "artifactId": "jte"
-  },
-  {
-    "groupId": "gg.jte",
-    "artifactId": "jte-kotlin"
-  },
-  {
-    "groupId": "io.activej",
-    "artifactId": "activej-launchers-http"
-  },
-  {
-    "groupId": "io.baratine",
-    "artifactId": "baratine"
-  },
-  {
-    "groupId": "io.dropwizard",
-    "artifactId": "dropwizard-core"
-  },
-  {
-    "groupId": "io.dropwizard",
-    "artifactId": "dropwizard-hibernate"
-  },
-  {
-    "groupId": "io.dropwizard",
-    "artifactId": "dropwizard-jdbi3"
-  },
-  {
-    "groupId": "io.dropwizard",
-    "artifactId": "dropwizard-views-mustache"
-  },
-  {
-    "groupId": "io.ebean",
-    "artifactId": "ebean-annotation"
-  },
-  {
-    "groupId": "io.edap",
-    "artifactId": "edapx-json"
-  },
-  {
-    "groupId": "io.github.robaho",
-    "artifactId": "httpserver"
-  },
-  {
-    "groupId": "io.helidon.common",
-    "artifactId": "helidon-common-reactive"
-  },
-  {
-    "groupId": "io.helidon.common.testing",
-    "artifactId": "helidon-common-testing-junit5"
-  },
-  {
-    "groupId": "io.helidon.config",
-    "artifactId": "helidon-config-yaml"
-  },
-  {
-    "groupId": "io.helidon.http.media",
-    "artifactId": "helidon-http-media-jsonp"
-  },
-  {
-    "groupId": "io.helidon.media",
-    "artifactId": "helidon-media-jsonp"
-  },
-  {
-    "groupId": "io.helidon.webserver",
-    "artifactId": "helidon-webserver"
-  },
-  {
-    "groupId": "io.inverno",
-    "artifactId": "inverno-core"
-  },
-  {
-    "groupId": "io.inverno.mod",
-    "artifactId": "inverno-boot"
-  },
-  {
-    "groupId": "io.inverno.mod",
-    "artifactId": "inverno-configuration"
-  },
-  {
-    "groupId": "io.inverno.mod",
-    "artifactId": "inverno-http-server"
-  },
-  {
-    "groupId": "io.inverno.mod",
-    "artifactId": "inverno-irt"
-  },
-  {
-    "groupId": "io.inverno.mod",
-    "artifactId": "inverno-sql-vertx"
-  },
-  {
-    "groupId": "io.javalin",
-    "artifactId": "javalin"
-  },
-  {
-    "groupId": "io.javalin",
-    "artifactId": "javalin-rendering"
-  },
-  {
-    "groupId": "io.jooby",
-    "artifactId": "jooby-hikari"
-  },
-  {
-    "groupId": "io.jooby",
-    "artifactId": "jooby-rocker"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-all"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-buffer"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-codec-dns"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-codec-http"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-codec-socks"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-common"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-handler-proxy"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-resolver-dns"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-transport-native-epoll"
-  },
-  {
-    "groupId": "io.netty",
-    "artifactId": "netty-transport-native-kqueue"
-  },
-  {
-    "groupId": "io.netty.incubator",
-    "artifactId": "netty-incubator-transport-native-io_uring"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-arc"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-benchmark-common"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-hibernate-orm"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-hibernate-reactive"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-jdbc-postgresql"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-reactive-pg-client"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-reactive-routes"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-rest"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-rest-jackson"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-scheduler"
-  },
-  {
-    "groupId": "io.quarkus",
-    "artifactId": "quarkus-vertx"
-  },
-  {
-    "groupId": "io.r2dbc",
-    "artifactId": "r2dbc-pool"
-  },
-  {
-    "groupId": "io.reactiverse",
-    "artifactId": "reactive-pg-client"
-  },
-  {
-    "groupId": "io.reactivex.rxjava2",
-    "artifactId": "rxjava"
-  },
-  {
-    "groupId": "io.rest-assured",
-    "artifactId": "rest-assured"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-concurrent-api"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-data-jackson"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-http-api"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-http-netty"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-serialization-api"
-  },
-  {
-    "groupId": "io.servicetalk",
-    "artifactId": "servicetalk-transport-netty-internal"
-  },
-  {
-    "groupId": "io.sinistral",
-    "artifactId": "proteus-core"
-  },
-  {
-    "groupId": "io.swagger",
-    "artifactId": "swagger-annotations"
-  },
-  {
-    "groupId": "io.undertow",
-    "artifactId": "undertow-core"
-  },
-  {
-    "groupId": "io.vertx",
-    "artifactId": "vertx-core"
-  },
-  {
-    "groupId": "io.vertx",
-    "artifactId": "vertx-pg-client"
-  },
-  {
-    "groupId": "io.vertx",
-    "artifactId": "vertx-web"
-  },
-  {
-    "groupId": "io.vertx",
-    "artifactId": "vertx-web-templ-rocker"
-  },
-  {
-    "groupId": "jakarta.annotation",
-    "artifactId": "jakarta.annotation-api"
-  },
-  {
-    "groupId": "jakarta.servlet",
-    "artifactId": "jakarta.servlet-api"
-  },
-  {
-    "groupId": "jakarta.xml.bind",
-    "artifactId": "jakarta.xml.bind-api"
-  },
-  {
-    "groupId": "javax",
-    "artifactId": "javaee-api"
-  },
-  {
-    "groupId": "javax.activation",
-    "artifactId": "activation"
-  },
-  {
-    "groupId": "javax.annotation",
-    "artifactId": "javax.annotation-api"
-  },
-  {
-    "groupId": "javax.annotation",
-    "artifactId": "javax.annotation-api"
-  },
-  {
-    "groupId": "javax.enterprise",
-    "artifactId": "cdi-api"
-  },
-  {
-    "groupId": "javax.inject",
-    "artifactId": "javax.inject"
-  },
-  {
-    "groupId": "javax.inject",
-    "artifactId": "javax.inject"
-  },
-  {
-    "groupId": "javax.mail",
-    "artifactId": "mail"
-  },
-  {
-    "groupId": "javax.servlet",
-    "artifactId": "javax.servlet-api"
-  },
-  {
-    "groupId": "javax.servlet",
-    "artifactId": "javax.servlet-api"
-  },
-  {
-    "groupId": "javax.servlet",
-    "artifactId": "jstl"
-  },
-  {
-    "groupId": "javax.servlet",
-    "artifactId": "servlet-api"
-  },
-  {
-    "groupId": "javax.servlet",
-    "artifactId": "servlet-api"
-  },
-  {
-    "groupId": "javax.validation",
-    "artifactId": "validation-api"
-  },
-  {
-    "groupId": "javax.ws.rs",
-    "artifactId": "javax.ws.rs-api"
-  },
-  {
-    "groupId": "javax.xml.bind",
-    "artifactId": "jaxb-api"
-  },
-  {
-    "groupId": "javax.xml.bind",
-    "artifactId": "jaxb-api"
-  },
-  {
-    "groupId": "joda-time",
-    "artifactId": "joda-time"
-  },
-  {
-    "groupId": "junit",
-    "artifactId": "junit"
-  },
-  {
-    "groupId": "junit",
-    "artifactId": "junit"
-  },
-  {
-    "groupId": "log4j",
-    "artifactId": "log4j"
-  },
-  {
-    "groupId": "mysql",
-    "artifactId": "mysql-connector-java"
-  },
-  {
-    "groupId": "net.freeutils",
-    "artifactId": "jlhttp"
-  },
-  {
-    "groupId": "org.actframework",
-    "artifactId": "act-mustache"
-  },
-  {
-    "groupId": "org.actframework",
-    "artifactId": "act-sql-common"
-  },
-  {
-    "groupId": "org.apache.commons",
-    "artifactId": "commons-collections4"
-  },
-  {
-    "groupId": "org.apache.commons",
-    "artifactId": "commons-compress"
-  },
-  {
-    "groupId": "org.apache.commons",
-    "artifactId": "commons-lang3"
-  },
-  {
-    "groupId": "org.apache.commons",
-    "artifactId": "commons-math3"
-  },
-  {
-    "groupId": "org.apache.commons",
-    "artifactId": "commons-text"
-  },
-  {
-    "groupId": "org.apache.hadoop",
-    "artifactId": "hadoop-common"
-  },
-  {
-    "groupId": "org.apache.httpcomponents",
-    "artifactId": "httpclient"
-  },
-  {
-    "groupId": "org.apache.httpcomponents",
-    "artifactId": "httpcore"
-  },
-  {
-    "groupId": "org.apache.httpcomponents",
-    "artifactId": "httpmime"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-api"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-api"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-core"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-core"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-slf4j-impl"
-  },
-  {
-    "groupId": "org.apache.logging.log4j",
-    "artifactId": "log4j-slf4j-impl"
-  },
-  {
-    "groupId": "org.apache.maven",
-    "artifactId": "maven-artifact"
-  },
-  {
-    "groupId": "org.apache.maven",
-    "artifactId": "maven-core"
-  },
-  {
-    "groupId": "org.apache.maven",
-    "artifactId": "maven-plugin-api"
-  },
-  {
-    "groupId": "org.apache.maven",
-    "artifactId": "maven-project"
-  },
-  {
-    "groupId": "org.apache.maven.plugin-tools",
-    "artifactId": "maven-plugin-annotations"
-  },
-  {
-    "groupId": "org.apache.poi",
-    "artifactId": "poi"
-  },
-  {
-    "groupId": "org.apache.poi",
-    "artifactId": "poi-ooxml"
-  },
-  {
-    "groupId": "org.apache.tapestry",
-    "artifactId": "tapestry-hibernate"
-  },
-  {
-    "groupId": "org.apache.tapestry",
-    "artifactId": "tapestry-javadoc"
-  },
-  {
-    "groupId": "org.apache.tapestry",
-    "artifactId": "tapestry-test"
-  },
-  {
-    "groupId": "org.apache.velocity",
-    "artifactId": "velocity"
-  },
-  {
-    "groupId": "org.apache.wicket",
-    "artifactId": "wicket-core"
-  },
-  {
-    "groupId": "org.aspectj",
-    "artifactId": "aspectjrt"
-  },
-  {
-    "groupId": "org.aspectj",
-    "artifactId": "aspectjweaver"
-  },
-  {
-    "groupId": "org.assertj",
-    "artifactId": "assertj-core"
-  },
-  {
-    "groupId": "org.awaitility",
-    "artifactId": "awaitility"
-  },
-  {
-    "groupId": "org.bouncycastle",
-    "artifactId": "bcpkix-jdk15on"
-  },
-  {
-    "groupId": "org.bouncycastle",
-    "artifactId": "bcprov-jdk15on"
-  },
-  {
-    "groupId": "org.cache2k",
-    "artifactId": "cache2k-base-bom"
-  },
-  {
-    "groupId": "org.clojure",
-    "artifactId": "clojure"
-  },
-  {
-    "groupId": "org.clojure",
-    "artifactId": "clojurescript"
-  },
-  {
-    "groupId": "org.clojure",
-    "artifactId": "tools.nrepl"
-  },
-  {
-    "groupId": "org.codehaus.groovy",
-    "artifactId": "groovy"
-  },
-  {
-    "groupId": "org.codehaus.groovy",
-    "artifactId": "groovy-all"
-  },
-  {
-    "groupId": "org.codehaus.jackson",
-    "artifactId": "jackson-core-asl"
-  },
-  {
-    "groupId": "org.codehaus.jackson",
-    "artifactId": "jackson-mapper-asl"
-  },
-  {
-    "groupId": "org.codehaus.plexus",
-    "artifactId": "plexus-utils"
-  },
-  {
-    "groupId": "org.easymock",
-    "artifactId": "easymock"
-  },
-  {
-    "groupId": "org.easymock",
-    "artifactId": "easymock"
-  },
-  {
-    "groupId": "org.eclipse.jetty",
-    "artifactId": "jetty-server"
-  },
-  {
-    "groupId": "org.eclipse.jetty",
-    "artifactId": "jetty-servlet"
-  },
-  {
-    "groupId": "org.eclipse.jetty",
-    "artifactId": "jetty-util-ajax"
-  },
-  {
-    "groupId": "org.eclipse.persistence",
-    "artifactId": "eclipselink"
-  },
-  {
-    "groupId": "org.eclipse.persistence",
-    "artifactId": "javax.persistence"
-  },
-  {
-    "groupId": "org.freemarker",
-    "artifactId": "freemarker"
-  },
-  {
-    "groupId": "org.glassfish.grizzly",
-    "artifactId": "grizzly-http-server"
-  },
-  {
-    "groupId": "org.glassfish.jaxb",
-    "artifactId": "jaxb-runtime"
-  },
-  {
-    "groupId": "org.glassfish.jersey.containers",
-    "artifactId": "jersey-container-servlet"
-  },
-  {
-    "groupId": "org.glassfish.jersey.core",
-    "artifactId": "jersey-server"
-  },
-  {
-    "groupId": "org.glassfish.jersey.ext",
-    "artifactId": "jersey-mvc-mustache"
-  },
-  {
-    "groupId": "org.glassfish.jersey.inject",
-    "artifactId": "jersey-hk2"
-  },
-  {
-    "groupId": "org.glassfish.jersey.media",
-    "artifactId": "jersey-media-json-jackson"
-  },
-  {
-    "groupId": "org.hamcrest",
-    "artifactId": "hamcrest"
-  },
-  {
-    "groupId": "org.hamcrest",
-    "artifactId": "hamcrest-all"
-  },
-  {
-    "groupId": "org.hamcrest",
-    "artifactId": "hamcrest-all"
-  },
-  {
-    "groupId": "org.hamcrest",
-    "artifactId": "hamcrest-core"
-  },
-  {
-    "groupId": "org.hamcrest",
-    "artifactId": "hamcrest-library"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-c3p0"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-core"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-core"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-entitymanager"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-entitymanager"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-hikaricp"
-  },
-  {
-    "groupId": "org.hibernate",
-    "artifactId": "hibernate-validator"
-  },
-  {
-    "groupId": "org.hibernate.validator",
-    "artifactId": "hibernate-validator"
-  },
-  {
-    "groupId": "org.javalite",
-    "artifactId": "activejdbc"
-  },
-  {
-    "groupId": "org.javalite",
-    "artifactId": "activeweb"
-  },
-  {
-    "groupId": "org.javalite",
-    "artifactId": "activeweb-testing"
-  },
-  {
-    "groupId": "org.javassist",
-    "artifactId": "javassist"
-  },
-  {
-    "groupId": "org.javassist",
-    "artifactId": "javassist"
-  },
-  {
-    "groupId": "org.jetbrains",
-    "artifactId": "annotations"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-android-extensions-runtime"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-dom-api-compat"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-reflect"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-stdlib"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-stdlib-common"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-stdlib-jdk7"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-stdlib-jdk8"
-  },
-  {
-    "groupId": "org.jetbrains.kotlin",
-    "artifactId": "kotlin-stdlib-js"
-  },
-  {
-    "groupId": "org.jetbrains.kotlinx",
-    "artifactId": "kotlinx-coroutines-android"
-  },
-  {
-    "groupId": "org.jetbrains.kotlinx",
-    "artifactId": "kotlinx-coroutines-core"
-  },
-  {
-    "groupId": "org.jetbrains.kotlinx",
-    "artifactId": "kotlinx-coroutines-core-jvm"
-  },
-  {
-    "groupId": "org.jetbrains.kotlinx",
-    "artifactId": "kotlinx-serialization-json-jvm"
-  },
-  {
-    "groupId": "org.json",
-    "artifactId": "json"
-  },
-  {
-    "groupId": "org.jsoup",
-    "artifactId": "jsoup"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter-api"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter-api"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter-engine"
-  },
-  {
-    "groupId": "org.junit.jupiter",
-    "artifactId": "junit-jupiter-params"
-  },
-  {
-    "groupId": "org.junit.platform",
-    "artifactId": "junit-platform-launcher"
-  },
-  {
-    "groupId": "org.junit.vintage",
-    "artifactId": "junit-vintage-engine"
-  },
-  {
-    "groupId": "org.microhttp",
-    "artifactId": "microhttp"
-  },
-  {
-    "groupId": "org.minijax",
-    "artifactId": "minijax-core"
-  },
-  {
-    "groupId": "org.minijax",
-    "artifactId": "minijax-db"
-  },
-  {
-    "groupId": "org.minijax",
-    "artifactId": "minijax-json"
-  },
-  {
-    "groupId": "org.minijax",
-    "artifactId": "minijax-mustache"
-  },
-  {
-    "groupId": "org.minijax",
-    "artifactId": "minijax-undertow"
-  },
-  {
-    "groupId": "org.mockito",
-    "artifactId": "mockito-all"
-  },
-  {
-    "groupId": "org.mockito",
-    "artifactId": "mockito-core"
-  },
-  {
-    "groupId": "org.mockito",
-    "artifactId": "mockito-junit-jupiter"
-  },
-  {
-    "groupId": "org.mongodb",
-    "artifactId": "mongodb-driver-sync"
-  },
-  {
-    "groupId": "org.mongodb.morphia",
-    "artifactId": "morphia"
-  },
-  {
-    "groupId": "org.mongojack",
-    "artifactId": "mongojack"
-  },
-  {
-    "groupId": "org.nanohttpd",
-    "artifactId": "nanohttpd"
-  },
-  {
-    "groupId": "org.ninjaframework",
-    "artifactId": "ninja-servlet"
-  },
-  {
-    "groupId": "org.ninjaframework",
-    "artifactId": "ninja-standalone"
-  },
-  {
-    "groupId": "org.noear",
-    "artifactId": "solon.boot.smarthttp"
-  },
-  {
-    "groupId": "org.noear",
-    "artifactId": "solon.serialization.snack3"
-  },
-  {
-    "groupId": "org.osgi",
-    "artifactId": "org.osgi.compendium"
-  },
-  {
-    "groupId": "org.osgi",
-    "artifactId": "org.osgi.core"
-  },
-  {
-    "groupId": "org.ow2.asm",
-    "artifactId": "asm"
-  },
-  {
-    "groupId": "org.postgresql",
-    "artifactId": "postgresql"
-  },
-  {
-    "groupId": "org.postgresql",
-    "artifactId": "postgresql"
-  },
-  {
-    "groupId": "org.postgresql",
-    "artifactId": "r2dbc-postgresql"
-  },
-  {
-    "groupId": "org.powermock",
-    "artifactId": "powermock-api-mockito"
-  },
-  {
-    "groupId": "org.powermock",
-    "artifactId": "powermock-module-junit4"
-  },
-  {
-    "groupId": "org.projectlombok",
-    "artifactId": "lombok"
-  },
-  {
-    "groupId": "org.projectlombok",
-    "artifactId": "lombok"
-  },
-  {
-    "groupId": "org.rapidoid",
-    "artifactId": "rapidoid-web"
-  },
-  {
-    "groupId": "org.redkale",
-    "artifactId": "redkale"
-  },
-  {
-    "groupId": "org.redkalex",
-    "artifactId": "redkale-plugins"
-  },
-  {
-    "groupId": "org.reflections",
-    "artifactId": "reflections"
-  },
-  {
-    "groupId": "org.renjin.cran",
-    "artifactId": "knitr"
-  },
-  {
-    "groupId": "org.renjin.cran",
-    "artifactId": "testthat"
-  },
-  {
-    "groupId": "org.revenj",
-    "artifactId": "revenj-core"
-  },
-  {
-    "groupId": "org.scala-js",
-    "artifactId": "scalajs-library"
-  },
-  {
-    "groupId": "org.scala-js",
-    "artifactId": "scalajs-test-bridge"
-  },
-  {
-    "groupId": "org.scala-js",
-    "artifactId": "scalajs-test-interface"
-  },
-  {
-    "groupId": "org.scala-lang",
-    "artifactId": "scala-library"
-  },
-  {
-    "groupId": "org.scala-lang",
-    "artifactId": "scala-reflect"
-  },
-  {
-    "groupId": "org.scala-lang",
-    "artifactId": "scala3-library"
-  },
-  {
-    "groupId": "org.scalacheck",
-    "artifactId": "scalacheck"
-  },
-  {
-    "groupId": "org.scalatest",
-    "artifactId": "scalatest"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "jcl-over-slf4j"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "jul-to-slf4j"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "log4j-over-slf4j"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-api"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-api"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-jdk14"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-jdk14"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-log4j12"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-log4j12"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-simple"
-  },
-  {
-    "groupId": "org.slf4j",
-    "artifactId": "slf4j-simple"
-  },
-  {
-    "groupId": "org.smartboot.servlet",
-    "artifactId": "servlet-core"
-  },
-  {
-    "groupId": "org.spockframework",
-    "artifactId": "spock-core"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-aop"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-beans"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-context"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-context-support"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-core"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-jdbc"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-orm"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-test"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-tx"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-web"
-  },
-  {
-    "groupId": "org.springframework",
-    "artifactId": "spring-webmvc"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-autoconfigure"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-configuration-processor"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-configuration-processor"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-actuator"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-aop"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-data-jpa"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-data-mongodb"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-data-mongodb-reactive"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-jdbc"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-mustache"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-test"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-undertow"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-web"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-web"
-  },
-  {
-    "groupId": "org.springframework.boot",
-    "artifactId": "spring-boot-starter-webflux"
-  },
-  {
-    "groupId": "org.springframework.data",
-    "artifactId": "spring-data-r2dbc"
-  },
-  {
-    "groupId": "org.t-io",
-    "artifactId": "tio-http-server"
-  },
-  {
-    "groupId": "org.testng",
-    "artifactId": "testng"
-  },
-  {
-    "groupId": "org.testng",
-    "artifactId": "testng"
-  },
-  {
-    "groupId": "org.typelevel",
-    "artifactId": "cats-core"
-  },
-  {
-    "groupId": "org.unbescape",
-    "artifactId": "unbescape"
-  },
-  {
-    "groupId": "org.voovan",
-    "artifactId": "voovan-framework"
-  },
-  {
-    "groupId": "org.yaml",
-    "artifactId": "snakeyaml"
-  },
-  {
-    "groupId": "oro",
-    "artifactId": "oro"
-  },
-  {
-    "groupId": "xerces",
-    "artifactId": "xercesImpl"
-  },
-  {
-    "groupId": "xml-apis",
-    "artifactId": "xml-apis"
+    "coordinates": "androidx.annotation:annotation",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "androidx.appcompat:appcompat",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "androidx.constraintlayout:constraintlayout",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "androidx.core:core-ktx",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "androidx.recyclerview:recyclerview",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "ch.qos.logback:logback-classic",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "ch.qos.logback:logback-classic",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "ch.qos.logback:logback-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "clojure-complete:clojure-complete",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "cn.hserver:hserver",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "cn.hserver:hserver-plugin-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "cn.ibaijia:isocket-nio",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.alibaba.fastjson2:fastjson2",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.alibaba:fastjson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.alibaba:fastjson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.android.support:appcompat-v7",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.android.support:design",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.android.support:recyclerview-v7",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.android.support:support-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.android.support:support-v4",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.dslplatform:dsl-json",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.dslplatform:dsl-json-java8",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.dslplatform:dsl-json-processor",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-databind",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.core:jackson-databind",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.dataformat:jackson-dataformat-xml",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.datatype:jackson-datatype-jdk8",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.datatype:jackson-datatype-jsr310",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.module:jackson-module-afterburner",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.module:jackson-module-blackbird",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.module:jackson-module-jaxb-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fasterxml.jackson.module:jackson-module-kotlin",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.firenio:firenio-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fizzed:rocker-compiler",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.fizzed:rocker-runtime",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.ben-manes.caffeine:caffeine",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.ben-manes.caffeine:caffeine",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.bumptech.glide:glide",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.davidmoten:rxjava2-jdbc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.httl:httl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.spullara.mustache.java:compiler",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.yuyenews:Magician",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.yuyenews:Martian",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.github.zhong-j-yu:bayou",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.android.material:material",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.auto.service:auto-service",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.code.findbugs:jsr305",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.code.gson:gson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.code.gson:gson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.guava:guava",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.guava:guava",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.inject:guice",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.google.protobuf:protobuf-java",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.googlecode.json-simple:json-simple",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.h2database:h2",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.h2database:h2",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.hellokaton:anima",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.hellokaton:blade-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.hellokaton:blade-template-jetbrick",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.javanut:greenlightning",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.jsoniter:jsoniter",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.linecorp.armeria:armeria",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.lmax:disruptor",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.mysql:mysql-connector-j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:config",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:exception",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:handler",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:service",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:status",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.networknt:utility",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.simplyti.cloud:simple-server-di-guice",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.sparkjava:spark-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.sparkjava:spark-template-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.squareup.okhttp3:logging-interceptor",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.squareup.okhttp3:okhttp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.squareup.retrofit2:converter-gson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.squareup.retrofit2:retrofit",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.strategicgains.repoexpress:repoexpress-mongodb",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.strategicgains:RestExpress",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.sun.xml.bind:jaxb-impl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.typesafe:config",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.zaxxer:HikariCP",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "com.zaxxer:HikariCP",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-beanutils:commons-beanutils",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-cli:commons-cli",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-cli:commons-cli",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-codec:commons-codec",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-collections:commons-collections",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-dbcp:commons-dbcp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-fileupload:commons-fileupload",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-httpclient:commons-httpclient",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-io:commons-io",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-lang:commons-lang",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "commons-logging:commons-logging",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "curacao:curacao",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "curacao:curacao-gson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "dom4j:dom4j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "gg.jte:jte",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "gg.jte:jte-kotlin",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.activej:activej-launchers-http",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.baratine:baratine",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.dropwizard:dropwizard-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.dropwizard:dropwizard-hibernate",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.dropwizard:dropwizard-jdbi3",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.dropwizard:dropwizard-views-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.ebean:ebean-annotation",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.edap:edapx-json",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.github.robaho:httpserver",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.common.testing:helidon-common-testing-junit5",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.common:helidon-common-reactive",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.config:helidon-config-yaml",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.http.media:helidon-http-media-jsonp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.media:helidon-media-jsonp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.helidon.webserver:helidon-webserver",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno.mod:inverno-boot",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno.mod:inverno-configuration",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno.mod:inverno-http-server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno.mod:inverno-irt",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno.mod:inverno-sql-vertx",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.inverno:inverno-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.javalin:javalin",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.javalin:javalin-rendering",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.jooby:jooby-hikari",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.jooby:jooby-rocker",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty.incubator:netty-incubator-transport-native-io_uring",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-buffer",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-codec-dns",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-codec-http",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-codec-socks",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-common",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-handler-proxy",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-resolver-dns",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-transport-native-epoll",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.netty:netty-transport-native-kqueue",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-arc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-benchmark-common",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-hibernate-orm",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-hibernate-reactive",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-jdbc-postgresql",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-reactive-pg-client",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-reactive-routes",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-rest",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-rest-jackson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-scheduler",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.quarkus:quarkus-vertx",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.r2dbc:r2dbc-pool",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.reactiverse:reactive-pg-client",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.reactivex.rxjava2:rxjava",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.rest-assured:rest-assured",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-concurrent-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-data-jackson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-http-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-http-netty",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-serialization-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.servicetalk:servicetalk-transport-netty-internal",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.sinistral:proteus-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.swagger:swagger-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.undertow:undertow-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.vertx:vertx-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.vertx:vertx-pg-client",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.vertx:vertx-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "io.vertx:vertx-web-templ-rocker",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "jakarta.annotation:jakarta.annotation-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "jakarta.servlet:jakarta.servlet-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "jakarta.xml.bind:jakarta.xml.bind-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.activation:activation",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.annotation:javax.annotation-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.annotation:javax.annotation-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.enterprise:cdi-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.inject:javax.inject",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.inject:javax.inject",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.mail:mail",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.servlet:javax.servlet-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.servlet:javax.servlet-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.servlet:jstl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.servlet:servlet-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.servlet:servlet-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.validation:validation-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.ws.rs:javax.ws.rs-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.xml.bind:jaxb-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax.xml.bind:jaxb-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "javax:javaee-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "joda-time:joda-time",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "junit:junit",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "junit:junit",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "log4j:log4j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "mysql:mysql-connector-java",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "net.freeutils:jlhttp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.actframework:act-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.actframework:act-sql-common",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.commons:commons-collections4",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.commons:commons-compress",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.commons:commons-lang3",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.commons:commons-math3",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.commons:commons-text",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.hadoop:hadoop-common",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.httpcomponents:httpclient",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.httpcomponents:httpcore",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.httpcomponents:httpmime",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-slf4j-impl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.logging.log4j:log4j-slf4j-impl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.maven.plugin-tools:maven-plugin-annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.maven:maven-artifact",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.maven:maven-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.maven:maven-plugin-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.maven:maven-project",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.poi:poi",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.poi:poi-ooxml",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.tapestry:tapestry-hibernate",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.tapestry:tapestry-javadoc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.tapestry:tapestry-test",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.velocity:velocity",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.apache.wicket:wicket-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.aspectj:aspectjrt",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.aspectj:aspectjweaver",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.assertj:assertj-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.awaitility:awaitility",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.bouncycastle:bcpkix-jdk15on",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.bouncycastle:bcprov-jdk15on",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.cache2k:cache2k-base-bom",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.clojure:clojure",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.clojure:clojurescript",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.clojure:tools.nrepl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.codehaus.groovy:groovy",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.codehaus.groovy:groovy-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.codehaus.jackson:jackson-core-asl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.codehaus.jackson:jackson-mapper-asl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.codehaus.plexus:plexus-utils",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.easymock:easymock",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.easymock:easymock",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.eclipse.jetty:jetty-server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.eclipse.jetty:jetty-servlet",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.eclipse.jetty:jetty-util-ajax",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.eclipse.persistence:eclipselink",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.eclipse.persistence:javax.persistence",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.freemarker:freemarker",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.grizzly:grizzly-http-server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jaxb:jaxb-runtime",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jersey.containers:jersey-container-servlet",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jersey.core:jersey-server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jersey.ext:jersey-mvc-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jersey.inject:jersey-hk2",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.glassfish.jersey.media:jersey-media-json-jackson",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hamcrest:hamcrest",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hamcrest:hamcrest-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hamcrest:hamcrest-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hamcrest:hamcrest-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hamcrest:hamcrest-library",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate.validator:hibernate-validator",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-c3p0",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-entitymanager",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-entitymanager",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-hikaricp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.hibernate:hibernate-validator",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.javalite:activejdbc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.javalite:activeweb",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.javalite:activeweb-testing",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.javassist:javassist",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.javassist:javassist",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-dom-api-compat",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-reflect",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-stdlib",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-stdlib-common",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-stdlib-jdk7",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlin:kotlin-stdlib-js",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlinx:kotlinx-coroutines-android",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jetbrains:annotations",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.json:json",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.jsoup:jsoup",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter-engine",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.jupiter:junit-jupiter-params",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.platform:junit-platform-launcher",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.junit.vintage:junit-vintage-engine",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.microhttp:microhttp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.minijax:minijax-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.minijax:minijax-db",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.minijax:minijax-json",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.minijax:minijax-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.minijax:minijax-undertow",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mockito:mockito-all",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mockito:mockito-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mockito:mockito-junit-jupiter",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mongodb.morphia:morphia",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mongodb:mongodb-driver-sync",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.mongojack:mongojack",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.nanohttpd:nanohttpd",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.ninjaframework:ninja-servlet",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.ninjaframework:ninja-standalone",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.noear:solon.boot.smarthttp",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.noear:solon.serialization.snack3",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.osgi:org.osgi.compendium",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.osgi:org.osgi.core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.ow2.asm:asm",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.postgresql:postgresql",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.postgresql:postgresql",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.postgresql:r2dbc-postgresql",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.powermock:powermock-api-mockito",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.powermock:powermock-module-junit4",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.projectlombok:lombok",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.projectlombok:lombok",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.rapidoid:rapidoid-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.redkale:redkale",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.redkalex:redkale-plugins",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.reflections:reflections",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.renjin.cran:knitr",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.renjin.cran:testthat",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.revenj:revenj-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-js:scalajs-library",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-js:scalajs-test-bridge",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-js:scalajs-test-interface",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-lang:scala-library",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-lang:scala-reflect",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scala-lang:scala3-library",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scalacheck:scalacheck",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.scalatest:scalatest",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:jcl-over-slf4j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:jul-to-slf4j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:log4j-over-slf4j",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-api",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-jdk14",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-jdk14",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-log4j12",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-log4j12",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-simple",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.slf4j:slf4j-simple",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.smartboot.servlet:servlet-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.spockframework:spock-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-autoconfigure",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-configuration-processor",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-configuration-processor",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-actuator",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-aop",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-data-jpa",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-data-mongodb",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-data-mongodb-reactive",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-jdbc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-mustache",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-test",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-undertow",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.boot:spring-boot-starter-webflux",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework.data:spring-data-r2dbc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-aop",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-beans",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-context",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-context-support",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-jdbc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-orm",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-test",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-tx",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-web",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.springframework:spring-webmvc",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.t-io:tio-http-server",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.testng:testng",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.testng:testng",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.typelevel:cats-core",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.unbescape:unbescape",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.voovan:voovan-framework",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "org.yaml:snakeyaml",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "oro:oro",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "xerces:xercesImpl",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
+  },
+  {
+    "coordinates": "xml-apis:xml-apis",
+    "downloads": 0,
+    "ranking": 0,
+    "users": 0,
+    "previousUsers": 0,
+    "interpolatedUsers": 0,
+    "infered": false
   }
 ]

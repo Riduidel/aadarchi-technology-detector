@@ -94,11 +94,11 @@ class HistoryBuilder {
 	 * @param allArtifactInformations
 	 * @throws IOException
 	 */
-	void generateHistoryFor(BrowserContext context, List<ArtifactInformations> allArtifactInformations)
+	void generateHistoryFor(BrowserContext context, Collection<ArtifactDetails> allArtifactInformations)
 			throws IOException {
 		Git git = Git.open(gitHistory.toFile());
 		// First thing first, fill our cache with all remote infos we can have
-		Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsCaptures = allArtifactInformations.stream()
+		Map<ArtifactDetails, NavigableMap<LocalDate, File>> artifactsCaptures = allArtifactInformations.stream()
 				.collect(Collectors.toMap(Function.identity(),
 						Throwing.function(artifact -> cacheHistoryOf(context, artifact)),
 						(firstMap, secondMap) -> firstMap));
@@ -118,7 +118,7 @@ class HistoryBuilder {
 				new TypeToken<Collection<ArtifactDetails>>() {
 				});
 		// Generate complete artifact informations through inference
-		Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
+		Map<ArtifactDetails , NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
 				.stream().collect(Collectors.toMap(entry -> entry.getKey(), Throwing.function(
 						entry -> generateAllStatusesFrom(entry.getKey(), entry.getValue(), currentArtifacts))));
 		// Create one artifacts.json per month
@@ -165,7 +165,7 @@ class HistoryBuilder {
 	 * @throws JsonSyntaxException
 	 */
 	private Map<LocalDate, SortedSet<ArtifactDetails>> aggregateStatusesPerDate(
-			Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsStatuses)
+			Map<ArtifactDetails, NavigableMap<LocalDate, File>> artifactsStatuses)
 			throws JsonSyntaxException, IOException {
 		// We directly take values, because they should all already be first of month
 		// ones
@@ -183,10 +183,10 @@ class HistoryBuilder {
 		return artifactLists;
 	}
 
-	private void copyHistoryFromLastToFirst(ArtifactInformations key, List<ArtifactDetails> allArtifactInformations,
+	private void copyHistoryFromLastToFirst(ArtifactDetails key, List<ArtifactDetails> allArtifactInformations,
 			NavigableMap<LocalDate, File> value) {
 		Optional<ArtifactDetails> associatedArtifactDetail = allArtifactInformations.stream()
-				.filter(artifact -> artifact.coordinates.equals(key.toCoordinates())).findFirst();
+				.filter(artifact -> artifact.getCoordinates().equals(key.getCoordinates())).findFirst();
 		if (associatedArtifactDetail.isPresent()) {
 			copyHistoryFromLastToFirst(key, associatedArtifactDetail.get(), value);
 		} else {
@@ -203,7 +203,7 @@ class HistoryBuilder {
 	 * @param artifact
 	 * @param capturesHistory
 	 */
-	private void copyHistoryFromLastToFirst(ArtifactInformations artifact, ArtifactDetails details,
+	private void copyHistoryFromLastToFirst(ArtifactDetails artifact, ArtifactDetails details,
 			NavigableMap<LocalDate, File> capturesHistory) {
 		ArtifactDetails newDetails = null;
 		capturesHistory.forEach((date, file) -> copyDatesInto(details, date, file));
@@ -240,11 +240,11 @@ class HistoryBuilder {
 	 * @throws IOException
 	 * @throws JsonSyntaxException
 	 */
-	public NavigableMap<LocalDate, File> generateAllStatusesFrom(ArtifactInformations artifact,
+	public NavigableMap<LocalDate, File> generateAllStatusesFrom(ArtifactDetails artifact,
 			NavigableMap<LocalDate, File> knownHistory, Collection<ArtifactDetails> currentArtifacts)
 			throws JsonSyntaxException, IOException {
 		logger
-				.info(String.format("generating all statuses for %s", artifact.toCoordinates()));
+				.info(String.format("generating all statuses for %s", artifact.getCoordinates()));
 		NavigableMap<LocalDate, File> returned = new TreeMap<LocalDate, File>();
 		LocalDate now = LocalDate.now();
 		LocalDate currentMonth = LocalDate.of(now.getYear(), now.getMonthValue(), 1);
@@ -259,11 +259,11 @@ class HistoryBuilder {
 		return returned;
 	}
 
-	private Optional<File> generateStatusFor(LocalDate currentMonth, ArtifactInformations artifact,
+	private Optional<File> generateStatusFor(LocalDate currentMonth, ArtifactDetails artifact,
 			NavigableMap<LocalDate, File> knownHistory, Collection<ArtifactDetails> currentArtifacts)
 			throws JsonSyntaxException, IOException {
 		File output = getDatedFilePath(statuses, currentMonth,
-				artifact.toCoordinates());
+				artifact.getCoordinates());
 		if (output.exists())
 			return Optional.of(output);
 		Entry<LocalDate, File> fileSnapshotBefore = knownHistory.floorEntry(currentMonth);
@@ -271,7 +271,7 @@ class HistoryBuilder {
 		ArtifactDetails dataBefore = null;
 		ArtifactDetails dataAfter = null;
 		Optional<ArtifactDetails> currentData = currentArtifacts.stream()
-				.filter(a -> a.coordinates.equals(artifact.toCoordinates())).findFirst();
+				.filter(a -> a.getCoordinates().equals(artifact.getCoordinates())).findFirst();
 		if (currentData.isEmpty())
 			return Optional.empty();
 		if (fileSnapshotBefore != null) {
@@ -317,7 +317,7 @@ class HistoryBuilder {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	private NavigableMap<LocalDate, File> cacheHistoryOf(BrowserContext context, ArtifactInformations artifact)
+	private NavigableMap<LocalDate, File> cacheHistoryOf(BrowserContext context, ArtifactDetails artifact)
 			throws IOException, InterruptedException, URISyntaxException {
 		var history = getArtifactHistoryOnCDX(artifact);
 		return history.stream().map(archivePoint -> obtainArchivePointFor(artifact, archivePoint, context))
@@ -326,10 +326,10 @@ class HistoryBuilder {
 						() -> new TreeMap<>()));
 	}
 
-	private Entry<LocalDateTime, File> obtainArchivePointFor(ArtifactInformations artifact, ArchivePoint archivePoint,
+	private Entry<LocalDateTime, File> obtainArchivePointFor(ArtifactDetails artifact, ArchivePoint archivePoint,
 			BrowserContext context) {
 		File destination = getDatedFilePath(captures,
-				archivePoint.timestamp().toLocalDate(), artifact.toCoordinates());
+				archivePoint.timestamp().toLocalDate(), artifact.getCoordinates());
 		if (destination.exists()) {
 			if (destination.length() < 200) {
 				logger
@@ -341,7 +341,7 @@ class HistoryBuilder {
 		}
 		var url = String.format("https://web.archive.org/web/%s/%s",
 				Formats.INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp()),
-				artifact.getArtifactUrl(mvnRepositoryServer));
+				ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
 		try (Page page = newPage.apply(context)) {
 
 			var details = addDetails.apply(page, url);
@@ -361,16 +361,15 @@ class HistoryBuilder {
 		return FileUtils.getFile(containerDir, timestamp.getYear() + "", timestamp.getMonthValue() + "",
 				timestamp.getDayOfMonth() + "", name + ".json");
 	}
-
-	private List<ArchivePoint> getArtifactHistoryOnCDX(ArtifactInformations artifact)
+	private List<ArchivePoint> getArtifactHistoryOnCDX(ArtifactDetails artifact)
 			throws IOException, InterruptedException, URISyntaxException {
-		File cache = new File(indices, artifact.toCoordinates() + ".json");
+		File cache = new File(indices, artifact.getCoordinates() + ".json");
 		String url = String.format("http://web.archive.org/cdx/search/cdx" + "?filter=statuscode:200" // We take only
 																										// valid
 																										// archive.org
 																										// captures
 				+ "&output=json" + "&collapse=timestamp:6" // We look at the month scale
-				+ "&url=%s", artifact.getArtifactUrl(mvnRepositoryServer));
+				+ "&url=%s", ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
 		if (!cache.exists()) {
 			// Run request
 			try {

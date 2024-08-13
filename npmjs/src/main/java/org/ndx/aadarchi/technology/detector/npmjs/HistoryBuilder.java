@@ -14,7 +14,10 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
@@ -33,15 +36,20 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import com.github.fge.lambdas.Throwing;
 
 class HistoryBuilder {
+	static final Logger logger = Logger.getLogger(HistoryBuilder.class.getName());
 
 		private final Path gitHistory;
 		private final Path cache;
 		private final BiFunction<Collection<ArtifactDetails>, String, Collection<ArtifactDetails>> getAllDownloadsForPeriod;
+		private final Function<File, Collection<ArtifactDetails>> readFromCache;
+		private final BiConsumer<Collection<ArtifactDetails>, File> writeToCache;
 
-		HistoryBuilder(Path gitHistory, Path cache, BiFunction<Collection<ArtifactDetails>, String, Collection<ArtifactDetails>> getAllDownloadsForPeriod) {
+		HistoryBuilder(Path gitHistory, Path cache, BiFunction<Collection<ArtifactDetails>, String, Collection<ArtifactDetails>> getAllDownloadsForPeriod, Function<File, Collection<ArtifactDetails>> readArtifacts, BiConsumer<Collection<ArtifactDetails>, File> writeArtifacts) {
 			this.gitHistory = gitHistory;
 			this.cache = cache;
 			this.getAllDownloadsForPeriod = getAllDownloadsForPeriod;
+			this.readFromCache = readArtifacts;
+			this.writeToCache = writeArtifacts;
 		}
 
 		public static DateTimeFormatter DATE_FORMAT_WITH_DAY =
@@ -52,20 +60,20 @@ class HistoryBuilder {
 					;
 
 		public void generateHistoryFor(Collection<ArtifactDetails> allDetails) throws IOException {
-			ExtractPopularNpmjsArtifacts.logger.info("Opening git repository at "+gitHistory.toFile().getAbsolutePath());
+			logger.info("Opening git repository at "+gitHistory.toFile().getAbsolutePath());
 	    	Git git = Git.open(gitHistory.toFile());
 	    	LocalDate initial = LocalDate.of(2010, 1, 1);
-	    	ExtractPopularNpmjsArtifacts.logger.info("Fetching all dependencies since "+initial);
+	    	logger.info("Fetching all dependencies since "+initial);
 	    	Map<LocalDate, File> aggregatedStatuses = initial.datesUntil(LocalDate.now(), Period.ofMonths(1))
 	    		.map(Throwing.function(month -> Map.entry(month, generateHistoryAtMonth(allDetails, month))))
 	    		.filter(Throwing.predicate(entry -> {
-	    			Collection<ArtifactDetails> infos = ExtractPopularNpmjsArtifacts.readArtifacts(entry.getValue());
+	    			Collection<ArtifactDetails> infos = readFromCache.apply(entry.getValue());
 	    			return !infos.isEmpty();
 	    		}))
 //	    		.forEach(entry -> logger.info("Got downloads at "+entry.getKey()))
 	    		.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> a, () -> new LinkedHashMap<LocalDate, File>()))
 	    		;
-	    	ExtractPopularNpmjsArtifacts.logger.info("Creating commits for all dates since "+initial);
+	    	logger.info("Creating commits for all dates since "+initial);
 		    
 	    	// Write them into git history
 	    	aggregatedStatuses.entrySet().stream()
@@ -74,8 +82,8 @@ class HistoryBuilder {
 		}
 	    private void writeArtifactListAtDate(Git git, LocalDate date,
 				File datedFilePath) throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
-	    	ExtractPopularNpmjsArtifacts.logger.info("Creating commit at "+date);
-			Collection<ArtifactDetails> infos = ExtractPopularNpmjsArtifacts.readArtifacts(datedFilePath);
+	    	logger.info("Creating commit at "+date);
+			Collection<ArtifactDetails> infos = readFromCache.apply(datedFilePath);
 	    	File artifacts = new File(new File(gitHistory.toFile(), "npmjs"), "artifacts.json");
 	    	FileUtils.copyFile(datedFilePath, artifacts);
 	    	// Then create a commit in the history repository
@@ -91,8 +99,6 @@ class HistoryBuilder {
 	    		.setAuthor(commiter)
 	    		.setCommitter(commiter)
 	    		.setAll(true)
-//	    		.setOnly("mvnrepository/artifacts.json")
-//	    		.setAllowEmpty(false)
 	    		.setMessage(String.format("Historical artifacts of %s, %d artifacts known at this date", 
 	    				DATE_FORMAT_WITH_DAY.format(date), infos.size()))
 	    		.call()
@@ -117,7 +123,7 @@ class HistoryBuilder {
 						format.format(month.withDayOfMonth(month.getMonth().length(month.isLeapYear())))
 						);
 				Collection<ArtifactDetails> atMonth = getAllDownloadsForPeriod.apply(allDetails, monthlySearch);
-		        ExtractPopularNpmjsArtifacts.writeArtifacts(atMonth, destination);
+		        writeToCache.accept(atMonth, destination);
 
 			}
 			return destination;

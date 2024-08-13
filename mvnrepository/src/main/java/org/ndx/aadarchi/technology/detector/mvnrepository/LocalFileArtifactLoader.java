@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.Page;
 
@@ -28,27 +30,27 @@ public class LocalFileArtifactLoader extends ArtifactLoader {
 	}
 
 	@Override
-	public Set<ArtifactInformations> loadArtifacts(Page page) throws IOException {
+	public Set<ArtifactDetails> loadArtifacts(Page page) throws IOException {
 		// Read the reference file
 		var text = FileUtils.readFileToString(referenceFile.toFile(), "UTF-8");
 		List<Map<String, String>> entries = this.extractPopularMvnRepositoryArtifacts.gson.fromJson(text, List.class);
-		Set<ArtifactInformations> returned = new HashSet<ArtifactInformations>();
+		Set<ArtifactDetails> returned = new HashSet<ArtifactDetails>();
 		entries.forEach(artifact -> returned.addAll(getArtifactInformations(page, artifact)));
 		return returned;
 	}
 
-	private Collection<ArtifactInformations> getArtifactInformations(Page page, Map<String, String> artifact) {
-		Set<ArtifactInformations> returned = new HashSet<ArtifactInformations>();
+	private Collection<ArtifactDetails> getArtifactInformations(Page page, Map<String, String> artifact) {
+		Set<ArtifactDetails> returned = new HashSet<>();
 		var groupId = artifact.get("groupId");
 		if(artifact.containsKey("artifactId")) {
-			returned.add(new ArtifactInformations(groupId, artifact.get("artifactId")));
+			returned.add(ArtifactDetailsBuilder.artifactDetails().coordinates(String.format("%s:%s", groupId, artifact.get("artifactId"))).build());
 		} else {
 			returned.addAll(loadAllArtifactsOfGroup(page, groupId));
 		}
 		return returned;
 	}
 
-	private Collection<? extends ArtifactInformations> loadAllArtifactsOfGroup(Page page, String groupId) {
+	private Collection<? extends ArtifactDetails> loadAllArtifactsOfGroup(Page page, String groupId) {
 		return loadPageList(page, this.extractPopularMvnRepositoryArtifacts.mvnRepositoryServer+"/artifact/"+groupId);
 	}
 }

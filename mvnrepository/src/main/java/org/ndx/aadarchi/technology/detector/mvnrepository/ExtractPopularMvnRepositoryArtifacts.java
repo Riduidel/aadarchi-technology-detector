@@ -1,12 +1,10 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
-import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,9 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.ndx.aadarchi.technology.detector.model.VersionDetails;
+import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.github.fge.lambdas.Throwing;
 import com.google.gson.Gson;
@@ -40,15 +41,9 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 @Command(name = "ExtractPuploarMvnRepositoryArtifacts", mixinStandardHelpOptions = true, version = "ExtractPuploarMvnRepositoryArtifacts 0.1",
         description = "ExtractPuploarMvnRepositoryArtifacts made with jbang")
-class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
+class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDownloader<MvnContext> implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
 	
-
-	@Option(names= {"-o", "--output"}, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json") Path output;
-
-//    @Option(names = {"--interesting-artifacts"}, description = "The local file containing interesting artifacts infos", defaultValue = "interesting_artifacts.json")
-//    private Path localInterestingArtifacts;
-
     @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
     		defaultValue = "../../FrameworkBenchmarks/frameworks")
     private Path techEmpowerFrameworks;
@@ -57,17 +52,6 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     private Path cachedArtifacts;
     @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
     		defaultValue = "https://mvnrepository.com") String mvnRepositoryServer;
-    @Option(names = {"--generate-history"}, description ="Generate an history branch with commits for each month")
-    boolean generateHistory;
-    @Option(names = {"--git-folder"}, description = "The output folder where data will be written", 
-    		defaultValue = "../history") Path gitHistory;
-    @Option(names = {"--cache-folder"}, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", 
-    		defaultValue = "../.cache")
-    private Path cache;
-
-	Gson gson = new GsonBuilder()
-			.setPrettyPrinting()
-			.create();
 
 	private String artifactDetailsExtractor;
 
@@ -80,82 +64,108 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
     @Override
     public Integer call() throws Exception {
         try (Playwright playwright = Playwright.create()) {
-        	BrowserContext context = createPlaywrightContext(playwright);
-        	// An empty browser page used to make sure the browser window doesn't move over time
-//        	var emptyPage = newPage(context);
-        	logger.info("Reading popular artifacts from multiple sources");
-        	List<ArtifactInformations> allArtifactInformations = null;
-        	if(cachedArtifacts.toFile().exists()) {
-        		var json = FileUtils.readFileToString(cachedArtifacts.toFile(), "UTF-8");
-        		allArtifactInformations = gson.fromJson(json, new TypeToken<List<ArtifactInformations>>() {});
-        	} else {
-	        	// Get the loaders
-	        	allArtifactInformations = fetchArtifactInformations(context, 
-	        			Arrays.asList(
-//	        					new LocalFileArtifactLoader(localInterestingArtifacts),
-	        					new PopularArtifactLoader(this),
-	        					new TechEmpowerArtifactLoader(techEmpowerFrameworks)
-										));
-	        	var json = gson.toJson(allArtifactInformations);
-	        	FileUtils.write(cachedArtifacts.toFile(), json, "UTF-8");
-        	}
-        	if(generateHistory) {
-        		new HistoryBuilder(mvnRepositoryServer, 
-        				gitHistory, 
-        				cache, 
-        				output, 
-        				gson, 
-        				this::newPage, this::addDetails)
-        		.generateHistoryFor(context, allArtifactInformations);
-        	} else {
-	        	Collection allDetails = obtainAllDetails(context, allArtifactInformations);
-		        logger.info("Exporting artifacts to " + output.toAbsolutePath().toFile().getAbsolutePath());
-		        FileUtils.write(output.toFile(), gson.toJson(allDetails), "UTF-8");
-		        logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), output));
-        	}
+        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright));
+        	super.doCall(mvnContext);
         }
         return 0;
     }
+
+    @Override
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
+		return (Collection<ArtifactDetails>) obtainAllDetails(mvnContext.context, allArtifactInformations);
+	}
+
+    @Override
+	protected void generateHistoryOf(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
+		try {
+			new HistoryBuilder(mvnRepositoryServer, 
+					gitHistory, 
+					cache, 
+					output, 
+					InterestingArtifactsDetailsDownloader.gson, 
+					this::newPage, this::addDetails)
+			.generateHistoryFor(mvnContext.context, allArtifactInformations);
+		} catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	protected Collection<ArtifactDetails> searchInterestingArtifacts(MvnContext context) {
+		List<ArtifactDetails> allArtifactInformations = null;
+		if(cachedArtifacts.toFile().exists()) {
+			try {
+				allArtifactInformations = readFromFile(cachedArtifacts.toFile());
+			} catch(IOException e) {
+				throw new RuntimeException("Unable to read from cache", e);
+			}
+		} else {
+			// Get the loaders
+			allArtifactInformations = fetchArtifactInformations(context.context, 
+					Arrays.asList(
+//	        					new LocalFileArtifactLoader(localInterestingArtifacts),
+							new PopularArtifactLoader(this),
+							new TechEmpowerArtifactLoader(techEmpowerFrameworks)
+									));
+			try {
+			writeToFile(allArtifactInformations, cachedArtifacts.toFile());
+			} catch(IOException e) {
+				throw new RuntimeException("Unable to write into cache", e);
+			}
+		}
+		return allArtifactInformations;
+	}
     
-    private List<ArtifactInformations> findRelocated(Map artifactInformations) {
+    private List<ArtifactDetails> findRelocated(Map artifactInformations) {
     	if(artifactInformations.containsKey("relocation")) {
     		Map relocation = (Map) artifactInformations.get("relocation");
     		Map<String, String> page = (Map<String, String>) relocation.get("page");
     		var groupId = page.get("groupId");
     		var artifactId = page.get("artifactId");
-    		var relocated = new ArtifactInformations(groupId, artifactId);
+    		var relocated = ArtifactDetailsBuilder
+    				.artifactDetails()
+    					.coordinates(String.format("%s:%s", groupId, artifactId))
+    					.build();
     		return List.of(relocated);
     	} else {
     		return List.of();
     	}
     }
 
-	private Collection<Map> obtainAllDetails(BrowserContext context,
-			List<ArtifactInformations> allArtifactInformations) {
-		Map<ArtifactInformations, Map> resolvedArtifacts = new TreeMap<ArtifactInformations, Map>();
+	private Collection<ArtifactDetails> obtainAllDetails(BrowserContext context,
+			Collection<ArtifactDetails> allArtifactInformations) {
+		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()
 				.flatMap(artifactInformations -> {
 					Page page = newPage(context);
 					try {
-						Optional<Map> details = addDetails(page, artifactInformations.getArtifactUrl(mvnRepositoryServer));
+						Optional<Map> details = addDetails(page, ArtifactDetailsUtils.getArtifactUrl(artifactInformations, mvnRepositoryServer));
 						details.stream()
-							.forEach(d -> resolvedArtifacts.put(artifactInformations, d));
+							.forEach(d -> {
+								try {
+									ArtifactDetails updated = ArtifactDetailsBuilder.toBuilder(artifactInformations).build();
+									BeanUtils.populate(updated, d);
+									resolvedArtifacts.put(artifactInformations, updated);
+								} catch(InvocationTargetException | IllegalAccessException e) {
+									throw new RuntimeException(e);
+								}
+							});
 						return details.stream();
 					} finally {
 						page.close();
 					}
 				})
 				// Now we're extracted details, let's do some complementary filtering
-				.filter(artifactInformations -> artifactInformations.containsKey("repositories") ? ((List) artifactInformations.get("repositories")).contains("Central") : false)
-				.flatMap(artifactInformations -> findRelocated(artifactInformations).stream())
+				.filter(informationsMap -> informationsMap.containsKey("repositories") ? ((List) informationsMap.get("repositories")).contains("Central") : false)
+				.flatMap(informationsMap -> findRelocated(informationsMap).stream())
 				.filter(artifactInformations -> !resolvedArtifacts.containsKey(artifactInformations))
 				.collect(Collectors.toList());
 		}
 		return resolvedArtifacts.values();
 	}
 
-	private List<ArtifactInformations> fetchArtifactInformations(
+	private List<ArtifactDetails> fetchArtifactInformations(
 			BrowserContext context, List<ArtifactLoader> sources) {
 		return sources.stream()
 			.map(Throwing.function(source -> this.loadArtifacts(context, source)))
@@ -165,7 +175,7 @@ class ExtractPopularMvnRepositoryArtifacts implements Callable<Integer> {
 			.collect(Collectors.toList());
 	}
 
-	private Set<ArtifactInformations> loadArtifacts(BrowserContext context, ArtifactLoader source) throws IOException {
+	private Set<ArtifactDetails> loadArtifacts(BrowserContext context, ArtifactLoader source) throws IOException {
 		Page page = newPage(context);
 		try {
 			return source.loadArtifacts(page);

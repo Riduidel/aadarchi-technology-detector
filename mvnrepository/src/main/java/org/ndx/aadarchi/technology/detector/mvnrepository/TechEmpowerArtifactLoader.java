@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.Page;
 
@@ -28,7 +30,7 @@ public class TechEmpowerArtifactLoader extends ArtifactLoader {
 	}
 
 	@Override
-	public Set<ArtifactInformations> loadArtifacts(Page page)
+	public Set<ArtifactDetails> loadArtifacts(Page page)
 			throws IOException {
 		// TODO Auto-generated method stub
 		File[] children = techEmpowerFrameworks.toFile().listFiles();
@@ -49,17 +51,19 @@ public class TechEmpowerArtifactLoader extends ArtifactLoader {
 					file.getName().equals("pom.xml") ? 
 							identifyInterestingDependenciesInMaven(file).stream() :
 								identifyInterestingDependenciesInGradle(file).stream())
-				.collect(Collectors.toCollection(() -> new TreeSet<ArtifactInformations>()));
+				.collect(Collectors.toCollection(() -> new TreeSet<ArtifactDetails>()));
 		}
 	}
 	
-	Set<ArtifactInformations> identifyInterestingDependenciesInMaven(File pomFile) {
-		Set<ArtifactInformations> returned = new TreeSet<ArtifactInformations>();
+	Set<ArtifactDetails> identifyInterestingDependenciesInMaven(File pomFile) {
+		Set<ArtifactDetails> returned = new TreeSet<ArtifactDetails>();
 		try(InputStream input = new FileInputStream(pomFile)) {
 			MavenProject mavenProject = new MavenProject(reader.read(input));
 			mavenProject.getModel().getDependencies().stream()
 				.filter(d -> !d.getGroupId().contains("${") && !d.getArtifactId().contains("${"))
-				.map(d -> new ArtifactInformations(d.getGroupId(), d.getArtifactId()))
+				.map(d -> ArtifactDetailsBuilder.artifactDetails()
+							.coordinates(String.format("%s:%s", d.getGroupId(), d.getArtifactId()))
+							.build())
 				.peek(a -> ExtractPopularMvnRepositoryArtifacts.logger.info("read artifact "+a))
 				.forEach(a -> returned.add(a));
 			// If pom has submodules, also explore them
@@ -77,8 +81,8 @@ public class TechEmpowerArtifactLoader extends ArtifactLoader {
 		return returned;
 	}
 	
-	Set<ArtifactInformations> identifyInterestingDependenciesInGradle(File folder) {
-		Set<ArtifactInformations> returned = new TreeSet<>();
+	Set<ArtifactDetails> identifyInterestingDependenciesInGradle(File folder) {
+		Set<ArtifactDetails> returned = new TreeSet<>();
 		ExtractPopularMvnRepositoryArtifacts.logger.severe("TODO implement handling of Gradle projects");
 		return returned;
 	}

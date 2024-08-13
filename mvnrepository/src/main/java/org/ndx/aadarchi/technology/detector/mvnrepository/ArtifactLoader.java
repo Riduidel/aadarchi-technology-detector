@@ -7,6 +7,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.IOUtils;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.Page;
 
@@ -18,14 +20,14 @@ public abstract class ArtifactLoader {
 			artifactsUrlExtractor = IOUtils.toString(ArtifactLoader.class.getClassLoader().getResourceAsStream("artifacts_urls_extractor.js"), "UTF-8");
 		} catch (IOException e) {
 			throw new UnsupportedOperationException(String.format("Unable to load script from %s", 
-					ArtifactLoader.class.getClassLoader().getResource("artifacts_urls_extractor.js")), e);
+					ArtifactDetails.class.getClassLoader().getResource("artifacts_urls_extractor.js")), e);
 		}
 	}
 
-	public abstract Set<ArtifactInformations> loadArtifacts(Page page) throws IOException;
+	public abstract Set<ArtifactDetails> loadArtifacts(Page page) throws IOException;
 
-	protected static Set<ArtifactInformations> loadPageList(Page page, String url) {
-		Set<ArtifactInformations> returned = new TreeSet<ArtifactInformations>();
+	protected static Set<ArtifactDetails> loadPageList(Page page, String url) {
+		Set<ArtifactDetails> returned = new TreeSet<ArtifactDetails>();
 		while(url!=null) {
 			ExtractPopularMvnRepositoryArtifacts.logger.info(String.format("Loading page %s", url));
 			page.navigate(url);
@@ -36,7 +38,11 @@ public abstract class ArtifactLoader {
             } else {
             	List<Map<String, String>> data = (List) pageInfos.get("data");
             	for (Map<String, String> object : data) {
-					returned.add(new ArtifactInformations(object.get("groupId"), object.get("artifactId")));
+					returned.add(
+							ArtifactDetailsBuilder.artifactDetails()
+								.coordinates(String.format("%s:%s", object.get("groupId"), object.get("artifactId")))
+								.build()
+								);
 				}
             }
             url = null;
