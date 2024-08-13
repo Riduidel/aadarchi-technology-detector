@@ -4,15 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Path;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -21,6 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NavigableMap;
 import java.util.Optional;
+import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -31,40 +29,31 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.AbortedByHookException;
-import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
-import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.NoMessageException;
-import org.eclipse.jgit.api.errors.ServiceUnavailableException;
-import org.eclipse.jgit.api.errors.UnmergedPathsException;
-import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
-import org.eclipse.jgit.lib.PersonIdent;
+import org.ndx.aadarchi.technology.detector.helper.BaseHistoryBuilder;
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.Formats;
 
 import com.github.fge.lambdas.Throwing;
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.PlaywrightException;
 
-class HistoryBuilder {
+/**
+ * As I dodn't found any artifact download history for maven artifact, I had to resign and use the internet wayback machine.
+ * As a consequence, figures here are infered, rather than cleanly obtained.
+ */
+public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
 
-	HttpClient client = HttpClient.newHttpClient();
-	
 	private final File captures;
 	private final File indices;
 	private final File statuses;
-	private final Path gitHistory;
-	private final File artifactsLists;
+	public final File artifactsLists;
 	private final Path output;
-
-	private Gson gson;
 
 	private final String mvnRepositoryServer;
 
@@ -72,9 +61,11 @@ class HistoryBuilder {
 
 	private BiFunction<Page, String, Optional<Map>> addDetails;
 
-	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output, Gson gson, Function<BrowserContext, Page> newPage, BiFunction<Page, String, Optional<Map>> addDetails) {
-		this.gitHistory = gitHistory;
-		this.gson = gson;
+	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output, Function<BrowserContext, Page> newPage, BiFunction<Page, String, Optional<Map>> addDetails) {
+		super(gitHistory, cache, 
+				"🤖 MvnRepository History Builder",
+				"get_mvnrepository_infos.yaml@history", 
+				new File(new File(gitHistory.toFile(), "mvnrepository"), "artifacts.json"));
 		this.output = output;
 		this.mvnRepositoryServer = mvnRepositoryServer;
 		this.newPage = newPage;
@@ -86,73 +77,37 @@ class HistoryBuilder {
 		statuses = new File(cache.toFile(), "statuses"); 
 	}
 
-	/**
-	 * Subverts all this class mechanism to generate a complete git history for all
-	 * monthly statistics of all the given artifacts.
-	 * 
-	 * @param context
-	 * @param allArtifactInformations
-	 * @throws IOException
-	 */
-	void generateHistoryFor(BrowserContext context, List<ArtifactInformations> allArtifactInformations)
-			throws IOException {
-		Git git = Git.open(gitHistory.toFile());
+	@Override
+	protected
+	SortedMap<LocalDate, File> generateAggregatedStatusesMap(MvnContext context,
+			Collection<ArtifactDetails> allArtifactInformations) throws IOException {
 		// First thing first, fill our cache with all remote infos we can have
-		Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsCaptures = allArtifactInformations.stream()
+		Map<ArtifactDetails, NavigableMap<LocalDate, File>> artifactsCaptures = allArtifactInformations.stream()
 				.collect(Collectors.toMap(Function.identity(),
-						Throwing.function(artifact -> cacheHistoryOf(context, artifact)),
+						Throwing.function(artifact -> cacheHistoryOf(context.context, artifact)),
 						(firstMap, secondMap) -> firstMap));
 		// Print some statistics
 		logger.info("Processed artifacts\n" + artifactsCaptures.entrySet().stream()
 				.map(e -> String.format("%s -> %d captures", e.getKey(), e.getValue().size()))
 				.collect(Collectors.joining("\n")));
-		List<ArtifactDetails> allArtifactsDetails = (List<ArtifactDetails>) gson
+		List<ArtifactDetails> allArtifactsDetails = (List<ArtifactDetails>) FileHelper.gson
 				.fromJson(
 						FileUtils.readFileToString(output.toFile(), "UTF-8"),
 						TypeToken.getParameterized(List.class, ArtifactDetails.class));
 		// Move history details from the future to the past for the whole timeline
 		artifactsCaptures.entrySet()
 				.forEach(entry -> copyHistoryFromLastToFirst(entry.getKey(), allArtifactsDetails, entry.getValue()));
-		Collection<ArtifactDetails> currentArtifacts = gson.fromJson(
+		Collection<ArtifactDetails> currentArtifacts = FileHelper.gson.fromJson(
 				FileUtils.readFileToString(output.toFile(), "UTF-8"),
 				new TypeToken<Collection<ArtifactDetails>>() {
 				});
 		// Generate complete artifact informations through inference
-		Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
+		Map<ArtifactDetails , NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
 				.stream().collect(Collectors.toMap(entry -> entry.getKey(), Throwing.function(
 						entry -> generateAllStatusesFrom(entry.getKey(), entry.getValue(), currentArtifacts))));
 		// Create one artifacts.json per month
-		var aggregatedStatuses = aggregateStatusesPerDate(artifactsStatuses);
-		// Write them into git history
-		aggregatedStatuses.entrySet().stream()
-				.forEach(Throwing.consumer(entry1 -> writeArtifactListAtDate(git, entry1.getKey(), entry1.getValue())));
-	}
-
-	private void writeArtifactListAtDate(Git git, LocalDate date, SortedSet<ArtifactDetails> value) throws IOException,
-			AbortedByHookException, ConcurrentRefUpdateException, NoHeadException, NoMessageException,
-			ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException, GitAPIException {
-		// First, write the artifact in its own folder
-		File datedFilePath = getDatedFilePath(artifactsLists, date,
-				"artifacts");
-		logger.info(String.format("Writing %d artifacts of %s into %s",
-				value.size(), Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), datedFilePath));
-		FileUtils.write(datedFilePath, gson.toJson(value), "UTF-8");
-		File artifacts = new File(
-				new File(gitHistory.toFile(), "mvnrepository"),
-				"artifacts.json");
-		FileUtils.copyFile(datedFilePath, artifacts);
-		// Then create a commit in the history repository
-		ZoneId systemZoneId = ZoneId.systemDefault();
-		Instant commitInstant = date.atStartOfDay(systemZoneId).toInstant();
-		PersonIdent commiter = new PersonIdent("🤖 MvnRepository History Builder",
-				"get_mvnrepository_infos.yaml@history", commitInstant, systemZoneId);
-		git.add().addFilepattern("resources/mvnrepository/artifacts.json").call();
-		git.commit().setAuthor(commiter).setCommitter(commiter).setAll(true)
-//	    		.setOnly("mvnrepository/artifacts.json")
-//	    		.setAllowEmpty(false)
-				.setMessage(String.format("Historical artifacts of %s, %d artifacts known at this date",
-						Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()))
-				.call();
+		SortedMap<LocalDate, File> aggregatedStatuses = aggregateStatusesPerDate(artifactsStatuses);
+		return aggregatedStatuses;
 	}
 
 	/**
@@ -164,8 +119,8 @@ class HistoryBuilder {
 	 * @throws IOException
 	 * @throws JsonSyntaxException
 	 */
-	private Map<LocalDate, SortedSet<ArtifactDetails>> aggregateStatusesPerDate(
-			Map<ArtifactInformations, NavigableMap<LocalDate, File>> artifactsStatuses)
+	private SortedMap<LocalDate, File> aggregateStatusesPerDate(
+			Map<ArtifactDetails, NavigableMap<LocalDate, File>> artifactsStatuses)
 			throws JsonSyntaxException, IOException {
 		// We directly take values, because they should all already be first of month
 		// ones
@@ -176,17 +131,29 @@ class HistoryBuilder {
 				if (!artifactLists.containsKey(key)) {
 					artifactLists.put(key, new TreeSet<>());
 				}
-				artifactLists.get(key).add(gson
+				artifactLists.get(key).add(FileHelper.gson
 						.fromJson(FileUtils.readFileToString(entry.getValue(), "UTF-8"), ArtifactDetails.class));
 			}
 		}
-		return artifactLists;
+		// Now write all those artifact lists to files
+		SortedMap<LocalDate, File> datesToFiles = artifactLists.entrySet().stream()
+			.map(Throwing.function(entry -> {
+				// First, write the artifact in its own folder
+				File datedFilePath = getDatedFilePath(artifactsLists, entry.getKey(),
+						"artifacts");
+				logger.info(String.format("Writing %d artifacts of %s into %s",
+						entry.getValue().size(), Formats.MVN_DATE_FORMAT_WITH_DAY.format(entry.getKey()), datedFilePath));
+				FileUtils.write(datedFilePath, FileHelper.gson.toJson(entry.getValue()), "UTF-8");
+				return Map.entry(entry.getKey(), datedFilePath);
+			}))
+			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> a, () -> new TreeMap<LocalDate, File>()));
+		return datesToFiles;
 	}
 
-	private void copyHistoryFromLastToFirst(ArtifactInformations key, List<ArtifactDetails> allArtifactInformations,
+	private void copyHistoryFromLastToFirst(ArtifactDetails key, List<ArtifactDetails> allArtifactInformations,
 			NavigableMap<LocalDate, File> value) {
 		Optional<ArtifactDetails> associatedArtifactDetail = allArtifactInformations.stream()
-				.filter(artifact -> artifact.coordinates.equals(key.toCoordinates())).findFirst();
+				.filter(artifact -> artifact.getCoordinates().equals(key.getCoordinates())).findFirst();
 		if (associatedArtifactDetail.isPresent()) {
 			copyHistoryFromLastToFirst(key, associatedArtifactDetail.get(), value);
 		} else {
@@ -203,7 +170,7 @@ class HistoryBuilder {
 	 * @param artifact
 	 * @param capturesHistory
 	 */
-	private void copyHistoryFromLastToFirst(ArtifactInformations artifact, ArtifactDetails details,
+	private void copyHistoryFromLastToFirst(ArtifactDetails artifact, ArtifactDetails details,
 			NavigableMap<LocalDate, File> capturesHistory) {
 		ArtifactDetails newDetails = null;
 		capturesHistory.forEach((date, file) -> copyDatesInto(details, date, file));
@@ -215,12 +182,12 @@ class HistoryBuilder {
 	 */
 	private void copyDatesInto(ArtifactDetails details, LocalDate date, File file) {
 		try {
-			ArtifactDetails oldDetails = gson
+			ArtifactDetails oldDetails = FileHelper.gson
 					.fromJson(FileUtils.readFileToString(file, "UTF-8"), ArtifactDetails.class);
 			Optional<ArtifactDetails> changedDetailsOptiona = oldDetails.copyDatesFrom(details);
 			if (changedDetailsOptiona.isPresent()) {
 				ArtifactDetails changedDetails = changedDetailsOptiona.get();
-				FileUtils.write(file, gson.toJson(changedDetails), "UTF-8");
+				FileUtils.write(file, FileHelper.gson.toJson(changedDetails), "UTF-8");
 				oldDetails = changedDetails;
 			}
 		} catch (IOException e) {
@@ -240,11 +207,11 @@ class HistoryBuilder {
 	 * @throws IOException
 	 * @throws JsonSyntaxException
 	 */
-	public NavigableMap<LocalDate, File> generateAllStatusesFrom(ArtifactInformations artifact,
+	public NavigableMap<LocalDate, File> generateAllStatusesFrom(ArtifactDetails artifact,
 			NavigableMap<LocalDate, File> knownHistory, Collection<ArtifactDetails> currentArtifacts)
 			throws JsonSyntaxException, IOException {
 		logger
-				.info(String.format("generating all statuses for %s", artifact.toCoordinates()));
+				.info(String.format("generating all statuses for %s", artifact.getCoordinates()));
 		NavigableMap<LocalDate, File> returned = new TreeMap<LocalDate, File>();
 		LocalDate now = LocalDate.now();
 		LocalDate currentMonth = LocalDate.of(now.getYear(), now.getMonthValue(), 1);
@@ -259,11 +226,11 @@ class HistoryBuilder {
 		return returned;
 	}
 
-	private Optional<File> generateStatusFor(LocalDate currentMonth, ArtifactInformations artifact,
+	private Optional<File> generateStatusFor(LocalDate currentMonth, ArtifactDetails artifact,
 			NavigableMap<LocalDate, File> knownHistory, Collection<ArtifactDetails> currentArtifacts)
 			throws JsonSyntaxException, IOException {
 		File output = getDatedFilePath(statuses, currentMonth,
-				artifact.toCoordinates());
+				artifact.getCoordinates());
 		if (output.exists())
 			return Optional.of(output);
 		Entry<LocalDate, File> fileSnapshotBefore = knownHistory.floorEntry(currentMonth);
@@ -271,12 +238,12 @@ class HistoryBuilder {
 		ArtifactDetails dataBefore = null;
 		ArtifactDetails dataAfter = null;
 		Optional<ArtifactDetails> currentData = currentArtifacts.stream()
-				.filter(a -> a.coordinates.equals(artifact.toCoordinates())).findFirst();
+				.filter(a -> a.getCoordinates().equals(artifact.getCoordinates())).findFirst();
 		if (currentData.isEmpty())
 			return Optional.empty();
 		if (fileSnapshotBefore != null) {
 			if (fileSnapshotBefore.getKey().compareTo(currentMonth) < 0) {
-				dataBefore = gson.fromJson(
+				dataBefore = FileHelper.gson.fromJson(
 						FileUtils.readFileToString(fileSnapshotBefore.getValue(), "UTF-8"), ArtifactDetails.class);
 			} else {
 				fileSnapshotBefore = null;
@@ -287,7 +254,7 @@ class HistoryBuilder {
 			dateAfter = currentMonth;
 			dataAfter = currentData.get();
 		} else {
-			dataAfter = gson
+			dataAfter = FileHelper.gson
 					.fromJson(FileUtils.readFileToString(fileSnapshotAfter.getValue(), "UTF-8"), ArtifactDetails.class);
 			dateAfter = fileSnapshotAfter.getKey();
 		}
@@ -300,7 +267,7 @@ class HistoryBuilder {
 					: dataAfter.inferDataPoint(currentData.get(), dateAfter, currentMonth, fileSnapshotBefore.getKey(),
 							dataBefore);
 			// Now we have an artifact, write it to disk
-			FileUtils.write(output, gson.toJson(currentMonthData), "UTF-8");
+			FileUtils.write(output, FileHelper.gson.toJson(currentMonthData), "UTF-8");
 			return Optional.of(output);
 		}
 		return Optional.empty();
@@ -317,7 +284,7 @@ class HistoryBuilder {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	private NavigableMap<LocalDate, File> cacheHistoryOf(BrowserContext context, ArtifactInformations artifact)
+	private NavigableMap<LocalDate, File> cacheHistoryOf(BrowserContext context, ArtifactDetails artifact)
 			throws IOException, InterruptedException, URISyntaxException {
 		var history = getArtifactHistoryOnCDX(artifact);
 		return history.stream().map(archivePoint -> obtainArchivePointFor(artifact, archivePoint, context))
@@ -326,10 +293,10 @@ class HistoryBuilder {
 						() -> new TreeMap<>()));
 	}
 
-	private Entry<LocalDateTime, File> obtainArchivePointFor(ArtifactInformations artifact, ArchivePoint archivePoint,
+	private Entry<LocalDateTime, File> obtainArchivePointFor(ArtifactDetails artifact, ArchivePoint archivePoint,
 			BrowserContext context) {
 		File destination = getDatedFilePath(captures,
-				archivePoint.timestamp().toLocalDate(), artifact.toCoordinates());
+				archivePoint.timestamp().toLocalDate(), artifact.getCoordinates());
 		if (destination.exists()) {
 			if (destination.length() < 200) {
 				logger
@@ -341,12 +308,12 @@ class HistoryBuilder {
 		}
 		var url = String.format("https://web.archive.org/web/%s/%s",
 				Formats.INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp()),
-				artifact.getArtifactUrl(mvnRepositoryServer));
+				ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
 		try (Page page = newPage.apply(context)) {
 
 			var details = addDetails.apply(page, url);
 			details.ifPresent(Throwing.consumer(map -> {
-				var json = gson.toJson(map);
+				var json = FileHelper.gson.toJson(map);
 				FileUtils.write(destination, json, "UTF-8");
 			}));
 			return Map.entry(archivePoint.timestamp(), destination);
@@ -357,24 +324,23 @@ class HistoryBuilder {
 		return null;
 	}
 
-	private File getDatedFilePath(File containerDir, LocalDate timestamp, String name) {
+	public File getDatedFilePath(File containerDir, LocalDate timestamp, String name) {
 		return FileUtils.getFile(containerDir, timestamp.getYear() + "", timestamp.getMonthValue() + "",
 				timestamp.getDayOfMonth() + "", name + ".json");
 	}
-
-	private List<ArchivePoint> getArtifactHistoryOnCDX(ArtifactInformations artifact)
+	private List<ArchivePoint> getArtifactHistoryOnCDX(ArtifactDetails artifact)
 			throws IOException, InterruptedException, URISyntaxException {
-		File cache = new File(indices, artifact.toCoordinates() + ".json");
+		File cache = new File(indices, artifact.getCoordinates() + ".json");
 		String url = String.format("http://web.archive.org/cdx/search/cdx" + "?filter=statuscode:200" // We take only
 																										// valid
 																										// archive.org
 																										// captures
 				+ "&output=json" + "&collapse=timestamp:6" // We look at the month scale
-				+ "&url=%s", artifact.getArtifactUrl(mvnRepositoryServer));
+				+ "&url=%s", ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
 		if (!cache.exists()) {
 			// Run request
 			try {
-				HttpResponse<String> response = client.send(HttpRequest.newBuilder(new URI(url)).build(),
+				HttpResponse<String> response = InterestingArtifactsDetailsDownloader.client.send(HttpRequest.newBuilder(new URI(url)).build(),
 						BodyHandlers.ofString());
 				if (response.statusCode() < 300) {
 					String text = response.body();
@@ -390,7 +356,7 @@ class HistoryBuilder {
 			}
 		}
 		String text = FileUtils.readFileToString(cache, "UTF-8");
-		return gson.fromJson(text, new TypeToken<List<List<String>>>() {
+		return FileHelper.gson.fromJson(text, new TypeToken<List<List<String>>>() {
 		}).stream().filter(row -> !row.get(0).equals("urlkey"))
 				.map(Throwing.function(row -> new ArchivePoint(row.get(0),
 						LocalDateTime.parse(row.get(1), Formats.INTERNET_ARCHIVE_DATE_FORMAT), row.get(2), row.get(5),
