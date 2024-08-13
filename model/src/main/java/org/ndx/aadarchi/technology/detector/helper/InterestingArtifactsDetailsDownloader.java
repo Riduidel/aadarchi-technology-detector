@@ -26,12 +26,12 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 				.setPrettyPrinting()
 				.create();
 
-	protected static List<ArtifactDetails> readFromFile(File file) throws IOException {
+	public static List<ArtifactDetails> readFromFile(File file) throws IOException {
 		return gson.fromJson(FileUtils.readFileToString(file, "UTF-8"),
 				new TypeToken<List<ArtifactDetails>>() {});
 	}
 
-	protected static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
+	public static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
 		logger.info("Exporting artifacts to " + file.getAbsolutePath());
 		FileUtils.write(file, gson.toJson(allDetails), "UTF-8");
 		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));

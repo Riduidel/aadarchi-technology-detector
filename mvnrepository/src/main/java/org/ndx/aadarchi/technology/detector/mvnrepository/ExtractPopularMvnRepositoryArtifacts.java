@@ -1,5 +1,6 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
@@ -16,16 +17,12 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.github.fge.lambdas.Throwing;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
@@ -47,9 +44,6 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
     		defaultValue = "../../FrameworkBenchmarks/frameworks")
     private Path techEmpowerFrameworks;
-    @Option(names = {"--searched-artifacts-cache"}, description = "List of already searched artifacts", 
-    		defaultValue = "cached_artifacts.json")
-    private Path cachedArtifacts;
     @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
     		defaultValue = "https://mvnrepository.com") String mvnRepositoryServer;
 
@@ -93,9 +87,9 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	@Override
 	protected Collection<ArtifactDetails> searchInterestingArtifacts(MvnContext context) {
 		List<ArtifactDetails> allArtifactInformations = null;
-		if(cachedArtifacts.toFile().exists()) {
+		if(getCachedArtifactsPath().toFile().exists()) {
 			try {
-				allArtifactInformations = readFromFile(cachedArtifacts.toFile());
+				allArtifactInformations = readFromFile(getCachedArtifactsPath().toFile());
 			} catch(IOException e) {
 				throw new RuntimeException("Unable to read from cache", e);
 			}
@@ -108,7 +102,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 							new TechEmpowerArtifactLoader(techEmpowerFrameworks)
 									));
 			try {
-			writeToFile(allArtifactInformations, cachedArtifacts.toFile());
+			writeToFile(allArtifactInformations, getCachedArtifactsPath().toFile());
 			} catch(IOException e) {
 				throw new RuntimeException("Unable to write into cache", e);
 			}
@@ -116,7 +110,11 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 		return allArtifactInformations;
 	}
     
-    private List<ArtifactDetails> findRelocated(Map artifactInformations) {
+    private Path getCachedArtifactsPath() {
+		return new File( cache.toFile(), "cached_artifacts.json").toPath();
+	}
+
+	private List<ArtifactDetails> findRelocated(Map artifactInformations) {
     	if(artifactInformations.containsKey("relocation")) {
     		Map relocation = (Map) artifactInformations.get("relocation");
     		Map<String, String> page = (Map<String, String>) relocation.get("page");

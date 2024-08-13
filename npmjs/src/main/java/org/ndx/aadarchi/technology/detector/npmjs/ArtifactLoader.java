@@ -3,6 +3,7 @@ package org.ndx.aadarchi.technology.detector.npmjs;
 import java.io.File;
 import java.util.List;
 
+import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 public interface ArtifactLoader {
@@ -13,9 +14,9 @@ public interface ArtifactLoader {
 			cachedArtifacts.delete();
 		}
 		if(!cachedArtifacts.exists()) {
-			ExtractPopularNpmjsArtifacts.writeToFile(doLoadArtifacts(), cachedArtifacts);
+			InterestingArtifactsDetailsDownloader.writeToFile(doLoadArtifacts(), cachedArtifacts);
 		}
-		return ExtractPopularNpmjsArtifacts.readFromFile(cachedArtifacts);
+		return InterestingArtifactsDetailsDownloader.readFromFile(cachedArtifacts);
 	}
 
 	public List<ArtifactDetails> doLoadArtifacts() throws Exception;
