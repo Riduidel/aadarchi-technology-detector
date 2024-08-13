@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.IOUtils;
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
@@ -76,9 +77,9 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 					gitHistory, 
 					cache, 
 					output, 
-					InterestingArtifactsDetailsDownloader.gson, 
-					this::newPage, this::addDetails)
-			.generateHistoryFor(mvnContext.context, allArtifactInformations);
+					this::newPage, 
+					this::addDetails)
+			.generateHistoryFor(mvnContext, allArtifactInformations);
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -89,7 +90,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 		List<ArtifactDetails> allArtifactInformations = null;
 		if(getCachedArtifactsPath().toFile().exists()) {
 			try {
-				allArtifactInformations = readFromFile(getCachedArtifactsPath().toFile());
+				allArtifactInformations = FileHelper.readFromFile(getCachedArtifactsPath().toFile());
 			} catch(IOException e) {
 				throw new RuntimeException("Unable to read from cache", e);
 			}
@@ -102,7 +103,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 							new TechEmpowerArtifactLoader(techEmpowerFrameworks)
 									));
 			try {
-			writeToFile(allArtifactInformations, getCachedArtifactsPath().toFile());
+			FileHelper.writeToFile(allArtifactInformations, getCachedArtifactsPath().toFile());
 			} catch(IOException e) {
 				throw new RuntimeException("Unable to write into cache", e);
 			}

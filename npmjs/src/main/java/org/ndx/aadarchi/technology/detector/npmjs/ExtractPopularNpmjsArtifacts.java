@@ -1,7 +1,6 @@
 package org.ndx.aadarchi.technology.detector.npmjs;
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
@@ -14,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -35,7 +35,6 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	 * @see https://github.com/npm/registry/blob/main/docs/download-counts.md
 	 */
 	private static final String DOWNLOADS_LAST_MONTH = "https://api.npmjs.org/downloads/point/%s/%s";
-	HttpClient client = HttpClient.newHttpClient();
 	private Set<ArtifactDetails> fetchArtifactInformations(
 			List<ArtifactLoader> sources) {
 		return sources.stream()
@@ -72,12 +71,8 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	@Override
 	protected void generateHistoryOf(NoContext context, Collection<ArtifactDetails> allDetails) {
 		try {
-			new HistoryBuilder(gitHistory, 
-					cache, 
-					Throwing.biFunction(this::getAllDownloadsForPeriod), 
-					Throwing.function(ExtractPopularNpmjsArtifacts::readFromFile), 
-					Throwing.biConsumer(ExtractPopularNpmjsArtifacts::writeToFile))
-			.generateHistoryFor(allDetails);
+			new HistoryBuilder(gitHistory, cache)
+				.generateHistoryFor(context, allDetails);
 		} catch(IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -97,7 +92,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	 * @return list of artifacts having at least one download on this period
 	 * @throws IOException
 	 */
-	private Collection<ArtifactDetails> getAllDownloadsForPeriod(Collection<ArtifactDetails> artifactsToQuery, String period) throws IOException {
+	static Collection<ArtifactDetails> getAllDownloadsForPeriod(Collection<ArtifactDetails> artifactsToQuery, String period) throws IOException {
 		// Now get download count for last month
     	return artifactsToQuery.stream()
     		// Do not use parallel, cause the download count api is quite cautious on load and will fast put an hauld on our queries
@@ -123,7 +118,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
      * @throws InterruptedException 
      * @throws IOException 
      */
-	private ArtifactDetails countDownloadsOf(ArtifactDetails artifact, String period) throws IOException, InterruptedException {
+	private static ArtifactDetails countDownloadsOf(ArtifactDetails artifact, String period) throws IOException, InterruptedException {
 		logger.info(String.format("Getting downloads counts of %s for period %s", 
 				artifact.getName(), period));
 		int status = 1000;
@@ -133,14 +128,14 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 			try {
 				HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 				status = response.statusCode();
-				DownloadCount jsonResponse = gson.fromJson(response.body(), new TypeToken<DownloadCount>() {});
+				DownloadCount jsonResponse = FileHelper.gson.fromJson(response.body(), new TypeToken<DownloadCount>() {});
 				return ArtifactDetailsBuilder.toBuilder(artifact)
 				.downloads(jsonResponse.downloads)
 				.build();
 			} catch(Exception e) {
 				logger.log(Level.WARNING, "Seems like we were hit by an error. Let's wait some time and retry latter ...");
-				synchronized(this) {
-					this.wait(5*60*1000);
+				synchronized(artifact) {
+					artifact.wait(5*60*1000);
 				}
 			}
 		} while(status>=400);

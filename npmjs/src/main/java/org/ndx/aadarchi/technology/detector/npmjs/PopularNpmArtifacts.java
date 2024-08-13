@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
@@ -58,7 +58,7 @@ public class PopularNpmArtifacts implements ArtifactLoader {
 	List<ArtifactDetails> doLoadArtifactsFrom(String url) throws IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder(URI.create(url)).build();
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-		PopularNpmArtifacts.NpmJsResponse jsonResponse = InterestingArtifactsDetailsDownloader.gson.fromJson(response.body(), new TypeToken<PopularNpmArtifacts.NpmJsResponse>() {});
+		PopularNpmArtifacts.NpmJsResponse jsonResponse = FileHelper.gson.fromJson(response.body(), new TypeToken<PopularNpmArtifacts.NpmJsResponse>() {});
 		List<ArtifactDetails> returned = jsonResponse.objects.stream()
 				.map(a -> a.artifact)
 				.collect(Collectors.toList());

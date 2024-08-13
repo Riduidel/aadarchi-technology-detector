@@ -1,19 +1,13 @@
 package org.ndx.aadarchi.technology.detector.helper;
 
-import java.io.File;
 import java.io.IOException;
+import java.net.http.HttpClient;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import picocli.CommandLine.Option;
 
@@ -22,21 +16,7 @@ import picocli.CommandLine.Option;
  */
 public abstract class InterestingArtifactsDetailsDownloader<Context extends ExtractionContext> implements Callable<Integer>{
 	public static final Logger logger = Logger.getLogger(InterestingArtifactsDetailsDownloader.class.getName());
-	public static Gson gson = new GsonBuilder()
-				.setPrettyPrinting()
-				.create();
-
-	public static List<ArtifactDetails> readFromFile(File file) throws IOException {
-		return gson.fromJson(FileUtils.readFileToString(file, "UTF-8"),
-				new TypeToken<List<ArtifactDetails>>() {});
-	}
-
-	public static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
-		logger.info("Exporting artifacts to " + file.getAbsolutePath());
-		FileUtils.write(file, gson.toJson(allDetails), "UTF-8");
-		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));
-	}
-
+	public static HttpClient client = HttpClient.newHttpClient();
 	@Option(names = { "--generate-history" }, description = "Generate an history branch with commits for each month")
 	public boolean generateHistory;
 	@Option(names = {
@@ -57,7 +37,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		} else {
 	    	Collection<ArtifactDetails> artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
 	    	try {
-				writeToFile(artifactDetails, output.toFile());
+				FileHelper.writeToFile(artifactDetails, output.toFile());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}

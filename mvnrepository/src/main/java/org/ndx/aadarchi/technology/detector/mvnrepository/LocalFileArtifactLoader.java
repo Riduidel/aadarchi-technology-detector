@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
@@ -33,7 +34,7 @@ public class LocalFileArtifactLoader extends ArtifactLoader {
 	public Set<ArtifactDetails> loadArtifacts(Page page) throws IOException {
 		// Read the reference file
 		var text = FileUtils.readFileToString(referenceFile.toFile(), "UTF-8");
-		List<Map<String, String>> entries = this.extractPopularMvnRepositoryArtifacts.gson.fromJson(text, List.class);
+		List<Map<String, String>> entries = FileHelper.gson.fromJson(text, List.class);
 		Set<ArtifactDetails> returned = new HashSet<ArtifactDetails>();
 		entries.forEach(artifact -> returned.addAll(getArtifactInformations(page, artifact)));
 		return returned;
