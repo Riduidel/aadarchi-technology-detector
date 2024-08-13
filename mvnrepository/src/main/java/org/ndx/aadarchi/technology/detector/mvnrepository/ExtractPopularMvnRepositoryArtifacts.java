@@ -70,19 +70,14 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 		return (Collection<ArtifactDetails>) obtainAllDetails(mvnContext.context, allArtifactInformations);
 	}
 
-    @Override
-	protected void generateHistoryOf(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
-		try {
-			new HistoryBuilder(mvnRepositoryServer, 
-					gitHistory, 
-					cache, 
-					output, 
-					this::newPage, 
-					this::addDetails)
-			.generateHistoryFor(mvnContext, allArtifactInformations);
-		} catch(IOException e) {
-			throw new RuntimeException(e);
-		}
+	@Override
+	protected HistoryBuilder createHistoryBuilder() {
+		return new HistoryBuilder(mvnRepositoryServer, 
+				gitHistory, 
+				cache, 
+				output, 
+				this::newPage, 
+				this::addDetails);
 	}
 
 	@Override

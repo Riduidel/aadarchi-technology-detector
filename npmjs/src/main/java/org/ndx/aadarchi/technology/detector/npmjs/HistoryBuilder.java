@@ -35,13 +35,6 @@ class HistoryBuilder extends BaseHistoryBuilder<NoContext> {
 			    	new File(new File(gitHistory.toFile(), "npmjs"), "artifacts.json"));
 		}
 
-		public static DateTimeFormatter DATE_FORMAT_WITH_DAY =
-				new DateTimeFormatterBuilder()
-					.appendPattern("MMM dd, yyyy")
-					.parseCaseInsensitive()
-					.toFormatter(Locale.ENGLISH)
-					;
-
 		private File getDatedFilePath(File containerDir,
 				LocalDate timestamp) {
 			return FileUtils.getFile(containerDir, 

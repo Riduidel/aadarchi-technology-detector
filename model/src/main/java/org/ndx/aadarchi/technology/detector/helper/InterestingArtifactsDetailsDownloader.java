@@ -46,7 +46,17 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 
 	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts);
 
-	protected abstract void generateHistoryOf(Context context, Collection<ArtifactDetails> interestingArtifacts);
+	protected void generateHistoryOf(Context context, Collection<ArtifactDetails> artifacts) {
+		try {
+			createHistoryBuilder()
+				.generateHistoryFor(context, artifacts);
+		} catch(IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+	protected abstract BaseHistoryBuilder<Context> createHistoryBuilder();
 
 	/**
 	 * Produces a list of interesting artifacts for this ecosystem.

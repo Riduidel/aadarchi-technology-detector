@@ -69,13 +69,8 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	}
 
 	@Override
-	protected void generateHistoryOf(NoContext context, Collection<ArtifactDetails> allDetails) {
-		try {
-			new HistoryBuilder(gitHistory, cache)
-				.generateHistoryFor(context, allDetails);
-		} catch(IOException e) {
-			throw new RuntimeException(e);
-		}
+	protected HistoryBuilder createHistoryBuilder() {
+		return new HistoryBuilder(gitHistory, cache);
 	}
 
 	public Set<ArtifactDetails> searchInterestingArtifacts(NoContext context) {
