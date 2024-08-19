@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -9,17 +7,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.IOUtils;
-import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
+import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
@@ -28,11 +24,7 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Response;
-import com.microsoft.playwright.options.WaitUntilState;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -42,14 +34,12 @@ import picocli.CommandLine.Option;
 class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDownloader<MvnContext> implements Callable<Integer> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularMvnRepositoryArtifacts.class.getName());
 	
-    @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
-    		defaultValue = "../../FrameworkBenchmarks/frameworks")
-    private Path techEmpowerFrameworks;
+    @Option(names = {"--local-artifacts"}, description = "A list of locally defined artifacts of interest.\n"
+    		+ "This typically allows us to add frameworks of interests that cannot be found otherwise", 
+    		defaultValue = "local_artifacts.json")
+    private Path localInterestingArtifacts;
     @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
     		defaultValue = "https://mvnrepository.com") String mvnRepositoryServer;
-
-	private String artifactDetailsExtractor;
-
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
@@ -65,49 +55,9 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
         return 0;
     }
 
-    @Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
-		return (Collection<ArtifactDetails>) obtainAllDetails(mvnContext.context, allArtifactInformations);
-	}
-
 	@Override
 	protected HistoryBuilder createHistoryBuilder() {
-		return new HistoryBuilder(mvnRepositoryServer, 
-				gitHistory, 
-				cache, 
-				output, 
-				this::newPage, 
-				this::addDetails);
-	}
-
-	@Override
-	protected Collection<ArtifactDetails> searchInterestingArtifacts(MvnContext context) {
-		List<ArtifactDetails> allArtifactInformations = null;
-		if(getCachedArtifactsPath().toFile().exists()) {
-			try {
-				allArtifactInformations = FileHelper.readFromFile(getCachedArtifactsPath().toFile());
-			} catch(IOException e) {
-				throw new RuntimeException("Unable to read from cache", e);
-			}
-		} else {
-			// Get the loaders
-			allArtifactInformations = fetchArtifactInformations(context.context, 
-					Arrays.asList(
-//	        					new LocalFileArtifactLoader(localInterestingArtifacts),
-							new PopularArtifactLoader(this),
-							new TechEmpowerArtifactLoader(techEmpowerFrameworks)
-									));
-			try {
-			FileHelper.writeToFile(allArtifactInformations, getCachedArtifactsPath().toFile());
-			} catch(IOException e) {
-				throw new RuntimeException("Unable to write into cache", e);
-			}
-		}
-		return allArtifactInformations;
-	}
-    
-    private Path getCachedArtifactsPath() {
-		return new File( cache.toFile(), "cached_artifacts.json").toPath();
+		return new HistoryBuilder(mvnRepositoryServer, gitHistory, getCache(), output);
 	}
 
 	private List<ArtifactDetails> findRelocated(Map artifactInformations) {
@@ -126,29 +76,30 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     	}
     }
 
-	private Collection<ArtifactDetails> obtainAllDetails(BrowserContext context,
+
+    @Override
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
+		return (Collection<ArtifactDetails>) obtainAllDetails(mvnContext, allArtifactInformations);
+	}
+
+    private Collection<ArtifactDetails> obtainAllDetails(MvnContext context,
 			Collection<ArtifactDetails> allArtifactInformations) {
 		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()
 				.flatMap(artifactInformations -> {
-					Page page = newPage(context);
-					try {
-						Optional<Map> details = addDetails(page, ArtifactDetailsUtils.getArtifactUrl(artifactInformations, mvnRepositoryServer));
-						details.stream()
-							.forEach(d -> {
-								try {
-									ArtifactDetails updated = ArtifactDetailsBuilder.toBuilder(artifactInformations).build();
-									BeanUtils.populate(updated, d);
-									resolvedArtifacts.put(artifactInformations, updated);
-								} catch(InvocationTargetException | IllegalAccessException e) {
-									throw new RuntimeException(e);
-								}
-							});
-						return details.stream();
-					} finally {
-						page.close();
-					}
+					Optional<Map> details = context.addDetails(ArtifactDetailsUtils.getArtifactUrl(artifactInformations, mvnRepositoryServer));
+					details.stream()
+						.forEach(d -> {
+							try {
+								ArtifactDetails updated = ArtifactDetailsBuilder.toBuilder(artifactInformations).build();
+								BeanUtils.populate(updated, d);
+								resolvedArtifacts.put(artifactInformations, updated);
+							} catch(InvocationTargetException | IllegalAccessException e) {
+								throw new RuntimeException(e);
+							}
+						});
+					return details.stream();
 				})
 				// Now we're extracted details, let's do some complementary filtering
 				.filter(informationsMap -> informationsMap.containsKey("repositories") ? ((List) informationsMap.get("repositories")).contains("Central") : false)
@@ -160,46 +111,13 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	}
 
 	private List<ArtifactDetails> fetchArtifactInformations(
-			BrowserContext context, List<ArtifactLoader> sources) {
+			MvnContext context, List<ArtifactLoader<MvnContext>> sources) {
 		return sources.stream()
-			.map(Throwing.function(source -> this.loadArtifacts(context, source)))
+			.map(Throwing.function(source -> source.loadArtifacts(context)))
 			.flatMap(artifactInformationsSet -> artifactInformationsSet.stream())
 			.peek(artifactInformations -> logger.info(String.format("found artifact %s", artifactInformations)))
 			.sorted()
 			.collect(Collectors.toList());
-	}
-
-	private Set<ArtifactDetails> loadArtifacts(BrowserContext context, ArtifactLoader source) throws IOException {
-		Page page = newPage(context);
-		try {
-			return source.loadArtifacts(page);
-		} finally {
-			page.close();
-		}
-	}
-
-	private Optional<Map> addDetails(Page page,
-			String url) {
-		Response response = page.navigate(url, new NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
-		Map pageInfos = null;
-		if(response!=null && response.status()<300) {
-			logger.info(String.format("Reading details of %s", url));
-			pageInfos = ((Map) page.evaluate(getArtifactDetailsExtractor()));
-		} else {
-			logger.warning(String.format("Failed to load %s, status is %s", url, response.status()));
-		}
-		return Optional.ofNullable(pageInfos);
-	}
-
-	private String getArtifactDetailsExtractor() {
-		if(artifactDetailsExtractor==null) {
-			try {
-				artifactDetailsExtractor = IOUtils.toString(ArtifactLoader.class.getClassLoader().getResourceAsStream("artifact_details_extractor.js"), "UTF-8");
-			} catch (IOException e) {
-				throw new UnsupportedOperationException("can't read file");
-			}
-		}
-		return artifactDetailsExtractor;
 	}
 
 	private BrowserContext createPlaywrightContext(Playwright playwright) {
@@ -217,24 +135,19 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     	context.setDefaultTimeout(0);
     	return context;
 	}
+	
+	@Override
+	public Path getCache() {
+		return super.getCache().toAbsolutePath().resolve("mvnrepository");
+	}
 
-
-	/**
-	 * Creates a correctly configured page
-	 * @param context
-	 * @return
-	 */
-	private Page newPage(BrowserContext context) {
-		Page created = context.newPage();
-		created.onConsoleMessage(message -> {
-			Level level = switch(message.type()) {
-			case "debug" -> Level.FINE;
-			case "warning" -> Level.WARNING;
-			case "error" -> Level.SEVERE;
-			default -> Level.INFO;
-			};
-			logger.logp(level, "Playwright", message.location(), () -> message.text());
-		});
-		return created;
+	@Override
+	protected Collection<ArtifactLoader<? super MvnContext>> getArtifactLoaderCollection(MvnContext context) {
+		return Arrays.asList(
+		new LocalFileArtifactLoader(getCache(), localInterestingArtifacts, mvnRepositoryServer),
+		new PopularArtifactLoader(getCache(), mvnRepositoryServer),
+		new JavaTechEmpowerArtifactLoader(getCache(),
+				techEmpowerFrameworks)
+		);
 	}
 }

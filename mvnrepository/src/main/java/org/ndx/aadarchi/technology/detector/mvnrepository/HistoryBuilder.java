@@ -57,19 +57,13 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 
 	private final String mvnRepositoryServer;
 
-	private Function<BrowserContext, Page> newPage;
-
-	private BiFunction<Page, String, Optional<Map>> addDetails;
-
-	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output, Function<BrowserContext, Page> newPage, BiFunction<Page, String, Optional<Map>> addDetails) {
+	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output) {
 		super(gitHistory, cache, 
 				"🤖 MvnRepository History Builder",
 				"get_mvnrepository_infos.yaml@history", 
 				new File(new File(gitHistory.toFile(), "mvnrepository"), "artifacts.json"));
 		this.output = output;
 		this.mvnRepositoryServer = mvnRepositoryServer;
-		this.newPage = newPage;
-		this.addDetails = addDetails;
 
 		artifactsLists = new File(cache.toFile(), "artifacts");
 		captures = new File(cache.toFile(), "captures");
@@ -84,7 +78,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 		// First thing first, fill our cache with all remote infos we can have
 		Map<ArtifactDetails, NavigableMap<LocalDate, File>> artifactsCaptures = allArtifactInformations.stream()
 				.collect(Collectors.toMap(Function.identity(),
-						Throwing.function(artifact -> cacheHistoryOf(context.context, artifact)),
+						Throwing.function(artifact -> cacheHistoryOf(context, artifact)),
 						(firstMap, secondMap) -> firstMap));
 		// Print some statistics
 		logger.info("Processed artifacts\n" + artifactsCaptures.entrySet().stream()
@@ -284,7 +278,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
-	private NavigableMap<LocalDate, File> cacheHistoryOf(BrowserContext context, ArtifactDetails artifact)
+	private NavigableMap<LocalDate, File> cacheHistoryOf(MvnContext context, ArtifactDetails artifact)
 			throws IOException, InterruptedException, URISyntaxException {
 		var history = getArtifactHistoryOnCDX(artifact);
 		return history.stream().map(archivePoint -> obtainArchivePointFor(artifact, archivePoint, context))
@@ -294,7 +288,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 	}
 
 	private Entry<LocalDateTime, File> obtainArchivePointFor(ArtifactDetails artifact, ArchivePoint archivePoint,
-			BrowserContext context) {
+			MvnContext context) {
 		File destination = getDatedFilePath(captures,
 				archivePoint.timestamp().toLocalDate(), artifact.getCoordinates());
 		if (destination.exists()) {
@@ -309,19 +303,12 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 		var url = String.format("https://web.archive.org/web/%s/%s",
 				Formats.INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp()),
 				ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
-		try (Page page = newPage.apply(context)) {
-
-			var details = addDetails.apply(page, url);
-			details.ifPresent(Throwing.consumer(map -> {
-				var json = FileHelper.gson.toJson(map);
-				FileUtils.write(destination, json, "UTF-8");
-			}));
-			return Map.entry(archivePoint.timestamp(), destination);
-		} catch (PlaywrightException e) {
-			logger.log(Level.WARNING,
-					String.format("Unable to add cache entry %s due to %s", archivePoint, e.getMessage()));
-		}
-		return null;
+		var details = context.addDetails(url);
+		details.ifPresent(Throwing.consumer(map -> {
+			var json = FileHelper.gson.toJson(map);
+			FileUtils.write(destination, json, "UTF-8");
+		}));
+		return Map.entry(archivePoint.timestamp(), destination);
 	}
 
 	public File getDatedFilePath(File containerDir, LocalDate timestamp, String name) {

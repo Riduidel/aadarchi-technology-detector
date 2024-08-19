@@ -8,10 +8,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -20,7 +22,7 @@ import com.github.fge.lambdas.Throwing;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-public class PopularNpmArtifacts implements ArtifactLoader {
+public class PopularNpmArtifacts implements ArtifactLoader<NoContext> {
 	public static final List<String> POPULAR_ARTIFACTS_PAGES = 
 			IntStream.of(0, 251, 501, 751)
 			.mapToObj(index -> String.format("https://registry.npmjs.com/-/v1/search?text=not:unstable&popularity=1.0&from=%d&size=250", index))
@@ -48,7 +50,7 @@ public class PopularNpmArtifacts implements ArtifactLoader {
 	}
 
 	@Override
-	public List<ArtifactDetails> doLoadArtifacts() throws IOException, InterruptedException {
+	public Collection<ArtifactDetails> doLoadArtifacts(NoContext context) throws Exception {
 		return POPULAR_ARTIFACTS_PAGES.stream()
 			.map(Throwing.function(this::doLoadArtifactsFrom))
 			.flatMap(List::stream)
