@@ -1,33 +1,33 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
-import java.io.IOException;
-import java.util.Set;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Collection;
 
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
-
-import com.microsoft.playwright.Page;
 
 /**
  * Load popular mvnrepository artifacts by browsing the popular pages
  */
-public class PopularArtifactLoader extends ArtifactLoader {
+public class PopularArtifactLoader implements ArtifactLoader<MvnContext> {
 
-	/**
-	 * 
-	 */
-	private final ExtractPopularMvnRepositoryArtifacts extractPopularMvnRepositoryArtifacts;
+	private File cachedArtifacts;
+	private String mvnRepositoryServer;
 
-	/**
-	 * @param extractPopularMvnRepositoryArtifacts
-	 */
-	PopularArtifactLoader(ExtractPopularMvnRepositoryArtifacts extractPopularMvnRepositoryArtifacts) {
-		this.extractPopularMvnRepositoryArtifacts = extractPopularMvnRepositoryArtifacts;
+	PopularArtifactLoader(Path cache, String mvnRepositoryServer) {
+		this.cachedArtifacts = new File(cache.toAbsolutePath().toFile(), "popular_artifacts.json");
+		this.mvnRepositoryServer = mvnRepositoryServer;
 	}
 
 	@Override
-	public Set<ArtifactDetails> loadArtifacts(Page page)
-			throws IOException {
-		return loadPageList(page, String.format("%s/popular", this.extractPopularMvnRepositoryArtifacts.mvnRepositoryServer));
+	public Collection<ArtifactDetails> doLoadArtifacts(MvnContext context) throws Exception {
+		return MvnArtifactLoaderHelper.loadPageList(context.newPage(), String.format("%s/popular", this.mvnRepositoryServer));
+	}
+
+	@Override
+	public File getCachedArtifactsFile() {
+		return cachedArtifacts;
 	}
 	
 }

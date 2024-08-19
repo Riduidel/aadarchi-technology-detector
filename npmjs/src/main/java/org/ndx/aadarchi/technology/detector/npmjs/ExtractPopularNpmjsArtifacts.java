@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;

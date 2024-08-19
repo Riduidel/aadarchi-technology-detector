@@ -7,24 +7,26 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.IOUtils;
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.Page;
 
-public abstract class ArtifactLoader {
+/**
+ * An helper class allowing artifact loaders to navigate the mvnrepository site to get correct informations
+ */
+public class MvnArtifactLoaderHelper {
 	private static String artifactsUrlExtractor;
 	
 	static {
 		try {
-			artifactsUrlExtractor = IOUtils.toString(ArtifactLoader.class.getClassLoader().getResourceAsStream("artifacts_urls_extractor.js"), "UTF-8");
+			artifactsUrlExtractor = IOUtils.toString(MvnArtifactLoaderHelper.class.getClassLoader().getResourceAsStream("artifacts_urls_extractor.js"), "UTF-8");
 		} catch (IOException e) {
 			throw new UnsupportedOperationException(String.format("Unable to load script from %s", 
 					ArtifactDetails.class.getClassLoader().getResource("artifacts_urls_extractor.js")), e);
 		}
 	}
-
-	public abstract Set<ArtifactDetails> loadArtifacts(Page page) throws IOException;
 
 	protected static Set<ArtifactDetails> loadPageList(Page page, String url) {
 		Set<ArtifactDetails> returned = new TreeSet<ArtifactDetails>();

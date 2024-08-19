@@ -8,10 +8,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -48,7 +50,7 @@ public class PopularNpmArtifacts implements ArtifactLoader {
 	}
 
 	@Override
-	public List<ArtifactDetails> doLoadArtifacts() throws IOException, InterruptedException {
+	public Collection<ArtifactDetails> doLoadArtifacts() throws IOException, InterruptedException {
 		return POPULAR_ARTIFACTS_PAGES.stream()
 			.map(Throwing.function(this::doLoadArtifactsFrom))
 			.flatMap(List::stream)

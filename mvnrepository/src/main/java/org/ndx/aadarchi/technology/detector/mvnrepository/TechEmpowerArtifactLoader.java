@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -15,23 +16,27 @@ import java.util.stream.Stream;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.helper.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.Page;
 
-public class TechEmpowerArtifactLoader extends ArtifactLoader {
+public class TechEmpowerArtifactLoader implements ArtifactLoader<ExtractionContext> {
 
 	private Path techEmpowerFrameworks;
 	MavenXpp3Reader reader = new MavenXpp3Reader();
+	private File cachedArtifacts;
 	
-	public TechEmpowerArtifactLoader(Path techEmpowerFrameworks) {
+	public TechEmpowerArtifactLoader(Path techEmpowerFrameworks, Path cache) {
 		this.techEmpowerFrameworks = techEmpowerFrameworks;
+		cachedArtifacts = new File(cache.toAbsolutePath().toFile(), "techempower_artifacts.json");
 	}
 
+
 	@Override
-	public Set<ArtifactDetails> loadArtifacts(Page page)
-			throws IOException {
+	public Collection<ArtifactDetails> doLoadArtifacts(ExtractionContext context) throws Exception {
 		// TODO Auto-generated method stub
 		File[] children = techEmpowerFrameworks.toFile().listFiles();
 		if(children.length==0) {
@@ -85,5 +90,10 @@ public class TechEmpowerArtifactLoader extends ArtifactLoader {
 		Set<ArtifactDetails> returned = new TreeSet<>();
 		ExtractPopularMvnRepositoryArtifacts.logger.severe("TODO implement handling of Gradle projects");
 		return returned;
+	}
+
+	@Override
+	public File getCachedArtifactsFile() {
+		return cachedArtifacts;
 	}
 }

@@ -216,7 +216,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	public Artifact toArtifact() {
 		String[] split = coordinates.split(":");
-		return new FakeArtifact(split[0], split[1]);
+		return new FakeArtifact(split[0], split.length>1 ? split[1] : null);
 	}
 
 	public String getCoordinates() {

@@ -20,8 +20,8 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	@Option(names = { "--generate-history" }, description = "Generate an history branch with commits for each month")
 	public boolean generateHistory;
 	@Option(names = {
-			"--cache-folder" }, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", defaultValue = "../.cache/npmjs")
-	protected Path cache;
+			"--cache-folder" }, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", defaultValue = "../.cache")
+	private Path cache;
 	@Option(names = {
 			"--git-folder" }, description = "The output folder where data will be written", defaultValue = "../history")
 	protected Path gitHistory;
@@ -65,4 +65,8 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * @return a list of **incomplete** ArtifactDetails (level of completion depends upon the implementation
 	 */
 	protected abstract Collection<ArtifactDetails> searchInterestingArtifacts(Context context);
+
+	public Path getCache() {
+		return cache;
+	}
 }
