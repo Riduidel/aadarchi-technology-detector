@@ -22,7 +22,7 @@ import com.github.fge.lambdas.Throwing;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-public class PopularNpmArtifacts implements ArtifactLoader {
+public class PopularNpmArtifacts implements ArtifactLoader<NoContext> {
 	public static final List<String> POPULAR_ARTIFACTS_PAGES = 
 			IntStream.of(0, 251, 501, 751)
 			.mapToObj(index -> String.format("https://registry.npmjs.com/-/v1/search?text=not:unstable&popularity=1.0&from=%d&size=250", index))
@@ -50,7 +50,7 @@ public class PopularNpmArtifacts implements ArtifactLoader {
 	}
 
 	@Override
-	public Collection<ArtifactDetails> doLoadArtifacts() throws IOException, InterruptedException {
+	public Collection<ArtifactDetails> doLoadArtifacts(NoContext context) throws Exception {
 		return POPULAR_ARTIFACTS_PAGES.stream()
 			.map(Throwing.function(this::doLoadArtifactsFrom))
 			.flatMap(List::stream)

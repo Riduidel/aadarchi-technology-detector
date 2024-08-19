@@ -28,7 +28,7 @@ public class LocalFileArtifactLoader implements ArtifactLoader<MvnContext> {
 	private String mvnRepositoryServer;
 	private File cachedArtifacts;
 
-	public LocalFileArtifactLoader(Path file, Path cache, String mvnRepositoryServer) {
+	public LocalFileArtifactLoader(Path cache, Path file, String mvnRepositoryServer) {
 		this.referenceFile = file;
 		this.cachedArtifacts = new File( cache.toAbsolutePath().toFile(), "local_artifacts.json");
 		this.mvnRepositoryServer = mvnRepositoryServer;

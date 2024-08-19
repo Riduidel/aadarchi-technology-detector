@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -28,6 +29,9 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	@Option(names = { "-o",
 			"--output" }, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
 	protected Path output;
+	@Option(names = {
+			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone", defaultValue = "../../FrameworkBenchmarks/frameworks")
+	protected Path techEmpowerFrameworks;
 
 	protected void doCall(Context context) {
 		Collection<ArtifactDetails> interestingArtifacts = searchInterestingArtifacts(context);
@@ -64,7 +68,19 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * @param context TODO
 	 * @return a list of **incomplete** ArtifactDetails (level of completion depends upon the implementation
 	 */
-	protected abstract Collection<ArtifactDetails> searchInterestingArtifacts(Context context);
+	protected Collection<ArtifactDetails> searchInterestingArtifacts(Context context) {
+		ArtifactLoaderCollection<Context> loader = new ArtifactLoaderCollection<>(
+				getCache(),
+				getArtifactLoaderCollection(context)
+				);
+		try {
+			return loader.loadArtifacts(context);
+		} catch(Exception e) {
+			throw new RuntimeException("Unable to write into cache", e);
+		}
+	}
+
+	protected abstract Collection<ArtifactLoader<? super Context>> getArtifactLoaderCollection(Context context);
 
 	public Path getCache() {
 		return cache;

@@ -22,6 +22,13 @@ import org.jilt.Builder;
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	
+	private static Comparator<String> nullSafeStringComparator = Comparator
+	        .nullsFirst(String::compareToIgnoreCase); 
+
+	private static final Comparator<ArtifactDetails> COMPARATOR_BY_COORDINATES_THEN_NAME =
+			Comparator
+	        .comparing(ArtifactDetails::getCoordinates, nullSafeStringComparator)
+	        .thenComparing(ArtifactDetails::getName, nullSafeStringComparator);
 	
 	public static ArtifactDetails toArtifactDetails(Map values) {
 		return null;
@@ -177,7 +184,8 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	@Override
 	public int compareTo(ArtifactDetails o) {
-		return coordinates.compareTo(o.coordinates);
+		return COMPARATOR_BY_COORDINATES_THEN_NAME
+			.compare(this, o);
 	}
 
 	/**

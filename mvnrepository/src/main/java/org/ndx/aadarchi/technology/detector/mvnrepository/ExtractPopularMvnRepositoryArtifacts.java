@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -9,17 +7,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.io.IOUtils;
 import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
-import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
+import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
@@ -28,11 +24,7 @@ import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Browser.NewContextOptions;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.Response;
-import com.microsoft.playwright.options.WaitUntilState;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -46,9 +38,6 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     		+ "This typically allows us to add frameworks of interests that cannot be found otherwise", 
     		defaultValue = "local_artifacts.json")
     private Path localInterestingArtifacts;
-    @Option(names = {"--techempower-frameworks-local-clone"}, description = "The techempower frameworks local clone", 
-    		defaultValue = "../../FrameworkBenchmarks/frameworks")
-    private Path techEmpowerFrameworks;
     @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
     		defaultValue = "https://mvnrepository.com") String mvnRepositoryServer;
 
@@ -69,24 +58,6 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	@Override
 	protected HistoryBuilder createHistoryBuilder() {
 		return new HistoryBuilder(mvnRepositoryServer, gitHistory, getCache(), output);
-	}
-
-	@Override
-	protected Collection<ArtifactDetails> searchInterestingArtifacts(MvnContext context) {
-		CompositeArtifactLoader loader = new CompositeArtifactLoader(
-				getCache(),
-				new LocalFileArtifactLoader(localInterestingArtifacts, getCache(), mvnRepositoryServer),
-				new PopularArtifactLoader(getCache(), mvnRepositoryServer),
-				new TechEmpowerArtifactLoader(techEmpowerFrameworks,
-						// This is a small hack to avoid techempower JS frameworks from polluting Java code
-						getCache().toAbsolutePath().resolve("mvnrepository"))
-				);
-		List<ArtifactDetails> allArtifactInformations = null;
-		try {
-			return loader.loadArtifacts(context);
-		} catch(Exception e) {
-			throw new RuntimeException("Unable to write into cache", e);
-		}
 	}
 
 	private List<ArtifactDetails> findRelocated(Map artifactInformations) {
@@ -168,5 +139,15 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	@Override
 	public Path getCache() {
 		return super.getCache().toAbsolutePath().resolve("mvnrepository");
+	}
+
+	@Override
+	protected Collection<ArtifactLoader<? super MvnContext>> getArtifactLoaderCollection(MvnContext context) {
+		return Arrays.asList(
+		new LocalFileArtifactLoader(getCache(), localInterestingArtifacts, mvnRepositoryServer),
+		new PopularArtifactLoader(getCache(), mvnRepositoryServer),
+		new JavaTechEmpowerArtifactLoader(getCache(),
+				techEmpowerFrameworks)
+		);
 	}
 }

@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.helper.ArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.helper.NoContext;
@@ -36,15 +38,6 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	 * @see https://github.com/npm/registry/blob/main/docs/download-counts.md
 	 */
 	private static final String DOWNLOADS_LAST_MONTH = "https://api.npmjs.org/downloads/point/%s/%s";
-	private Set<ArtifactDetails> fetchArtifactInformations(
-			List<ArtifactLoader> sources) {
-		return sources.stream()
-			.map(Throwing.function(source -> source.loadArtifacts()))
-			.flatMap(artifactInformationsSet -> artifactInformationsSet.stream())
-			.peek(artifactInformations -> logger.info(String.format("found artifact %s", artifactInformations)))
-			.sorted(Comparator.comparing(ArtifactDetails::getName))
-			.collect(Collectors.toSet());
-	}
 
 	public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularNpmjsArtifacts()).execute(args);
@@ -71,14 +64,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 
 	@Override
 	protected HistoryBuilder createHistoryBuilder() {
-		return new HistoryBuilder(gitHistory, cache);
-	}
-
-	public Set<ArtifactDetails> searchInterestingArtifacts(NoContext context) {
-		return fetchArtifactInformations(Arrays.asList(
-    			// Way to much complicated
-//    			new CodebaseShowArtifacts(),
-    			new PopularNpmArtifacts(cache, client)));
+		return new HistoryBuilder(gitHistory, getCache());
 	}
 
     /**
@@ -136,5 +122,20 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 			}
 		} while(status>=400);
 		return artifact;
+	}
+	
+	@Override
+	public Path getCache() {
+		return super.getCache().toAbsolutePath().resolve("npmjs");
+	}
+
+	@Override
+	protected Collection<ArtifactLoader<? super NoContext>> getArtifactLoaderCollection(NoContext context) {
+		return Arrays.asList( 
+    			// Way to much complicated
+//    			new CodebaseShowArtifacts(),
+				new JavascriptTechEmpowerArtifacts(getCache(), techEmpowerFrameworks),
+    			new PopularNpmArtifacts(getCache(), client)
+    			);
 	}
 }
