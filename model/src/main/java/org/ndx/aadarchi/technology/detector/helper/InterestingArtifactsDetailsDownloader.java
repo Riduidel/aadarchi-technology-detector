@@ -69,15 +69,19 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * @return a list of **incomplete** ArtifactDetails (level of completion depends upon the implementation
 	 */
 	protected Collection<ArtifactDetails> searchInterestingArtifacts(Context context) {
-		ArtifactLoaderCollection<Context> loader = new ArtifactLoaderCollection<>(
-				getCache(),
-				getArtifactLoaderCollection(context)
-				);
+		ArtifactLoaderCollection<Context> loader = createArtifactLoaderCollection(context);
 		try {
 			return loader.loadArtifacts(context);
 		} catch(Exception e) {
 			throw new RuntimeException("Unable to write into cache", e);
 		}
+	}
+
+	protected ArtifactLoaderCollection<Context> createArtifactLoaderCollection(Context context) {
+		return new ArtifactLoaderCollection<Context>(
+				getCache(),
+				getArtifactLoaderCollection(context)
+				);
 	}
 
 	protected abstract Collection<ArtifactLoader<? super Context>> getArtifactLoaderCollection(Context context);
