@@ -1,8 +1,5 @@
-name: npmjs
+name: pypi
 on:
-  push:
-#    branches:
-#      - feat/35_copy_paste_to_npm_read
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:
@@ -15,7 +12,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  read_npmjs:
+  read_pypi:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     permissions:
@@ -59,7 +56,7 @@ jobs:
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
-            -Dartifact=org.ndx.aadarchi.technology-detector:npmjs:$VERSION:jar:jar-with-dependencies \
+            -Dartifact=org.ndx.aadarchi.technology-detector:pypi:$VERSION:jar:jar-with-dependencies \
             -DoutputDirectory=. \
             -DstripClassifier=true \
             -DstripVersion=true
