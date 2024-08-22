@@ -345,12 +345,12 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 				+ (licenses != null ? "licenses=" + licenses + ", " : "")
 				+ (categories != null ? "categories=" + categories + ", " : "")
 				+ (tags != null ? "tags=" + tags + ", " : "") 
-				+ (downloads ==0 ? "" : "downloads=" + downloads + ",")
-				+ (ranking==0 ? "" : ", ranking=" + ranking+ ",")
-				+ (users ==0 ? "" : ", users=" + users + ",")
-				+ (previousUsers ==0 ? "" : ", previousUsers=" + previousUsers + ",")
-				+ (interpolatedUsers==0 ? "" : ", interpolatedUsers=" + interpolatedUsers+ ",")
-				+ (infered ? "infered=" + infered + ", " : "" )
+				+ (downloads==null || downloads ==0 ? "" : "downloads=" + downloads + ",")
+				+ (ranking==null || ranking==0 ? "" : ", ranking=" + ranking+ ",")
+				+ (users==null || users ==0 ? "" : ", users=" + users + ",")
+				+ (previousUsers==null || previousUsers ==0 ? "" : ", previousUsers=" + previousUsers + ",")
+				+ (interpolatedUsers==null || interpolatedUsers==0 ? "" : ", interpolatedUsers=" + interpolatedUsers+ ",")
+				+ (infered==null || infered ? "infered=" + infered + ", " : "" )
 				+ (repositories != null ? "repositories=" + repositories + ", " : "")
 				+ (versions != null ? "versions=" + versions : "") + "]";
 	}
