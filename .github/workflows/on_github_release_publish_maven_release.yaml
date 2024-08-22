@@ -33,9 +33,9 @@ jobs:
         env:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Also push binaries to release
-        uses: alexellis/upload-assets@0.4.0
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          asset_paths: '["./mvnrepository/target/mvnrepository*jar-with-dependencies.jar", "./npmjs/target/npmjs*jar-with-dependencies.jar"]'
+#      - name: Also push binaries to release
+#        uses: alexellis/upload-assets@0.4.0
+#        env:
+#          GITHUB_TOKEN: ${{ github.token }}
+#        with:
+#          asset_paths: '["./mvnrepository/target/mvnrepository*jar-with-dependencies.jar", "./npmjs/target/npmjs*jar-with-dependencies.jar"]'
