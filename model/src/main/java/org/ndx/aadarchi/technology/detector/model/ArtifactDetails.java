@@ -56,12 +56,12 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			List<String> licenses,
 			List<String> categories, 
 			List<String> tags, 
-			long downloads,
-			int ranking, 
-			int users, 
-			int previousUsers,
-			int interpolatedUsers, 
-			boolean infered, 
+			Long downloads,
+			Integer ranking, 
+			Integer users, 
+			Integer previousUsers,
+			Integer interpolatedUsers, 
+			Boolean infered, 
 			List<String> repositories, 
 			Map<String, VersionDetails> versions) {
 		super();
@@ -273,7 +273,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.tags = tags;
 	}
 
-	public long getDownloads() {
+	public Long getDownloads() {
 		return downloads;
 	}
 
@@ -281,7 +281,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.downloads = downloads;
 	}
 
-	public int getRanking() {
+	public Integer getRanking() {
 		return ranking;
 	}
 
@@ -289,7 +289,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.ranking = ranking;
 	}
 
-	public int getPreviousUsers() {
+	public Integer getPreviousUsers() {
 		return previousUsers;
 	}
 
@@ -297,15 +297,15 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.previousUsers = previousUsers;
 	}
 
-	public int getInterpolatedUsers() {
+	public Integer getInterpolatedUsers() {
 		return interpolatedUsers;
 	}
 
 	public void setInterpolatedUsers(int interpolatedUsers) {
 		this.interpolatedUsers = interpolatedUsers;
 	}
-
-	public boolean isInfered() {
+	
+	public Boolean isInfered() {
 		return infered;
 	}
 
@@ -329,7 +329,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.versions = versions;
 	}
 
-	public int getUsers() {
+	public Integer getUsers() {
 		return users;
 	}
 
