@@ -1,6 +1,7 @@
 package org.ndx.aadarchi.technology.detector.helper;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.Collection;
 
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -19,7 +20,19 @@ public interface ArtifactLoader<Context extends ExtractionContext> {
 	}
 
 	public default boolean isCachedArtifactsObsolete(File cachedArtifacts) {
-		return cachedArtifacts.lastModified()<System.currentTimeMillis()-(1000*60*60*24);
+		return cachedArtifacts.lastModified()<System.currentTimeMillis()-getCacheDelayInSeconds()*1000;
+	}
+
+	/**
+	 * The caching delay for the result of this artifact loader
+	 * @return default value is one day
+	 */
+	public default long getCacheDelayInSeconds() {
+		return getCacheDelay().toSeconds();
+	}
+
+	public default Duration getCacheDelay() {
+		return Duration.ofDays(1);
 	}
 
 	public Collection<ArtifactDetails> doLoadArtifacts(Context context) throws Exception;

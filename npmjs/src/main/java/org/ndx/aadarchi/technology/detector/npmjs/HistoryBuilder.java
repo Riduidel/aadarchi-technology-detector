@@ -29,10 +29,9 @@ class HistoryBuilder extends BaseHistoryBuilder<NoContext> {
 	static final Logger logger = Logger.getLogger(HistoryBuilder.class.getName());
 
 		HistoryBuilder(Path gitHistory, Path cache) {
-			super(gitHistory, cache, 
-			    	"🤖 Npmjs History Builder",
-					"get_npmjs_infos.yaml@history", 
-			    	new File(new File(gitHistory.toFile(), "npmjs"), "artifacts.json"));
+			super(cache, "🤖 Npmjs History Builder", 
+			    	"get_npmjs_infos.yaml@history",
+					"npmjs");
 		}
 
 		private File getDatedFilePath(File containerDir,

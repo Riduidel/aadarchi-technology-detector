@@ -16,19 +16,19 @@ import com.google.gson.reflect.TypeToken;
 public class FileHelper {
 	public static final Logger logger = Logger.getLogger(FileHelper.class.getName());
 
+	public static Gson gson = new GsonBuilder()
+			.setPrettyPrinting()
+			.create();
+	
 	public static List<ArtifactDetails> readFromFile(File file) throws IOException {
 		return gson.fromJson(FileUtils.readFileToString(file, "UTF-8"),
 				new TypeToken<List<ArtifactDetails>>() {});
 	}
 
 	public static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
-		logger.info("Exporting artifacts to " + file.getAbsolutePath());
+		logger.fine("Exporting artifacts to " + file.getAbsolutePath());
 		FileUtils.write(file, gson.toJson(allDetails), "UTF-8");
 		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));
 	}
-
-	public static Gson gson = new GsonBuilder()
-	.setPrettyPrinting()
-	.create();
 
 }
