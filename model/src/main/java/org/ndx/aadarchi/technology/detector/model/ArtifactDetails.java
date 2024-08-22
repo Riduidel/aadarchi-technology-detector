@@ -30,22 +30,20 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	        .comparing(ArtifactDetails::getCoordinates, nullSafeStringComparator)
 	        .thenComparing(ArtifactDetails::getName, nullSafeStringComparator);
 	
-	public static ArtifactDetails toArtifactDetails(Map values) {
-		return null;
-	}
-	
 	private String coordinates;
 	private String name;
 	private String description;
 	private List<String> licenses;
 	private List<String> categories;
 	private List<String> tags;
-	private long downloads;
-	private int ranking;
-	private int users;
-	private int previousUsers;
-	private int interpolatedUsers;
-	private boolean infered;
+	// We use object types because Gson won't serialize them when they're null
+	// i.e. when they have not be set in any fashion
+	private Long downloads;
+	private Integer ranking;
+	private Integer users;
+	private Integer previousUsers;
+	private Integer interpolatedUsers;
+	private Boolean infered;
 	private List<String> repositories;
 	private Map<String, VersionDetails> versions;
 	
@@ -337,5 +335,23 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	public void setUsers(int users) {
 		this.users = users;
+	}
+
+	@Override
+	public String toString() {
+		return "ArtifactDetails [" + (coordinates != null ? "coordinates=" + coordinates + ", " : "")
+				+ (name != null ? "name=" + name + ", " : "")
+				+ (description != null ? "description=" + description + ", " : "")
+				+ (licenses != null ? "licenses=" + licenses + ", " : "")
+				+ (categories != null ? "categories=" + categories + ", " : "")
+				+ (tags != null ? "tags=" + tags + ", " : "") 
+				+ (downloads ==0 ? "" : "downloads=" + downloads + ",")
+				+ (ranking==0 ? "" : ", ranking=" + ranking+ ",")
+				+ (users ==0 ? "" : ", users=" + users + ",")
+				+ (previousUsers ==0 ? "" : ", previousUsers=" + previousUsers + ",")
+				+ (interpolatedUsers==0 ? "" : ", interpolatedUsers=" + interpolatedUsers+ ",")
+				+ (infered ? "infered=" + infered + ", " : "" )
+				+ (repositories != null ? "repositories=" + repositories + ", " : "")
+				+ (versions != null ? "versions=" + versions : "") + "]";
 	}
 }

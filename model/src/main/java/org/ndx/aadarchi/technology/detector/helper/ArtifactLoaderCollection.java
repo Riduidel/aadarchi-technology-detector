@@ -13,19 +13,18 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import com.github.fge.lambdas.Throwing;
 
-public class ArtifactLoaderCollection<Context extends ExtractionContext> implements ArtifactLoader<Context> {
+public class ArtifactLoaderCollection<Context extends ExtractionContext> extends BasicArtifactLoader<Context> {
 
 	private List<ArtifactLoader<? super Context>> artifactLoaders;
-	private File cachedArtifacts;
 
 	public ArtifactLoaderCollection(Path cache, 
 			ArtifactLoader<? super Context>...artifactLoaders) {
-		this.cachedArtifacts = new File(cache.toAbsolutePath().toFile(), "all_artifacts.json");
+		registerCachedArtifacts(cache, "all_artifacts.json");
 		this.artifactLoaders = Arrays.asList(artifactLoaders);
 	}
 
 	public ArtifactLoaderCollection(Path cache, Collection<ArtifactLoader<? super Context>> artifactLoaderCollection) {
-		this.cachedArtifacts = new File(cache.toAbsolutePath().toFile(), "all_artifacts.json");
+		registerCachedArtifacts(cache, "all_artifacts.json");
 		this.artifactLoaders = new ArrayList<>(artifactLoaderCollection);
 	}
 
@@ -34,11 +33,6 @@ public class ArtifactLoaderCollection<Context extends ExtractionContext> impleme
 		return artifactLoaders.stream()
 				.flatMap(Throwing.function(loader -> loader.loadArtifacts(context).stream()))
 				.collect(Collectors.toCollection(() -> new TreeSet<ArtifactDetails>()));
-	}
-
-	@Override
-	public File getCachedArtifactsFile() {
-		return cachedArtifacts;
 	}
 
 }

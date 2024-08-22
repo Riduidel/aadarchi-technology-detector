@@ -1,18 +1,15 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.artifact.Artifact;
-import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.helper.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
@@ -22,15 +19,14 @@ import com.microsoft.playwright.Page;
 /**
  * Load interesting artifacts from a local file
  */
-public class LocalFileArtifactLoader implements ArtifactLoader<MvnContext> {
+public class LocalFileArtifactLoader extends BasicArtifactLoader<MvnContext> {
 	public static final Logger logger = Logger.getLogger(LocalFileArtifactLoader.class.getName());
 	private Path referenceFile;
 	private String mvnRepositoryServer;
-	private File cachedArtifacts;
 
 	public LocalFileArtifactLoader(Path cache, Path file, String mvnRepositoryServer) {
 		this.referenceFile = file;
-		this.cachedArtifacts = new File( cache.toAbsolutePath().toFile(), "local_artifacts.json");
+		registerCachedArtifacts(cache, "local_artifacts.json");
 		this.mvnRepositoryServer = mvnRepositoryServer;
 	}
 
@@ -65,10 +61,5 @@ public class LocalFileArtifactLoader implements ArtifactLoader<MvnContext> {
 		}
 		return returned;
 
-	}
-
-	@Override
-	public File getCachedArtifactsFile() {
-		return cachedArtifacts;
 	}
 }

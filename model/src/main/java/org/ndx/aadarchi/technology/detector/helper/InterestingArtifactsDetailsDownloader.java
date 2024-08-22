@@ -24,7 +24,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--cache-folder" }, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", defaultValue = "../.cache")
 	private Path cache;
 	@Option(names = {
-			"--git-folder" }, description = "The output folder where data will be written", defaultValue = "../history")
+			"--git-folder" }, description = "The output folder where data will be written")
 	protected Path gitHistory;
 	@Option(names = { "-o",
 			"--output" }, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
@@ -69,15 +69,19 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * @return a list of **incomplete** ArtifactDetails (level of completion depends upon the implementation
 	 */
 	protected Collection<ArtifactDetails> searchInterestingArtifacts(Context context) {
-		ArtifactLoaderCollection<Context> loader = new ArtifactLoaderCollection<>(
-				getCache(),
-				getArtifactLoaderCollection(context)
-				);
+		ArtifactLoaderCollection<Context> loader = createArtifactLoaderCollection(context);
 		try {
 			return loader.loadArtifacts(context);
 		} catch(Exception e) {
 			throw new RuntimeException("Unable to write into cache", e);
 		}
+	}
+
+	protected ArtifactLoaderCollection<Context> createArtifactLoaderCollection(Context context) {
+		return new ArtifactLoaderCollection<Context>(
+				getCache(),
+				getArtifactLoaderCollection(context)
+				);
 	}
 
 	protected abstract Collection<ArtifactLoader<? super Context>> getArtifactLoaderCollection(Context context);

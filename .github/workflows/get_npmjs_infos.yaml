@@ -1,8 +1,5 @@
 name: npmjs
 on:
-  push:
-    branches:
-      - feat/35_copy_paste_to_npm_read
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:

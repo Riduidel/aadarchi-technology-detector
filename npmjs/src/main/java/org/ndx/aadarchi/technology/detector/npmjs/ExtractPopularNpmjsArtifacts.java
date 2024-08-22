@@ -81,7 +81,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 //    		.parallel()
     		.map(Throwing.function(artifact -> countDownloadsOf(artifact, period)))
     		.filter(artifact -> artifact.getDownloads()>0)
-			.sorted(Comparator.comparing(ArtifactDetails::getName))
+			.sorted()
     		.collect(Collectors.toList());
 	}
     
