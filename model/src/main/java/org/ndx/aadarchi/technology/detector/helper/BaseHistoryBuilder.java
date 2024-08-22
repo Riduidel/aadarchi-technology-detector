@@ -16,13 +16,16 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.AbortedByHookException;
 import org.eclipse.jgit.api.errors.ConcurrentRefUpdateException;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.InvalidRemoteException;
 import org.eclipse.jgit.api.errors.NoFilepatternException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.eclipse.jgit.api.errors.NoMessageException;
 import org.eclipse.jgit.api.errors.ServiceUnavailableException;
+import org.eclipse.jgit.api.errors.TransportException;
 import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.PersonIdent;
+import org.eclipse.jgit.transport.URIish;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.Formats;
 
@@ -38,14 +41,17 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	protected final String username;
 	protected final String email;
 	protected final File artifactsFile;
+	private final String artifactsQualifier;
 	
-	public BaseHistoryBuilder(Path gitHistory, Path cache, String username, String email, File artifacts) {
+	public BaseHistoryBuilder(Path cache, String gitUsername, String gitEmail, String artifactQualifierName) {
 		super();
-		this.gitHistory = gitHistory;
 		this.cache = cache;
-		this.username = username;
-		this.email = email;
-		this.artifactsFile=  artifacts;
+		gitHistory = cache.resolve("git-history");
+		logger.warning(String.format("Using %s as git history repo", gitHistory));
+		this.username = gitUsername;
+		this.email = gitEmail;
+		this.artifactsQualifier = artifactQualifierName;
+		this.artifactsFile= new File(gitHistory.toFile(), artifactQualifierName+"/artifacts.json");
 	}
 	
 	protected abstract SortedMap<LocalDate, File> generateAggregatedStatusesMap(Context context,
@@ -65,7 +71,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			.call();
 		git.commit()
 			.setAuthor(commiter)
-			.setCommitter(commiter).setAll(true)
+			.setCommitter(commiter)
 			.setOnly(commitedFile)
 			.setAllowEmpty(false)
 			.setMessage(commitMessage)
@@ -86,9 +92,39 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	}
 
 	protected void writeAggregatedStatusesToGit(Map<LocalDate, File> aggregatedStatuses) throws IOException {
-		Git git = Git.open(gitHistory.toFile());
+		Git git = initializeGitHistory();
 		aggregatedStatuses.entrySet().stream()
 				.forEach(Throwing.consumer(entry1 -> writeArtifactListAtDate(git, entry1.getKey(), entry1.getValue(), artifactsFile)));
+	}
+
+	/**
+	 * Initialize a valid git repository in a branch having a good default name
+	 * @return a git repository ready to accept commits
+	 * @throws IOException
+	 * @throws GitAPIException 
+	 * @throws TransportException 
+	 * @throws InvalidRemoteException 
+	 */
+	private Git initializeGitHistory() {
+		File gitHstoryFile = gitHistory.toFile();
+		File gitFile = new File(gitHstoryFile, ".git");
+		try {
+			if(gitFile.exists() && gitFile.isDirectory()) {
+				return Git.open(gitHstoryFile);
+			} else {
+				Git git = Git.init()
+					.setDirectory(gitHstoryFile)
+					.setInitialBranch("reports_pypi")
+					.call();
+				git.remoteAdd()
+					.setName("origin")
+					.setUri(new URIish("git@github.com:Riduidel/aadarchi-technology-detector.git"))
+					.call();
+				return git;
+			}
+		} catch(Exception e) {
+			throw new RuntimeException("Can't clone or open git repo in "+gitHstoryFile.getAbsolutePath(), e);
+		}
 	}
 
 	/**

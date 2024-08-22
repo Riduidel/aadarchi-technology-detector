@@ -24,7 +24,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--cache-folder" }, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", defaultValue = "../.cache")
 	private Path cache;
 	@Option(names = {
-			"--git-folder" }, description = "The output folder where data will be written", defaultValue = "../history")
+			"--git-folder" }, description = "The output folder where data will be written")
 	protected Path gitHistory;
 	@Option(names = { "-o",
 			"--output" }, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")

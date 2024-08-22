@@ -40,7 +40,7 @@ public class PypiContext implements ExtractionContext {
 	private transient FailsafeExecutor<Object> failsafe;
 	private static final String INFOS = "https://pypi.org/pypi/%s/json";
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
-	private static final String POPULAR = "https://pypi.org/stats/";
+	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
 	public PypiContext(HttpClient client) {
 		this.client = client;
 	}
@@ -172,6 +172,13 @@ public class PypiContext implements ExtractionContext {
 		return artifact;
 	}
 
+	/**
+	 * This initially used https://pypi.org/stats url, which only gives the
+	 * 100 most popular packages, which is wildlyu unsifficient.
+	 * Fortunatly, https://github.com/hugovk/top-pypi-packages provides the
+	 * top-8000 (which I trim to 1000) packages.
+	 * @return
+	 */
 	public Collection<ArtifactDetails> loadPopularArtifacts() {
 		String url = String.format(POPULAR);
 		HttpRequest request = HttpRequest.newBuilder(URI.create(url))
@@ -182,14 +189,15 @@ public class PypiContext implements ExtractionContext {
 			if(response.statusCode()<300) {
 				String text = response.body();
 				Map content = FileHelper.gson.fromJson(text, Map.class);
-				if(content.containsKey("top_packages")) {
-					Map<Object, Object> top = (Map) content.get("top_packages");
-					return top.keySet().stream()
-						.map(Object::toString)
-						.map(name -> ArtifactDetailsBuilder.artifactDetails()
-								.name(name)
-								.build())
-						.collect(Collectors.toList());
+				if(content.containsKey("rows")) {
+					List<Map<String, String>> top = (List<Map<String, String>>) content.get("rows");
+					return top.subList(0, 1000).stream()
+							.filter(map -> map.containsKey("project"))
+							.map(map -> map.get("project"))
+							.map(name -> ArtifactDetailsBuilder.artifactDetails()
+									.name(name)
+									.build())
+							.collect(Collectors.toList());
 				} else {
 					throw new UnsupportedOperationException("Content has changed, there is no more top_packages");
 				}

@@ -26,7 +26,7 @@ public class FileHelper {
 	}
 
 	public static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
-		logger.info("Exporting artifacts to " + file.getAbsolutePath());
+		logger.fine("Exporting artifacts to " + file.getAbsolutePath());
 		FileUtils.write(file, gson.toJson(allDetails), "UTF-8");
 		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));
 	}

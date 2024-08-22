@@ -1,0 +1,32 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="get_packages_downloads_by_month_reduced"><![CDATA[
+#standardSQL
+SELECT
+  file.project,
+  COUNT(*) AS number_of_downloads,
+  DATE_TRUNC(DATE(timestamp), MONTH) AS `month`
+FROM `bigquery-public-data.pypi.file_downloads`
+WHERE
+  file.project in UNNEST(@packagesList)
+  -- Only query the last 6 months of history
+  AND DATE(timestamp)
+    BETWEEN DATE_TRUNC(DATE_SUB(CURRENT_DATE(), INTERVAL 6 MONTH), MONTH)
+    AND CURRENT_DATE()
+GROUP BY file.project, `month`
+ORDER BY `month` DESC
+]]></entry>
+    <entry key="get_packages_downloads_by_month"><![CDATA[
+#standardSQL
+SELECT
+  file.project,
+  COUNT(*) AS number_of_downloads,
+  DATE_TRUNC(DATE(timestamp), MONTH) AS `month`
+FROM `bigquery-public-data.pypi.file_downloads`
+WHERE
+  file.project in UNNEST(@packagesList)
+GROUP BY file.project, `month`
+ORDER BY `month` DESC
+]]></entry>
+
+</properties>

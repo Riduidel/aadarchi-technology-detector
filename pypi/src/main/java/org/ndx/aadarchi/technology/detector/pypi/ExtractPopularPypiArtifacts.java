@@ -16,6 +16,7 @@ import com.github.fge.lambdas.Throwing;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 @Command(name = "ExtractPopularPypiArtifacts", mixinStandardHelpOptions = true, version = "ExtractPopularNpmjsArtifacts 0.1")
 public
@@ -26,6 +27,16 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
         int exitCode = new CommandLine(new ExtractPopularPypiArtifacts()).execute(args);
         System.exit(exitCode);
     }
+
+	@Option(names = {
+	"--query-to-run" }, description = "The bigquery query name (from query.xml) that will be run. BEWARE! It heavily impacts pricing, but will only be run when building history.", 
+			defaultValue = "get_packages_downloads_by_month_reduced")
+	private String queryToRun;
+
+	@Option(names = {
+	"--big-query-project-id" }, description = "The bigquery project which will be used by Google to invoice", 
+			defaultValue = "tendances-tech-et-opportunites")
+	private String bigQueryProjectId;
 
 	@Override
 	public Integer call() throws Exception {
@@ -77,6 +88,6 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	protected BaseHistoryBuilder<PypiContext> createHistoryBuilder() {
-		throw new UnsupportedOperationException("TODO implement #createHistoryBuilder");
+		return new HistoryBuilder(gitHistory, getCache(), bigQueryProjectId, queryToRun);
 	}
 }
