@@ -27,11 +27,13 @@ import com.github.fge.lambdas.Throwing;
 
 class HistoryBuilder extends BaseHistoryBuilder<NoContext> {
 	static final Logger logger = Logger.getLogger(HistoryBuilder.class.getName());
+	private ExtractPopularNpmjsArtifacts downloadCounter;
 
-		HistoryBuilder(Path gitHistory, Path cache) {
+		HistoryBuilder(ExtractPopularNpmjsArtifacts extractPopularNpmjsArtifacts, Path gitHistory, Path cache) {
 			super(cache, "🤖 Npmjs History Builder", 
 			    	"get_npmjs_infos.yaml@history",
 					"npmjs");
+			this.downloadCounter = extractPopularNpmjsArtifacts;
 		}
 
 		private File getDatedFilePath(File containerDir,
@@ -52,7 +54,7 @@ class HistoryBuilder extends BaseHistoryBuilder<NoContext> {
 						format.format(month),
 						format.format(month.withDayOfMonth(month.getMonth().length(month.isLeapYear())))
 						);
-				Collection<ArtifactDetails> atMonth = ExtractPopularNpmjsArtifacts.getAllDownloadsForPeriod(allDetails, monthlySearch);
+				Collection<ArtifactDetails> atMonth = downloadCounter.getAllDownloadsForPeriod(allDetails, monthlySearch);
 		        FileHelper.writeToFile(atMonth, destination);
 
 			}
