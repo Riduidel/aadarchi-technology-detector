@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.ArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.helper.BaseHistoryBuilder;
+import org.ndx.aadarchi.technology.detector.helper.DetailFetchingArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
@@ -57,7 +58,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 	}
 
 	@Override
-	protected Collection<ArtifactLoader<? super PypiContext>> getArtifactLoaderCollection(PypiContext context) {
+	protected Collection<ArtifactLoader<PypiContext>> getArtifactLoaderCollection(PypiContext context) {
 		return Arrays.asList( 
     			// Way to much complicated
 //    			new CodebaseShowArtifacts(),

@@ -46,6 +46,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	private Boolean infered;
 	private List<String> repositories;
 	private Map<String, VersionDetails> versions;
+	private Map<String, String> urls;
 	
 	public ArtifactDetails() {}
 
@@ -63,7 +64,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			Integer interpolatedUsers, 
 			Boolean infered, 
 			List<String> repositories, 
-			Map<String, VersionDetails> versions) {
+			Map<String, VersionDetails> versions, Map<String, String> urls) {
 		super();
 		this.coordinates = coordinates;
 		this.name = name;
@@ -79,6 +80,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.infered = infered;
 		this.repositories = repositories;
 		this.versions = versions;
+		this.urls = urls;
 	}
 
 	/**
@@ -337,6 +339,14 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.users = users;
 	}
 
+	public Map<String, String> getUrls() {
+		return urls;
+	}
+
+	public void setUrls(Map<String, String> urls) {
+		this.urls = urls;
+	}
+
 	@Override
 	public String toString() {
 		return "ArtifactDetails [" + (coordinates != null ? "coordinates=" + coordinates + ", " : "")
@@ -352,6 +362,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 				+ (interpolatedUsers==null || interpolatedUsers==0 ? "" : ", interpolatedUsers=" + interpolatedUsers+ ",")
 				+ (infered==null || infered ? "infered=" + infered + ", " : "" )
 				+ (repositories != null ? "repositories=" + repositories + ", " : "")
-				+ (versions != null ? "versions=" + versions : "") + "]";
+				+ (versions != null ? "versions=" + versions : "") + "]"
+				+ (urls != null ? "urls=" + urls: "") + "]";
 	}
 }

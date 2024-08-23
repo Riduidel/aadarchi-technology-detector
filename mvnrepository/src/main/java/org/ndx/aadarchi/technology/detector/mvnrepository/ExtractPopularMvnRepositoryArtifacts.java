@@ -142,7 +142,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	}
 
 	@Override
-	protected Collection<ArtifactLoader<? super MvnContext>> getArtifactLoaderCollection(MvnContext context) {
+	protected Collection<ArtifactLoader<Context>> getArtifactLoaderCollection(MvnContext context) {
 		return Arrays.asList(
 		new LocalFileArtifactLoader(getCache(), localInterestingArtifacts, mvnRepositoryServer),
 		new PopularArtifactLoader(getCache(), mvnRepositoryServer),
