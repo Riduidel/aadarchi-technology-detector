@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
-public abstract class TechEmpowerArtifactLoader extends BasicArtifactLoader<ExtractionContext> {
+public abstract class TechEmpowerArtifactLoader<Context extends ExtractionContext> extends BasicArtifactLoader<Context> {
 	public static final Logger logger = Logger.getLogger(TechEmpowerArtifactLoader.class.getName());
 
 	private Path techEmpowerFrameworks;
@@ -24,7 +24,7 @@ public abstract class TechEmpowerArtifactLoader extends BasicArtifactLoader<Extr
 	}
 
 	@Override
-	public Collection<ArtifactDetails> doLoadArtifacts(ExtractionContext context) throws Exception {
+	public Collection<ArtifactDetails> doLoadArtifacts(Context context) throws Exception {
 		return locateArtifactsIn(findMatchingFrameworksFolders(techEmpowerFrameworks));
 	}
 

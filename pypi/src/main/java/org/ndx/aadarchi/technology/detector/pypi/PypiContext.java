@@ -11,15 +11,17 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.ndx.aadarchi.technology.detector.helper.ExtractionContext;
+import org.ndx.aadarchi.technology.detector.helper.DetailsFetchingContext;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.model.VersionDetails;
@@ -31,7 +33,7 @@ import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
 
-public class PypiContext implements ExtractionContext {
+public class PypiContext implements DetailsFetchingContext {
 	public static class RateLimitReached extends RuntimeException {
 		
 	}
@@ -45,7 +47,8 @@ public class PypiContext implements ExtractionContext {
 		this.client = client;
 	}
 
-	public ArtifactDetails addDetails(ArtifactDetails source) throws IOException, InterruptedException {
+	@Override
+	public ArtifactDetails addDetails(ArtifactDetails source) throws Exception {
 		if(source.getDescription()==null) {
 			logger.info(String.format("Adding missing details to %s", source));
 			String url = String.format(INFOS, source.getName());
@@ -72,17 +75,17 @@ public class PypiContext implements ExtractionContext {
 			builder = builder
 				.categories((List<String>) info.get("classifiers"))
 				.description((String) info.get("description"));
-			if(info.containsKey("keywords")) {
-				String keywords = (String) info.get("keywords");
-				if(keywords!=null && !keywords.isBlank())
-					builder = builder.tags(Arrays.asList(keywords.split(",")));
-			}
-			if(info.containsKey("license")) {
-				builder.licenses(Arrays.asList((String) info.get("license")));
-			}
+			builder = handleTags(builder, info);
+			builder = handleLicenses(builder, info);
+			builder = handleUrls(builder, info);
 		}
+		builder = handleVersions(content, builder);
+		return builder.build();
+	}
+
+	private ArtifactDetailsBuilder handleVersions(Map content, ArtifactDetailsBuilder builder) {
 		if(content.containsKey("releases")) {
-			Map<String, VersionDetails> versions = new LinkedHashMap<String, VersionDetails>();
+			SortedMap<String, VersionDetails> versions = new TreeMap<String, VersionDetails>();
 			Map releases = (Map) content.get("releases");
 			for(Object key : releases.keySet()) {
 				String version = (String) key;
@@ -101,7 +104,53 @@ public class PypiContext implements ExtractionContext {
 			}
 			builder = builder.versions(versions);
 		}
-		return builder.build();
+		return builder;
+	}
+
+	private ArtifactDetailsBuilder handleTags(ArtifactDetailsBuilder builder, Map info) {
+		if(info.containsKey("keywords")) {
+			String keywords = (String) info.get("keywords");
+			if(keywords!=null && !keywords.isBlank())
+				builder = builder.tags(Arrays.asList(keywords.split(",")));
+		}
+		return builder;
+	}
+
+	private ArtifactDetailsBuilder handleLicenses(ArtifactDetailsBuilder builder, Map info) {
+		if(info.containsKey("license")) {
+			builder = builder.licenses(Arrays.asList((String) info.get("license")));
+		}
+		return builder;
+	}
+
+	private ArtifactDetailsBuilder handleUrls(ArtifactDetailsBuilder builder, Map info) {
+		if(info.containsKey("project_urls")) {
+			Map<String, String> urls = (Map<String, String>) info.get("project_urls");
+			if(urls==null || urls.isEmpty()) {
+				Map<String, String> value = new TreeMap<String, String>();
+				if(info.containsKey("project_url")) {
+					String url = (String) info.get("project_url");
+					value.put(Utils.getDomain(url), url);
+				}
+				if(info.containsKey("package_url")) {
+					String url = (String) info.get("package_url");
+					value.put(Utils.getDomain(url), url);
+				}
+				builder = builder.urls(value);
+			} else {
+				Map<String, String> value = urls.values().stream()
+					.filter(v -> !"UNKNOWN".equals(v))
+					.map(v -> Map.entry(Utils.getDomain(v), v))
+					.collect(Collectors.toMap(
+							Map.Entry<String, String>::getKey, 
+							Map.Entry<String, String>::getValue,
+							(a, b) -> a,
+							() -> new TreeMap<String, String>()));
+				builder = builder
+						.urls(value);
+			}
+		}
+		return builder;
 	}
 
 	public ArtifactDetails countDownloadsOf(ArtifactDetails artifact, String period) {

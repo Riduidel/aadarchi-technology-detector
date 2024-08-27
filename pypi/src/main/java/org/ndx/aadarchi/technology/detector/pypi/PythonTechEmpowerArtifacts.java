@@ -16,7 +16,7 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.github.fge.lambdas.Throwing;
 
-public class PythonTechEmpowerArtifacts extends TechEmpowerArtifactLoader {
+public class PythonTechEmpowerArtifacts extends TechEmpowerArtifactLoader<PypiContext> {
 
 	public PythonTechEmpowerArtifacts(Path cache, Path techEmpowerFrameworks) {
 		super(cache, techEmpowerFrameworks, "Python");

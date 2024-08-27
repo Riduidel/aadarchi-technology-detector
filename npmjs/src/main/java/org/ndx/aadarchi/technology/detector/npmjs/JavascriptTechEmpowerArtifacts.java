@@ -17,7 +17,7 @@ import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
-public class JavascriptTechEmpowerArtifacts extends TechEmpowerArtifactLoader {
+public class JavascriptTechEmpowerArtifacts extends TechEmpowerArtifactLoader<NpmjsContext> {
 
 	public JavascriptTechEmpowerArtifacts(Path cache, Path techEmpowerFrameworks) {
 		super(cache, techEmpowerFrameworks, "JavaScript");
