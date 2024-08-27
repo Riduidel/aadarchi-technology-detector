@@ -182,25 +182,6 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>io.github.kerwin612</groupId>
-                <artifactId>findclass-maven-plugin</artifactId>
-                <version>0.0.2</version>
-                <executions>
-                    <execution>
-                        <id>Find main class</id>
-                        <goals>
-                            <goal>find</goal>
-                        </goals>
-                        <configuration>
-                            <methodKeyMatch>public static void
-								.*\.main\(java.lang.String\[\]\).*</methodKeyMatch>
-                            <firstFound>true</firstFound>
-                            <outputPropertyName>extractor.main.class</outputPropertyName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>com.diffplug.spotless</groupId>
                 <artifactId>spotless-maven-plugin</artifactId>
                 <version>2.43.0</version>
@@ -273,12 +254,57 @@
             <id>Generate extractor jar (unless for the model, that's the reason
 				of the activation property)</id>
             <activation>
+                <property>
+                    <name>packaging</name>
+                    <value>jar</value>
+                </property>
                 <file>
-                    <missing>src/main/java/org/ndx/aadarchi/technology/detector/model/ArtifactDetails.java</missing>
+                    <missing><![CDATA[src/main/java/org/ndx/aadarchi/technology/detector/model/ArtifactDetails.java]]></missing>
                 </file>
             </activation>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>io.github.kerwin612</groupId>
+                        <artifactId>findclass-maven-plugin</artifactId>
+                        <version>0.0.2</version>
+                        <executions>
+                            <execution>
+                                <id>Find main class</id>
+                                <goals>
+                                    <goal>find</goal>
+                                </goals>
+                                <configuration>
+                                    <methodKeyMatch><![CDATA[public static void .*\.main\(java.lang.String\[\]\).*]]></methodKeyMatch>
+                                    <firstFound>true</firstFound>
+                                    <outputPropertyName>extractor.main.class</outputPropertyName>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>There must be a non-empty main class defined</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <phase>prepare-package</phase>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>extractor.main.class</property>
+                                            <message>The extractor main class must not be empty</message>
+                                            <regex>[a-zA-Z\.]+</regex>
+                                            <regexMessage>The extractor main class must be a valid Java class name.</regexMessage>
+                                        </requireProperty>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-assembly-plugin</artifactId>
                         <executions>
