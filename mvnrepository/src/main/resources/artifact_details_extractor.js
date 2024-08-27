@@ -268,7 +268,7 @@ function extract_artifact_details() {
                                 groupId: links[0].text,
                                 artifactId: links[1].text
                             },
-                            "coordinates": links.map(element => element.innerText).join(".")
+                            "coordinates": links.map(element => element.innerText).join(":")
                         }
                     }
                 } else if(element.tagName.toLowerCase()=="style") {
@@ -369,7 +369,7 @@ function extract_artifact_details() {
     var usedCallback = null
     const path = document.location.pathname
     artifact = {}
-    artifact["coordinates"] = path.substring(path.indexOf("/artifact/")+"/artifact/".length).split("/").join(".")
+    artifact["coordinates"] = path.substring(path.indexOf("/artifact/")+"/artifact/".length).split("/").join(":")
     if(document.querySelector("div.content")) {
         analyzedElement = document.querySelector("div.content")
         console.log("Selected MvnRepository 2023")

@@ -20,7 +20,7 @@ import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
-public class JavaTechEmpowerArtifactLoader extends TechEmpowerArtifactLoader {
+public class JavaTechEmpowerArtifactLoader extends TechEmpowerArtifactLoader<MvnContext> {
 	protected MavenXpp3Reader reader = new MavenXpp3Reader();
 
 	public JavaTechEmpowerArtifactLoader(Path cache, Path techEmpowerFrameworks) {
@@ -49,7 +49,8 @@ public class JavaTechEmpowerArtifactLoader extends TechEmpowerArtifactLoader {
 			mavenProject.getModel().getDependencies().stream()
 				.filter(d -> !d.getGroupId().contains("${") && !d.getArtifactId().contains("${"))
 				.map(d -> ArtifactDetailsBuilder.artifactDetails()
-							.coordinates(String.format("%s:%s", d.getGroupId(), d.getArtifactId()))
+							.groupId(d.getGroupId())
+							.artifactId(d.getArtifactId())
 							.build())
 				.peek(a -> logger.info("read artifact "+a))
 				.forEach(a -> returned.add(a));

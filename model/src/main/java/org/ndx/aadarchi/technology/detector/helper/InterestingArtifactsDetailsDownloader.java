@@ -84,7 +84,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 				);
 	}
 
-	protected abstract Collection<ArtifactLoader<? super Context>> getArtifactLoaderCollection(Context context);
+	protected abstract Collection<ArtifactLoader<Context>> getArtifactLoaderCollection(Context context);
 
 	public Path getCache() {
 		return cache;

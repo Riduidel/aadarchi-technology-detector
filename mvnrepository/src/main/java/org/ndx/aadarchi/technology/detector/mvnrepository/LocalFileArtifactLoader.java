@@ -32,13 +32,12 @@ public class LocalFileArtifactLoader extends BasicArtifactLoader<MvnContext> {
 
 	private Collection<ArtifactDetails> getArtifactInformations(Page page, ArtifactDetails artifactFuzzyDetails) {
 		Set<ArtifactDetails> returned = new HashSet<>();
-		Artifact artifact = artifactFuzzyDetails.toArtifact();
-		if(artifact.getGroupId()!=null) {
-			var groupId = artifact.getGroupId();
-			if(artifact.getArtifactId()==null) {
+		if(artifactFuzzyDetails.getGroupId()!=null) {
+			var groupId = artifactFuzzyDetails.getGroupId();
+			if(artifactFuzzyDetails.getArtifactId()==null) {
 				returned.addAll(loadAllArtifactsOfGroup(page, groupId));
 			} else {
-				returned.add(ArtifactDetailsBuilder.artifactDetails().coordinates(String.format("%s:%s", groupId, artifact.getArtifactId())).build());
+				returned.add(artifactFuzzyDetails);
 			}
 		}
 		return returned;

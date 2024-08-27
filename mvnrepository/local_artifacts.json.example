@@ -2,6 +2,6 @@
 	// Each entry will contain a subset of ArtifactDetails informations
 	{
 		// Fetches the whole quarkus group
-		"coordinates": "io.quarkus"
+		"groupId": "io.quarkus"
 	}
 ]
