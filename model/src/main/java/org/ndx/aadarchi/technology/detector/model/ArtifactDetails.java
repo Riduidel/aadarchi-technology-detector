@@ -3,18 +3,17 @@ package org.ndx.aadarchi.technology.detector.model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.DefaultArtifact;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
@@ -27,10 +26,12 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	private static final Comparator<ArtifactDetails> COMPARATOR_BY_COORDINATES_THEN_NAME =
 			Comparator
-	        .comparing(ArtifactDetails::getCoordinates, nullSafeStringComparator)
+	        .comparing(ArtifactDetails::getGroupId, nullSafeStringComparator)
+	        .thenComparing(ArtifactDetails::getArtifactId, nullSafeStringComparator)
 	        .thenComparing(ArtifactDetails::getName, nullSafeStringComparator);
 	
-	private String coordinates;
+	private String groupId;
+	private String artifactId;
 	private String name;
 	private String description;
 	private List<String> licenses;
@@ -45,13 +46,14 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	private Integer interpolatedUsers;
 	private Boolean infered;
 	private List<String> repositories;
-	private Map<String, VersionDetails> versions;
+	private SortedMap<String, VersionDetails> versions;
 	private Map<String, String> urls;
 	
 	public ArtifactDetails() {}
 
 	public ArtifactDetails(
-			String coordinates, 
+			String groupId,
+			String artifactId,
 			String name, 
 			String description, 
 			List<String> licenses,
@@ -64,9 +66,11 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			Integer interpolatedUsers, 
 			Boolean infered, 
 			List<String> repositories, 
-			Map<String, VersionDetails> versions, Map<String, String> urls) {
+			SortedMap<String, VersionDetails> versions,
+			Map<String, String> urls) {
 		super();
-		this.coordinates = coordinates;
+		this.groupId = groupId;
+		this.artifactId = artifactId;
 		this.name = name;
 		this.description = description;
 		this.licenses = licenses;
@@ -116,7 +120,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	 * @param dataBefore the potional (maybe nullable) previous data point
 	 * @return a map of previous versions
 	 */
-	private Map<String, VersionDetails> versionsUpTo(
+	private SortedMap<String, VersionDetails> versionsUpTo(
 			Map<String, VersionDetails> currentVersions, LocalDate thisDate, LocalDate inferredMonth,
 			LocalDate beforeDate, ArtifactDetails dataBefore) {
 		return versions.entrySet().stream()
@@ -196,7 +200,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	 */
 	public Optional<ArtifactDetails> copyDatesFrom(ArtifactDetails details) {
 		Set<String> oldVersions = new LinkedHashSet<>(versions.keySet());
-		Map<String, VersionDetails> updatedVersions = new LinkedHashMap<>();
+		SortedMap<String, VersionDetails> updatedVersions = new TreeMap<>();
 		boolean changed = false;
 		for(String version : oldVersions) {
 			if(details.versions.containsKey(version) && versions.containsKey(version)) {
@@ -220,19 +224,6 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		} else {
 			return Optional.empty();
 		}
-	}
-
-	public Artifact toArtifact() {
-		String[] split = coordinates.split(":");
-		return new FakeArtifact(split[0], split.length>1 ? split[1] : null);
-	}
-
-	public String getCoordinates() {
-		return coordinates;
-	}
-
-	public void setCoordinates(String coordinates) {
-		this.coordinates = coordinates;
 	}
 
 	public String getName() {
@@ -323,12 +314,16 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.repositories = repositories;
 	}
 
-	public Map<String, VersionDetails> getVersions() {
+	public SortedMap<String, VersionDetails> getVersions() {
 		return versions;
 	}
 
 	public void setVersions(Map<String, VersionDetails> versions) {
-		this.versions = versions;
+		this.versions = new TreeMap<>(versions);
+	}
+
+	public void setVersions(SortedMap<String, VersionDetails> versions) {
+		this.versions = new TreeMap<>(versions);
 	}
 
 	public Integer getUsers() {
@@ -349,7 +344,9 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 
 	@Override
 	public String toString() {
-		return "ArtifactDetails [" + (coordinates != null ? "coordinates=" + coordinates + ", " : "")
+		return "ArtifactDetails ["
+				+ (groupId != null ? "groupId=" + groupId + ", " : "")
+				+ (artifactId != null ? "artifactId=" + artifactId + ", " : "")
 				+ (name != null ? "name=" + name + ", " : "")
 				+ (description != null ? "description=" + description + ", " : "")
 				+ (licenses != null ? "licenses=" + licenses + ", " : "")
@@ -364,5 +361,33 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 				+ (repositories != null ? "repositories=" + repositories + ", " : "")
 				+ (versions != null ? "versions=" + versions : "") + "]"
 				+ (urls != null ? "urls=" + urls: "") + "]";
+	}
+
+	public String getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(String groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getArtifactId() {
+		return artifactId;
+	}
+
+	public void setArtifactId(String artifactId) {
+		this.artifactId = artifactId;
+	}
+	
+	public void setCoordinates(String c) {
+		String[] parts = c.split(":");
+		if(parts.length!=2)
+			throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
+		setGroupId(parts[0]);
+		setArtifactId(parts[1]);
+	}
+
+	public String getCoordinates() {
+		return String.format("%s:%s", getGroupId(), getArtifactId());
 	}
 }

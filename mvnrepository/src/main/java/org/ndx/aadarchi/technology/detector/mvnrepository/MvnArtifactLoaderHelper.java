@@ -42,7 +42,8 @@ public class MvnArtifactLoaderHelper {
             	for (Map<String, String> object : data) {
 					returned.add(
 							ArtifactDetailsBuilder.artifactDetails()
-								.coordinates(String.format("%s:%s", object.get("groupId"), object.get("artifactId")))
+								.groupId(object.get("groupId"))
+								.artifactId(object.get("artifactId"))
 								.build()
 								);
 				}

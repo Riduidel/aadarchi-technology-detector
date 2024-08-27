@@ -301,7 +301,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 		}
 		var url = String.format("https://web.archive.org/web/%s/%s",
 				Formats.INTERNET_ARCHIVE_DATE_FORMAT.format(archivePoint.timestamp()),
-				ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
+				MvnContext.getArtifactUrl(artifact, mvnRepositoryServer));
 		var details = context.addDetails(url);
 		details.ifPresent(Throwing.consumer(map -> {
 			var json = FileHelper.gson.toJson(map);
@@ -322,7 +322,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 																										// archive.org
 																										// captures
 				+ "&output=json" + "&collapse=timestamp:6" // We look at the month scale
-				+ "&url=%s", ArtifactDetailsUtils.getArtifactUrl(artifact, mvnRepositoryServer));
+				+ "&url=%s", MvnContext.getArtifactUrl(artifact, mvnRepositoryServer));
 		if (!cache.exists()) {
 			// Run request
 			try {

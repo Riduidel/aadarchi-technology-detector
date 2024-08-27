@@ -1,5 +1,6 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -7,6 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -15,9 +17,9 @@ import java.util.stream.Collectors;
 import org.apache.commons.beanutils.BeanUtils;
 import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
-import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
+import org.ndx.aadarchi.technology.detector.model.VersionDetails;
 
 import com.github.fge.lambdas.Throwing;
 import com.microsoft.playwright.Browser;
@@ -40,6 +42,8 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     private Path localInterestingArtifacts;
     @Option(names = {"-u", "--server-url"}, description = "The used mvnrepository server", 
     		defaultValue = "https://mvnrepository.com") String mvnRepositoryServer;
+    @Option(names = {"-m", "--maven-path"}, description = "The local maven executable path", 
+    		required = true) File maven;
 
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
@@ -49,7 +53,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Override
     public Integer call() throws Exception {
         try (Playwright playwright = Playwright.create()) {
-        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright));
+        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache());
         	super.doCall(mvnContext);
         }
         return 0;
@@ -68,7 +72,8 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     		var artifactId = page.get("artifactId");
     		var relocated = ArtifactDetailsBuilder
     				.artifactDetails()
-    					.coordinates(String.format("%s:%s", groupId, artifactId))
+    					.groupId(groupId)
+    					.artifactId(artifactId)
     					.build();
     		return List.of(relocated);
     	} else {
@@ -78,23 +83,25 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 
 
     @Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext mvnContext, Collection<ArtifactDetails> allArtifactInformations) {
-		return (Collection<ArtifactDetails>) obtainAllDetails(mvnContext, allArtifactInformations);
-	}
-
-    private Collection<ArtifactDetails> obtainAllDetails(MvnContext context,
-			Collection<ArtifactDetails> allArtifactInformations) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations) {
 		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()
-				.flatMap(artifactInformations -> {
-					Optional<Map> details = context.addDetails(ArtifactDetailsUtils.getArtifactUrl(artifactInformations, mvnRepositoryServer));
+				.flatMap(artifactDetails -> {
+					Optional<Map> details = context.addDetails(MvnContext.getArtifactUrl(artifactDetails, mvnRepositoryServer));
 					details.stream()
-						.forEach(d -> {
+						.forEach(detailsMap -> {
 							try {
-								ArtifactDetails updated = ArtifactDetailsBuilder.toBuilder(artifactInformations).build();
-								BeanUtils.populate(updated, d);
-								resolvedArtifacts.put(artifactInformations, updated);
+								ArtifactDetails updated = ArtifactDetailsBuilder.toBuilder(artifactDetails).build();
+								// put versions in a SortedMap, otherwise it won't work
+								if(detailsMap.containsKey("versions") && !(detailsMap.get("versions") instanceof SortedMap)) {
+									Map<String, VersionDetails> versions = (Map<String, VersionDetails>)detailsMap.get("versions");
+									detailsMap.put("versions", 
+											new TreeMap<String, VersionDetails>(versions));
+								}
+								BeanUtils.populate(updated, detailsMap);
+								updated = context.addMavenDetails(updated, mvnRepositoryServer);
+								resolvedArtifacts.put(artifactDetails, updated);
 							} catch(InvocationTargetException | IllegalAccessException e) {
 								throw new RuntimeException(e);
 							}
@@ -142,7 +149,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 	}
 
 	@Override
-	protected Collection<ArtifactLoader<Context>> getArtifactLoaderCollection(MvnContext context) {
+	protected Collection<ArtifactLoader<MvnContext>> getArtifactLoaderCollection(MvnContext context) {
 		return Arrays.asList(
 		new LocalFileArtifactLoader(getCache(), localInterestingArtifacts, mvnRepositoryServer),
 		new PopularArtifactLoader(getCache(), mvnRepositoryServer),
