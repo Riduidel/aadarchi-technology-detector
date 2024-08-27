@@ -3,7 +3,6 @@ package org.ndx.aadarchi.technology.detector.pypi;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -12,25 +11,21 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.ndx.aadarchi.technology.detector.helper.DetailsFetchingContext;
-import org.ndx.aadarchi.technology.detector.helper.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.model.VersionDetails;
 import org.ndx.aadarchi.technology.detector.model.VersionDetailsBuilder;
-
-import com.github.fge.lambdas.Throwing;
 
 import dev.failsafe.Failsafe;
 import dev.failsafe.FailsafeExecutor;
@@ -90,7 +85,7 @@ public class PypiContext implements DetailsFetchingContext {
 
 	private ArtifactDetailsBuilder handleVersions(Map content, ArtifactDetailsBuilder builder) {
 		if(content.containsKey("releases")) {
-			Map<String, VersionDetails> versions = new LinkedHashMap<String, VersionDetails>();
+			SortedMap<String, VersionDetails> versions = new TreeMap<String, VersionDetails>();
 			Map releases = (Map) content.get("releases");
 			for(Object key : releases.keySet()) {
 				String version = (String) key;
