@@ -13,7 +13,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
@@ -29,6 +28,17 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	        .comparing(ArtifactDetails::getGroupId, nullSafeStringComparator)
 	        .thenComparing(ArtifactDetails::getArtifactId, nullSafeStringComparator)
 	        .thenComparing(ArtifactDetails::getName, nullSafeStringComparator);
+
+	private static final Comparator<String> COMPARATOR_BY_MAVEN_VERSION = new Comparator<String>() {
+		private Map<String, DefaultArtifactVersion> versionsCache = new TreeMap<>();
+		@Override
+		public int compare(String o1, String o2) {
+			DefaultArtifactVersion v1 = versionsCache.computeIfAbsent(o1, v -> new DefaultArtifactVersion(v));
+			DefaultArtifactVersion v2 = versionsCache.computeIfAbsent(o2, v -> new DefaultArtifactVersion(v));
+			return v1.compareTo(v2);
+		}
+		
+	};
 	
 	private String groupId;
 	private String artifactId;
@@ -319,11 +329,12 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	}
 
 	public void setVersions(Map<String, VersionDetails> versions) {
-		this.versions = new TreeMap<>(versions);
+		this.versions = new TreeMap<String, VersionDetails>(COMPARATOR_BY_MAVEN_VERSION);
+		this.versions.putAll(versions);
 	}
 
 	public void setVersions(SortedMap<String, VersionDetails> versions) {
-		this.versions = new TreeMap<>(versions);
+		setVersions((Map<String, VersionDetails>) versions);
 	}
 
 	public Integer getUsers() {
