@@ -34,6 +34,7 @@ aggregating all informations.
 | ----------------- | --------------------- | ---------------------------- |
 | mvnrepository.com | reports_mvnrepository | mvnrepository/artifacts.json |
 | npmjs.com         | reports_npmjs         | npmjs/artifacts.json         |
+| pypi.org          | reports_pypi          | pypi/artifacts.json          |
 
 If you take a look at these branches, 
 in each of them, you'll find one commit per month.
@@ -46,23 +47,24 @@ Each scrapper should produce a file with this structure
 [
   // A list of artifacts
   {
-    // Artifact coordinates (depending upon the artifact type)
-    "coordinates": "androidx.annotation.annotation",
+    // Maven group id (when available)
+    "groupId": "group.id",
+    // Maven artifact id (when available)
+    "artifactId": "artifact.id",
     // Artifact visible name
-    "name": "Annotation",
+    "name": "A project name",
     // Artifact description (optionnal, but highly recommended)
-    "description": "Provides source annotations for tooling and readability.",
+    "description": "Some text, in an unknown format",
     // Artifact licenses (optionnal)
     "license": [
       "Apache 2.0"
     ],
     // Artifact categories (optionnal)
     "categories": [
-      "Annotation Libraries"
+      "Set of categories, not to be confused with tags"
     ],
     // Artifact tags (optionnal)
     "tags": [
-      "android",
       "annotations",
       "metadata"
     ],
@@ -72,7 +74,12 @@ Each scrapper should produce a file with this structure
     "users": 4307,
     // Number of downloads of this artifact
     "downloads": "-1",
-    // Artifact repositories (optionnal)
+    // Urls for this project (will allow further research, such as GitHub stars)
+    "urls": {
+      // Each entry maps a domain (typically github when available) to the very project page
+      "github.com": "https://github.com/OWNER/PROJECT#README"
+    }
+   // Artifact repositories (optionnal)
     "repositories": [
       "Google",
       "SciJava Public"
