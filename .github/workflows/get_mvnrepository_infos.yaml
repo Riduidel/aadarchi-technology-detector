@@ -61,7 +61,7 @@ jobs:
           echo "Actor is $ACTOR"
           cat ~/.m2/settings.xml
         env:
-          ACTOR: ${{secrets.GITHUB_ACTOR}}
+          ACTOR: ${{env.GITHUB_ACTOR}}
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
@@ -72,7 +72,6 @@ jobs:
 
         env:
           VERSION: "${{steps.version.outputs.release}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
