@@ -58,6 +58,7 @@ public class NpmjsContext implements DetailsFetchingContext {
     		// Do not use parallel, cause the download count api is quite cautious on load and will fast put an hauld on our queries
 //    		.parallel()
     		.map(Throwing.function(artifact -> countDownloadsOf(artifact, period)))
+    		.filter(artifact -> artifact.getDownloads()!=null)
     		.filter(artifact -> artifact.getDownloads()>0)
 			.sorted()
     		.collect(Collectors.toList());
