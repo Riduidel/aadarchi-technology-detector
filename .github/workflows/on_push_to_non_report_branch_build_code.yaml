@@ -24,6 +24,7 @@ jobs:
       # Well, it will be funny
       # So we will abuse artifacts
       - name: Build package
-        run: mvn --batch-mode install
+        run: mvn -v
+#        run: mvn --batch-mode install
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
