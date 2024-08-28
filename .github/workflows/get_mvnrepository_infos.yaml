@@ -57,7 +57,9 @@ jobs:
               }
             ]
       - name: Expose settings.xml
-        run: cat ~/.m2/settings.xml
+        run: |
+          cat ~/.m2/settings.xml
+          mvn help:activeProfiles
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
