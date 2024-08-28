@@ -248,9 +248,6 @@
     </distributionManagement>
     <profiles>
         <profile>
-            <id>execute</id>
-        </profile>
-        <profile>
             <id><![CDATA[Generate extractor jar (unless for the model, that's the reason of the activation property)]]></id>
             <activation>
                 <property>
@@ -294,7 +291,7 @@
                                 <configuration>
                                     <rules>
                                         <requireProperty>
-                                            <property>extractor.main.class</property>
+                                       	     <property>extractor.main.class</property>
                                             <message><![CDATA[The extractor main class must not be empty]]></message>
                                             <regex>[a-zA-Z\.]+</regex>
                                             <regexMessage><![CDATA[The extractor main class must be a valid Java class name.]]></regexMessage>
