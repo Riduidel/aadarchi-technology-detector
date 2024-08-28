@@ -1,5 +1,8 @@
 name: mvnrepository
 on:
+  push:
+    branches:
+      - bugfix/58_mvnrepository_unauthorized
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:
