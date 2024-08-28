@@ -1,8 +1,5 @@
 name: mvnrepository
 on:
-  push:
-    branches:
-      - bugfix/52_cant_pull_from_packages
   schedule:
     - cron: '0 1 1 * *'
   workflow_dispatch:
