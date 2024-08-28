@@ -42,7 +42,13 @@ jobs:
         uses: s4u/maven-settings-action@v3.0.0
         with:
           override: true
-          githubServer: true
+          githubServer: false
+          servers: |
+            [{
+                "id": "github",
+                "username": "Riduidel",
+                "password": "${{ secrets.GITHUB_TOKEN }}"
+            }]
           repositories: |
             [
               {
