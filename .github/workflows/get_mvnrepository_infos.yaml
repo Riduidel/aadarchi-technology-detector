@@ -53,6 +53,9 @@ jobs:
                 "snapshots":{"enabled":true}
               }
             ]
+      - name: Expose settings.xml
+        run: |
+          cat ~/.m2/settings.xml
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
@@ -63,7 +66,6 @@ jobs:
 
         env:
           VERSION: "${{steps.version.outputs.release}}"
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Clone TechEmpower benchmarks repository
         uses: actions/checkout@v4
@@ -78,22 +80,24 @@ jobs:
         run: |
           sudo apt update
           sudo apt install curl -y
+          MAVEN=$(which mvn)
           xvfb-run java -jar mvnrepository-$VERSION-jar-with-dependencies.jar \
-            --techempower-frameworks-local-clone FrameworkBenchmarks/frameworks
+            --techempower-frameworks-local-clone FrameworkBenchmarks/frameworks \
+            --maven-path $MAVEN
           ls -la
           mkdir target
           mv artifacts.json target/artifacts.json
         env:
           VERSION: "${{steps.version.outputs.release}}"
 
-      - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: reports_mvnrepository
-          FOLDER: target
-          TARGET_DIR: mvnrepository
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: Updated mvnrepository infos
-          COMMIT-NAME: 🤖 GitHub Action
-          COMMIT_EMAIL: get_mvnrepository_infos.yaml@github.actions
+#      - name: Deploy
+#        uses: s0/git-publish-subdir-action@develop
+#        env:
+#          REPO: self
+#          BRANCH: reports_mvnrepository
+#          FOLDER: target
+#          TARGET_DIR: mvnrepository
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          MESSAGE: Updated mvnrepository infos
+#          COMMIT-NAME: 🤖 GitHub Action
+#          COMMIT_EMAIL: get_mvnrepository_infos.yaml@github.actions
