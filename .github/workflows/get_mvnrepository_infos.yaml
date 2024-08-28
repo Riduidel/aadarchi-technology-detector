@@ -46,7 +46,7 @@ jobs:
             [
               {
                 "id": "github",
-                "username": "${{ env.GITHUB_ACTOR }}"
+                "username": "${{ env.GITHUB_ACTOR }}",
                 "password": "Bearer ${{ secrets.GITHUB_TOKEN }}",
                 "configuration": {
                   "httpHeaders": {
