@@ -251,8 +251,7 @@
             <id>execute</id>
         </profile>
         <profile>
-            <id>Generate extractor jar (unless for the model, that's the reason
-				of the activation property)</id>
+            <id><![CDATA[Generate extractor jar (unless for the model, that's the reason of the activation property)]]></id>
             <activation>
                 <property>
                     <name>packaging</name>
@@ -287,7 +286,7 @@
                         <artifactId>maven-enforcer-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>There must be a non-empty main class defined</id>
+                                <id><![CDATA[There must be a non-empty main class defined]]></id>
                                 <goals>
                                     <goal>enforce</goal>
                                 </goals>
@@ -296,9 +295,9 @@
                                     <rules>
                                         <requireProperty>
                                             <property>extractor.main.class</property>
-                                            <message>The extractor main class must not be empty</message>
+                                            <message><![CDATA[The extractor main class must not be empty]]></message>
                                             <regex>[a-zA-Z\.]+</regex>
-                                            <regexMessage>The extractor main class must be a valid Java class name.</regexMessage>
+                                            <regexMessage><![CDATA[The extractor main class must be a valid Java class name.]]></regexMessage>
                                         </requireProperty>
                                     </rules>
                                 </configuration>
