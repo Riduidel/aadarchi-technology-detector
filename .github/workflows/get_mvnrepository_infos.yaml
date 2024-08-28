@@ -43,19 +43,21 @@ jobs:
           override: true
           githubServer: false
           servers: |
-            [{
-              "id": "github",
-              "username": "Bearer ${{ env.GITHUB_ACTOR }}"
-              "password": "Bearer ${{ secrets.GITHUB_TOKEN }}"
-              "configuration": {
-                "httpHeaders": {
-                  "property": {
-                    "name": "Authorization",
-                    "value": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+            [
+              {
+                "id": "github",
+                "username": "${{ env.GITHUB_ACTOR }}"
+                "password": "Bearer ${{ secrets.GITHUB_TOKEN }}",
+                "configuration": {
+                  "httpHeaders": {
+                    "property": {
+                      "name": "Authorization",
+                      "value": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                    }
                   }
                 }
               }
-            }]
+            ]
           repositories: |
             [
               {
