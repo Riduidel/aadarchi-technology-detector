@@ -250,6 +250,10 @@
         <profile>
             <id><![CDATA[Generate extractor jar (unless for the model, that's the reason of the activation property)]]></id>
             <activation>
+            <!-- 
+				It "seemed" to work (at least locally) but not in GitHub Actions (which uses mvn 3.8.8)
+				https://stackoverflow.com/a/4629269/15619
+				So I had to fallback to activation hidden files
                 <property>
                     <name>packaging</name>
                     <value>jar</value>
@@ -257,6 +261,10 @@
                 <file>
                     <missing><![CDATA[src/main/java/org/ndx/aadarchi/technology/detector/model/ArtifactDetails.java]]></missing>
                 </file>
+            -->
+            	<file>
+            		<exists>.generate-executable-jar</exists>
+            	</file>
             </activation>
             <build>
                 <plugins>
