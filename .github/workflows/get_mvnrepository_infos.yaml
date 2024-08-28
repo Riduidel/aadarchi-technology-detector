@@ -42,13 +42,7 @@ jobs:
         uses: s4u/maven-settings-action@v3.0.0
         with:
           override: true
-          githubServer: false
-          servers: |
-            [{
-                "id": "github",
-                "username": "Riduidel",
-                "password": "${{ secrets.GITHUB_TOKEN }}"
-            }]
+          githubServer: true
           repositories: |
             [
               {
@@ -64,10 +58,7 @@ jobs:
             ]
       - name: Expose settings.xml
         run: |
-          echo "Actor is $ACTOR"
           cat ~/.m2/settings.xml
-        env:
-          ACTOR: ${{env.GITHUB_ACTOR}}
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
