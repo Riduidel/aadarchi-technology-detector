@@ -8,7 +8,7 @@ permissions:
   packages: read
 # Allow only one concurrent run
 concurrency:
-  group: "npmjs"
+  group: "mvnrepository"
   cancel-in-progress: true
 
 jobs:
