@@ -39,7 +39,21 @@ jobs:
         uses: s4u/maven-settings-action@v3.0.0
         with:
           override: true
-          githubServer: true
+          githubServer: false
+          servers: |
+            [{
+              "id": "github",
+              "username": "Bearer ${{ env.GITHUB_ACTOR }}"
+              "password": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+              "configuration": {
+                "httpHeaders": {
+                  "property": {
+                    "name": "Authorization",
+                    "value": "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                  }
+                }
+              }
+            }]
           repositories: |
             [
               {
