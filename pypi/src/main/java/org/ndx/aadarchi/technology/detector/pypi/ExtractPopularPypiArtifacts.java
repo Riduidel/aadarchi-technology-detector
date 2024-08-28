@@ -82,6 +82,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
     		// Do not use parallel, cause the download count api is quite cautious on load and will fast put an hauld on our queries
 //    		.parallel()
     		.map(Throwing.function(artifact -> new DownloadsLoader(artifact, getCache(), period).getDownloads(context)))
+    		.filter(artifact -> artifact.getDownloads()!=null)
     		.filter(artifact -> artifact.getDownloads()>0)
 			.sorted()
     		.collect(Collectors.toList());
