@@ -24,7 +24,7 @@ jobs:
       # Well, it will be funny
       # So we will abuse artifacts
       - name: List active profiles per project
-        run: mvn help:active-profile
+        run: mvn help:active-profiles
       - name: Build package
         run: mvn --batch-mode install
 #        env:
