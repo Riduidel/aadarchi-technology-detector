@@ -58,7 +58,10 @@ jobs:
             ]
       - name: Expose settings.xml
         run: |
+          echo "Actor is $ACTOR"
           cat ~/.m2/settings.xml
+        env:
+          ACTOR: ${{secrets.GITHUB_ACTOR}}
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
