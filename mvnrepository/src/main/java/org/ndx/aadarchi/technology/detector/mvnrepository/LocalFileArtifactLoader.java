@@ -9,8 +9,8 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.apache.maven.artifact.Artifact;
-import org.ndx.aadarchi.technology.detector.helper.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 

@@ -23,8 +23,8 @@ import java.util.stream.StreamSupport;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import org.ndx.aadarchi.technology.detector.helper.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 

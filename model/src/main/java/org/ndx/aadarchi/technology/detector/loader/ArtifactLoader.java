@@ -1,11 +1,16 @@
-package org.ndx.aadarchi.technology.detector.helper;
+package org.ndx.aadarchi.technology.detector.loader;
 
 import java.io.File;
 import java.time.Duration;
 import java.util.Collection;
 
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
+/**
+ * Load a list of artifacts from a given file
+ * @param <Context>
+ */
 public interface ArtifactLoader<Context extends ExtractionContext> {
 
 	public default Collection<ArtifactDetails> loadArtifacts(Context context) throws Exception {

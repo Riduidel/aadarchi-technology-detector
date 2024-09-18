@@ -5,10 +5,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Logger;
 
-import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
-import org.ndx.aadarchi.technology.detector.helper.ArtifactLoaderCollection;
-import org.ndx.aadarchi.technology.detector.helper.DetailFetchingArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
+import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
+import org.ndx.aadarchi.technology.detector.loader.DetailFetchingArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import picocli.CommandLine;

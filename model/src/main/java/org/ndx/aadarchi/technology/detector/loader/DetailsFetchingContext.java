@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.helper;
+package org.ndx.aadarchi.technology.detector.loader;
 
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 

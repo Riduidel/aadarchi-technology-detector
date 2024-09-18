@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.helper;
+package org.ndx.aadarchi.technology.detector.loader;
 
 /**
  * This interface allows easy communication of elements that will be needed

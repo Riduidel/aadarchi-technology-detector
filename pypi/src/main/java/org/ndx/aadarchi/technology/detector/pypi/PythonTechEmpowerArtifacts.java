@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
-import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
