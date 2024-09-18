@@ -15,8 +15,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
-import org.ndx.aadarchi.technology.detector.helper.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import com.github.fge.lambdas.Throwing;

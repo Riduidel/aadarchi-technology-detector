@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.ndx.aadarchi.technology.detector.helper.TechEmpowerArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 

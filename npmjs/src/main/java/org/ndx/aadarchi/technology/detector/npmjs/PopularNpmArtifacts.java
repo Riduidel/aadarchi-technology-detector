@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.ndx.aadarchi.technology.detector.helper.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import com.github.fge.lambdas.Throwing;

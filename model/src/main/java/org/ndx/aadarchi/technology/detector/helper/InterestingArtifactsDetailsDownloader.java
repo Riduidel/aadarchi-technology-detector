@@ -8,12 +8,18 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
+import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
+import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import picocli.CommandLine.Option;
 
 /**
  * Class defining a common (and I hope efficient) method to obtain artifacts for various languages
+ * 
+ * Main method of this class is {@link #doCall(ExtractionContext)} which executes all code
  */
 public abstract class InterestingArtifactsDetailsDownloader<Context extends ExtractionContext> implements Callable<Integer>{
 	public static final Logger logger = Logger.getLogger(InterestingArtifactsDetailsDownloader.class.getName());
@@ -33,6 +39,19 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone", defaultValue = "../../FrameworkBenchmarks/frameworks")
 	protected Path techEmpowerFrameworks;
 
+	/**
+	 * Perform all artifact analysis by 
+	 * <ul>
+	 * <li>Loading a list of artifacts ({@link #searchInterestingArtifacts(ExtractionContext)})
+	 * <li>If history generate is required, calls {@link #generateHistoryOf(ExtractionContext, Collection)}
+	 * <li>If no history generation is needed
+	 * <ul>
+	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection)}
+	 * <li>Write results to file using {@link #writeDetails(Collection)}
+	 * </ul>
+	 * </ul>
+	 * @param context
+	 */
 	protected void doCall(Context context) {
 		Collection<ArtifactDetails> interestingArtifacts = searchInterestingArtifacts(context);
 		// Changing this period will allow us to build very fast a very good history
@@ -40,11 +59,15 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			generateHistoryOf(context, interestingArtifacts);
 		} else {
 	    	Collection<ArtifactDetails> artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
-	    	try {
-				FileHelper.writeToFile(artifactDetails, output.toFile());
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+	    	writeDetails(artifactDetails);
+		}
+	}
+
+	private void writeDetails(Collection<ArtifactDetails> artifactDetails) {
+		try {
+			FileHelper.writeToFile(artifactDetails, output.toFile());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

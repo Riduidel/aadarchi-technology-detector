@@ -27,8 +27,8 @@ import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.apache.maven.shared.invoker.PrintStreamHandler;
-import org.ndx.aadarchi.technology.detector.helper.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
+import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 

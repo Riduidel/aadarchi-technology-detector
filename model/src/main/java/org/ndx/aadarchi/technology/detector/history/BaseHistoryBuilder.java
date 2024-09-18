@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.helper;
+package org.ndx.aadarchi.technology.detector.history;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +26,8 @@ import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.transport.URIish;
+import org.ndx.aadarchi.technology.detector.helper.FileHelper;
+import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.Formats;
 

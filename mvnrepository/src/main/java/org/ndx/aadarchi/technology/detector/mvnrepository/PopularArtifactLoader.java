@@ -3,7 +3,7 @@ package org.ndx.aadarchi.technology.detector.mvnrepository;
 import java.nio.file.Path;
 import java.util.Collection;
 
-import org.ndx.aadarchi.technology.detector.helper.BasicArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 /**

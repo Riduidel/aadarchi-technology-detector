@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.io.IOUtils;
-import org.ndx.aadarchi.technology.detector.helper.ArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 

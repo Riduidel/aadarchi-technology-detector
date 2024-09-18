@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.ndx.aadarchi.technology.detector.helper.BasicArtifactLoader;
+import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 public class DownloadsLoader extends BasicArtifactLoader<PypiContext> {
