@@ -26,6 +26,7 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <version.junit>5.9.1</version.junit>
     </properties>
 
     <dependencyManagement>
@@ -97,10 +98,30 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
             <dependency>
-                <groupId>org.eclipse.jgit</groupId>
-                <artifactId>org.eclipse.jgit</artifactId>
-                <version>6.7.0.202309050840-r</version>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.23.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>${version.junit}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${version.junit}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.rnorth.visible-assertions</groupId>
+                <artifactId>visible-assertions</artifactId>
+                <version>2.0.0</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
@@ -250,7 +271,7 @@
         <profile>
             <id><![CDATA[Generate extractor jar (unless for the model, that's the reason of the activation property)]]></id>
             <activation>
-            <!-- 
+                <!-- 
 				It "seemed" to work (at least locally) but not in GitHub Actions (which uses mvn 3.8.8)
 				https://stackoverflow.com/a/4629269/15619
 				So I had to fallback to activation hidden files
@@ -262,9 +283,9 @@
                     <missing><![CDATA[src/main/java/org/ndx/aadarchi/technology/detector/model/ArtifactDetails.java]]></missing>
                 </file>
             -->
-            	<file>
-            		<exists>.generate-executable-jar</exists>
-            	</file>
+                <file>
+                    <exists>.generate-executable-jar</exists>
+                </file>
             </activation>
             <build>
                 <plugins>
@@ -299,7 +320,7 @@
                                 <configuration>
                                     <rules>
                                         <requireProperty>
-                                       	     <property>extractor.main.class</property>
+                                            <property>extractor.main.class</property>
                                             <message><![CDATA[The extractor main class must not be empty]]></message>
                                             <regex>[a-zA-Z\.]+</regex>
                                             <regexMessage><![CDATA[The extractor main class must be a valid Java class name.]]></regexMessage>
