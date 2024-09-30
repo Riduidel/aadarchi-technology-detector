@@ -2,13 +2,18 @@ package org.ndx.aadarchi.technology.detector.history;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.errors.CheckoutConflictException;
@@ -37,12 +42,14 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 	public final String gitBranchName;
 	public final String replacerBranchName;
 	public final File artifactsFile;
+	public final File schemaFile;
 	public final Path gitHistory;
 
 	public HistoryAugmenter(BaseHistoryBuilder<Context> baseHistoryBuilder) {
 		this.gitHistory = baseHistoryBuilder.gitHistory;
 		this.gitBranchName = baseHistoryBuilder.gitBranch;
 		this.artifactsFile = baseHistoryBuilder.artifactsFile;
+		this.schemaFile = baseHistoryBuilder.schemaFile;
 		replacerBranchName = gitBranchName + "_REPLACER";
 	}
 
@@ -100,6 +107,11 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				commit.getCommitterIdent().getWhen(),
 				commit.getShortMessage()));
 		git.checkout().setName(commit.getName()).call();
+		// Don't forget to read schema!
+		Optional<String> schema = schemaFile.exists()
+				? Optional.of(FileUtils.readFileToString(schemaFile, "UTF-8"))
+				: Optional.empty()
+				;
 		// Now load artifacts into data structure
 		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile);
 		// Augment each artifact
@@ -119,18 +131,24 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 			.call();
 		// Write the file
 		FileHelper.writeToFile(augmented, artifactsFile);
+		// And the schema
+		schema.ifPresent(Throwing.consumer(s -> 
+			FileUtils.writeStringToFile(schemaFile, s, Charset.forName("UTF-8"))));
 		// Commit with all values read from initial commit
 		PersonIdent commiter = commit.getAuthorIdent();
 		String commitMessage = commit.getFullMessage();
-		String commitedFile = gitHistory.relativize(artifactsFile.toPath()).toString();
 		Status response = git.status().call();
 		if(!response.getAdded().isEmpty()) {
-			git.add().addFilepattern(commitedFile).call();
+			AddCommand addCommand = git.add();
+			for(String s : response.getAdded()) {
+				addCommand.addFilepattern(s);
+			}
+			addCommand.call();
 		}
 		git.commit()
 			.setAuthor(commiter)
 			.setCommitter(commiter)
-			.setOnly(commitedFile)
+//			.setOnly(commitedFile)
 			.setAllowEmpty(true)
 			.setMessage(commitMessage)
 			.call();
