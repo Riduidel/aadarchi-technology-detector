@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
@@ -15,6 +17,13 @@ import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.mappers.Mappers;
 import org.ndx.aadarchi.technology.detector.mappers.MappingGenerator;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.SimpleType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchema;
+import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchemaGenerator;
 
 import picocli.CommandLine.Option;
 
@@ -44,6 +53,9 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	@Option(names = { "-o",
 			"--output" }, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
 	protected Path output;
+	@Option(names = { "-s",
+		"--schema" }, description = "The output file for generated JSON schema file", defaultValue = "schema.json")
+	protected Path schema;
 	@Option(names = {
 			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone"
 					, defaultValue = "../../FrameworkBenchmarks/frameworks")
@@ -94,6 +106,11 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 
 	private void writeDetails(Collection<ArtifactDetails> artifactDetails) {
 		try {
+			JsonSchemaGenerator generator = new JsonSchemaGenerator(FileHelper.getObjectMapper());
+			JsonSchema jsonSchema = generator.generateSchema(CollectionType.construct(artifactDetails.getClass(), SimpleType.construct(ArtifactDetails.class)));
+			FileUtils.write(schema.toFile(), 
+					FileHelper.getObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(jsonSchema), 
+					"UTF-8");
 			FileHelper.writeToFile(artifactDetails, output.toFile());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
