@@ -27,6 +27,8 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.model.VersionDetails;
 import org.ndx.aadarchi.technology.detector.model.VersionDetailsBuilder;
 
+import com.fasterxml.jackson.core.JacksonException;
+
 import dev.failsafe.Failsafe;
 import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RateLimitExceededException;
@@ -58,7 +60,7 @@ public class PypiContext implements DetailsFetchingContext {
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 			if(response.statusCode()<300) {
 				String text = response.body();
-				Map content = FileHelper.gson.fromJson(text, Map.class);
+				Map content = FileHelper.getObjectMapper().readValue(text, Map.class);
 				return buildArtifactDetails(source, content);
 			} else {
 				logger.severe(() -> String.format("Seems like getting infos for %s failed due to http error %s. Url was %s", 
@@ -206,19 +208,24 @@ public class PypiContext implements DetailsFetchingContext {
 			return artifact;
 	}
 
-	private ArtifactDetails addDownloadInfosTo(ArtifactDetails artifact, String text) {
-		Map content = FileHelper.gson.fromJson(text, Map.class);
-		if(content.containsKey("data")) {
-			Map data = (Map) content.get("data");
-			if(data.containsKey("last_month")) {
-				String downloadsText = data.get("last_month").toString();
-				BigDecimal big = new BigDecimal(downloadsText);
-				return ArtifactDetailsBuilder.toBuilder(artifact)
-						.downloads(big.longValueExact())
-						.build();
+	private ArtifactDetails addDownloadInfosTo(ArtifactDetails artifact, String text) throws IOException {
+		Map content;
+		try {
+			content = FileHelper.getObjectMapper().readValue(text, Map.class);
+			if(content.containsKey("data")) {
+				Map data = (Map) content.get("data");
+				if(data.containsKey("last_month")) {
+					String downloadsText = data.get("last_month").toString();
+					BigDecimal big = new BigDecimal(downloadsText);
+					return ArtifactDetailsBuilder.toBuilder(artifact)
+							.downloads(big.longValueExact())
+							.build();
+				}
 			}
+			return artifact;
+		} catch (JacksonException e) {
+			throw new IOException(e);
 		}
-		return artifact;
 	}
 
 	/**
@@ -237,7 +244,7 @@ public class PypiContext implements DetailsFetchingContext {
 			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 			if(response.statusCode()<300) {
 				String text = response.body();
-				Map content = FileHelper.gson.fromJson(text, Map.class);
+				Map content = FileHelper.getObjectMapper().readValue(text, Map.class);
 				if(content.containsKey("rows")) {
 					List<Map<String, String>> top = (List<Map<String, String>>) content.get("rows");
 					return top.subList(0, 1000).stream()

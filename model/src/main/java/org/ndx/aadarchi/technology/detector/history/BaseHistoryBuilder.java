@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.logging.Logger;
+import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -29,6 +30,7 @@ import org.eclipse.jgit.api.errors.UnmergedPathsException;
 import org.eclipse.jgit.api.errors.WrongRepositoryStateException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
@@ -42,12 +44,13 @@ import com.github.fge.lambdas.Throwing;
  */
 public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	static final Logger logger = Logger.getLogger(BaseHistoryBuilder.class.getName());
-	protected final Path gitHistory;
-	protected final Path cache;
-	protected final String username;
-	protected final String email;
-	protected final File artifactsFile;
-	private final String artifactsQualifier;
+	public final Path gitHistory;
+	public final Path cache;
+	public final String username;
+	public final String email;
+	public final File artifactsFile;
+	public final String artifactsQualifier;
+	public final String gitBranch;
 	
 	static {
         String path = BaseHistoryBuilder.class.getClassLoader()
@@ -65,6 +68,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 		this.email = gitEmail;
 		this.artifactsQualifier = artifactQualifierName;
 		this.artifactsFile = new File(gitHistory.toFile(), artifactQualifierName + "/artifacts.json");
+		gitBranch = "reports_" + artifactsQualifier;
 	}
 
 	protected abstract SortedMap<LocalDate, File> generateAggregatedStatusesMap(Context context,
@@ -96,8 +100,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 						Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()));
 	}
 
-	protected void writeAggregatedStatusesToGit(Map<LocalDate, File> aggregatedStatuses) throws IOException {
-		Git git = initializeGitHistory();
+	protected void writeAggregatedStatusesToGit(Map<LocalDate, File> aggregatedStatuses, Git git) throws IOException {
 		aggregatedStatuses.entrySet().stream().forEach(Throwing
 				.consumer(entry1 -> writeArtifactListAtDate(git, entry1.getKey(), entry1.getValue(), artifactsFile)));
 	}
@@ -116,9 +119,11 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 		File gitFile = new File(gitHstoryFile, ".git");
 		try {
 			if (gitFile.exists() && gitFile.isDirectory()) {
+				logger.info(String.format("Reusing git history repository at %s", gitHstoryFile.getAbsolutePath()));
 				return Git.open(gitHstoryFile);
 			} else {
-				return createGitRepositoryHostingBranch(gitHstoryFile, "reports_" + artifactsQualifier);
+				logger.info(String.format("Creating git history repository at %s", gitHstoryFile.getAbsolutePath()));
+				return createGitRepositoryHostingBranch(gitHstoryFile, gitBranch);
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
@@ -133,7 +138,9 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 		// Don't forget to fetch first
 		git.fetch().call();
 		List<Ref> remoteBranches = git.branchList().setListMode(ListMode.ALL).call();
-		boolean branchExistsRemotely = remoteBranches.stream().filter(ref -> branch.equals(ref.getName())).findAny()
+		boolean branchExistsRemotely = remoteBranches.stream()
+				.filter(ref -> ref.getName().endsWith("/"+branch))
+				.findAny()
 				.isPresent();
 		// If branch exists on remote, clone it
 		if (branchExistsRemotely) {
@@ -151,11 +158,29 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	 * @param context
 	 * @param allArtifactInformations
 	 * @throws IOException
+	 * @throws GitAPIException 
+	 * @throws NoHeadException 
 	 */
 	public void generateHistoryFor(Context context, Collection<ArtifactDetails> allArtifactInformations)
-			throws IOException {
-		Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
-		// Write them into git history
-		writeAggregatedStatusesToGit(aggregatedStatuses);
+			throws IOException, NoHeadException, GitAPIException {
+		Git git = initializeGitHistory();
+		// To get commits of branch, we have to first list branches
+		// Hopefully that repo should contain only our branch
+		List<Ref> branches = git.branchList().call();
+		Ref branchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny().get();
+		Iterable<RevCommit> commits = git.log()
+			.add(branchName.getObjectId())
+			.call();
+		// We consider history to be of the good size, so if the git repository already exists,
+		// it means it should be "augmented" with whatever augmenters are available
+		if(commits.iterator().hasNext()) {
+			// Time for an history augmentation!
+			new HistoryAugmenter<Context>(this).augmentHistory(context, git);
+		} else {
+			// This branch is new, so get all data and write it!
+			Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
+			// Write them into git history
+			writeAggregatedStatusesToGit(aggregatedStatuses, git);
+		}
 	}
 }

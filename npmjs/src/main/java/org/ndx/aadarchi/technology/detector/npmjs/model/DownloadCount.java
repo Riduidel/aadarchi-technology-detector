@@ -1,11 +1,11 @@
 package org.ndx.aadarchi.technology.detector.npmjs.model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DownloadCount {
 	  public long downloads;
 	  public String start;
 	  public String end;
-	  @SerializedName("package")
+	  @JsonProperty("package")
 	  public String packageName;
 }

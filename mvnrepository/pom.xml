@@ -41,5 +41,10 @@
             <artifactId>maven-invoker</artifactId>
             <version>3.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.emilyy-dev</groupId>
+            <artifactId>annotated-service-provider</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

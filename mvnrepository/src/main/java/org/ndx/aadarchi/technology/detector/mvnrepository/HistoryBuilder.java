@@ -22,7 +22,6 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,12 +34,9 @@ import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.Formats;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.fge.lambdas.Throwing;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.PlaywrightException;
 
 /**
  * As I dodn't found any artifact download history for maven artifact, I had to resign and use the internet wayback machine.
@@ -83,17 +79,11 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 		logger.info("Processed artifacts\n" + artifactsCaptures.entrySet().stream()
 				.map(e -> String.format("%s -> %d captures", e.getKey(), e.getValue().size()))
 				.collect(Collectors.joining("\n")));
-		List<ArtifactDetails> allArtifactsDetails = (List<ArtifactDetails>) FileHelper.gson
-				.fromJson(
-						FileUtils.readFileToString(output.toFile(), "UTF-8"),
-						TypeToken.getParameterized(List.class, ArtifactDetails.class));
+		List<ArtifactDetails> allArtifactsDetails =	FileHelper.readFromFile(output.toFile());
 		// Move history details from the future to the past for the whole timeline
 		artifactsCaptures.entrySet()
 				.forEach(entry -> copyHistoryFromLastToFirst(entry.getKey(), allArtifactsDetails, entry.getValue()));
-		Collection<ArtifactDetails> currentArtifacts = FileHelper.gson.fromJson(
-				FileUtils.readFileToString(output.toFile(), "UTF-8"),
-				new TypeToken<Collection<ArtifactDetails>>() {
-				});
+		Collection<ArtifactDetails> currentArtifacts = FileHelper.readFromFile(output.toFile());
 		// Generate complete artifact informations through inference
 		Map<ArtifactDetails , NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
 				.stream().collect(Collectors.toMap(entry -> entry.getKey(), Throwing.function(
@@ -124,8 +114,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 				if (!artifactLists.containsKey(key)) {
 					artifactLists.put(key, new TreeSet<>());
 				}
-				artifactLists.get(key).add(FileHelper.gson
-						.fromJson(FileUtils.readFileToString(entry.getValue(), "UTF-8"), ArtifactDetails.class));
+				artifactLists.get(key).add(FileHelper.getObjectMapper().readValue(FileUtils.readFileToString(entry.getValue(), "UTF-8"), ArtifactDetails.class));
 			}
 		}
 		// Now write all those artifact lists to files
@@ -136,7 +125,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 						"artifacts");
 				logger.info(String.format("Writing %d artifacts of %s into %s",
 						entry.getValue().size(), Formats.MVN_DATE_FORMAT_WITH_DAY.format(entry.getKey()), datedFilePath));
-				FileUtils.write(datedFilePath, FileHelper.gson.toJson(entry.getValue()), "UTF-8");
+				FileHelper.writeToFile(entry.getValue(), datedFilePath);
 				return Map.entry(entry.getKey(), datedFilePath);
 			}))
 			.collect(Collectors.toMap(Entry::getKey, Entry::getValue, (a, b) -> a, () -> new TreeMap<LocalDate, File>()));
@@ -175,12 +164,12 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 	 */
 	private void copyDatesInto(ArtifactDetails details, LocalDate date, File file) {
 		try {
-			ArtifactDetails oldDetails = FileHelper.gson
-					.fromJson(FileUtils.readFileToString(file, "UTF-8"), ArtifactDetails.class);
+			ArtifactDetails oldDetails = FileHelper.getObjectMapper().readValue(
+					FileUtils.readFileToString(file, "UTF-8"), ArtifactDetails.class);
 			Optional<ArtifactDetails> changedDetailsOptiona = oldDetails.copyDatesFrom(details);
 			if (changedDetailsOptiona.isPresent()) {
 				ArtifactDetails changedDetails = changedDetailsOptiona.get();
-				FileUtils.write(file, FileHelper.gson.toJson(changedDetails), "UTF-8");
+				FileUtils.write(file, FileHelper.getObjectMapper().writeValueAsString(changedDetails), "UTF-8");
 				oldDetails = changedDetails;
 			}
 		} catch (IOException e) {
@@ -236,7 +225,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 			return Optional.empty();
 		if (fileSnapshotBefore != null) {
 			if (fileSnapshotBefore.getKey().compareTo(currentMonth) < 0) {
-				dataBefore = FileHelper.gson.fromJson(
+				dataBefore = FileHelper.getObjectMapper().readValue(
 						FileUtils.readFileToString(fileSnapshotBefore.getValue(), "UTF-8"), ArtifactDetails.class);
 			} else {
 				fileSnapshotBefore = null;
@@ -247,8 +236,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 			dateAfter = currentMonth;
 			dataAfter = currentData.get();
 		} else {
-			dataAfter = FileHelper.gson
-					.fromJson(FileUtils.readFileToString(fileSnapshotAfter.getValue(), "UTF-8"), ArtifactDetails.class);
+			dataAfter = FileHelper.getObjectMapper().readValue(FileUtils.readFileToString(fileSnapshotAfter.getValue(), "UTF-8"), ArtifactDetails.class);
 			dateAfter = fileSnapshotAfter.getKey();
 		}
 		if (fileSnapshotBefore == null)
@@ -260,7 +248,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 					: dataAfter.inferDataPoint(currentData.get(), dateAfter, currentMonth, fileSnapshotBefore.getKey(),
 							dataBefore);
 			// Now we have an artifact, write it to disk
-			FileUtils.write(output, FileHelper.gson.toJson(currentMonthData), "UTF-8");
+			FileUtils.write(output, FileHelper.getObjectMapper().writeValueAsString(currentMonthData), "UTF-8");
 			return Optional.of(output);
 		}
 		return Optional.empty();
@@ -304,7 +292,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 				MvnContext.getArtifactUrl(artifact, mvnRepositoryServer));
 		var details = context.addDetails(url);
 		details.ifPresent(Throwing.consumer(map -> {
-			var json = FileHelper.gson.toJson(map);
+			var json = FileHelper.getObjectMapper().writeValueAsString(map);
 			FileUtils.write(destination, json, "UTF-8");
 		}));
 		return Map.entry(archivePoint.timestamp(), destination);
@@ -342,7 +330,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 			}
 		}
 		String text = FileUtils.readFileToString(cache, "UTF-8");
-		return FileHelper.gson.fromJson(text, new TypeToken<List<List<String>>>() {
+		return FileHelper.getObjectMapper().readValue(text, new TypeReference<List<List<String>>>() {
 		}).stream().filter(row -> !row.get(0).equals("urlkey"))
 				.map(Throwing.function(row -> new ArchivePoint(row.get(0),
 						LocalDateTime.parse(row.get(1), Formats.INTERNET_ARCHIVE_DATE_FORMAT), row.get(2), row.get(5),

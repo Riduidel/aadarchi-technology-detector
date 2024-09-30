@@ -18,6 +18,10 @@ public class VersionDetails {
 	public VersionDetails() {
 		
 	}
+	public VersionDetails(String date) {
+		super();
+		this.date = date;
+	}
 	public VersionDetails(String usages, String date, int users, int previousUsers, int interpolatedUsers) {
 		super();
 		this.usages = usages;
