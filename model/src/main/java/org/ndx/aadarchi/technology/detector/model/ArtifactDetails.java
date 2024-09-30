@@ -1,24 +1,58 @@
 package org.ndx.aadarchi.technology.detector.model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
+
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
+	private static final Logger logger = Logger.getLogger(ArtifactDetails.class.getName());
+	public static final String BADLY_NAMED_ARTIFACTS_MAPPING = "badly_named_artifacts.properties";
+
+	/**
+	 * Stupidly enough, I had some code where coordinates were stored as one field (bad)
+	 * And with "." as separator (worse for Java)
+	 * 
+	 * To change that, I took last version, and run (with https://github.com/ddopson/underscore-cli)
+	 * 
+	 * cat artifacts.json | underscore map 'value.groupId+"."+value.artifactId+"="+value.groupId+":"+value.artifactId' > badly_named_artifacts.properties
+	 * 
+	 * on it
+	 */
+	static Properties badlyNamedArtifactsToCorrectlyNamedOnes = new Properties();
+	static {
+		if(ArtifactDetails.class.getClassLoader().getResource(BADLY_NAMED_ARTIFACTS_MAPPING)==null) {
+			logger.warning(String.format("There is no %s file in CLASSPATH, no mapping will be done", BADLY_NAMED_ARTIFACTS_MAPPING));
+		} else {
+			try(InputStream p = ArtifactDetails.class.getClassLoader().getResourceAsStream(BADLY_NAMED_ARTIFACTS_MAPPING)) {
+				badlyNamedArtifactsToCorrectlyNamedOnes.load(p);
+			} catch (IOException e) {
+				throw new RuntimeException("This one should never happen", e);
+			}
+		}
+	}
 	
 	private static Comparator<String> nullSafeStringComparator = Comparator
 	        .nullsFirst(String::compareToIgnoreCase); 
@@ -56,7 +90,9 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	private Integer interpolatedUsers;
 	private Boolean infered;
 	private List<String> repositories;
+	@JsonDeserialize(as=TreeMap.class)
 	private SortedMap<String, VersionDetails> versions;
+	@JsonDeserialize(as=LinkedHashMap.class)
 	private Map<String, String> urls;
 	
 	public ArtifactDetails() {}
@@ -328,9 +364,11 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		return versions;
 	}
 
+	@JsonSetter
 	public void setVersions(Map<String, VersionDetails> versions) {
 		this.versions = new TreeMap<String, VersionDetails>(COMPARATOR_BY_MAVEN_VERSION);
-		this.versions.putAll(versions);
+		if(versions!=null)
+			this.versions.putAll(versions);
 	}
 
 	public void setVersions(SortedMap<String, VersionDetails> versions) {
@@ -391,14 +429,32 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	}
 	
 	public void setCoordinates(String c) {
-		String[] parts = c.split(":");
-		if(parts.length!=2)
-			throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
-		setGroupId(parts[0]);
-		setArtifactId(parts[1]);
+		if(c.contains(":")) {
+			String[] parts = c.split(":");
+			if(parts.length!=2)
+				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
+			setGroupId(parts[0]);
+			setArtifactId(parts[1]);
+		} else if(c.contains(".")){
+			if(c.endsWith("."))
+				c = c.substring(0, c.length()-1);
+			// Oh the dumbass shit of the man who thought it could be "clever" to use "." as group:artifact separator.
+			// I'm sorry to be soooo stupid
+			if(badlyNamedArtifactsToCorrectlyNamedOnes.containsKey(c)) {
+				setCoordinates(badlyNamedArtifactsToCorrectlyNamedOnes.getProperty(c));
+			} else {
+				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
+			}
+		}
 	}
 
 	public String getCoordinates() {
-		return String.format("%s:%s", getGroupId(), getArtifactId());
+		StringBuilder returned = new StringBuilder();
+		if(getGroupId()!=null)
+			returned.append(getGroupId());
+		if(getArtifactId()!=null) {
+			returned.append(':').append(getArtifactId());
+		}
+		return returned.toString();
 	}
 }

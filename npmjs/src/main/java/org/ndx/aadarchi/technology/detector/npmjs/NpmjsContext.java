@@ -23,8 +23,8 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.npmjs.model.DownloadCount;
 import org.ndx.aadarchi.technology.detector.npmjs.model.Package;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.fge.lambdas.Throwing;
-import com.google.gson.reflect.TypeToken;
 
 import dev.failsafe.Failsafe;
 import dev.failsafe.FailsafeExecutor;
@@ -98,7 +98,7 @@ public class NpmjsContext implements DetailsFetchingContext {
 				HttpRequest request = HttpRequest.newBuilder(URI.create(
 						String.format(DOWNLOADS_LAST_MONTH, period, artifact.getName()))).build();
 				HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-				DownloadCount jsonResponse = FileHelper.gson.fromJson(response.body(), new TypeToken<DownloadCount>() {});
+				DownloadCount jsonResponse = FileHelper.getObjectMapper().readValue(response.body(), new TypeReference<DownloadCount>() {});
 				return ArtifactDetailsBuilder.toBuilder(artifact)
 					.downloads(jsonResponse.downloads)
 					.build();
@@ -113,7 +113,7 @@ public class NpmjsContext implements DetailsFetchingContext {
 					HttpRequest request = HttpRequest.newBuilder(URI.create(
 							String.format(REGISTRY, artifact.getName()))).build();
 					HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-					Package jsonResponse = FileHelper.gson.fromJson(response.body(), new TypeToken<Package>() {});
+					Package jsonResponse = FileHelper.getObjectMapper().readValue(response.body(), new TypeReference<Package>() {});
 					ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(artifact);
 					if(jsonResponse.description!=null)
 						builder = builder.description(jsonResponse.description);

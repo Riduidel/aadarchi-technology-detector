@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
+import org.ndx.aadarchi.technology.detector.mappers.Mappers;
+import org.ndx.aadarchi.technology.detector.mappers.MappingGenerator;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import picocli.CommandLine.Option;
@@ -26,9 +28,16 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	public static HttpClient client = HttpClient.newHttpClient();
 	@Option(names = { "--generate-history" }, description = "Generate an history branch with commits for each month")
 	public boolean generateHistory;
-	@Option(names = {
-			"--cache-folder" }, description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", defaultValue = "../.cache")
+	@Option(names = { "--generate-mapping-files" }, description = "Generate mapping files for various data analysis. This will typically be invoked during development.")
+	public boolean generateMappingFiles;
+	@Option(names = {"--cache-folder" }, 
+			description = "Since fetching all artifacts could be very long, I prefer to manage a ocal cache, preventing the need for re-downloading everything", 
+			defaultValue = "../.cache")
 	private Path cache;
+	@Option(names = {"--resource-folder" }, 
+			description = "Resource folder of the given generator (used ONLY when --generate-mapping-files is set)", 
+			defaultValue = "src/main/resources")
+	private Path resources;
 	@Option(names = {
 			"--git-folder" }, description = "The output folder where data will be written")
 	protected Path gitHistory;
@@ -36,7 +45,8 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--output" }, description = "The output file for generated artifacts.json file", defaultValue = "artifacts.json")
 	protected Path output;
 	@Option(names = {
-			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone", defaultValue = "../../FrameworkBenchmarks/frameworks")
+			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone"
+					, defaultValue = "../../FrameworkBenchmarks/frameworks")
 	protected Path techEmpowerFrameworks;
 
 	/**
@@ -58,8 +68,27 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		if(generateHistory) {
 			generateHistoryOf(context, interestingArtifacts);
 		} else {
-	    	Collection<ArtifactDetails> artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
-	    	writeDetails(artifactDetails);
+	    	Collection<ArtifactDetails> artifactDetails;
+			if(output.toFile().exists() && output.toFile().lastModified()>System.currentTimeMillis()-60*60*1000*24) {
+				try {
+					artifactDetails = FileHelper.readFromFile(output.toFile());
+				} catch (IOException e) {
+					throw new RuntimeException("Can't read file", e);
+				}
+			} else {
+		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
+		    	writeDetails(artifactDetails);
+			}
+	    	if(generateMappingFiles) {
+	    		generateMappingFiles(artifactDetails);
+	    	}
+		}
+	}
+
+	
+	private void generateMappingFiles(Collection<ArtifactDetails> artifactDetails) {
+		for(MappingGenerator generator : Mappers.getMappers()) {
+			generator.generateMapping(artifactDetails, resources);
 		}
 	}
 
@@ -77,7 +106,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		try {
 			createHistoryBuilder()
 				.generateHistoryFor(context, artifacts);
-		} catch(IOException e) {
+		} catch(IOException | GitAPIException e) {
 			throw new RuntimeException(e);
 		}
 		

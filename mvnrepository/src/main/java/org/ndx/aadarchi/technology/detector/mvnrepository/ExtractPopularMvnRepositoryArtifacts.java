@@ -100,7 +100,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 											new TreeMap<String, VersionDetails>(versions));
 								}
 								BeanUtils.populate(updated, detailsMap);
-								updated = context.addMavenDetails(updated, mvnRepositoryServer);
+								updated = new MvnInfosAugmenter().augment(context, updated);
 								resolvedArtifacts.put(artifactDetails, updated);
 							} catch(InvocationTargetException | IllegalAccessException e) {
 								throw new RuntimeException(e);

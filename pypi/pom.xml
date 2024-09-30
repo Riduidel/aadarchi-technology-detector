@@ -31,5 +31,10 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.emilyy-dev</groupId>
+            <artifactId>annotated-service-provider</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
