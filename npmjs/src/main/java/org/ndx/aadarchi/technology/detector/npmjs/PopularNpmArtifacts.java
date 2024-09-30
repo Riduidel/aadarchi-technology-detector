@@ -16,9 +16,9 @@ import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.fge.lambdas.Throwing;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.reflect.TypeToken;
 
 public class PopularNpmArtifacts extends BasicArtifactLoader<NpmjsContext> {
 	public static final List<String> POPULAR_ARTIFACTS_PAGES = 
@@ -28,7 +28,7 @@ public class PopularNpmArtifacts extends BasicArtifactLoader<NpmjsContext> {
 			;
 	
 	public static class PackageResponse {
-		@SerializedName("package")
+		@JsonProperty("package")
 		public ArtifactDetails artifact;
 	}
 	
@@ -56,7 +56,7 @@ public class PopularNpmArtifacts extends BasicArtifactLoader<NpmjsContext> {
 	List<ArtifactDetails> doLoadArtifactsFrom(String url) throws IOException, InterruptedException {
 		HttpRequest request = HttpRequest.newBuilder(URI.create(url)).build();
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-		PopularNpmArtifacts.NpmJsResponse jsonResponse = FileHelper.gson.fromJson(response.body(), new TypeToken<PopularNpmArtifacts.NpmJsResponse>() {});
+		PopularNpmArtifacts.NpmJsResponse jsonResponse = FileHelper.getObjectMapper().readValue(response.body(), new TypeReference<PopularNpmArtifacts.NpmJsResponse>() {});
 		List<ArtifactDetails> returned = jsonResponse.objects.stream()
 				.map(a -> a.artifact)
 				.collect(Collectors.toList());

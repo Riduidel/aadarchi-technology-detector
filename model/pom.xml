@@ -11,12 +11,12 @@
     <description>Model classes for the various extraction tools</description>
     <dependencies>
         <dependency>
-            <groupId>com.github.fge</groupId>
-            <artifactId>throwing-lambdas</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
+            <groupId>com.github.fge</groupId>
+            <artifactId>throwing-lambdas</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
@@ -54,6 +54,12 @@
             <scope>provided</scope>
             <!-- Jilt is not needed at runtime -->
         </dependency>
+        <dependency>
+            <groupId>io.github.emilyy-dev</groupId>
+            <artifactId>annotated-service-provider</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>

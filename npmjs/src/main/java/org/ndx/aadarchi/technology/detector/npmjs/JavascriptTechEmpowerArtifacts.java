@@ -38,7 +38,7 @@ public class JavascriptTechEmpowerArtifacts extends TechEmpowerArtifactLoader<Np
 		try {
 			Collection<ArtifactDetails> returned = new ArrayList<ArtifactDetails>();
 			String packageJsonContent = FileUtils.readFileToString(packageJson, "UTF-8");
-			Map content = FileHelper.gson.fromJson(packageJsonContent, Map.class);
+			Map content = FileHelper.getObjectMapper().readValue(packageJsonContent, Map.class);
 			if(content.containsKey("dependencies")) {
 				@SuppressWarnings("unchecked")
 				Map<String, ?> dependencies = (Map<String, ?>) content.get("dependencies");
