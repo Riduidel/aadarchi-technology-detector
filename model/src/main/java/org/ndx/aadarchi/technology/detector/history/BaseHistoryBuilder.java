@@ -51,6 +51,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	public final File artifactsFile;
 	public final String artifactsQualifier;
 	public final String gitBranch;
+	public final File schemaFile;
 	
 	static {
         String path = BaseHistoryBuilder.class.getClassLoader()
@@ -68,6 +69,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 		this.email = gitEmail;
 		this.artifactsQualifier = artifactQualifierName;
 		this.artifactsFile = new File(gitHistory.toFile(), artifactQualifierName + "/artifacts.json");
+		this.schemaFile = new File(gitHistory.toFile(), artifactQualifierName + "/schema.json");
 		gitBranch = "reports_" + artifactsQualifier;
 	}
 

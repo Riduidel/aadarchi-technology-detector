@@ -85,6 +85,7 @@ jobs:
           java -jar npmjs-$VERSION-jar-with-dependencies.jar
           ls -la
           mkdir target
+          mv schema.json target/schema.json
           mv artifacts.json target/artifacts.json
         env:
           VERSION: "${{steps.version.outputs.release}}"
