@@ -95,6 +95,7 @@ jobs:
             --techempower-frameworks-local-clone FrameworkBenchmarks/frameworks
           ls -la
           mkdir target
+          mv schema.json target/schema.json
           mv artifacts.json target/artifacts.json
         env:
           VERSION: "${{steps.version.outputs.release}}"
