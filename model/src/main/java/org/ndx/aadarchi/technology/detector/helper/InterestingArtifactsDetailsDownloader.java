@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
@@ -89,6 +90,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 				}
 			} else {
 		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
+		    	artifactDetails = Augmenters.augmentArtifacts(context, artifactDetails);
 		    	writeDetails(artifactDetails);
 			}
 	    	if(generateMappingFiles) {
