@@ -1,0 +1,96 @@
+{
+  "type" : "array",
+  "items" : {
+    "type" : "object",
+    "id" : "urn:jsonschema:org:ndx:aadarchi:technology:detector:model:ArtifactDetails",
+    "properties" : {
+      "groupId" : {
+        "type" : "string"
+      },
+      "artifactId" : {
+        "type" : "string"
+      },
+      "name" : {
+        "type" : "string"
+      },
+      "description" : {
+        "type" : "string"
+      },
+      "licenses" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string"
+        }
+      },
+      "categories" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string"
+        }
+      },
+      "tags" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string"
+        }
+      },
+      "downloads" : {
+        "type" : "integer"
+      },
+      "ranking" : {
+        "type" : "integer"
+      },
+      "users" : {
+        "type" : "integer"
+      },
+      "previousUsers" : {
+        "type" : "integer"
+      },
+      "interpolatedUsers" : {
+        "type" : "integer"
+      },
+      "infered" : {
+        "type" : "boolean"
+      },
+      "repositories" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string"
+        }
+      },
+      "versions" : {
+        "type" : "object",
+        "additionalProperties" : {
+          "type" : "object",
+          "id" : "urn:jsonschema:org:ndx:aadarchi:technology:detector:model:VersionDetails",
+          "properties" : {
+            "usages" : {
+              "type" : "string"
+            },
+            "date" : {
+              "type" : "string"
+            },
+            "users" : {
+              "type" : "integer"
+            },
+            "previousUsers" : {
+              "type" : "integer"
+            },
+            "interpolatedUsers" : {
+              "type" : "integer"
+            }
+          }
+        }
+      },
+      "urls" : {
+        "type" : "object",
+        "additionalProperties" : {
+          "type" : "string"
+        }
+      },
+      "coordinates" : {
+        "type" : "string"
+      }
+    }
+  }
+}
