@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.loader.DetailsFetchingContext;
@@ -45,8 +46,11 @@ public class PypiContext implements DetailsFetchingContext {
 	private static final String INFOS = "https://pypi.org/pypi/%s/json";
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
 	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
-	public PypiContext(HttpClient client) {
+	
+	private GitHub github;
+	public PypiContext(HttpClient client, GitHub github) {
 		this.client = client;
+		this.github = github;
 	}
 
 	@Override
@@ -263,5 +267,10 @@ public class PypiContext implements DetailsFetchingContext {
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public GitHub getGithub() {
+		return github;
 	}
 }

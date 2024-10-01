@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.loader.DetailsFetchingContext;
@@ -42,8 +43,10 @@ public class NpmjsContext implements DetailsFetchingContext {
 
 	private FailsafeExecutor<Object> failsafe;
 	private HttpClient client;
-    public NpmjsContext(HttpClient client) {
+	private GitHub github;
+    public NpmjsContext(HttpClient client, GitHub github) {
     	this.client = client;
+    	this.github = github;
 	}
 	/**
 	 * Get all downloads on a given period, as defined by npmjs download api
@@ -126,6 +129,10 @@ public class NpmjsContext implements DetailsFetchingContext {
 					return builder
 						.build();
 				});
+	}
+	@Override
+	public GitHub getGithub() {
+		return github;
 	}
 
 }

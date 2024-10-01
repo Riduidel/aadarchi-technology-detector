@@ -27,7 +27,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 
 	@Override
 	public Integer call() throws Exception {
-		super.doCall(new NpmjsContext(client));
+		super.doCall(new NpmjsContext(client, getGithub()));
 		return 0;
 	}
 	

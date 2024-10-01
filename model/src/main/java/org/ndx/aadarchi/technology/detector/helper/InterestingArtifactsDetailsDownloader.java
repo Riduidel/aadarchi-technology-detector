@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
@@ -61,6 +63,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone"
 					, defaultValue = "../../FrameworkBenchmarks/frameworks")
 	protected Path techEmpowerFrameworks;
+	@Option(names = { "--github-token" }) protected String githubToken;
 
 	/**
 	 * Perform all artifact analysis by 
@@ -159,5 +162,14 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 
 	public Path getCache() {
 		return cache;
+	}
+
+
+	protected GitHub getGithub() {
+		try {
+			return new GitHubBuilder().withJwtToken(githubToken).build();
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to connect to GitHub", e);
+		}
 	}
 }

@@ -53,7 +53,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Override
     public Integer call() throws Exception {
         try (Playwright playwright = Playwright.create()) {
-        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache());
+        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache(), getGithub());
         	super.doCall(mvnContext);
         }
         return 0;

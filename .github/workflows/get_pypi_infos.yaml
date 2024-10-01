@@ -99,6 +99,7 @@ jobs:
           mv artifacts.json target/artifacts.json
         env:
           VERSION: "${{steps.version.outputs.release}}"
+          TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
