@@ -87,7 +87,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	    	Collection<ArtifactDetails> artifactDetails;
 			if(output.toFile().exists() && output.toFile().lastModified()>System.currentTimeMillis()-60*60*1000*24) {
 				try {
-					artifactDetails = FileHelper.readFromFile(output.toFile());
+					artifactDetails = FileHelper.readFromFile(output.toFile(), ArtifactDetails.LIST);
 				} catch (IOException e) {
 					throw new RuntimeException("Can't read file", e);
 				}

@@ -22,7 +22,9 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 
@@ -73,6 +75,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		}
 		
 	};
+	public static final TypeReference<List<ArtifactDetails>> LIST =  new TypeReference<List<ArtifactDetails>>() {};
 	
 	private String groupId;
 	private String artifactId;
@@ -456,5 +459,10 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			returned.append(':').append(getArtifactId());
 		}
 		return returned.toString();
+	}
+
+	@JsonIgnore
+	public String getIdentifier() {
+		return getCoordinates() == null ? getName() : getCoordinates();
 	}
 }

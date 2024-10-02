@@ -1,5 +1,7 @@
 package org.ndx.aadarchi.technology.detector.loader;
 
+import java.nio.file.Path;
+
 import org.kohsuke.github.GitHub;
 
 /**
@@ -8,6 +10,10 @@ import org.kohsuke.github.GitHub;
  * Typically, Playwright BrowserContext will be stored in this very context
  */
 public interface ExtractionContext {
+	/**
+	 * @return path of the used cache folder
+	 */
+	Path getCache();
 	/**
 	 * Get github client
 	 * @return

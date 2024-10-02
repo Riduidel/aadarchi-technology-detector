@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
 import org.kohsuke.github.GitHub;
+import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
@@ -19,20 +20,18 @@ import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.WaitUntilState;
 
-public class MvnContext implements ExtractionContext {
+public class MvnContext extends AbstractContext implements ExtractionContext {
 	public static final Logger logger = Logger.getLogger(MvnContext.class.getName());
 	public final BrowserContext context;
 	private String artifactDetailsExtractor;
 	public final File mavenExecutable;
 	public final File mavenPropertiesCache;
-	private final GitHub github;
 
 	public MvnContext(BrowserContext context, File maven, Path cache, GitHub github) {
-		super();
+		super(cache, github);
 		this.context = context;
 		this.mavenExecutable  = maven;
 		this.mavenPropertiesCache = new File(cache.toAbsolutePath().toFile(), "maven/properties");
-		this.github = github;
 	}
 
 	public Page newPage() {
@@ -96,10 +95,5 @@ public class MvnContext implements ExtractionContext {
 
 	public static String getArtifactUrl(ArtifactDetails details, String mvnRepositoryServer) {
 		return String.format("%s/artifact/%s/%s", mvnRepositoryServer, details.getGroupId(), details.getArtifactId());
-	}
-
-	@Override
-	public GitHub getGithub() {
-		return github;
 	}
 }

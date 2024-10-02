@@ -106,8 +106,7 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				: Optional.empty()
 				;
 		// Now load artifacts into data structure
-		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile);
-		// Augment each artifact
+		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile, ArtifactDetails.LIST);
 		Collection<ArtifactDetails> augmented = Augmenters.augmentArtifacts(context, artifacts);
 		// Switch branch
 		// If branch doesn't exist yet, create an orphan one

@@ -1,6 +1,5 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,12 +7,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.apache.maven.artifact.Artifact;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.BasicArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
-import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.microsoft.playwright.Page;
 
 /**
@@ -52,7 +50,7 @@ public class LocalFileArtifactLoader extends BasicArtifactLoader<MvnContext> {
 		Set<ArtifactDetails> returned = new HashSet<ArtifactDetails>();
 		// Read the reference file
 		if(referenceFile.toFile().exists()) {
-			List<ArtifactDetails> entries = FileHelper.readFromFile(referenceFile.toFile());
+			List<ArtifactDetails> entries = FileHelper.readFromFile(referenceFile.toFile(), ArtifactDetails.LIST);
 			Page page = context.newPage();
 			entries.forEach(artifact -> returned.addAll(getArtifactInformations(page, artifact)));
 		} else {

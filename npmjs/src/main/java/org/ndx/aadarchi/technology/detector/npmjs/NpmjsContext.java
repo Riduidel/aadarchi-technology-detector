@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
+import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.DetailsFetchingContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
@@ -33,7 +35,7 @@ import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
 
-public class NpmjsContext implements DetailsFetchingContext {
+public class NpmjsContext extends AbstractContext implements DetailsFetchingContext {
 	public static final Logger logger = Logger.getLogger(NpmjsContext.class.getName());
 	/**
 	 * @see https://github.com/npm/registry/blob/main/docs/download-counts.md
@@ -43,10 +45,10 @@ public class NpmjsContext implements DetailsFetchingContext {
 
 	private FailsafeExecutor<Object> failsafe;
 	private HttpClient client;
-	private GitHub github;
-    public NpmjsContext(HttpClient client, GitHub github) {
+
+    public NpmjsContext(HttpClient client, Path cache, GitHub github) {
+    	super(cache, github);
     	this.client = client;
-    	this.github = github;
 	}
 	/**
 	 * Get all downloads on a given period, as defined by npmjs download api
@@ -130,9 +132,4 @@ public class NpmjsContext implements DetailsFetchingContext {
 						.build();
 				});
 	}
-	@Override
-	public GitHub getGithub() {
-		return github;
-	}
-
 }

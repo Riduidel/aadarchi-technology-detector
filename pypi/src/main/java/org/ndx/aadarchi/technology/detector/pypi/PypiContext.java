@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
+import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.DetailsFetchingContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
@@ -36,7 +38,7 @@ import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
 
-public class PypiContext implements DetailsFetchingContext {
+public class PypiContext extends AbstractContext implements DetailsFetchingContext {
 	public static class RateLimitReached extends RuntimeException {
 		
 	}
@@ -47,10 +49,9 @@ public class PypiContext implements DetailsFetchingContext {
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
 	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
 	
-	private GitHub github;
-	public PypiContext(HttpClient client, GitHub github) {
+	public PypiContext(HttpClient client, GitHub github, Path cache) {
+		super(cache, github);
 		this.client = client;
-		this.github = github;
 	}
 
 	@Override
@@ -267,10 +268,5 @@ public class PypiContext implements DetailsFetchingContext {
 		} catch (IOException | InterruptedException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	@Override
-	public GitHub getGithub() {
-		return github;
 	}
 }

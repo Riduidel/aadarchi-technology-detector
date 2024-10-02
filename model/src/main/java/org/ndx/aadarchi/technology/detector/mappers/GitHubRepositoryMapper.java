@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
+import org.ndx.aadarchi.technology.detector.augmenters.github.AddGitHubStarsAtPeriod;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import io.github.emilyydev.asp.ProvidesService;
@@ -23,10 +24,10 @@ public class GitHubRepositoryMapper implements MappingGenerator {
 				.filter(artifact -> artifact.getUrls()!=null)
 				.filter(artifact -> artifact.getUrls().containsKey("github.com"))
 				.map(artifact -> Map.entry(
-						artifact.getCoordinates() == null ? artifact.getName() : artifact.getCoordinates(),
+						artifact.getIdentifier(),
 						artifact.getUrls().get("github.com")))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (a, b) -> a, () -> new Properties()));
-		File output = new File(resources.toFile(), "github.repositories.properties");
+		File output = new File(resources.toFile(), AddGitHubStarsAtPeriod.GITHUB_REPOSITORIES);
 		writeProperties(output, mappings);
 	}
 }
