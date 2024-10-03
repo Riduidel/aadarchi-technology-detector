@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
@@ -16,8 +17,7 @@ import picocli.CommandLine.Command;
 
 @Command(name = "ExtractPopularNpmjsArtifacts", mixinStandardHelpOptions = true, version = "ExtractPopularNpmjsArtifacts 0.1",
         description = "ExtractPopularNpmjsArtifacts made with jbang")
-public
-class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader<NpmjsContext> {
+public class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader<NpmjsContext> {
 	public static final Logger logger = Logger.getLogger(ExtractPopularNpmjsArtifacts.class.getName());
 
 	public static void main(String... args) {
@@ -33,7 +33,7 @@ class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDownloader
 	
 
 	@Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(NpmjsContext context, Collection<ArtifactDetails> allDetails) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(NpmjsContext context, Collection<ArtifactDetails> allDetails, Date date) {
 		try {
 			String period = "last-month";
 			allDetails = context.getAllDownloadsForPeriod(allDetails, period);

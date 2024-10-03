@@ -97,6 +97,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	private SortedMap<String, VersionDetails> versions;
 	@JsonDeserialize(as=LinkedHashMap.class)
 	private Map<String, String> urls;
+	private GitHubDetails githubDetails;
 	
 	public ArtifactDetails() {}
 
@@ -116,7 +117,8 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			Boolean infered, 
 			List<String> repositories, 
 			SortedMap<String, VersionDetails> versions,
-			Map<String, String> urls) {
+			Map<String, String> urls,
+			GitHubDetails githubDetails) {
 		super();
 		this.groupId = groupId;
 		this.artifactId = artifactId;
@@ -134,6 +136,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.repositories = repositories;
 		this.versions = versions;
 		this.urls = urls;
+		this.githubDetails = githubDetails;
 	}
 
 	/**
@@ -464,5 +467,13 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	@JsonIgnore
 	public String getIdentifier() {
 		return getCoordinates() == null ? getName() : getCoordinates();
+	}
+
+	public GitHubDetails getGithubDetails() {
+		return githubDetails;
+	}
+
+	public void setGithubDetails(GitHubDetails githubDetails) {
+		this.githubDetails = githubDetails;
 	}
 }

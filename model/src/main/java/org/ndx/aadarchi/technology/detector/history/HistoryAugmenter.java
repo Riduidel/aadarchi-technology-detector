@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -100,6 +101,7 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				commit.getCommitterIdent().getWhen(),
 				commit.getShortMessage()));
 		git.checkout().setName(commit.getName()).call();
+		Date commitDate = commit.getAuthorIdent().getWhen();
 		// Don't forget to read schema!
 		Optional<String> schema = schemaFile.exists()
 				? Optional.of(FileUtils.readFileToString(schemaFile, "UTF-8"))
@@ -107,7 +109,7 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				;
 		// Now load artifacts into data structure
 		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile, ArtifactDetails.LIST);
-		Collection<ArtifactDetails> augmented = Augmenters.augmentArtifacts(context, artifacts);
+		Collection<ArtifactDetails> augmented = Augmenters.augmentArtifacts(context, artifacts, commitDate);
 		// Switch branch
 		// If branch doesn't exist yet, create an orphan one
 		// (for more details, see https://stackoverflow.com/a/59162735/15619)
@@ -139,6 +141,7 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 			.setAuthor(commiter)
 			.setCommitter(commiter)
 //			.setOnly(commitedFile)
+			.setAll(true)
 			.setAllowEmpty(true)
 			.setMessage(commitMessage)
 			.call();

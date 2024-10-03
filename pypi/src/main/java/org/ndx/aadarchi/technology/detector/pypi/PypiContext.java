@@ -135,13 +135,11 @@ public class PypiContext extends AbstractContext implements DetailsFetchingConte
 			Map<String, String> urls = (Map<String, String>) info.get("project_urls");
 			if(urls==null || urls.isEmpty()) {
 				Map<String, String> value = new TreeMap<String, String>();
-				if(info.containsKey("project_url")) {
-					String url = (String) info.get("project_url");
-					value.put(Utils.getDomain(url), url);
-				}
-				if(info.containsKey("package_url")) {
-					String url = (String) info.get("package_url");
-					value.put(Utils.getDomain(url), url);
+				for(String key : Arrays.asList("project_url", "package_url")) {
+					if(info.containsKey(key)) {
+						String url = (String) info.get(key);
+						value.put(Utils.getDomain(url), url);
+					}
 				}
 				builder = builder.urls(value);
 			} else {

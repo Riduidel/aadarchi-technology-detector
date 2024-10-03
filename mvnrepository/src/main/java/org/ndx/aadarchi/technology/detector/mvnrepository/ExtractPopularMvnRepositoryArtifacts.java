@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -83,7 +84,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 
 
     @Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations, Date date) {
 		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()
@@ -100,7 +101,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 											new TreeMap<String, VersionDetails>(versions));
 								}
 								BeanUtils.populate(updated, detailsMap);
-								updated = new MvnInfosAugmenter().augment(context, updated);
+								updated = new MvnInfosAugmenter().augment(context, updated, date);
 								resolvedArtifacts.put(artifactDetails, updated);
 							} catch(InvocationTargetException | IllegalAccessException e) {
 								throw new RuntimeException(e);

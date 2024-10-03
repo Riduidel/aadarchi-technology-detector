@@ -2,10 +2,12 @@ package org.ndx.aadarchi.technology.detector.augmenters.github;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
-import java.util.Properties;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -18,7 +20,7 @@ import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
-import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
+import org.ndx.aadarchi.technology.detector.model.GitHubDetails;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 
@@ -28,47 +30,65 @@ import io.github.emilyydev.asp.ProvidesService;
 public class AddGitHubStarsAtPeriod implements Augmenter {
 	private static final Logger logger = Logger.getLogger(AddGitHubStarsAtPeriod.class.getName());
 	
-	public static final String GITHUB_REPOSITORIES = "github.repositories.properties";
-
-	private final Properties githubProjects;
-
-	{
-		githubProjects = new Properties();
-		try(InputStream input = AddGitHubStarsAtPeriod.class.getClassLoader().getResourceAsStream(GITHUB_REPOSITORIES)) {
-			githubProjects.load(input);
-		} catch (IOException e) {
-			throw new RuntimeException("Can't read "+GITHUB_REPOSITORIES, e);
-		}
+	@Override
+	public int order() {
+		return AddGitHub.ADD_GITHUB_OBJECT+1;
 	}
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source) {
-		if(source.getUrls()!=null && source.getUrls().containsKey("github.com")) {
-			return doAugment(context, source, source.getUrls().get("github.com").toString());
-		} else if(githubProjects.containsKey(source.getCoordinates())) {
-			return doAugment(context, source,githubProjects.getProperty(source.getCoordinates()));
-		} else {
-			logger.warning(String.format("There doesn't seems to be any github repo for "+source.getIdentifier()));
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date) {
+		if(source.getGithubDetails()!=null) {
+			return doAugment(context, source, date);
 		}
 		return source;
 	}
 	
-	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, String githubRepositoryUrl) {
-		ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
-		List<Stargazer> allStarGazers = getAllStargazers(context, source, githubRepositoryUrl);
-		
-		return builder.build();
+	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, Date date) {
+		GitHubDetails githubDetails = source.getGithubDetails();
+		if(githubDetails.getStargazers().isEmpty()) {
+			// We have a special edge case to distinguish between 
+			// history rebuilding and standard data fetching.
+			// When getting this month stargazers, it's way faster to ask
+			// GitHub directly instead of getting the precise list of stargazers
+			LocalDate now = LocalDate.now();
+			LocalDate initial = LocalDate.from(date.toInstant());
+			Period period = Period.between(initial, now);
+			if(period.toTotalMonths()>0) {
+				extractStargazersHistory(context, source, date, githubDetails);
+			} else {
+				extractStargazersToday(context, source, githubDetails);
+			}
+		}
+		return source;
 	}
 
-	private List<Stargazer> getAllStargazers(ExtractionContext context, ArtifactDetails source, String githubRepositoryUrl) {
+	private void extractStargazersToday(ExtractionContext context, ArtifactDetails source, GitHubDetails githubDetails) {
+		try {
+			GHRepository repository = context.getGithub().getRepository(source.getGithubDetails().getPath());
+			githubDetails.setStargazers(Optional.of(repository.getStargazersCount()));
+		} catch (IOException e) {
+			throw new RuntimeException("TODO handle IOException", e);
+		}
+	}
+
+	private void extractStargazersHistory(ExtractionContext context, ArtifactDetails source, Date date,
+			GitHubDetails githubDetails) {
+		List<Stargazer> allStargazers = getAllStargazers(context, source, githubDetails);
+		long numberOfStargazersBefore = allStargazers.stream()
+				.filter(s -> s.getStarredAt().compareTo(date)<0)
+				.count();
+		githubDetails.setStargazers(Optional.of((int) numberOfStargazersBefore));
+	}
+
+	private List<Stargazer> getAllStargazers(ExtractionContext context, ArtifactDetails source, GitHubDetails details) {
 		File cache = context.getCache()
 				.resolve("github")
-				.resolve(source.getIdentifier().replace(':', '-').replace('.', '-'))
+				.resolve(details.getPath())
 				.resolve("stargazers.json")
 				.toFile();
 		cache.getParentFile().mkdirs();
 		if(!cache.exists() || cache.lastModified()<System.currentTimeMillis()-Duration.ofDays(7).toMillis()) {
-			List<Stargazer> stargazers = doGetAllStargazers(context, getGitHubPath(githubRepositoryUrl));
+			List<Stargazer> stargazers = doGetAllStargazers(context, details.getPath());
 			try {
 				FileHelper.writeToFile(stargazers, cache);
 			} catch (IOException e) {
@@ -80,12 +100,6 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		} catch (IOException e) {
 			throw new RuntimeException("Can't read stargazers from "+cache.getAbsolutePath(), e);
 		}
-	}
-
-	private String getGitHubPath(String githubRepositoryUrl) {
-		String GITHUB = "github.com/";
-		String returned = githubRepositoryUrl.substring(githubRepositoryUrl.indexOf(GITHUB)+GITHUB.length());
-		return returned;
 	}
 
 	private List<Stargazer> doGetAllStargazers(ExtractionContext context, String githubRepositoryUrl) {

@@ -3,8 +3,10 @@ package org.ndx.aadarchi.technology.detector.helper;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -21,10 +23,8 @@ import org.ndx.aadarchi.technology.detector.mappers.Mappers;
 import org.ndx.aadarchi.technology.detector.mappers.MappingGenerator;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.SimpleType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchemaGenerator;
 
@@ -72,7 +72,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * <li>If history generate is required, calls {@link #generateHistoryOf(ExtractionContext, Collection)}
 	 * <li>If no history generation is needed
 	 * <ul>
-	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection)}
+	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection, Date)}
 	 * <li>Write results to file using {@link #writeDetails(Collection)}
 	 * </ul>
 	 * </ul>
@@ -92,8 +92,12 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 					throw new RuntimeException("Can't read file", e);
 				}
 			} else {
-		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
-		    	artifactDetails = Augmenters.augmentArtifacts(context, artifactDetails);
+				Date firstDayOfMonth = Date.from(LocalDate.now()
+						.withDayOfMonth(1)
+						.atStartOfDay(ZoneOffset.UTC)
+						.toInstant());
+		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts, firstDayOfMonth);
+				artifactDetails = Augmenters.augmentArtifacts(context, artifactDetails, firstDayOfMonth);
 		    	writeDetails(artifactDetails);
 			}
 	    	if(generateMappingFiles) {
@@ -122,7 +126,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		}
 	}
 
-	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts);
+	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts, Date date);
 
 	protected void generateHistoryOf(Context context, Collection<ArtifactDetails> artifacts) {
 		try {
