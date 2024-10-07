@@ -1,8 +1,10 @@
 package org.ndx.aadarchi.technology.detector.mappers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -25,6 +27,17 @@ public interface MappingGenerator {
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(String.format("Unable to write artifacts in %s", output.getAbsolutePath()), e);
+		}
+	}
+
+
+	public default Properties withPropertiesLoadedFrom(File output) {
+		Properties existing = new Properties();
+		try(InputStream input = new FileInputStream(output)) {
+			existing.load(input);
+			return existing;
+		} catch (IOException e) {
+			throw new RuntimeException("Can't read properties from "+output.getAbsolutePath(), e);
 		}
 	}
 }
