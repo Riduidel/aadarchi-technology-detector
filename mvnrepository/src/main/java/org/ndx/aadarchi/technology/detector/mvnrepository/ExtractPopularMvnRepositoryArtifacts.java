@@ -46,6 +46,9 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Option(names = {"-m", "--maven-path"}, description = "The local maven executable path", 
     		required = true) File maven;
 
+    @Option(names= {"--visible-browser"}, description="Activate this flag to have the Chrome window visible")
+	private boolean visibleBrowser;
+
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
         System.exit(exitCode);
@@ -132,9 +135,12 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     	Browser chromium = playwright.chromium().launch(
     			new BrowserType.LaunchOptions()
     				.setHeadless(false)
+//    				.setHeadless(!visibleBrowser)
     			);
-    	BrowserContext context = chromium.newContext(new NewContextOptions()
-    			.setJavaScriptEnabled(false));
+    	BrowserContext context = chromium.newContext(
+    			new NewContextOptions()
+    				.setJavaScriptEnabled(false)
+    				.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"));
 		// Disable all resources coming from any domain that is not
 		// mvnrepository or wayback machine
 //		context.route(url -> !(url.contains("mvnrepository.com") || url.contains("web.archive.com")), 

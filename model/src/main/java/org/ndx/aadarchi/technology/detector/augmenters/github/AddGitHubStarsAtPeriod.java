@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -67,7 +68,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 			GHRepository repository = context.getGithub().getRepository(source.getGithubDetails().getPath());
 			githubDetails.setStargazers(Optional.of(repository.getStargazersCount()));
 		} catch (IOException e) {
-			throw new RuntimeException("TODO handle IOException", e);
+			logger.log(Level.WARNING, String.format("Can't get stargazers count for artifact %s (supposedly at %s)", source.getCoordinates(), githubDetails.getPath()), e);
 		}
 	}
 
