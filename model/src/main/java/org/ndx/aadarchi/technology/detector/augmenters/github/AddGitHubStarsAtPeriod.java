@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneOffset;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.kohsuke.github.GHFileNotFoundException;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHStargazer;
 import org.kohsuke.github.PagedIterable;
@@ -91,10 +93,12 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		cache.getParentFile().mkdirs();
 		if(!cache.exists() || cache.lastModified()<System.currentTimeMillis()-Duration.ofDays(7).toMillis()) {
 			List<Stargazer> stargazers = doGetAllStargazers(context, details.getPath());
-			try {
-				FileHelper.writeToFile(stargazers, cache);
-			} catch (IOException e) {
-				throw new RuntimeException("Can't write stargazers to "+cache.getAbsolutePath(), e);
+			if(!stargazers.isEmpty()) {
+				try {
+					FileHelper.writeToFile(stargazers, cache);
+				} catch (IOException e) {
+					throw new RuntimeException("Can't write stargazers to "+cache.getAbsolutePath(), e);
+				}
 			}
 		}
 		try {
@@ -123,6 +127,9 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 					.sorted()
 					.collect(Collectors.toList());
 			return allStargazers;
+		} catch (GHFileNotFoundException e) {
+			logger.log(Level.SEVERE, "Weirdly, repository "+githubRepositoryUrl+" doesn't seems to exist");
+			return Collections.emptyList();
 		} catch (IOException e) {
 			throw new RuntimeException("TODO handle IOException", e);
 		} finally {
