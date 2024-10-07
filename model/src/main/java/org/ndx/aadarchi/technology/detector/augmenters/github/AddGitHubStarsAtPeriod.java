@@ -93,12 +93,10 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		cache.getParentFile().mkdirs();
 		if(!cache.exists() || cache.lastModified()<System.currentTimeMillis()-Duration.ofDays(7).toMillis()) {
 			List<Stargazer> stargazers = doGetAllStargazers(context, details.getPath());
-			if(!stargazers.isEmpty()) {
-				try {
-					FileHelper.writeToFile(stargazers, cache);
-				} catch (IOException e) {
-					throw new RuntimeException("Can't write stargazers to "+cache.getAbsolutePath(), e);
-				}
+			try {
+				FileHelper.writeToFile(stargazers, cache);
+			} catch (IOException e) {
+				throw new RuntimeException("Can't write stargazers to "+cache.getAbsolutePath(), e);
 			}
 		}
 		try {
@@ -112,6 +110,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		try {
 			logger.info("Fetching stargazers history of "+githubRepositoryUrl);
 			GHRepository repository = context.getGithub().getRepository(githubRepositoryUrl);
+			int total = repository.getStargazersCount();
 			PagedIterable<GHStargazer> stargazers = repository
 					.listStargazers2()
 					.withPageSize(100);
@@ -120,7 +119,8 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 					.peek(consumer -> {
 						int current = atomic.incrementAndGet();
 						if(current%100==0) {
-							logger.info(String.format("Fetched %d stargazers of %s", current, githubRepositoryUrl));
+							logger.info(String.format("Fetched %d/%d stargazers of %s", 
+									current, total, githubRepositoryUrl));
 						}
 					})
 					.map(s -> new Stargazer(s))
