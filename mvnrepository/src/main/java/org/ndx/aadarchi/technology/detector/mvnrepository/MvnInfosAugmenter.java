@@ -92,7 +92,7 @@ public class MvnInfosAugmenter implements Augmenter {
 				logger.log(Level.WARNING, "Unable to prefil properties for "+source.getCoordinates(), e);
 			}
 		} else {
-			logger.warning(
+			logger.fine(
 					String.format(
 							"Artifact %s is not present in maven central but in %s."
 							+ "Please update maven settings to add the required repositories",
@@ -107,7 +107,7 @@ public class MvnInfosAugmenter implements Augmenter {
 				updated.getCoordinates()
 				.replace(":", "/")
 				.replace(".", "/")
-				+(updated.getVersions().isEmpty() ? "" : "."+updated.getVersions().lastKey()) 
+				+(updated.getVersions()==null || updated.getVersions().isEmpty() ? "" : "."+updated.getVersions().lastKey()) 
 				+".properties");
 		if(!propertiesCache.exists()) {
 			propertiesCache.getParentFile().mkdirs();
@@ -144,7 +144,9 @@ public class MvnInfosAugmenter implements Augmenter {
 
 
 	private Map<String, String> getInterestingProperties(MvnContext context, ArtifactDetails artifact) {
-		logger.info("Fetching interesting properties of "+artifact.getCoordinates()+ (artifact.getVersions().isEmpty() ? "" :  ":"+artifact.getVersions().lastKey()));
+		logger.info("Fetching interesting properties of "
+				+artifact.getCoordinates()
+				+ (artifact.getVersions()==null || artifact.getVersions().isEmpty() ? "" :  ":"+artifact.getVersions().lastKey()));
 		Map<String, String> returned = new TreeMap<String, String>();
 		for(String text : Arrays.asList("project.url", "project.description", "project.scm.url")) {
 			String value = executeMavenCommand(context, Optional.empty(), 
