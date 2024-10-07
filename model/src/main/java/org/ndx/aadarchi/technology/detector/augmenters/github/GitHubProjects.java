@@ -38,7 +38,7 @@ public class GitHubProjects {
 	public static String getGitHubPath(String githubRepositoryUrl) {
 		String GITHUB = "github.com/";
 		String returned = githubRepositoryUrl.substring(githubRepositoryUrl.indexOf(GITHUB)+GITHUB.length());
-		String[] parts = returned.split("/");
+		String[] parts = returned.split("[/#]");
 		if(parts.length<=2) {
 			return returned;
 		} else {
