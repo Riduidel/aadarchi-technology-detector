@@ -1,9 +1,9 @@
 package org.ndx.aadarchi.technology.detector.pypi;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -70,7 +70,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	protected Collection<ArtifactDetails> injectDownloadInfosFor(PypiContext context,
-			Collection<ArtifactDetails> allDetails, Date date) {
+			Collection<ArtifactDetails> allDetails, LocalDate date) {
 			String period = "last-month";
 			allDetails = getAllDownloadsForPeriod(context, allDetails, period);
 			return allDetails;

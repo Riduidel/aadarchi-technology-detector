@@ -1,5 +1,6 @@
 package org.ndx.aadarchi.technology.detector.augmenters.github;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class AddGitHub implements Augmenter {
 	}
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date) {
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		if(source.getGithubDetails()==null) {
 			if(GitHubProjects.contains(source)) {
 				return doAugment(context, source,GitHubProjects.getGitHubPath(source), date);
@@ -42,7 +43,7 @@ public class AddGitHub implements Augmenter {
 		return source;
 	}
 
-	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, String path, Date date) {
+	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, String path, LocalDate date) {
 		ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
 		return builder.githubDetails(GitHubDetailsBuilder.gitHubDetails()
 					.stargazers(Optional.empty())

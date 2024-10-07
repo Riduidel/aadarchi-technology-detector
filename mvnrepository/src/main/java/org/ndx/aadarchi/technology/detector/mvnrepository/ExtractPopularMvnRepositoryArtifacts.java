@@ -3,9 +3,9 @@ package org.ndx.aadarchi.technology.detector.mvnrepository;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,7 +84,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 
 
     @Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations, Date date) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations, LocalDate date) {
 		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()

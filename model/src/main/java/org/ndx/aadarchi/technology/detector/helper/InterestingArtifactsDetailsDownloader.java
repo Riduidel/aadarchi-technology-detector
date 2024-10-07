@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Collection;
-import java.util.Date;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
@@ -72,7 +71,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * <li>If history generate is required, calls {@link #generateHistoryOf(ExtractionContext, Collection)}
 	 * <li>If no history generation is needed
 	 * <ul>
-	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection, Date)}
+	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection, LocalDate)}
 	 * <li>Write results to file using {@link #writeDetails(Collection)}
 	 * </ul>
 	 * </ul>
@@ -92,10 +91,8 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 					throw new RuntimeException("Can't read file", e);
 				}
 			} else {
-				Date firstDayOfMonth = Date.from(LocalDate.now()
-						.withDayOfMonth(1)
-						.atStartOfDay(ZoneOffset.UTC)
-						.toInstant());
+				LocalDate firstDayOfMonth = LocalDate.now()
+						.withDayOfMonth(1);
 		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts, firstDayOfMonth);
 				artifactDetails = Augmenters.augmentArtifacts(context, artifactDetails, firstDayOfMonth);
 		    	writeDetails(artifactDetails);
@@ -126,7 +123,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		}
 	}
 
-	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts, Date date);
+	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts, LocalDate date);
 
 	protected void generateHistoryOf(Context context, Collection<ArtifactDetails> artifacts) {
 		try {

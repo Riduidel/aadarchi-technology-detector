@@ -1,6 +1,6 @@
 package org.ndx.aadarchi.technology.detector.augmenters;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -26,5 +26,5 @@ public interface Augmenter {
 	 * @param date date at which we want to have our artifact augmented
 	 * @return an updated artifact, typically created with {@link ArtifactDetailsBuilder#toBuilder(ArtifactDetails)}
 	 */
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date);
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date);
 }

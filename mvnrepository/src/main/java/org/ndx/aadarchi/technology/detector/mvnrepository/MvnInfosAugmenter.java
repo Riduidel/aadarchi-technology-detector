@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public class MvnInfosAugmenter implements Augmenter {
 		}
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date) {
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
 		if(source.getCoordinates()==null) {
 			logger.severe(String.format("Unable to add maven infos for %s\n(coordinates are null)", source));

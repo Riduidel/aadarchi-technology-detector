@@ -1,5 +1,6 @@
 package org.ndx.aadarchi.technology.detector.augmenters;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -27,14 +28,14 @@ public class Augmenters {
 	 }
 
 	 public static <Context extends ExtractionContext> Collection<ArtifactDetails> augmentArtifacts(Context context,
-			Collection<ArtifactDetails> artifacts, Date date) {
+			Collection<ArtifactDetails> artifacts, LocalDate date) {
 		List<ArtifactDetails> augmented = artifacts.stream()
 			.map(a -> augmentArtifact(context, a, date))
 			.collect(Collectors.toList());
 		return augmented;
 	}
 
-	private static <Context extends ExtractionContext> ArtifactDetails augmentArtifact(Context context, ArtifactDetails artifactdetails, Date date) {
+	private static <Context extends ExtractionContext> ArtifactDetails augmentArtifact(Context context, ArtifactDetails artifactdetails, LocalDate date) {
 		for(Augmenter a : Augmenters.getAugmenters()) {
 			artifactdetails = a.augment(context, artifactdetails, date);
 		}

@@ -1,6 +1,6 @@
 package org.ndx.aadarchi.technology.detector.augmenters.stackoverflow;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
@@ -16,7 +16,7 @@ import io.github.emilyydev.asp.ProvidesService;
 public class StackOverflowTagLoader implements Augmenter {
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date) {
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		return source;
 	}
 

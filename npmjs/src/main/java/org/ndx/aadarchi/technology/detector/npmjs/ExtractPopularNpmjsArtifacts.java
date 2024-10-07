@@ -1,9 +1,9 @@
 package org.ndx.aadarchi.technology.detector.npmjs;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.logging.Logger;
 
 import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
@@ -33,7 +33,7 @@ public class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDow
 	
 
 	@Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(NpmjsContext context, Collection<ArtifactDetails> allDetails, Date date) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(NpmjsContext context, Collection<ArtifactDetails> allDetails, LocalDate date) {
 		try {
 			String period = "last-month";
 			allDetails = context.getAllDownloadsForPeriod(allDetails, period);

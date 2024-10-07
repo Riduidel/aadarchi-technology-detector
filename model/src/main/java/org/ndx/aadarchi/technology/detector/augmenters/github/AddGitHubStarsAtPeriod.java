@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,14 +37,14 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 	}
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, Date date) {
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		if(source.getGithubDetails()!=null) {
 			return doAugment(context, source, date);
 		}
 		return source;
 	}
 	
-	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, Date date) {
+	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		GitHubDetails githubDetails = source.getGithubDetails();
 		if(githubDetails.getStargazers().isEmpty()) {
 			// We have a special edge case to distinguish between 
@@ -51,8 +52,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 			// When getting this month stargazers, it's way faster to ask
 			// GitHub directly instead of getting the precise list of stargazers
 			LocalDate now = LocalDate.now();
-			LocalDate initial = LocalDate.from(date.toInstant());
-			Period period = Period.between(initial, now);
+			Period period = Period.between(date, now);
 			if(period.toTotalMonths()>0) {
 				extractStargazersHistory(context, source, date, githubDetails);
 			} else {
@@ -71,11 +71,12 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		}
 	}
 
-	private void extractStargazersHistory(ExtractionContext context, ArtifactDetails source, Date date,
+	private void extractStargazersHistory(ExtractionContext context, ArtifactDetails source, LocalDate date,
 			GitHubDetails githubDetails) {
+		Date old = Date.from(date.atStartOfDay(ZoneOffset.UTC).toInstant());
 		List<Stargazer> allStargazers = getAllStargazers(context, source, githubDetails);
 		long numberOfStargazersBefore = allStargazers.stream()
-				.filter(s -> s.getStarredAt().compareTo(date)<0)
+				.filter(s -> s.getStarredAt().compareTo(old)<0)
 				.count();
 		githubDetails.setStargazers(Optional.of((int) numberOfStargazersBefore));
 	}

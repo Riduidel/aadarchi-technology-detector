@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -101,7 +103,10 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				commit.getCommitterIdent().getWhen(),
 				commit.getShortMessage()));
 		git.checkout().setName(commit.getName()).call();
-		Date commitDate = commit.getAuthorIdent().getWhen();
+		LocalDate commitDate = 
+				LocalDate.ofInstant( 
+						commit.getAuthorIdent().getWhen().toInstant(),
+						ZoneOffset.UTC);
 		// Don't forget to read schema!
 		Optional<String> schema = schemaFile.exists()
 				? Optional.of(FileUtils.readFileToString(schemaFile, "UTF-8"))
