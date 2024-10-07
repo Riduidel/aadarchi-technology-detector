@@ -23,6 +23,8 @@ public class BadlyNamedArtifactsMapper implements MappingGenerator {
 	public void generateMapping(Collection<ArtifactDetails> artifactDetails, Path resources) {
 		Properties mappings = artifactDetails.stream()
 			.filter(artifact -> artifact.getCoordinates()!=null)
+			.filter(artifact -> artifact.getGroupId()!=null)
+			.filter(artifact -> artifact.getArtifactId()!=null)
 			.map(artifact ->
 				Map.entry(
 					String.format("%s.%s", artifact.getGroupId(), artifact.getArtifactId()), 

@@ -4,11 +4,15 @@ import java.util.Optional;
 
 import org.jilt.Builder;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Builder(toBuilder = "toBuilder")
 public class GitHubDetails {
 	private String path;
 	private Optional<Integer> stargazers = Optional.empty();
-	public GitHubDetails(String path, Optional<Integer> stargazers) {
+	@JsonCreator
+	public GitHubDetails(@JsonProperty("path") String path, @JsonProperty("stargazers") Optional<Integer> stargazers) {
 		super();
 		this.path = path;
 		this.stargazers = stargazers;

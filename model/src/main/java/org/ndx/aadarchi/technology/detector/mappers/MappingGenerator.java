@@ -33,11 +33,13 @@ public interface MappingGenerator {
 
 	public default Properties withPropertiesLoadedFrom(File output) {
 		Properties existing = new Properties();
-		try(InputStream input = new FileInputStream(output)) {
-			existing.load(input);
-			return existing;
-		} catch (IOException e) {
-			throw new RuntimeException("Can't read properties from "+output.getAbsolutePath(), e);
+		if(output.exists()) {
+			try(InputStream input = new FileInputStream(output)) {
+				existing.load(input);
+			} catch (IOException e) {
+				throw new RuntimeException("Can't read properties from "+output.getAbsolutePath(), e);
+			}
 		}
+		return existing;
 	}
 }

@@ -132,3 +132,6 @@ fabric.properties
 **/.gitignore
 .idea/
 .cache/
+
+*/artifacts.json
+*/schema.json

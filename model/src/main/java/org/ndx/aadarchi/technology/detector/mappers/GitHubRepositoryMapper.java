@@ -1,15 +1,11 @@
 package org.ndx.aadarchi.technology.detector.mappers;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.ndx.aadarchi.technology.detector.augmenters.github.GitHubProjects;
@@ -38,11 +34,16 @@ public class GitHubRepositoryMapper implements MappingGenerator {
 	}
 
 	private boolean artifactInInput(Properties input, ArtifactDetails artifact) {
-		if(input.containsKey(artifact.getCoordinates()))
-			return input.getProperty(artifact.getCoordinates()).equals(artifact.getUrls().get("github.com"));
-		else if(input.containsKey(artifact.getGroupId()))
-			return input.getProperty(artifact.getGroupId()).equals(artifact.getUrls().get("github.com"));
-		else
-			return false;
+		for(Function<ArtifactDetails, String> extractor : ArtifactDetails.GITHUB_REPO_EXTRACTORS) {
+			String key = extractor.apply(artifact);
+			if(key!=null) {
+				if(input.containsKey(key)) {
+					if(input.getProperty(key).equals(artifact.getUrls().get("github.com"))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

@@ -3,6 +3,7 @@ package org.ndx.aadarchi.technology.detector.augmenters.github;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.function.Function;
 
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
@@ -13,10 +14,12 @@ public class GitHubProjects {
 
 	static {
 		githubProjects = new Properties();
-		try(InputStream input = GitHubProjects.class.getClassLoader().getResourceAsStream(GITHUB_REPOSITORIES)) {
-			githubProjects.load(input);
-		} catch (IOException e) {
-			throw new RuntimeException("Can't read "+GITHUB_REPOSITORIES, e);
+		if(GitHubProjects.class.getClassLoader().getResource(GITHUB_REPOSITORIES)!=null) {
+			try(InputStream input = GitHubProjects.class.getClassLoader().getResourceAsStream(GITHUB_REPOSITORIES)) {
+				githubProjects.load(input);
+			} catch (IOException e) {
+				throw new RuntimeException("Can't read "+GITHUB_REPOSITORIES, e);
+			}
 		}
 	}
 
@@ -25,14 +28,11 @@ public class GitHubProjects {
 	}
 
 	public static String getGitHubPath(ArtifactDetails details) {
-		if(get().containsKey(details.getCoordinates())) {
-			return getGitHubPath(get().getProperty(details.getCoordinates()));
-		} else if(get().containsKey(details.getGroupId())) {
-			return getGitHubPath(get().getProperty(details.getGroupId()));
-		} else {
-			return null;
+		for(Function<ArtifactDetails, String> extractor : ArtifactDetails.GITHUB_REPO_EXTRACTORS) {
+			String key = extractor.apply(details);
+			return getGitHubPath(get().getProperty(key));
 		}
-		
+		return null;
 	}
 
 	public static String getGitHubPath(String githubRepositoryUrl) {
@@ -47,7 +47,12 @@ public class GitHubProjects {
 	}
 
 	public static boolean contains(ArtifactDetails source) {
-		return get().containsKey(source.getCoordinates()) || get().containsKey(source.getGroupId());
+		for(Function<ArtifactDetails, String> extractor : ArtifactDetails.GITHUB_REPO_EXTRACTORS) {
+			String key = extractor.apply(source);
+			if(key!=null && get().containsKey(key))
+				return true;
+		}
+		return false;
 	}
 
 }

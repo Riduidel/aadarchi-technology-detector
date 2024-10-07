@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -15,6 +16,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
@@ -76,6 +77,10 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		
 	};
 	public static final TypeReference<List<ArtifactDetails>> LIST =  new TypeReference<List<ArtifactDetails>>() {};
+	public static final List<Function<ArtifactDetails, String>> GITHUB_REPO_EXTRACTORS = Arrays.asList(
+			ArtifactDetails::getCoordinates,
+			ArtifactDetails::getGroupId,
+			ArtifactDetails::getName);
 	
 	private String groupId;
 	private String artifactId;
@@ -435,7 +440,8 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	}
 	
 	public void setCoordinates(String c) {
-		if(c.contains(":")) {
+		if(c==null) {
+		} else if(c.contains(":")) {
 			String[] parts = c.split(":");
 			if(parts.length!=2)
 				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
@@ -461,7 +467,10 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		if(getArtifactId()!=null) {
 			returned.append(':').append(getArtifactId());
 		}
-		return returned.toString();
+		if(returned.isEmpty())
+			return null;
+		else
+			return returned.toString();
 	}
 
 	@JsonIgnore
