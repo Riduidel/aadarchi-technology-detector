@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
@@ -19,6 +20,7 @@ import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.github.fge.lambdas.Throwing;
 
 class HistoryBuilder extends BaseHistoryBuilder<NpmjsContext> {
@@ -63,7 +65,7 @@ class HistoryBuilder extends BaseHistoryBuilder<NpmjsContext> {
     	SortedMap<LocalDate, File> aggregatedStatuses = initial.datesUntil(LocalDate.now(), Period.ofMonths(1))
     		.map(Throwing.function(month -> Map.entry(month, generateHistoryAtMonth(context, allDetails, month))))
     		.filter(Throwing.predicate(entry -> {
-    			Collection<ArtifactDetails> infos = FileHelper.readFromFile(entry.getValue());
+    			Collection<ArtifactDetails> infos = FileHelper.readFromFile(entry.getValue(), ArtifactDetails.LIST);
     			return !infos.isEmpty();
     		}))
 //	    		.forEach(entry -> logger.info("Got downloads at "+entry.getKey()))

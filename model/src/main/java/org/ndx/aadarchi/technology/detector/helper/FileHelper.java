@@ -23,20 +23,20 @@ public class FileHelper {
 		objectMapper = new ObjectMapper()
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 				;
+		objectMapper.findAndRegisterModules();
 	}
 
 	
-	public static List<ArtifactDetails> readFromFile(File file) throws IOException {
+	public static <Type> Type readFromFile(File file, TypeReference<Type> type) throws IOException {
 		return objectMapper.readValue(FileUtils.readFileToString(file, "UTF-8"),
-				new TypeReference<List<ArtifactDetails>>() {});
+				type);
 	}
 
-	public static void writeToFile(Collection<ArtifactDetails> allDetails, File file) throws IOException {
+	public static void writeToFile(Object allDetails, File file) throws IOException {
 		logger.fine("Exporting artifacts to " + file.getAbsolutePath());
 		FileUtils.write(file, 
 				objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(allDetails), 
 				"UTF-8");
-		logger.info(String.format("Exported %d artifacts to %s", allDetails.size(), file));
 	}
 
 	public static ObjectMapper getObjectMapper() {

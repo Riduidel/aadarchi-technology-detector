@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.api.AddCommand;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
@@ -21,15 +23,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.InvalidRefNameException;
 import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
 import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.errors.StopWalkException;
 import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
-import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
@@ -107,17 +103,18 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 				commit.getCommitterIdent().getWhen(),
 				commit.getShortMessage()));
 		git.checkout().setName(commit.getName()).call();
+		LocalDate commitDate = 
+				LocalDate.ofInstant( 
+						commit.getAuthorIdent().getWhen().toInstant(),
+						ZoneOffset.UTC);
 		// Don't forget to read schema!
 		Optional<String> schema = schemaFile.exists()
 				? Optional.of(FileUtils.readFileToString(schemaFile, "UTF-8"))
 				: Optional.empty()
 				;
 		// Now load artifacts into data structure
-		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile);
-		// Augment each artifact
-		List<ArtifactDetails> augmented = artifacts.stream()
-			.map(a -> augmentArtifact(context, a))
-			.collect(Collectors.toList());
+		List<ArtifactDetails> artifacts = FileHelper.readFromFile(artifactsFile, ArtifactDetails.LIST);
+		Collection<ArtifactDetails> augmented = Augmenters.augmentArtifacts(context, artifacts, commitDate);
 		// Switch branch
 		// If branch doesn't exist yet, create an orphan one
 		// (for more details, see https://stackoverflow.com/a/59162735/15619)
@@ -149,15 +146,9 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 			.setAuthor(commiter)
 			.setCommitter(commiter)
 //			.setOnly(commitedFile)
+			.setAll(true)
 			.setAllowEmpty(true)
 			.setMessage(commitMessage)
 			.call();
-	}
-
-	private ArtifactDetails augmentArtifact(Context context, ArtifactDetails artifactdetails) {
-		for(Augmenter a : Augmenters.getAugmenters()) {
-			artifactdetails = a.augment(context, artifactdetails);
-		}
-		return artifactdetails;
 	}
 }

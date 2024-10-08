@@ -3,9 +3,12 @@ package org.ndx.aadarchi.technology.detector.loader;
 import java.io.File;
 import java.time.Duration;
 import java.util.Collection;
+import java.util.List;
 
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 /**
  * Load a list of artifacts from a given file
@@ -21,7 +24,7 @@ public interface ArtifactLoader<Context extends ExtractionContext> {
 		if(!cachedArtifacts.exists()) {
 			FileHelper.writeToFile(doLoadArtifacts(context), cachedArtifacts);
 		}
-		return FileHelper.readFromFile(cachedArtifacts);
+		return FileHelper.readFromFile(cachedArtifacts, ArtifactDetails.LIST);
 	}
 
 	public default boolean isCachedArtifactsObsolete(File cachedArtifacts) {

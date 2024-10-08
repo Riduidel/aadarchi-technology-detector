@@ -94,7 +94,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException,
 			GitAPIException {
 		logger.info("Creating commit at " + date);
-		Collection<ArtifactDetails> value = FileHelper.readFromFile(inputFile);
+		Collection<ArtifactDetails> value = FileHelper.readFromFile(inputFile, ArtifactDetails.LIST);
 		FileUtils.copyFile(inputFile, commitedFilePath);
 		// Then create a commit in the history repository
 		commitArtifacts(git, date, commitedFilePath,
