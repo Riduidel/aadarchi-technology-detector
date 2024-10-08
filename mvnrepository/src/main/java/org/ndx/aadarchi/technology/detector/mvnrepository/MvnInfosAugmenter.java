@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class MvnInfosAugmenter implements Augmenter {
 		}
 
 	@Override
-	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source) {
+	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
 		if(source.getCoordinates()==null) {
 			logger.severe(String.format("Unable to add maven infos for %s\n(coordinates are null)", source));
@@ -91,7 +92,7 @@ public class MvnInfosAugmenter implements Augmenter {
 				logger.log(Level.WARNING, "Unable to prefil properties for "+source.getCoordinates(), e);
 			}
 		} else {
-			logger.warning(
+			logger.fine(
 					String.format(
 							"Artifact %s is not present in maven central but in %s."
 							+ "Please update maven settings to add the required repositories",
@@ -106,15 +107,18 @@ public class MvnInfosAugmenter implements Augmenter {
 				updated.getCoordinates()
 				.replace(":", "/")
 				.replace(".", "/")
-				+"."
-				+updated.getVersions().lastKey()
+				+(updated.getVersions()==null || updated.getVersions().isEmpty() ? "" : "."+updated.getVersions().lastKey()) 
 				+".properties");
 		if(!propertiesCache.exists()) {
 			propertiesCache.getParentFile().mkdirs();
 			// Now build the properties
-			Map<String, String> properties = getInterestingProperties(context, updated);
 			Properties p = new Properties();
-			p.putAll(properties);
+			try {
+				Map<String, String> properties = getInterestingProperties(context, updated);
+				p.putAll(properties);
+			} catch(RuntimeException e) {
+				logger.warning("Unable to populate property cache for "+updated);
+			}
 			try {
 				try(FileOutputStream output = new FileOutputStream(propertiesCache)) {
 					p.store(output, null);
@@ -140,12 +144,15 @@ public class MvnInfosAugmenter implements Augmenter {
 
 
 	private Map<String, String> getInterestingProperties(MvnContext context, ArtifactDetails artifact) {
+		logger.info("Fetching interesting properties of "
+				+artifact.getCoordinates()
+				+ (artifact.getVersions()==null || artifact.getVersions().isEmpty() ? "" :  ":"+artifact.getVersions().lastKey()));
 		Map<String, String> returned = new TreeMap<String, String>();
 		for(String text : Arrays.asList("project.url", "project.description", "project.scm.url")) {
 			String value = executeMavenCommand(context, Optional.empty(), 
 					Arrays.asList(
 							"help:evaluate",
-							"-Dartifact="+artifact.getCoordinates()+":"+artifact.getVersions().lastKey(),
+							"-Dartifact="+artifact.getCoordinates()+ (artifact.getVersions().isEmpty() ? "" :  ":"+artifact.getVersions().lastKey()),
 							"-Dexpression="+text,
 							"--quiet",
 							"-DforceStdout"));
@@ -189,7 +196,7 @@ public class MvnInfosAugmenter implements Augmenter {
 								.append("Has error\n===============\n")
 								.append(error)
 								.append("\n===============\n");
-						logger.info(message.toString());
+						logger.fine(message.toString());
 						if(result.getExitCode()==0) {
 							return output;
 						} else {

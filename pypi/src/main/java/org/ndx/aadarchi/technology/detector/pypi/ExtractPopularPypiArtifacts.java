@@ -1,6 +1,7 @@
 package org.ndx.aadarchi.technology.detector.pypi;
 
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Logger;
@@ -41,7 +42,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	public Integer call() throws Exception {
-		super.doCall(new PypiContext(client));
+		super.doCall(new PypiContext(client, getGithub(), getCache()));
 		return 0;
 	}
 	
@@ -69,7 +70,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	protected Collection<ArtifactDetails> injectDownloadInfosFor(PypiContext context,
-			Collection<ArtifactDetails> allDetails) {
+			Collection<ArtifactDetails> allDetails, LocalDate date) {
 			String period = "last-month";
 			allDetails = getAllDownloadsForPeriod(context, allDetails, period);
 			return allDetails;

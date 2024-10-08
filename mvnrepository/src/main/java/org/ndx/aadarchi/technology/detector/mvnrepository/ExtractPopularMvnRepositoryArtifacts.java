@@ -3,6 +3,7 @@ package org.ndx.aadarchi.technology.detector.mvnrepository;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -45,6 +46,9 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Option(names = {"-m", "--maven-path"}, description = "The local maven executable path", 
     		required = true) File maven;
 
+    @Option(names= {"--visible-browser"}, description="Activate this flag to have the Chrome window visible")
+	private boolean visibleBrowser;
+
     public static void main(String... args) {
         int exitCode = new CommandLine(new ExtractPopularMvnRepositoryArtifacts()).execute(args);
         System.exit(exitCode);
@@ -53,7 +57,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Override
     public Integer call() throws Exception {
         try (Playwright playwright = Playwright.create()) {
-        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache());
+        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache(), getGithub());
         	super.doCall(mvnContext);
         }
         return 0;
@@ -83,7 +87,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 
 
     @Override
-	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations) {
+	protected Collection<ArtifactDetails> injectDownloadInfosFor(MvnContext context, Collection<ArtifactDetails> allArtifactInformations, LocalDate date) {
 		Map<ArtifactDetails, ArtifactDetails> resolvedArtifacts = new TreeMap<ArtifactDetails, ArtifactDetails>();
 		while(!allArtifactInformations.isEmpty()) {
 			allArtifactInformations = allArtifactInformations.stream()
@@ -100,7 +104,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 											new TreeMap<String, VersionDetails>(versions));
 								}
 								BeanUtils.populate(updated, detailsMap);
-								updated = new MvnInfosAugmenter().augment(context, updated);
+								updated = new MvnInfosAugmenter().augment(context, updated, date);
 								resolvedArtifacts.put(artifactDetails, updated);
 							} catch(InvocationTargetException | IllegalAccessException e) {
 								throw new RuntimeException(e);
@@ -131,9 +135,12 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     	Browser chromium = playwright.chromium().launch(
     			new BrowserType.LaunchOptions()
     				.setHeadless(false)
+//    				.setHeadless(!visibleBrowser)
     			);
-    	BrowserContext context = chromium.newContext(new NewContextOptions()
-    			.setJavaScriptEnabled(false));
+    	BrowserContext context = chromium.newContext(
+    			new NewContextOptions()
+    				.setJavaScriptEnabled(false)
+    				.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"));
 		// Disable all resources coming from any domain that is not
 		// mvnrepository or wayback machine
 //		context.route(url -> !(url.contains("mvnrepository.com") || url.contains("web.archive.com")), 

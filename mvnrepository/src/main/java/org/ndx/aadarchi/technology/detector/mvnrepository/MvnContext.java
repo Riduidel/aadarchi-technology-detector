@@ -1,36 +1,18 @@
 package org.ndx.aadarchi.technology.detector.mvnrepository;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.net.MalformedURLException;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Properties;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.DefaultInvoker;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.InvocationResult;
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.invoker.MavenInvocationException;
-import org.apache.maven.shared.invoker.PrintStreamHandler;
-import org.ndx.aadarchi.technology.detector.helper.Utils;
+import org.kohsuke.github.GitHub;
+import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
-import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
@@ -38,15 +20,15 @@ import com.microsoft.playwright.Page.NavigateOptions;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.WaitUntilState;
 
-public class MvnContext implements ExtractionContext {
+public class MvnContext extends AbstractContext implements ExtractionContext {
 	public static final Logger logger = Logger.getLogger(MvnContext.class.getName());
 	public final BrowserContext context;
 	private String artifactDetailsExtractor;
 	public final File mavenExecutable;
 	public final File mavenPropertiesCache;
 
-	public MvnContext(BrowserContext context, File maven, Path cache) {
-		super();
+	public MvnContext(BrowserContext context, File maven, Path cache, GitHub github) {
+		super(cache, github);
 		this.context = context;
 		this.mavenExecutable  = maven;
 		this.mavenPropertiesCache = new File(cache.toAbsolutePath().toFile(), "maven/properties");

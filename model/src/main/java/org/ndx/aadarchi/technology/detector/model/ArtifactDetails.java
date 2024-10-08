@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -15,6 +16,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -22,9 +24,10 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.artifact.versioning.DefaultArtifactVersion;
 import org.jilt.Builder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.deser.std.MapDeserializer;
 
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
@@ -73,6 +76,11 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		}
 		
 	};
+	public static final TypeReference<List<ArtifactDetails>> LIST =  new TypeReference<List<ArtifactDetails>>() {};
+	public static final List<Function<ArtifactDetails, String>> GITHUB_REPO_EXTRACTORS = Arrays.asList(
+			ArtifactDetails::getCoordinates,
+			ArtifactDetails::getGroupId,
+			ArtifactDetails::getName);
 	
 	private String groupId;
 	private String artifactId;
@@ -94,6 +102,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	private SortedMap<String, VersionDetails> versions;
 	@JsonDeserialize(as=LinkedHashMap.class)
 	private Map<String, String> urls;
+	private GitHubDetails githubDetails;
 	
 	public ArtifactDetails() {}
 
@@ -113,7 +122,8 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			Boolean infered, 
 			List<String> repositories, 
 			SortedMap<String, VersionDetails> versions,
-			Map<String, String> urls) {
+			Map<String, String> urls,
+			GitHubDetails githubDetails) {
 		super();
 		this.groupId = groupId;
 		this.artifactId = artifactId;
@@ -131,6 +141,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		this.repositories = repositories;
 		this.versions = versions;
 		this.urls = urls;
+		this.githubDetails = githubDetails;
 	}
 
 	/**
@@ -429,7 +440,8 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 	}
 	
 	public void setCoordinates(String c) {
-		if(c.contains(":")) {
+		if(c==null) {
+		} else if(c.contains(":")) {
 			String[] parts = c.split(":");
 			if(parts.length!=2)
 				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
@@ -455,6 +467,22 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		if(getArtifactId()!=null) {
 			returned.append(':').append(getArtifactId());
 		}
-		return returned.toString();
+		if(returned.isEmpty())
+			return null;
+		else
+			return returned.toString();
+	}
+
+	@JsonIgnore
+	public String getIdentifier() {
+		return getCoordinates() == null ? getName() : getCoordinates();
+	}
+
+	public GitHubDetails getGithubDetails() {
+		return githubDetails;
+	}
+
+	public void setGithubDetails(GitHubDetails githubDetails) {
+		this.githubDetails = githubDetails;
 	}
 }

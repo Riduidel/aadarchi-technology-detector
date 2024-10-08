@@ -79,11 +79,11 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 		logger.info("Processed artifacts\n" + artifactsCaptures.entrySet().stream()
 				.map(e -> String.format("%s -> %d captures", e.getKey(), e.getValue().size()))
 				.collect(Collectors.joining("\n")));
-		List<ArtifactDetails> allArtifactsDetails =	FileHelper.readFromFile(output.toFile());
+		List<ArtifactDetails> allArtifactsDetails =	FileHelper.readFromFile(output.toFile(), ArtifactDetails.LIST);
 		// Move history details from the future to the past for the whole timeline
 		artifactsCaptures.entrySet()
 				.forEach(entry -> copyHistoryFromLastToFirst(entry.getKey(), allArtifactsDetails, entry.getValue()));
-		Collection<ArtifactDetails> currentArtifacts = FileHelper.readFromFile(output.toFile());
+		Collection<ArtifactDetails> currentArtifacts = FileHelper.readFromFile(output.toFile(), ArtifactDetails.LIST);
 		// Generate complete artifact informations through inference
 		Map<ArtifactDetails , NavigableMap<LocalDate, File>> artifactsStatuses = artifactsCaptures.entrySet()
 				.stream().collect(Collectors.toMap(entry -> entry.getKey(), Throwing.function(

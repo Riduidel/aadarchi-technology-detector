@@ -3,13 +3,17 @@ package org.ndx.aadarchi.technology.detector.helper;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
+import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
@@ -18,10 +22,8 @@ import org.ndx.aadarchi.technology.detector.mappers.Mappers;
 import org.ndx.aadarchi.technology.detector.mappers.MappingGenerator;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.SimpleType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.jakarta.JsonSchemaGenerator;
 
@@ -60,6 +62,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			"--techempower-frameworks-local-clone" }, description = "The techempower frameworks local clone"
 					, defaultValue = "../../FrameworkBenchmarks/frameworks")
 	protected Path techEmpowerFrameworks;
+	@Option(names = { "--github-token" }) protected String githubToken;
 
 	/**
 	 * Perform all artifact analysis by 
@@ -68,7 +71,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	 * <li>If history generate is required, calls {@link #generateHistoryOf(ExtractionContext, Collection)}
 	 * <li>If no history generation is needed
 	 * <ul>
-	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection)}
+	 * <li>Get download count with {@link #injectDownloadInfosFor(ExtractionContext, Collection, LocalDate)}
 	 * <li>Write results to file using {@link #writeDetails(Collection)}
 	 * </ul>
 	 * </ul>
@@ -83,12 +86,15 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	    	Collection<ArtifactDetails> artifactDetails;
 			if(output.toFile().exists() && output.toFile().lastModified()>System.currentTimeMillis()-60*60*1000*24) {
 				try {
-					artifactDetails = FileHelper.readFromFile(output.toFile());
+					artifactDetails = FileHelper.readFromFile(output.toFile(), ArtifactDetails.LIST);
 				} catch (IOException e) {
 					throw new RuntimeException("Can't read file", e);
 				}
 			} else {
-		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts);
+				LocalDate firstDayOfMonth = LocalDate.now()
+						.withDayOfMonth(1);
+		    	artifactDetails = injectDownloadInfosFor(context, interestingArtifacts, firstDayOfMonth);
+				artifactDetails = Augmenters.augmentArtifacts(context, artifactDetails, firstDayOfMonth);
 		    	writeDetails(artifactDetails);
 			}
 	    	if(generateMappingFiles) {
@@ -117,7 +123,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		}
 	}
 
-	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts);
+	protected abstract Collection<ArtifactDetails> injectDownloadInfosFor(Context context, Collection<ArtifactDetails> interestingArtifacts, LocalDate date);
 
 	protected void generateHistoryOf(Context context, Collection<ArtifactDetails> artifacts) {
 		try {
@@ -157,5 +163,14 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 
 	public Path getCache() {
 		return cache;
+	}
+
+
+	protected GitHub getGithub() {
+		try {
+			return new GitHubBuilder().withJwtToken(githubToken).build();
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to connect to GitHub", e);
+		}
 	}
 }

@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,8 +20,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
+import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.DetailsFetchingContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
@@ -35,7 +38,7 @@ import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
 
-public class PypiContext implements DetailsFetchingContext {
+public class PypiContext extends AbstractContext implements DetailsFetchingContext {
 	public static class RateLimitReached extends RuntimeException {
 		
 	}
@@ -45,7 +48,9 @@ public class PypiContext implements DetailsFetchingContext {
 	private static final String INFOS = "https://pypi.org/pypi/%s/json";
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
 	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
-	public PypiContext(HttpClient client) {
+	
+	public PypiContext(HttpClient client, GitHub github, Path cache) {
+		super(cache, github);
 		this.client = client;
 	}
 
@@ -130,13 +135,11 @@ public class PypiContext implements DetailsFetchingContext {
 			Map<String, String> urls = (Map<String, String>) info.get("project_urls");
 			if(urls==null || urls.isEmpty()) {
 				Map<String, String> value = new TreeMap<String, String>();
-				if(info.containsKey("project_url")) {
-					String url = (String) info.get("project_url");
-					value.put(Utils.getDomain(url), url);
-				}
-				if(info.containsKey("package_url")) {
-					String url = (String) info.get("package_url");
-					value.put(Utils.getDomain(url), url);
+				for(String key : Arrays.asList("project_url", "package_url")) {
+					if(info.containsKey(key)) {
+						String url = (String) info.get(key);
+						value.put(Utils.getDomain(url), url);
+					}
 				}
 				builder = builder.urls(value);
 			} else {
