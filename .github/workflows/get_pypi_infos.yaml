@@ -107,8 +107,8 @@ jobs:
           REPO: self
           BRANCH: reports_pypi
           FOLDER: target
-          TARGET_DIR: npmjs
+          TARGET_DIR: pypi
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: Updated npmjs infos
+          MESSAGE: Updated npmjs infospypi
           COMMIT-NAME: 🤖 GitHub Action
           COMMIT_EMAIL: get_pypi_infos.yaml@github.actions
