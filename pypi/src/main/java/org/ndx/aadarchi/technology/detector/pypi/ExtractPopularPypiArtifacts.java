@@ -91,6 +91,6 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	protected BaseHistoryBuilder<PypiContext> createHistoryBuilder() {
-		return new HistoryBuilder(gitHistory, getCache(), bigQueryProjectId, queryToRun);
+		return new HistoryBuilder(gitHistory, getCache(), bigQueryProjectId, queryToRun, forceRebuildHistory);
 	}
 }

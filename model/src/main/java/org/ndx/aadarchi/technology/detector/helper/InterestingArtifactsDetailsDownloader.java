@@ -39,6 +39,8 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 	public static HttpClient client = HttpClient.newHttpClient();
 	@Option(names = { "--generate-history" }, description = "Generate an history branch with commits for each month")
 	public boolean generateHistory;
+	@Option(names = { "--force-rebuild-history" }, description = "When set to true, the history branch will be deleted and rebuilt from scratch")
+	public boolean forceRebuildHistory;
 	@Option(names = { "--generate-mapping-files" }, description = "Generate mapping files for various data analysis. This will typically be invoked during development.")
 	public boolean generateMappingFiles;
 	@Option(names = {"--cache-folder" }, 

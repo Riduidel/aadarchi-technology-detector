@@ -10,9 +10,9 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.SortedMap;
 import java.util.logging.Logger;
-import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -32,6 +32,7 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
+import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -52,6 +53,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	public final String artifactsQualifier;
 	public final String gitBranch;
 	public final File schemaFile;
+	public final boolean force;
 	
 	static {
         String path = BaseHistoryBuilder.class.getClassLoader()
@@ -60,8 +62,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
         System.setProperty("java.util.logging.config.file", path);
 	}
 
-	public BaseHistoryBuilder(Path cache, String gitUsername, String gitEmail, String artifactQualifierName) {
-		super();
+	public BaseHistoryBuilder(Path cache, String gitUsername, String gitEmail, String artifactQualifierName, boolean forceRebuildHistory) {
 		this.cache = cache;
 		gitHistory = cache.resolve("git-history");
 		logger.warning(String.format("Using %s as git history repo", gitHistory));
@@ -71,15 +72,23 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 		this.artifactsFile = new File(gitHistory.toFile(), artifactQualifierName + "/artifacts.json");
 		this.schemaFile = new File(gitHistory.toFile(), artifactQualifierName + "/schema.json");
 		gitBranch = "reports_" + artifactsQualifier;
+		this.force = forceRebuildHistory;
 	}
 
+		/**
+		 * Generate a map linking dates to files containing artifacts at that date.
+		 * This method is not supposed to invoke history augmenters
+		 * (although the history augmenters are supposed to be idempotent
+		 * @param context
+		 * @param allArtifactInformations
+		 * @return
+		 * @throws IOException
+		 */
 	protected abstract SortedMap<LocalDate, File> generateAggregatedStatusesMap(Context context,
 			Collection<ArtifactDetails> allArtifactInformations) throws IOException;
 
 	protected void commitArtifacts(Git git, LocalDate date, File artifacts, String commitMessage)
-			throws GitAPIException, NoFilepatternException, AbortedByHookException, ConcurrentRefUpdateException,
-			NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException,
-			WrongRepositoryStateException {
+			throws GitAPIException {
 		ZoneId systemZoneId = ZoneId.systemDefault();
 		Instant commitInstant = date.atStartOfDay(systemZoneId).toInstant();
 		PersonIdent commiter = new PersonIdent(username, email, commitInstant, systemZoneId);
@@ -89,12 +98,13 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 				.setMessage(commitMessage).call();
 	}
 
-	protected void writeArtifactListAtDate(Git git, LocalDate date, File inputFile, File commitedFilePath)
-			throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException,
-			NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException,
-			GitAPIException {
+	protected void writeArtifactListAtDate(Context context, Git git, LocalDate date, File inputFile, File commitedFilePath)
+			throws IOException, GitAPIException {
 		logger.info("Creating commit at " + date);
 		Collection<ArtifactDetails> value = FileHelper.readFromFile(inputFile, ArtifactDetails.LIST);
+		// Run history augmenters to make sure they're applied
+		value = Augmenters.augmentArtifacts(context, value, date);
+		FileHelper.writeToFile(value, inputFile);
 		FileUtils.copyFile(inputFile, commitedFilePath);
 		// Then create a commit in the history repository
 		commitArtifacts(git, date, commitedFilePath,
@@ -102,9 +112,9 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 						Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()));
 	}
 
-	protected void writeAggregatedStatusesToGit(Map<LocalDate, File> aggregatedStatuses, Git git) throws IOException {
+	protected void writeAggregatedStatusesToGit(Context context, Git git, Map<LocalDate, File> aggregatedStatuses) throws IOException {
 		aggregatedStatuses.entrySet().stream().forEach(Throwing
-				.consumer(entry1 -> writeArtifactListAtDate(git, entry1.getKey(), entry1.getValue(), artifactsFile)));
+				.consumer(entry1 -> writeArtifactListAtDate(context, git, entry1.getKey(), entry1.getValue(), artifactsFile)));
 	}
 
 	/**
@@ -166,23 +176,59 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	public void generateHistoryFor(Context context, Collection<ArtifactDetails> allArtifactInformations)
 			throws IOException, NoHeadException, GitAPIException {
 		Git git = initializeGitHistory();
+		// If history rebuild is forced, delete branch
+		if(force) {
+			deleteHistoryBranch(git);
+		}
 		// To get commits of branch, we have to first list branches
 		// Hopefully that repo should contain only our branch
 		List<Ref> branches = git.branchList().call();
-		Ref branchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny().get();
-		Iterable<RevCommit> commits = git.log()
-			.add(branchName.getObjectId())
-			.call();
-		// We consider history to be of the good size, so if the git repository already exists,
-		// it means it should be "augmented" with whatever augmenters are available
-		if(commits.iterator().hasNext()) {
-			// Time for an history augmentation!
-			new HistoryAugmenter<Context>(this).augmentHistory(context, git);
-		} else {
-			// This branch is new, so get all data and write it!
-			Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
-			// Write them into git history
-			writeAggregatedStatusesToGit(aggregatedStatuses, git);
-		}
+		Optional<Ref> optionalBranchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny();
+		optionalBranchName.ifPresentOrElse(Throwing.consumer(branchName -> {
+			Iterable<RevCommit> commits = git.log()
+					.add(branchName.getObjectId())
+					.call();
+				// We consider history to be of the good size, so if the git repository already exists,
+				// it means it should be "augmented" with whatever augmenters are available
+				if(commits.iterator().hasNext()) {
+					augmentHistory(context, git);
+				} else {
+					createHistory(context, git, allArtifactInformations);
+				}
+			
+		}), // Branch name was not found, so we're sure we have to create the full history
+				Throwing.runnable(() -> createHistory(context, git, allArtifactInformations)));
+	}
+
+	private void createHistory(Context context, Git git, Collection<ArtifactDetails> allArtifactInformations)
+			throws IOException {
+		// This branch is new, so get all data and write it!
+		Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
+		// Write them into git history
+		writeAggregatedStatusesToGit(context, git, aggregatedStatuses);
+	}
+
+	private void augmentHistory(Context context, Git git) throws IOException, GitAPIException {
+		// Time for an history augmentation!
+		new HistoryAugmenter<Context>(this).augmentHistory(context, git);
+	}
+
+	private void deleteHistoryBranch(Git git) throws GitAPIException {
+		List<Ref> branches = git.branchList().call();
+		Optional<Ref> optionalBranchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny();
+		optionalBranchName.ifPresent(Throwing.consumer(branchRef -> {
+			// Branch may be the one we're on, in such a case, delete will be impossible.
+			// So create an empty fake branch
+			git.checkout()
+				.setName("empty_branch")
+				.setOrphan(true)
+				.call();
+			// Move to that branch, and delete the history one
+			git.branchDelete()
+				.setBranchNames(gitBranch)
+				.setForce(true)
+				.call();
+		}));
+
 	}
 }

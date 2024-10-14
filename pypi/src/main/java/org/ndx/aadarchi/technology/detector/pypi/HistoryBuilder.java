@@ -46,8 +46,8 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 	private boolean reduced;
 	private File historyBaseFolder;
 
-	public HistoryBuilder(Path gitHistory, Path cache, String projectId, String queryName) {
-		super(cache, "🤖 Pypi History Builder", "get_pypi_infos.yaml@history", "pypi");
+	public HistoryBuilder(Path gitHistory, Path cache, String projectId, String queryName, boolean forceRebuildHistory) {
+		super(cache, "🤖 Pypi History Builder", "get_pypi_infos.yaml@history", "pypi", forceRebuildHistory);
 		this.projectId = projectId;
 		reduced = queryName.contains("reduced");
 		query = loadQuery(queryName);
@@ -123,6 +123,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 						.downloads(value.getOrDefault(artifact.getName(), -1l))
 						.build())
 				.collect(Collectors.toList());
+		logger.info("Writing artifacts for "+month.getYear()+"/"+month.getMonthValue());
 		FileHelper.writeToFile(artifactsAtDateCollection, artifactsAtDateFile);
 		return Map.entry(month, artifactsAtDateFile);
 	}

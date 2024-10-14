@@ -26,10 +26,10 @@ import com.github.fge.lambdas.Throwing;
 class HistoryBuilder extends BaseHistoryBuilder<NpmjsContext> {
 	static final Logger logger = Logger.getLogger(HistoryBuilder.class.getName());
 
-	HistoryBuilder(ExtractPopularNpmjsArtifacts extractPopularNpmjsArtifacts, Path gitHistory, Path cache) {
+	HistoryBuilder(ExtractPopularNpmjsArtifacts extractPopularNpmjsArtifacts, Path gitHistory, Path cache, boolean forceRebuildHistory) {
 		super(cache, "🤖 Npmjs History Builder", 
 		    	"get_npmjs_infos.yaml@history",
-				"npmjs");
+				"npmjs", forceRebuildHistory);
 	}
 
 	private File getDatedFilePath(File containerDir,

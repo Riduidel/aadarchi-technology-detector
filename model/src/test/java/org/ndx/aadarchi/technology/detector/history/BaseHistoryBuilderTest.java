@@ -26,7 +26,7 @@ class BaseHistoryBuilderTest {
 		public Tested(Path cache, String extension) {
 			super(cache, "🤖 Test History Builder", 
 					"get_test_infos.yaml@history",
-					extension);
+					extension, false);
 		}
 
 		@Override

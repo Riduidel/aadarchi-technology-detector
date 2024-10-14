@@ -45,7 +45,7 @@ public class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDow
 
 	@Override
 	protected HistoryBuilder createHistoryBuilder() {
-		return new HistoryBuilder(this, gitHistory, getCache());
+		return new HistoryBuilder(this, gitHistory, getCache(), forceRebuildHistory);
 	}
 
 	
