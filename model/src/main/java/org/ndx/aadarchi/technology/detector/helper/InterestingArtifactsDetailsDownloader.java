@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.concurrent.Callable;
 import java.util.logging.Logger;
@@ -14,6 +13,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
+import org.ndx.aadarchi.technology.detector.exception.CacheWriteException;
+import org.ndx.aadarchi.technology.detector.exception.FileHandlingException;
+import org.ndx.aadarchi.technology.detector.exception.GitHubOperationException;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
@@ -88,7 +90,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 				try {
 					artifactDetails = FileHelper.readFromFile(output.toFile(), ArtifactDetails.LIST);
 				} catch (IOException e) {
-					throw new RuntimeException("Can't read file", e);
+					throw new FileHandlingException("Failed to read artifact details from file", e);
 				}
 			} else {
 				LocalDate firstDayOfMonth = LocalDate.now()
@@ -119,7 +121,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 					"UTF-8");
 			FileHelper.writeToFile(artifactDetails, output.toFile());
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new FileHandlingException("Failed to write artifact details to file",e);
 		}
 	}
 
@@ -130,7 +132,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 			createHistoryBuilder()
 				.generateHistoryFor(context, artifacts);
 		} catch(IOException | GitAPIException e) {
-			throw new RuntimeException(e);
+			throw new FileHandlingException("Failed to generate history", e);
 		}
 		
 	}
@@ -148,7 +150,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		try {
 			return loader.loadArtifacts(context);
 		} catch(Exception e) {
-			throw new RuntimeException("Unable to write into cache", e);
+			throw new CacheWriteException("Unable to write into cache", e);
 		}
 	}
 
@@ -170,7 +172,7 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 		try {
 			return new GitHubBuilder().withJwtToken(githubToken).build();
 		} catch (IOException e) {
-			throw new RuntimeException("Unable to connect to GitHub", e);
+			throw new GitHubOperationException("Unable to connect to GitHub", e);
 		}
 	}
 }

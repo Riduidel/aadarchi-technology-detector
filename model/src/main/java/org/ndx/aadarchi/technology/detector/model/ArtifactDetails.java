@@ -28,6 +28,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.ndx.aadarchi.technology.detector.exception.ArtifactCoordinateException;
+import org.ndx.aadarchi.technology.detector.exception.ArtifactPropertiesLoadingException;
 
 @Builder(toBuilder = "toBuilder")
 public class ArtifactDetails implements Comparable<ArtifactDetails> {
@@ -52,7 +54,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			try(InputStream p = ArtifactDetails.class.getClassLoader().getResourceAsStream(BADLY_NAMED_ARTIFACTS_MAPPING)) {
 				badlyNamedArtifactsToCorrectlyNamedOnes.load(p);
 			} catch (IOException e) {
-				throw new RuntimeException("This one should never happen", e);
+				throw new ArtifactPropertiesLoadingException("This one should never happen", e);
 			}
 		}
 	}
@@ -444,7 +446,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 		} else if(c.contains(":")) {
 			String[] parts = c.split(":");
 			if(parts.length!=2)
-				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
+				throw new ArtifactCoordinateException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
 			setGroupId(parts[0]);
 			setArtifactId(parts[1]);
 		} else if(c.contains(".")){
@@ -455,7 +457,7 @@ public class ArtifactDetails implements Comparable<ArtifactDetails> {
 			if(badlyNamedArtifactsToCorrectlyNamedOnes.containsKey(c)) {
 				setCoordinates(badlyNamedArtifactsToCorrectlyNamedOnes.getProperty(c));
 			} else {
-				throw new UnsupportedOperationException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
+				throw new ArtifactCoordinateException("Can't extract coordinates when they're not groupId:artifactId.\nInput string is "+c);
 			}
 		}
 	}

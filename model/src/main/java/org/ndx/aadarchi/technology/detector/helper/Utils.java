@@ -1,5 +1,7 @@
 package org.ndx.aadarchi.technology.detector.helper;
 
+import org.ndx.aadarchi.technology.detector.exception.InvalidURLException;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -8,7 +10,7 @@ public class Utils {
 		try {
 			return new URL(url).getHost();
 		} catch(MalformedURLException e) {
-			throw new RuntimeException(e);
+			throw new InvalidURLException("Invalid URL: " + url, e);
 		}
 	}
 }

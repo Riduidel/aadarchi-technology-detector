@@ -32,6 +32,9 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
+import org.ndx.aadarchi.technology.detector.exception.FileHandlingException;
+import org.ndx.aadarchi.technology.detector.exception.GitOperationException;
+import org.ndx.aadarchi.technology.detector.exception.HistoryGenerationException;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -80,26 +83,36 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			throws GitAPIException, NoFilepatternException, AbortedByHookException, ConcurrentRefUpdateException,
 			NoHeadException, NoMessageException, ServiceUnavailableException, UnmergedPathsException,
 			WrongRepositoryStateException {
-		ZoneId systemZoneId = ZoneId.systemDefault();
-		Instant commitInstant = date.atStartOfDay(systemZoneId).toInstant();
-		PersonIdent commiter = new PersonIdent(username, email, commitInstant, systemZoneId);
-		String commitedFile = gitHistory.relativize(artifacts.toPath()).toString();
-		git.add().addFilepattern(commitedFile).call();
-		git.commit().setAuthor(commiter).setCommitter(commiter).setOnly(commitedFile).setAllowEmpty(false)
-				.setMessage(commitMessage).call();
+		try {
+			ZoneId systemZoneId = ZoneId.systemDefault();
+			Instant commitInstant = date.atStartOfDay(systemZoneId).toInstant();
+			PersonIdent commiter = new PersonIdent(username, email, commitInstant, systemZoneId);
+			String commitedFile = gitHistory.relativize(artifacts.toPath()).toString();
+			git.add().addFilepattern(commitedFile).call();
+			git.commit().setAuthor(commiter).setCommitter(commiter).setOnly(commitedFile).setAllowEmpty(false)
+					.setMessage(commitMessage).call();
+		}  catch (GitAPIException e) {
+			throw new GitOperationException("Failed to commit artifacts on " + date, e);
+		}
 	}
 
 	protected void writeArtifactListAtDate(Git git, LocalDate date, File inputFile, File commitedFilePath)
 			throws IOException, AbortedByHookException, ConcurrentRefUpdateException, NoHeadException,
 			NoMessageException, ServiceUnavailableException, UnmergedPathsException, WrongRepositoryStateException,
 			GitAPIException {
-		logger.info("Creating commit at " + date);
-		Collection<ArtifactDetails> value = FileHelper.readFromFile(inputFile, ArtifactDetails.LIST);
-		FileUtils.copyFile(inputFile, commitedFilePath);
-		// Then create a commit in the history repository
-		commitArtifacts(git, date, commitedFilePath,
-				String.format("Historical artifacts of %s, %d artifacts known at this date",
-						Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()));
+		try {
+			logger.info("Creating commit at " + date);
+			Collection<ArtifactDetails> value = FileHelper.readFromFile(inputFile, ArtifactDetails.LIST);
+			FileUtils.copyFile(inputFile, commitedFilePath);
+			// Then create a commit in the history repository
+			commitArtifacts(git, date, commitedFilePath,
+					String.format("Historical artifacts of %s, %d artifacts known at this date",
+							Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()));
+		} catch (IOException e) {
+			throw new FileHandlingException("Failed to write artifact list at " + date, e);
+		} catch (GitAPIException e) {
+			throw new GitOperationException("Failed to commit artifacts for " + date, e);
+		}
 	}
 
 	protected void writeAggregatedStatusesToGit(Map<LocalDate, File> aggregatedStatuses, Git git) throws IOException {
@@ -128,29 +141,32 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 				return createGitRepositoryHostingBranch(gitHstoryFile, gitBranch);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
+			throw new GitOperationException("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
 		}
 	}
 
-	private Git createGitRepositoryHostingBranch(File gitHstoryFile, String branch)
-			throws GitAPIException, URISyntaxException {
-		Git git = Git.init().setDirectory(gitHstoryFile).setInitialBranch(branch).call();
-		git.remoteAdd().setName("origin").setUri(new URIish("https://github.com/Riduidel/aadarchi-technology-detector.git"))
-				.call();
-		// Don't forget to fetch first
-		git.fetch().call();
-		List<Ref> remoteBranches = git.branchList().setListMode(ListMode.ALL).call();
-		boolean branchExistsRemotely = remoteBranches.stream()
-				.filter(ref -> ref.getName().endsWith("/"+branch))
-				.findAny()
-				.isPresent();
-		// If branch exists on remote, clone it
-		if (branchExistsRemotely) {
-			git.pull().setCredentialsProvider(null).call();
-		} else {
-			logger.warning("You specified the branch " + branch + " which doesn't exists yet on remote");
+	private Git createGitRepositoryHostingBranch(File gitHstoryFile, String branch) {
+		try {
+			Git git = Git.init().setDirectory(gitHstoryFile).setInitialBranch(branch).call();
+			git.remoteAdd().setName("origin").setUri(new URIish("https://github.com/Riduidel/aadarchi-technology-detector.git"))
+					.call();
+			// Don't forget to fetch first
+			git.fetch().call();
+			List<Ref> remoteBranches = git.branchList().setListMode(ListMode.ALL).call();
+			boolean branchExistsRemotely = remoteBranches.stream()
+					.filter(ref -> ref.getName().endsWith("/"+branch))
+					.findAny()
+					.isPresent();
+			// If branch exists on remote, clone it
+			if (branchExistsRemotely) {
+				git.pull().setCredentialsProvider(null).call();
+			} else {
+				logger.warning("You specified the branch " + branch + " which doesn't exists yet on remote");
+			}
+			return git;
+		} catch (GitAPIException | URISyntaxException e) {
+			throw new GitOperationException("Failed to create or fetch Git repository branch", e);
 		}
-		return git;
 	}
 
 	/**
@@ -165,24 +181,30 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 	 */
 	public void generateHistoryFor(Context context, Collection<ArtifactDetails> allArtifactInformations)
 			throws IOException, NoHeadException, GitAPIException {
-		Git git = initializeGitHistory();
-		// To get commits of branch, we have to first list branches
-		// Hopefully that repo should contain only our branch
-		List<Ref> branches = git.branchList().call();
-		Ref branchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny().get();
-		Iterable<RevCommit> commits = git.log()
-			.add(branchName.getObjectId())
-			.call();
-		// We consider history to be of the good size, so if the git repository already exists,
-		// it means it should be "augmented" with whatever augmenters are available
-		if(commits.iterator().hasNext()) {
-			// Time for an history augmentation!
-			new HistoryAugmenter<Context>(this).augmentHistory(context, git);
-		} else {
-			// This branch is new, so get all data and write it!
-			Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
-			// Write them into git history
-			writeAggregatedStatusesToGit(aggregatedStatuses, git);
+		try {
+			Git git = initializeGitHistory();
+			// To get commits of branch, we have to first list branches
+			// Hopefully that repo should contain only our branch
+			List<Ref> branches = git.branchList().call();
+			Ref branchName = branches.stream().filter(ref -> ref.getName().contains(gitBranch)).findAny().get();
+			Iterable<RevCommit> commits = git.log()
+					.add(branchName.getObjectId())
+					.call();
+			// We consider history to be of the good size, so if the git repository already exists,
+			// it means it should be "augmented" with whatever augmenters are available
+			if(commits.iterator().hasNext()) {
+				// Time for an history augmentation!
+				new HistoryAugmenter<Context>(this).augmentHistory(context, git);
+			} else {
+				// This branch is new, so get all data and write it!
+				Map<LocalDate, File> aggregatedStatuses = generateAggregatedStatusesMap(context, allArtifactInformations);
+				// Write them into git history
+				writeAggregatedStatusesToGit(aggregatedStatuses, git);
+			}
+		} catch (GitAPIException e) {
+			throw new GitOperationException("Failed to generate Git history", e);
+		} catch (IOException e) {
+			throw new HistoryGenerationException("Error occurred during history generation", e);
 		}
 	}
 }

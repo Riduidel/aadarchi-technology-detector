@@ -29,6 +29,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 
+import org.ndx.aadarchi.technology.detector.mvnrepository.exception.MvnArtifactProcessingException;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -107,7 +108,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 								updated = new MvnInfosAugmenter().augment(context, updated, date);
 								resolvedArtifacts.put(artifactDetails, updated);
 							} catch(InvocationTargetException | IllegalAccessException e) {
-								throw new RuntimeException(e);
+								throw new MvnArtifactProcessingException("Failed to process artifact details", e);
 							}
 						});
 					return details.stream();

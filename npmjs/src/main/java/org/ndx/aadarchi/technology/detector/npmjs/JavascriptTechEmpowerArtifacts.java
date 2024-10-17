@@ -16,6 +16,7 @@ import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.TechEmpowerArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
+import org.ndx.aadarchi.technology.detector.npmjs.exception.NpmjsFileReadException;
 
 public class JavascriptTechEmpowerArtifacts extends TechEmpowerArtifactLoader<NpmjsContext> {
 
@@ -48,7 +49,7 @@ public class JavascriptTechEmpowerArtifacts extends TechEmpowerArtifactLoader<Np
 			}
 			return returned;
 		} catch(IOException e) {
-			throw new RuntimeException(String.format("Can't read package.json file %s", packageJson), e);
+			throw new NpmjsFileReadException(String.format("Can't read package.json file %s", packageJson), e);
 		}
 	}
 }

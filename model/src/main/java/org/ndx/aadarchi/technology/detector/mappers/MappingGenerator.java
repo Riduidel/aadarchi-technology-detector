@@ -11,6 +11,8 @@ import java.util.Collection;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import org.ndx.aadarchi.technology.detector.exception.MappingReadException;
+import org.ndx.aadarchi.technology.detector.exception.MappingWriteException;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 public interface MappingGenerator {
@@ -27,7 +29,7 @@ public interface MappingGenerator {
 				logger.info("Wrote file "+output.getAbsolutePath());
 			}
 		} catch (IOException e) {
-			throw new RuntimeException(String.format("Unable to write artifacts in %s", output.getAbsolutePath()), e);
+			throw new MappingWriteException(String.format("Unable to write artifacts in %s", output.getAbsolutePath()), e);
 		}
 	}
 
@@ -38,7 +40,7 @@ public interface MappingGenerator {
 			try(InputStream input = new FileInputStream(output)) {
 				existing.load(input);
 			} catch (IOException e) {
-				throw new RuntimeException("Can't read properties from "+output.getAbsolutePath(), e);
+				throw new MappingReadException("Can't read properties from "+output.getAbsolutePath(), e);
 			}
 		}
 		return existing;
