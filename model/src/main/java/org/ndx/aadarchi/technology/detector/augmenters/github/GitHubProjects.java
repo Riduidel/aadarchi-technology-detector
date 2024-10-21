@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.util.Properties;
 import java.util.function.Function;
 
-import org.ndx.aadarchi.technology.detector.exception.GitHubOperationException;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 public class GitHubProjects {
@@ -19,7 +18,7 @@ public class GitHubProjects {
 			try(InputStream input = GitHubProjects.class.getClassLoader().getResourceAsStream(GITHUB_REPOSITORIES)) {
 				githubProjects.load(input);
 			} catch (IOException e) {
-				throw new GitHubOperationException("Can't read "+GITHUB_REPOSITORIES, e);
+				throw new CannotLoadGitHubRepositoriesMapping("Can't read "+GITHUB_REPOSITORIES, e);
 			}
 		}
 	}

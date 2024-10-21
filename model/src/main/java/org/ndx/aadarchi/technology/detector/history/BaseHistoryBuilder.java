@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.logging.Logger;
-import java.util.stream.StreamSupport;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.Git;
@@ -32,9 +31,6 @@ import org.eclipse.jgit.lib.PersonIdent;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.transport.URIish;
-import org.ndx.aadarchi.technology.detector.exception.FileHandlingException;
-import org.ndx.aadarchi.technology.detector.exception.GitOperationException;
-import org.ndx.aadarchi.technology.detector.exception.HistoryGenerationException;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -92,7 +88,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			git.commit().setAuthor(commiter).setCommitter(commiter).setOnly(commitedFile).setAllowEmpty(false)
 					.setMessage(commitMessage).call();
 		}  catch (GitAPIException e) {
-			throw new GitOperationException("Failed to commit artifacts on " + date, e);
+			throw new CannotCommitArtifacts("Failed to commit artifacts on " + date, e);
 		}
 	}
 
@@ -108,10 +104,8 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			commitArtifacts(git, date, commitedFilePath,
 					String.format("Historical artifacts of %s, %d artifacts known at this date",
 							Formats.MVN_DATE_FORMAT_WITH_DAY.format(date), value.size()));
-		} catch (IOException e) {
-			throw new FileHandlingException("Failed to write artifact list at " + date, e);
-		} catch (GitAPIException e) {
-			throw new GitOperationException("Failed to commit artifacts for " + date, e);
+		} catch (IOException | GitAPIException e) {
+			throw new CantCreateCommit("Failed to write artifact list at " + date, e);
 		}
 	}
 
@@ -141,7 +135,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 				return createGitRepositoryHostingBranch(gitHstoryFile, gitBranch);
 			}
 		} catch (Exception e) {
-			throw new GitOperationException("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
+			throw new CannotCloneGitRepository("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
 		}
 	}
 
@@ -165,7 +159,7 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 			}
 			return git;
 		} catch (GitAPIException | URISyntaxException e) {
-			throw new GitOperationException("Failed to create or fetch Git repository branch", e);
+			throw new CannotGetBranch("Failed to create or fetch Git repository branch", e);
 		}
 	}
 
@@ -201,10 +195,8 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 				// Write them into git history
 				writeAggregatedStatusesToGit(aggregatedStatuses, git);
 			}
-		} catch (GitAPIException e) {
-			throw new GitOperationException("Failed to generate Git history", e);
-		} catch (IOException e) {
-			throw new HistoryGenerationException("Error occurred during history generation", e);
+		} catch (GitAPIException | IOException e) {
+			throw new CannotGenerateGitHistory("Failed to generate Git history", e);
 		}
 	}
 }

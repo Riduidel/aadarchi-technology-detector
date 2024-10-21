@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.helper;
 
-import org.ndx.aadarchi.technology.detector.exception.InvalidURLException;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 

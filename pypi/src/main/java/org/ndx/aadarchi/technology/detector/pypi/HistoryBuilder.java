@@ -37,9 +37,9 @@ import com.google.cloud.bigquery.JobInfo;
 import com.google.cloud.bigquery.QueryJobConfiguration;
 import com.google.cloud.bigquery.QueryParameterValue;
 import com.google.cloud.bigquery.TableResult;
-import org.ndx.aadarchi.technology.detector.pypi.exception.PypiBigQueryExecutionException;
-import org.ndx.aadarchi.technology.detector.pypi.exception.PypiCSVProcessingException;
-import org.ndx.aadarchi.technology.detector.pypi.exception.PypiQueryLoadException;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotExecuteBigQuery;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotWriteBigQueryResultsToFile;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotLoadBigQueryFromProperties;
 
 public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 	public static final Logger logger = Logger.getLogger(HistoryBuilder.class.getName());
@@ -66,7 +66,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 				return properties.getProperty(queryName);
 			}
 		} catch (IOException e) {
-			throw new PypiQueryLoadException("Unable to open query.xml", e);
+			throw new CannotLoadBigQueryFromProperties("Unable to open query.xml", e);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 				return function.apply(csvFormat.parse(reader));
 			}
 		} catch (IOException e) {
-			throw new PypiCSVProcessingException("can't write table result to file " + csvResultsFile, e);
+			throw new CannotWriteBigQueryResultsToFile("can't write table result to file " + csvResultsFile, e);
 		}
 	}
 
@@ -171,7 +171,7 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 				}
 			}
 		} catch(IOException e) {
-			throw new PypiCSVProcessingException("Unable to write to csv file "+csvResultsFile, e);
+			throw new CannotWriteBigQueryResultsToFile("Unable to write to csv file "+csvResultsFile, e);
 		}
 	}
 
@@ -193,18 +193,18 @@ public class HistoryBuilder extends BaseHistoryBuilder<PypiContext> {
 			// the waitFor method blocks until the job completes
 			// and returns `null` if the job doesn't exist anymore
 			if (queryJob == null) {
-				throw new PypiBigQueryExecutionException("job no longer exists");
+				throw new CannotExecuteBigQuery("job no longer exists");
 			}
 			// once the job is done, check if any error occured
 			if (queryJob.getStatus().getError() != null) {
-				throw new PypiBigQueryExecutionException(queryJob.getStatus().getError().toString());
+				throw new CannotExecuteBigQuery(queryJob.getStatus().getError().toString());
 			}
 
 			logger.info("Fetching results");
 			TableResult result = queryJob.getQueryResults();
 			return result;
 		} catch (InterruptedException e) {
-			throw new PypiBigQueryExecutionException("Something went weirdly wrong during BigQuery search", e);
+			throw new CannotExecuteBigQuery("Something went weirdly wrong during BigQuery search", e);
 		}
 	}
 }
