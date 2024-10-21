@@ -20,7 +20,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.ndx.aadarchi.technology.detector.loader.NoContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
-class BaseHistoryBuilderTest {
+class BaseHistoryBuilderIT {
 	public static class Tested extends BaseHistoryBuilder<NoContext> {
 
 		public Tested(Path cache, String extension) {

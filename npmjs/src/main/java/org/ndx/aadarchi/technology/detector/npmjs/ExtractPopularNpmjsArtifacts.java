@@ -12,6 +12,7 @@ import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.loader.DetailFetchingArtifactLoaderCollection;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
+import org.ndx.aadarchi.technology.detector.npmjs.exception.CannotGetDownloads;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -39,7 +40,7 @@ public class ExtractPopularNpmjsArtifacts extends InterestingArtifactsDetailsDow
 			allDetails = context.getAllDownloadsForPeriod(allDetails, period);
 			return allDetails;
 		} catch(IOException e) {
-			throw new RuntimeException(e);
+			throw new CannotGetDownloads("Failed to inject download information for Npmjs artifacts", e);
 		}
 	}
 

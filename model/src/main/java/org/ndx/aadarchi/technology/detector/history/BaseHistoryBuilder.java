@@ -138,29 +138,32 @@ public abstract class BaseHistoryBuilder<Context extends ExtractionContext> {
 				return createGitRepositoryHostingBranch(gitHstoryFile, gitBranch);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
+			throw new CannotCloneGitRepository("Can't clone or open git repo in " + gitHstoryFile.getAbsolutePath(), e);
 		}
 	}
 
-	private Git createGitRepositoryHostingBranch(File gitHstoryFile, String branch)
-			throws GitAPIException, URISyntaxException {
-		Git git = Git.init().setDirectory(gitHstoryFile).setInitialBranch(branch).call();
-		git.remoteAdd().setName("origin").setUri(new URIish("https://github.com/Riduidel/aadarchi-technology-detector.git"))
-				.call();
-		// Don't forget to fetch first
-		git.fetch().call();
-		List<Ref> remoteBranches = git.branchList().setListMode(ListMode.ALL).call();
-		boolean branchExistsRemotely = remoteBranches.stream()
-				.filter(ref -> ref.getName().endsWith("/"+branch))
-				.findAny()
-				.isPresent();
-		// If branch exists on remote, clone it
-		if (branchExistsRemotely) {
-			git.pull().setCredentialsProvider(null).call();
-		} else {
-			logger.warning("You specified the branch " + branch + " which doesn't exists yet on remote");
+	private Git createGitRepositoryHostingBranch(File gitHstoryFile, String branch) {
+		try {
+			Git git = Git.init().setDirectory(gitHstoryFile).setInitialBranch(branch).call();
+			git.remoteAdd().setName("origin").setUri(new URIish("https://github.com/Riduidel/aadarchi-technology-detector.git"))
+					.call();
+			// Don't forget to fetch first
+			git.fetch().call();
+			List<Ref> remoteBranches = git.branchList().setListMode(ListMode.ALL).call();
+			boolean branchExistsRemotely = remoteBranches.stream()
+					.filter(ref -> ref.getName().endsWith("/"+branch))
+					.findAny()
+					.isPresent();
+			// If branch exists on remote, clone it
+			if (branchExistsRemotely) {
+				git.pull().setCredentialsProvider(null).call();
+			} else {
+				logger.warning("You specified the branch " + branch + " which doesn't exists yet on remote");
+			}
+			return git;
+		} catch (GitAPIException | URISyntaxException e) {
+			throw new CannotGetBranch("Failed to create or fetch Git repository branch", e);
 		}
-		return git;
 	}
 
 	/**

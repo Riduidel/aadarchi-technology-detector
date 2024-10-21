@@ -21,6 +21,8 @@ import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHStargazer;
 import org.kohsuke.github.PagedIterable;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
+import org.ndx.aadarchi.technology.detector.exceptions.CannottReadFromCache;
+import org.ndx.aadarchi.technology.detector.exceptions.CannotWriteToCache;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -107,7 +109,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 				try {
 					FileHelper.writeToFile(stargazers, cache);
 				} catch (IOException e) {
-					throw new RuntimeException("Can't write stargazers to "+cache.getAbsolutePath(), e);
+					throw new CannotWriteToCache("Can't write stargazers to "+cache.getAbsolutePath(), e);
 				}
 				returned = FileHelper.readFromFile(cache, new TypeReference<List<Stargazer>>() {});
 			}
@@ -116,7 +118,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 			logger.log(Level.SEVERE, "Weirdly, repository "+details.getPath()+" doesn't seems to exist");
 			return Collections.emptyList();
 		} catch (IOException e) {
-			throw new RuntimeException("Can't read stargazers for "+details.getPath(), e);
+			throw new CannottReadFromCache("Can't read stargazers", e);
 		}
 	}
 

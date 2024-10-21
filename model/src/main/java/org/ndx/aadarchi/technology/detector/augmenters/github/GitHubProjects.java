@@ -18,7 +18,7 @@ public class GitHubProjects {
 			try(InputStream input = GitHubProjects.class.getClassLoader().getResourceAsStream(GITHUB_REPOSITORIES)) {
 				githubProjects.load(input);
 			} catch (IOException e) {
-				throw new RuntimeException("Can't read "+GITHUB_REPOSITORIES, e);
+				throw new CannotLoadGitHubRepositoriesMapping("Can't read "+GITHUB_REPOSITORIES, e);
 			}
 		}
 	}

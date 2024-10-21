@@ -2,17 +2,14 @@ package org.ndx.aadarchi.technology.detector.helper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.io.FileUtils;
-import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class FileHelper {
 	public static final Logger logger = Logger.getLogger(FileHelper.class.getName());
@@ -22,7 +19,7 @@ public class FileHelper {
 	static {
 		objectMapper = new ObjectMapper()
 				.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-				;
+				.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		objectMapper.findAndRegisterModules();
 	}
 

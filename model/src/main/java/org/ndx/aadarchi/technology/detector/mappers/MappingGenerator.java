@@ -27,7 +27,7 @@ public interface MappingGenerator {
 				logger.info("Wrote file "+output.getAbsolutePath());
 			}
 		} catch (IOException e) {
-			throw new RuntimeException(String.format("Unable to write artifacts in %s", output.getAbsolutePath()), e);
+			throw new CannotWriteMapping(String.format("Unable to write artifacts in %s", output.getAbsolutePath()), e);
 		}
 	}
 
@@ -38,7 +38,7 @@ public interface MappingGenerator {
 			try(InputStream input = new FileInputStream(output)) {
 				existing.load(input);
 			} catch (IOException e) {
-				throw new RuntimeException("Can't read properties from "+output.getAbsolutePath(), e);
+				throw new CannotReadMapping("Can't read properties from "+output.getAbsolutePath(), e);
 			}
 		}
 		return existing;

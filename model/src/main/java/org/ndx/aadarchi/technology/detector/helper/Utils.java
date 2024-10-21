@@ -8,7 +8,7 @@ public class Utils {
 		try {
 			return new URL(url).getHost();
 		} catch(MalformedURLException e) {
-			throw new RuntimeException(e);
+			throw new InvalidURLException("Invalid URL: " + url, e);
 		}
 	}
 }
