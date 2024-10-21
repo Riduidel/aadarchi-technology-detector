@@ -37,11 +37,12 @@ import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotFindTopPackages;
+import org.ndx.aadarchi.technology.detector.pypi.exception.PypiExtractionException;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotProcessHTTPError;
+import org.ndx.aadarchi.technology.detector.pypi.exception.RateLimitReached;
 
 public class PypiContext extends AbstractContext implements DetailsFetchingContext {
-	public static class RateLimitReached extends RuntimeException {
-		
-	}
 	public static final Logger logger = Logger.getLogger(PypiContext.class.getName());
 	private HttpClient client;
 	private transient FailsafeExecutor<Object> failsafe;
@@ -204,7 +205,7 @@ public class PypiContext extends AbstractContext implements DetailsFetchingConte
 				case 200:
 					return addDownloadInfosTo(artifact, response.body());
 				case 429:
-					throw new RateLimitReached();
+					throw new RateLimitReached("Seems like we're rate limited by pypistats");
 				default:
 					logger.severe(String.format("What to do with status %s sent for url %s", status, url));
 			}
@@ -258,13 +259,13 @@ public class PypiContext extends AbstractContext implements DetailsFetchingConte
 									.build())
 							.collect(Collectors.toList());
 				} else {
-					throw new UnsupportedOperationException("Content has changed, there is no more top_packages");
+					throw new CannotFindTopPackages("Content has changed, there is no more top_packages");
 				}
 			} else {
-				throw new UnsupportedOperationException("I don't handle http erros");
+				throw new CannotProcessHTTPError("I don't handle http erros");
 			}
 		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException(e);
+			throw new CannotLoadPopularArtifacts("Unable to load popular artifacts", e);
 		}
 	}
 }

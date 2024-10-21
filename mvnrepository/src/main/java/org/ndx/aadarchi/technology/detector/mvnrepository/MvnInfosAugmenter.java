@@ -25,12 +25,15 @@ import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.apache.maven.shared.invoker.PrintStreamHandler;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
+import org.ndx.aadarchi.technology.detector.exceptions.CannotWriteToCache;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 
 import io.github.emilyydev.asp.ProvidesService;
+import org.ndx.aadarchi.technology.detector.mvnrepository.exception.CannotRunMavenCommand;
+import org.ndx.aadarchi.technology.detector.mvnrepository.exception.CannotWriteToOutput;
 
 /**
  * Read infos from maven to have them inserted into artifact details
@@ -124,7 +127,7 @@ public class MvnInfosAugmenter implements Augmenter {
 					p.store(output, null);
 				}
 			} catch(IOException e) {
-				throw new RuntimeException("Unable to write properties cache at "+propertiesCache.getAbsolutePath(), e);
+				throw new CannotWriteToCache("Unable to write properties cache at "+propertiesCache.getAbsolutePath(), e);
 			}
 		}
 		Properties used = new Properties();
@@ -138,7 +141,7 @@ public class MvnInfosAugmenter implements Augmenter {
 					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 			}
 		} catch(IOException e) {
-			throw new RuntimeException("Unable to read properties cache at "+propertiesCache.getAbsolutePath(), e);
+			throw new CannotWriteToOutput("Unable to read properties cache at "+propertiesCache.getAbsolutePath(), e);
 		}
 	}
 
@@ -200,16 +203,16 @@ public class MvnInfosAugmenter implements Augmenter {
 						if(result.getExitCode()==0) {
 							return output;
 						} else {
-							throw new RuntimeException(
+							throw new CannotRunMavenCommand(
 									String.format("Unable to process command \"%s\"\nError is\n%s",loggedCommand, error));
 						}
 					} catch (MavenInvocationException e) {
-						throw new RuntimeException("Unable to run maven command "+request.toString(), e);
+						throw new CannotRunMavenCommand("Unable to run maven command "+request.toString(), e);
 					}
 				}
 			}
 		} catch (IOException e) {
-			throw new RuntimeException("An IOException for a ByteArrayOutputStream?", e);
+			throw new CannotWriteToOutput("An IOException for a ByteArrayOutputStream?", e);
 		}
 	}
 
