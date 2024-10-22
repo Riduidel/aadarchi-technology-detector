@@ -30,8 +30,11 @@ public class GitHubProjects {
 	public static String getGitHubPath(ArtifactDetails details) {
 		for(Function<ArtifactDetails, String> extractor : ArtifactDetails.GITHUB_REPO_EXTRACTORS) {
 			String key = extractor.apply(details);
-			if(key!=null)
-				return getGitHubPath(get().getProperty(key));
+			if(key!=null) {
+				if(get().containsKey(key)) {
+					return getGitHubPath(get().getProperty(key));
+				}
+			}
 		}
 		return null;
 	}
