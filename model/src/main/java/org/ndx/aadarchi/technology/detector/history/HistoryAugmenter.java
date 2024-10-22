@@ -61,9 +61,9 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 	 * @param git
 	 */
 	public void augmentHistory(Context context, Git git) throws IOException, GitAPIException {
-		// First, create augmented branch from scratch
+		// First, move on to history branch
 		Ref checkout = git.checkout().setName(gitBranchName).call();
-		// This branch will have an upcased suffix to make sure I can't ignore it
+		// Make sure replacer branch is clean
 		git.branchList().call().stream().filter(ref -> ref.getName().endsWith(replacerBranchName)).findAny()
 			.ifPresent(
 				Throwing.consumer(
@@ -76,7 +76,7 @@ public class HistoryAugmenter<Context extends ExtractionContext> {
 					}));
 		List<Ref> branches = git.branchList().call();
 		Ref gitBranch = branches.stream().filter(ref -> ref.getName().contains(gitBranchName)).findAny().get();
-		// Now we have a target branch, take each commit in turn
+		// Now we have a target branch, take each commit from source branch in turn
 		Iterable<RevCommit> commits = git.log()
 				.add(gitBranch.getObjectId())
 				.call();

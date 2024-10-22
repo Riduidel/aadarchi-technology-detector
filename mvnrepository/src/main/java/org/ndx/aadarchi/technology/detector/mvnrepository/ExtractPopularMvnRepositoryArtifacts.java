@@ -66,7 +66,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
 
 	@Override
 	protected HistoryBuilder createHistoryBuilder() {
-		return new HistoryBuilder(mvnRepositoryServer, gitHistory, getCache(), output);
+		return new HistoryBuilder(mvnRepositoryServer, gitHistory, getCache(), output, forceRebuildHistory);
 	}
 
 	private List<ArtifactDetails> findRelocated(Map artifactInformations) {

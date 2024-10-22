@@ -32,7 +32,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Option(names = {
 	"--query-to-run" }, description = "The bigquery query name (from query.xml) that will be run. BEWARE! It heavily impacts pricing, but will only be run when building history.", 
-			defaultValue = "get_packages_downloads_by_month_reduced")
+			defaultValue = "get_packages_downloads_by_month")
 	private String queryToRun;
 
 	@Option(names = {
@@ -91,6 +91,6 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	protected BaseHistoryBuilder<PypiContext> createHistoryBuilder() {
-		return new HistoryBuilder(gitHistory, getCache(), bigQueryProjectId, queryToRun);
+		return new HistoryBuilder(gitHistory, getCache(), bigQueryProjectId, queryToRun, forceRebuildHistory);
 	}
 }

@@ -53,10 +53,10 @@ public class HistoryBuilder extends BaseHistoryBuilder<MvnContext> {
 
 	private final String mvnRepositoryServer;
 
-	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output) {
+	HistoryBuilder(String mvnRepositoryServer, Path gitHistory, Path cache, Path output, boolean forceRebuildHistory) {
 		super(cache, "🤖 MvnRepository History Builder", 
 				"get_mvnrepository_infos.yaml@history",
-				"mvnrepository");
+				"mvnrepository", forceRebuildHistory);
 		this.output = output;
 		this.mvnRepositoryServer = mvnRepositoryServer;
 
