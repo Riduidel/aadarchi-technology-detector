@@ -67,6 +67,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 	@Override
 	public ArtifactDetails augment(ExtractionContext context, ArtifactDetails source, LocalDate date) {
 		if(source.getGithubDetails()!=null) {
+			// Make sure repository exist before anything
 			return doAugment(context, source, date);
 		}
 		return source;
@@ -97,9 +98,12 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 	Integer getCurrentStargazersCount(String githubToken, GitHubDetails githubDetails) {
 		String requestText = String.format(STARGAZERS_COUNT, githubDetails.getOwner(), githubDetails.getRepository());
 		JsonNode response = runGraphQlRequest(githubToken, requestText);
-		return response.get("data")
-			.get("repository")
-			.get("stargazerCount").asInt();
+		JsonNode data = response.get("data");
+		JsonNode repository = data
+			.get("repository");
+		JsonNode stargazerCount = repository
+			.get("stargazerCount");
+		return stargazerCount.asInt();
 	}
 
 	void extractStargazersHistory(ExtractionContext context, ArtifactDetails source, LocalDate date,
@@ -166,6 +170,7 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 					.forEach(element -> {
 						returned.add(toStargazer(element));
 					});
+				logger.info("Fetched "+returned.size()+"/"+total+" stargazers of "+repositoryOwner+"/"+repositoryName);
 			} while(cursor!=null && !cursor.equals(""));
 			return returned;
 		} catch (CannotPerformGraphQL e) {
