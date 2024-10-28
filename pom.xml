@@ -16,6 +16,7 @@
         <module>mvnrepository</module>
         <module>npmjs</module>
         <module>pypi</module>
+        <module>packagist</module>
     </modules>
 
     <properties>
