@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
@@ -29,6 +28,9 @@ import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.model.VersionDetails;
 import org.ndx.aadarchi.technology.detector.model.VersionDetailsBuilder;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotFindTopPackages;
+import org.ndx.aadarchi.technology.detector.pypi.exception.CannotProcessHTTPError;
+import org.ndx.aadarchi.technology.detector.pypi.exception.RateLimitReached;
 
 import com.fasterxml.jackson.core.JacksonException;
 
@@ -37,10 +39,6 @@ import dev.failsafe.FailsafeExecutor;
 import dev.failsafe.RateLimitExceededException;
 import dev.failsafe.RateLimiter;
 import dev.failsafe.RetryPolicy;
-import org.ndx.aadarchi.technology.detector.pypi.exception.CannotFindTopPackages;
-import org.ndx.aadarchi.technology.detector.pypi.exception.PypiExtractionException;
-import org.ndx.aadarchi.technology.detector.pypi.exception.CannotProcessHTTPError;
-import org.ndx.aadarchi.technology.detector.pypi.exception.RateLimitReached;
 
 public class PypiContext extends AbstractContext implements DetailsFetchingContext {
 	public static final Logger logger = Logger.getLogger(PypiContext.class.getName());
@@ -50,7 +48,7 @@ public class PypiContext extends AbstractContext implements DetailsFetchingConte
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
 	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
 	
-	public PypiContext(HttpClient client, GitHub github, Path cache, String githubToken) {
+	public PypiContext(HttpClient client, Path cache, String githubToken) {
 		super(cache, githubToken);
 		this.client = client;
 	}

@@ -21,6 +21,7 @@ import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
 import org.ndx.aadarchi.technology.detector.model.VersionDetails;
+import org.ndx.aadarchi.technology.detector.mvnrepository.exception.CannotMapArtifact;
 
 import com.github.fge.lambdas.Throwing;
 import com.microsoft.playwright.Browser;
@@ -29,7 +30,6 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Playwright;
 
-import org.ndx.aadarchi.technology.detector.mvnrepository.exception.CannotMapArtifact;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -58,7 +58,7 @@ class ExtractPopularMvnRepositoryArtifacts extends InterestingArtifactsDetailsDo
     @Override
     public Integer call() throws Exception {
         try (Playwright playwright = Playwright.create()) {
-        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache(), getGithub(), githubToken);
+        	MvnContext mvnContext = new MvnContext(createPlaywrightContext(playwright), maven, getCache(), githubToken);
         	super.doCall(mvnContext);
         }
         return 0;

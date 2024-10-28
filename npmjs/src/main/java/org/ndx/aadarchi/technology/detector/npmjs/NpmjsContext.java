@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
 import org.ndx.aadarchi.technology.detector.helper.Utils;
 import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
@@ -46,7 +45,7 @@ public class NpmjsContext extends AbstractContext implements DetailsFetchingCont
 	private FailsafeExecutor<Object> failsafe;
 	private HttpClient client;
 
-    public NpmjsContext(HttpClient client, Path cache, GitHub github, String githubToken) {
+    public NpmjsContext(HttpClient client, Path cache, String githubToken) {
     	super(cache, githubToken);
     	this.client = client;
 	}

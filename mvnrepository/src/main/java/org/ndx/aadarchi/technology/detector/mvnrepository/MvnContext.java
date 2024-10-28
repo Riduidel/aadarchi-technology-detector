@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.io.IOUtils;
-import org.kohsuke.github.GitHub;
 import org.ndx.aadarchi.technology.detector.loader.AbstractContext;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
@@ -27,7 +26,7 @@ public class MvnContext extends AbstractContext implements ExtractionContext {
 	public final File mavenExecutable;
 	public final File mavenPropertiesCache;
 
-	public MvnContext(BrowserContext context, File maven, Path cache, GitHub github, String githubToken) {
+	public MvnContext(BrowserContext context, File maven, Path cache, String githubToken) {
 		super(cache, githubToken);
 		this.context = context;
 		this.mavenExecutable  = maven;
