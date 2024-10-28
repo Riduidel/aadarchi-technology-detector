@@ -2,23 +2,21 @@ package org.ndx.aadarchi.technology.detector.loader;
 
 import java.nio.file.Path;
 
-import org.kohsuke.github.GitHub;
-
 public abstract class AbstractContext {
-	private final GitHub github;
+	private final String githubToken;
 	private final Path cache;
 
-	public AbstractContext(Path cache, GitHub github) {
+	public AbstractContext(Path cache, String githubToken) {
 		super();
 		this.cache = cache;
-		this.github = github;
+		this.githubToken = githubToken;
 	}
 	
 	public Path getCache() {
 		return cache;
 	}
 
-	public GitHub getGithub() {
-		return github;
+	public String getGithubToken() {
+		return githubToken;
 	}
 }

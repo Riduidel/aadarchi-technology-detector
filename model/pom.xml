@@ -10,6 +10,7 @@
     <artifactId>model</artifactId>
     <description>Model classes for the various extraction tools</description>
     <dependencies>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -54,14 +55,15 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.kohsuke</groupId>
-            <artifactId>github-api</artifactId>
-            <version>1.308</version>
-        </dependency>
-        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>
             <version>1.7.32</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/tech.habegger.assertj/assertj-jackson -->
+        <dependency>
+            <groupId>tech.habegger.assertj</groupId>
+            <artifactId>assertj-jackson</artifactId>
+            <version>0.1.0</version>
         </dependency>
         <dependency>
             <groupId>cc.jilt</groupId>
@@ -89,6 +91,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- We use Koshuke code only for tests, because it relies upon the REST client-->
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>github-api</artifactId>
+            <version>1.308</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -149,6 +158,15 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <aadarchi.github.token>${aadarchi.github.token}</aadarchi.github.token>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>

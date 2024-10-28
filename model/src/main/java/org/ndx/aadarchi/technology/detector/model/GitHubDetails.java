@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.jilt.Builder;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Builder(toBuilder = "toBuilder")
@@ -34,5 +35,13 @@ public class GitHubDetails {
 	}
 	public void setStargazers(Optional<Integer> stargazers) {
 		this.stargazers = stargazers;
+	}
+	@JsonIgnore
+	public String getOwner() {
+		return path.substring(0, path.indexOf('/'));
+	}
+	@JsonIgnore
+	public String getRepository() {
+		return path.substring(path.indexOf('/')+1);
 	}
 }

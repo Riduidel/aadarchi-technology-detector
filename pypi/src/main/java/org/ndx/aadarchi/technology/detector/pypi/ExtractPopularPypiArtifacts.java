@@ -42,7 +42,7 @@ class ExtractPopularPypiArtifacts extends InterestingArtifactsDetailsDownloader<
 
 	@Override
 	public Integer call() throws Exception {
-		super.doCall(new PypiContext(client, getGithub(), getCache()));
+		super.doCall(new PypiContext(client, getGithub(), getCache(), githubToken));
 		return 0;
 	}
 	

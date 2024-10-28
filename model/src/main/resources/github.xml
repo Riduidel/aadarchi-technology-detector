@@ -1,0 +1,60 @@
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="stargazers_count"><![CDATA[query {
+  repository(owner: "%s", name: "%s") {
+    stargazerCount
+    stargazers {
+      totalCount
+    }
+  }
+}]]></entry>
+    <entry key="stargazers_list"><![CDATA[{
+  repository(owner: "%s", name: "%s") {
+    stargazers(first: 100, after: "%s") {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      edges {
+        starredAt
+        node {
+          login
+        }
+      }
+    }
+  }
+}]]></entry>
+    <entry key="stargazers_count_example_django"><![CDATA[
+query {
+  repository(owner: "django", name: "django") {
+    stargazerCount
+    stargazers {
+      totalCount
+    }
+  }
+}
+]]></entry>
+    <entry key="stargazers_list_example_django"><![CDATA[
+query {
+  repository(owner: "django", name: "django") {
+    stargazers(first: 100, after:"") {
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      edges {
+        starredAt
+        node {
+          login
+        }
+      }
+    }
+  }
+}
+]]></entry>
+
+</properties>

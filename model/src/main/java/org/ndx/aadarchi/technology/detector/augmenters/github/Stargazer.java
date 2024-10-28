@@ -2,8 +2,6 @@ package org.ndx.aadarchi.technology.detector.augmenters.github;
 
 import java.util.Date;
 
-import org.kohsuke.github.GHStargazer;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,11 +14,6 @@ public class Stargazer implements Comparable<Stargazer>{
 	public Stargazer(@JsonProperty("starredAt") Date starredAt, @JsonProperty("user") String user) {
 		this.starredAt = starredAt;
 		this.user = user;
-	}
-
-	public Stargazer(GHStargazer s) {
-		starredAt = s.getStarredAt();
-		user = s.getUser().getLogin();
 	}
 	@Override
 	public int compareTo(Stargazer o) {

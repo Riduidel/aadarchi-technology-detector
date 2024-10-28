@@ -27,8 +27,8 @@ public class MvnContext extends AbstractContext implements ExtractionContext {
 	public final File mavenExecutable;
 	public final File mavenPropertiesCache;
 
-	public MvnContext(BrowserContext context, File maven, Path cache, GitHub github) {
-		super(cache, github);
+	public MvnContext(BrowserContext context, File maven, Path cache, GitHub github, String githubToken) {
+		super(cache, githubToken);
 		this.context = context;
 		this.mavenExecutable  = maven;
 		this.mavenPropertiesCache = new File(cache.toAbsolutePath().toFile(), "maven/properties");

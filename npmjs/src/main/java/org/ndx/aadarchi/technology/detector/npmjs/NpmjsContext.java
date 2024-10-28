@@ -46,8 +46,8 @@ public class NpmjsContext extends AbstractContext implements DetailsFetchingCont
 	private FailsafeExecutor<Object> failsafe;
 	private HttpClient client;
 
-    public NpmjsContext(HttpClient client, Path cache, GitHub github) {
-    	super(cache, github);
+    public NpmjsContext(HttpClient client, Path cache, GitHub github, String githubToken) {
+    	super(cache, githubToken);
     	this.client = client;
 	}
 	/**

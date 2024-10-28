@@ -50,8 +50,8 @@ public class PypiContext extends AbstractContext implements DetailsFetchingConte
 	private static final String DOWNLOADS = "https://pypistats.org/api/packages/%s/recent";
 	private static final String POPULAR = "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.min.json";
 	
-	public PypiContext(HttpClient client, GitHub github, Path cache) {
-		super(cache, github);
+	public PypiContext(HttpClient client, GitHub github, Path cache, String githubToken) {
+		super(cache, githubToken);
 		this.client = client;
 	}
 

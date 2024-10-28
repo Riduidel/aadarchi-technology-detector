@@ -10,13 +10,9 @@ import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.kohsuke.github.GHRateLimit.Record;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.GitHubBuilder;
-import org.kohsuke.github.RateLimitChecker;
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenters;
-import org.ndx.aadarchi.technology.detector.exceptions.CannottReadFromCache;
 import org.ndx.aadarchi.technology.detector.exceptions.CannotWriteToCache;
+import org.ndx.aadarchi.technology.detector.exceptions.CannottReadFromCache;
 import org.ndx.aadarchi.technology.detector.history.BaseHistoryBuilder;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoader;
 import org.ndx.aadarchi.technology.detector.loader.ArtifactLoaderCollection;
@@ -168,33 +164,5 @@ public abstract class InterestingArtifactsDetailsDownloader<Context extends Extr
 
 	public Path getCache() {
 		return cache;
-	}
-	
-	private static class ProgressingRateLimitChecker extends RateLimitChecker {
-		@Override
-		protected boolean checkRateLimit(Record rateLimitRecord, long count) throws InterruptedException {
-			if(rateLimitRecord.getLimit()-rateLimitRecord.getRemaining()>rateLimitRecord.getLimit()-1000) {
-				int delay = -1000-(rateLimitRecord.getLimit()-rateLimitRecord.getRemaining());
-				logger.info(String.format("Approaching rate limit, starting progressive slow down (waiting %d s.)", delay));
-				synchronized(this) {
-					this.wait(delay*1000);
-				}
-			}
-			var returned = super.checkRateLimit(rateLimitRecord, count);
-			if(returned)
-				logger.warning("Rate limit is reached ("+rateLimitRecord+")");
-			return returned;
-		}
-	}
-
-
-	protected GitHub getGithub() {
-		try {
-			return new GitHubBuilder()
-					.withRateLimitChecker(new ProgressingRateLimitChecker())
-					.withJwtToken(githubToken).build();
-		} catch (IOException e) {
-			throw new CannotInitializeGitHubClient("Unable to connect to GitHub", e);
-		}
 	}
 }
