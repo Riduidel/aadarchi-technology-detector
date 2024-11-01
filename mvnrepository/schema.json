@@ -88,6 +88,18 @@
           "type" : "string"
         }
       },
+      "githubDetails" : {
+        "type" : "object",
+        "id" : "urn:jsonschema:org:ndx:aadarchi:technology:detector:model:GitHubDetails",
+        "properties" : {
+          "path" : {
+            "type" : "string"
+          },
+          "stargazers" : {
+            "type" : "integer"
+          }
+        }
+      },
       "coordinates" : {
         "type" : "string"
       }
