@@ -38,10 +38,17 @@ public class GitHubDetails {
 	}
 	@JsonIgnore
 	public String getOwner() {
+		return getOwner(path);
+	}
+	public static String getOwner(String path) {
 		return path.substring(0, path.indexOf('/'));
 	}
 	@JsonIgnore
 	public String getRepository() {
+		return getRepository(path);
+	}
+	public static String getRepository(String path) {
 		return path.substring(path.indexOf('/')+1);
 	}
+	
 }

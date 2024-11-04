@@ -41,7 +41,7 @@ class AddGitHubStarsAtPeriodTest extends AddGitHubStarsAtPeriod {
 	@Test void can_fetch_login() throws IOException, InterruptedException {
 		// Given
 		String requestText = "{query { viewer { login }}}";
-		HttpRequest request = createGraphQLQuery(token, requestText);
+		HttpRequest request = GitHubGraphQLClient.getClient(token).createGraphQLQuery(token, requestText);
 		// When
 		HttpResponse<String> response = InterestingArtifactsDetailsDownloader.client.send(request, BodyHandlers.ofString());
 		// Then

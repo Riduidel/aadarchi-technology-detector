@@ -3,12 +3,6 @@ package org.ndx.aadarchi.technology.detector.augmenters.github;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.text.DateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -29,7 +23,6 @@ import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
 import org.ndx.aadarchi.technology.detector.exceptions.CannotWriteToCache;
 import org.ndx.aadarchi.technology.detector.exceptions.CannottReadFromCache;
 import org.ndx.aadarchi.technology.detector.helper.FileHelper;
-import org.ndx.aadarchi.technology.detector.helper.InterestingArtifactsDetailsDownloader;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.GitHubDetails;
@@ -41,23 +34,7 @@ import io.github.emilyydev.asp.ProvidesService;
 
 @ProvidesService(Augmenter.class)
 public class AddGitHubStarsAtPeriod implements Augmenter {
-	
 	private static final Logger logger = Logger.getLogger(AddGitHubStarsAtPeriod.class.getName());
-	private static String STARGAZERS_COUNT;
-	private static String STARGAZERS_LIST;
-	
-	static {
-		Properties properties = new Properties();
-		try {
-			try(InputStream input = AddGitHubStarsAtPeriod.class.getClassLoader().getResourceAsStream("github.xml")) {
-				properties.loadFromXML(input);
-			}
-			STARGAZERS_LIST = properties.getProperty("stargazers_list");
-			STARGAZERS_COUNT = properties.getProperty("stargazers_count");
-		} catch(IOException e) {
-			throw new Error("Cannot load github.xml file from CLASSPATH", e);
-		}
-	}
 	
 	@Override
 	public int order() {
@@ -96,8 +73,8 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 	}
 
 	Integer getCurrentStargazersCount(String githubToken, GitHubDetails githubDetails) {
-		String requestText = String.format(STARGAZERS_COUNT, githubDetails.getOwner(), githubDetails.getRepository());
-		JsonNode response = runGraphQlRequest(githubToken, requestText);
+		GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(githubToken);
+		JsonNode response = helper.runGraphQLQuery(GitHubGraphQLClient.STARGAZERS_COUNT, githubDetails.getOwner(), githubDetails.getRepository());
 		JsonNode data = response.get("data");
 		JsonNode repository = data
 			.get("repository");
@@ -159,8 +136,8 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 			List<Stargazer> returned = new ArrayList<Stargazer>();
 			String cursor = "";
 			do {
-				String requestText = String.format(STARGAZERS_LIST, repositoryOwner, repositoryName, cursor);
-				JsonNode response = runGraphQlRequest(githubToken, requestText);
+				GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(githubToken);
+				JsonNode response = helper.runGraphQLQuery(GitHubGraphQLClient.STARGAZERS_LIST, repositoryOwner, repositoryName, cursor);
 				cursor = getNextCursorValue(response);
 				// Now process data
 				JsonNode data = response.get("data");
@@ -197,48 +174,6 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		} else {
 			return null;
 		}
-	}
-
-	private JsonNode runGraphQlRequest(String githubToken, String requestText) {
-		try {
-			HttpRequest request = createGraphQLQuery(githubToken, requestText);
-			HttpClient client = InterestingArtifactsDetailsDownloader.client;
-			HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-			if(response.statusCode()<300) {
-				return FileHelper.getObjectMapper().readTree(response.body());
-			} else {
-				throw new UnsupportedOperationException(
-						String.format("Seems like HTTP request was incorrect (request was %s)(response was %s)",
-								request.bodyPublisher().get(),
-								response.body()));
-			}
-		} catch(IOException | InterruptedException e) {
-			throw new CannotPerformGraphQL(
-					String.format("Unable to perform graph query\n"
-							+ "=====\n"
-							+ "%s\n"
-							+ "=====\n"
-							+ "due to lower level exception", requestText), e);
-		}
-	}
-
-	public static HttpRequest createGraphQLQuery(String githubToken, String query) {
-		String jsonQuery = String.format("{ \"query\": \"%s\" }",
-				// We have to embed query in JSON.
-				// For that
-				query
-					// Quote line returns
-					.replace("\n", "")
-					// Quote double quotes
-					.replace("\"", "\\\"")
-				);
-		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://api.github.com/graphql"))
-				.header("Authorization", String.format("Bearer %s", githubToken))
-				.header("Content-Type", "application/json; charset=utf-8")
-				.POST(BodyPublishers.ofString(jsonQuery))
-				.build();
-		return request;
 	}
 
 }

@@ -10,7 +10,6 @@
     <artifactId>model</artifactId>
     <description>Model classes for the various extraction tools</description>
     <dependencies>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -33,6 +32,10 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>dev.failsafe</groupId>
+            <artifactId>failsafe</artifactId>
         </dependency>
         <dependency>
             <groupId>info.picocli</groupId>

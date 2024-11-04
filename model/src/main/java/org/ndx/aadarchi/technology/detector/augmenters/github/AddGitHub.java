@@ -11,7 +11,10 @@ import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
 import org.ndx.aadarchi.technology.detector.loader.ExtractionContext;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetails;
 import org.ndx.aadarchi.technology.detector.model.ArtifactDetailsBuilder;
+import org.ndx.aadarchi.technology.detector.model.GitHubDetails;
 import org.ndx.aadarchi.technology.detector.model.GitHubDetailsBuilder;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import io.github.emilyydev.asp.ProvidesService;
 
@@ -44,12 +47,19 @@ public class AddGitHub implements Augmenter {
 	}
 
 	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, String path, LocalDate date) {
-		ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
-		return builder.githubDetails(GitHubDetailsBuilder.gitHubDetails()
-					.stargazers(Optional.empty())
-					.path(path)
-					.build())
-				.build();
+		GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(context.getGithubToken());
+		JsonNode repositoryId = helper.runGraphQLQuery(GitHubGraphQLClient.REPOSITORY_ID, GitHubDetails.getOwner(path), GitHubDetails.getRepository(path));
+		if(repositoryId.has("errors")) {
+			logger.warning("Impossible to add GitHub repository to "+source.getName()+"\ndue to "+repositoryId);
+			return source;
+		} else {
+			ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
+			return builder.githubDetails(GitHubDetailsBuilder.gitHubDetails()
+						.stargazers(Optional.empty())
+						.path(path)
+						.build())
+					.build();
+		}
 	}
 
 }
