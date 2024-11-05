@@ -58,6 +58,7 @@ public class GitHubGraphQLClient {
 		try {
 			HttpRequest request = createGraphQLQuery(githubToken, requestText);
 			HttpClient client = InterestingArtifactsDetailsDownloader.client;
+			emergencyBrake();
 			HttpResponse<String> response = failsafe.get(sendRequest(request, client));
 			// Analyze headers to get available quota
 			updateHeaders(response);
@@ -110,7 +111,6 @@ public class GitHubGraphQLClient {
 				.ofNullable(headers.firstValue("x-ratelimit-remaining").map(Integer::parseInt).orElseGet(() -> null));
 		resetAt = Optional.ofNullable(headers.firstValue("x-ratelimit-reset").map(Long::parseLong)
 				.map(date -> date * 1000).map(date -> new Date(date)).orElseGet(() -> null));
-		urgencyBrake();
 		if (limit.isPresent() && remaining.isPresent() && resetAt.isPresent()) {
 			Duration delay = delay();
 			updateFailsafe(limit.get(), remaining.get(), delay);
@@ -125,11 +125,12 @@ public class GitHubGraphQLClient {
 		return delay;
 	}
 
-	private void urgencyBrake() {
+	private void emergencyBrake() {
 		if (remaining.isPresent() && resetAt.isPresent()) {
 			if (remaining.get() <= 1000) {
 				Duration delay = delay();
-				long waitDelay = Math.abs(delay.toMillis());
+				// We always urgency brake to 1s. after delay expiration
+				long waitDelay = Math.abs(delay.toMillis())+1000;
 				logger.warning(
 						String.format("We're dangerously approaching our limits, waiting %d minutes %02d seconds",
 								delay.toMinutesPart(), delay.toSecondsPart())
