@@ -1,10 +1,12 @@
 package org.ndx.aadarchi.technology.detector.augmenters.github;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
@@ -22,6 +24,7 @@ import io.github.emilyydev.asp.ProvidesService;
 public class AddGitHub implements Augmenter {
 	private static final Logger logger = Logger.getLogger(AddGitHub.class.getName());
 	private final Set<String> alreadyLoggedProjects = new TreeSet<>();
+	private final Map<String, Boolean> alreadyValidatedGithubRepositories = new TreeMap<>();
 	public static final int ADD_GITHUB_OBJECT = 100;
 
 	@Override
@@ -47,19 +50,29 @@ public class AddGitHub implements Augmenter {
 	}
 
 	private ArtifactDetails doAugment(ExtractionContext context, ArtifactDetails source, String path, LocalDate date) {
-		GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(context.getGithubToken());
-		JsonNode repositoryId = helper.runGraphQLQuery(GitHubGraphQLClient.REPOSITORY_ID, GitHubDetails.getOwner(path), GitHubDetails.getRepository(path));
-		if(repositoryId.has("errors")) {
-			logger.warning("Impossible to add GitHub repository to "+source.getName()+"\ndue to "+repositoryId);
-			return source;
-		} else {
+		if(alreadyValidatedGithubRepositories.computeIfAbsent(path, isThereARepositoryForPath(context, source))) {
 			ArtifactDetailsBuilder builder = ArtifactDetailsBuilder.toBuilder(source);
 			return builder.githubDetails(GitHubDetailsBuilder.gitHubDetails()
 						.stargazers(Optional.empty())
 						.path(path)
 						.build())
 					.build();
+		} else {
+			return source;
 		}
+	}
+
+	private Function<String, Boolean> isThereARepositoryForPath(ExtractionContext context, ArtifactDetails source) {
+		return path -> {
+			GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(context.getGithubToken());
+			JsonNode repositoryId = helper.runGraphQLQuery(GitHubGraphQLClient.REPOSITORY_ID, GitHubDetails.getOwner(path), GitHubDetails.getRepository(path));
+			if(repositoryId.has("errors")) {
+				logger.warning("Impossible to add GitHub repository to "+source.getName()+"\ndue to "+repositoryId.get("errors"));
+				return false;
+			} else {
+				return true;
+			}
+		};
 	}
 
 }
