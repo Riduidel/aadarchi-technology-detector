@@ -2,21 +2,19 @@ package org.ndx.aadarchi.technology.detector.augmenters.github;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.DateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
+import java.util.TreeSet;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.ndx.aadarchi.technology.detector.augmenters.Augmenter;
@@ -79,21 +77,29 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		JsonNode repository = data
 			.get("repository");
 		JsonNode stargazerCount = repository
-			.get("stargazerCount");
-		return stargazerCount.asInt();
+				.get("stargazerCount");
+		if(stargazerCount==null) {
+			return 0;
+		} else {
+			return stargazerCount.asInt();
+		}
 	}
 
 	void extractStargazersHistory(ExtractionContext context, ArtifactDetails source, LocalDate date,
 			GitHubDetails githubDetails) {
 		Date old = Date.from(date.atStartOfDay(ZoneOffset.UTC).toInstant());
-		List<Stargazer> allStargazers = getAllStargazers(context.getGithubToken(), context, source, githubDetails);
+		Collection<Stargazer> allStargazers = getAllStargazers(context.getGithubToken(), context, source, githubDetails);
 		long numberOfStargazersBefore = allStargazers.stream()
 				.filter(s -> s.getStarredAt().compareTo(old)<0)
 				.count();
-		githubDetails.setStargazers(Optional.of((int) numberOfStargazersBefore));
+		if(numberOfStargazersBefore>0) {
+			githubDetails.setStargazers(Optional.of((int) numberOfStargazersBefore));
+		} else {
+			githubDetails.setStargazers(Optional.empty());
+		}
 	}
 
-	List<Stargazer> getAllStargazers(String githubToken, ExtractionContext context, ArtifactDetails source, GitHubDetails details) {
+	Collection<Stargazer> getAllStargazers(String githubToken, ExtractionContext context, ArtifactDetails source, GitHubDetails details) {
 		try {
 			int total = getCurrentStargazersCount(githubToken, details);
 			File cache = context.getCache()
@@ -103,9 +109,9 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 					.toFile();
 			cache.getParentFile().mkdirs();
 			int percentage = 0;
-			List<Stargazer> returned = null;
+			Collection<Stargazer> returned = new TreeSet<Stargazer>();
 			if(cache.exists()) {
-				returned = FileHelper.readFromFile(cache, new TypeReference<List<Stargazer>>() {});
+				returned = FileHelper.readFromFile(cache, new TypeReference<TreeSet<Stargazer>>() {});
 				percentage = (int) (returned.size()/((float) total)*100);
 			}
 			if(percentage>0 && percentage<90) {
@@ -113,15 +119,16 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 						String.format("Our cache doesn't contains enough data for %S (it contains only %d %%). Force refreshing",
 								details.getPath(), percentage));
 				cache.delete();
+				returned.clear();
 			}
 			if(!cache.exists() || cache.lastModified()<System.currentTimeMillis()-Duration.ofDays(7).toMillis()) {
-				List<Stargazer> stargazers = doGetAllStargazers(githubToken, details, total);
+				Collection<Stargazer> stargazers = doGetAllStargazers(githubToken, details, total, returned);
 				try {
 					FileHelper.writeToFile(stargazers, cache);
 				} catch (IOException e) {
 					throw new CannotWriteToCache("Can't write stargazers to "+cache.getAbsolutePath(), e);
 				}
-				returned = FileHelper.readFromFile(cache, new TypeReference<List<Stargazer>>() {});
+				returned = FileHelper.readFromFile(cache, new TypeReference<TreeSet<Stargazer>>() {});
 			}
 			return returned;
 		} catch (IOException e) {
@@ -129,26 +136,30 @@ public class AddGitHubStarsAtPeriod implements Augmenter {
 		}
 	}
 
-	List<Stargazer> doGetAllStargazers(String githubToken, GitHubDetails githubDetails, int total) {
+	Collection<Stargazer> doGetAllStargazers(String githubToken, GitHubDetails githubDetails, int total, Collection<Stargazer> initial) {
 		String repositoryOwner = githubDetails.getOwner();
 		String repositoryName = githubDetails.getRepository();
 		try {
-			List<Stargazer> returned = new ArrayList<Stargazer>();
+			Collection<Stargazer> returned = new TreeSet<Stargazer>(initial);
 			String cursor = "";
+			boolean alreadyKnown = false;
 			do {
 				GitHubGraphQLClient helper = GitHubGraphQLClient.getClient(githubToken);
 				JsonNode response = helper.runGraphQLQuery(GitHubGraphQLClient.STARGAZERS_LIST, repositoryOwner, repositoryName, cursor);
+				if(response.has("errors")) {
+					return returned;
+				}
 				cursor = getNextCursorValue(response);
 				// Now process data
 				JsonNode data = response.get("data");
 				JsonNode repository = data.get("repository");
 				JsonNode stargazers = repository.get("stargazers");
-				StreamSupport.stream(stargazers.get("edges").spliterator(), false)
-					.forEach(element -> {
-						returned.add(toStargazer(element));
-					});
+				TreeSet<Stargazer> newStargazers = StreamSupport.stream(stargazers.get("edges").spliterator(), false)
+					.map(this::toStargazer)
+					.collect(Collectors.toCollection(() -> new TreeSet<>()));
+				 alreadyKnown = !returned.addAll(newStargazers);
 				logger.info("Fetched "+returned.size()+"/"+total+" stargazers of "+repositoryOwner+"/"+repositoryName);
-			} while(cursor!=null && !cursor.equals(""));
+			} while(cursor!=null && !cursor.equals("") && !alreadyKnown);
 			return returned;
 		} catch (CannotPerformGraphQL e) {
 			throw new CannotFetchStargazers("Cannot fetch stargazers of "+repositoryOwner+"/"+repositoryName, e);

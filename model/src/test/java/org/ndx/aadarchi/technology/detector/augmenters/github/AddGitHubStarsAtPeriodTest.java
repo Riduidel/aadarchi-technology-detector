@@ -1,18 +1,15 @@
 package org.ndx.aadarchi.technology.detector.augmenters.github;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpRequest;
-import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
+import java.util.TreeSet;
 
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
@@ -77,7 +74,7 @@ class AddGitHubStarsAtPeriodTest extends AddGitHubStarsAtPeriod {
 		// Just to be sure we can get it
 		Assertions.assertThat(stargazersCount).isGreaterThan(1);
 		// When
-		List<Stargazer> allStargazers = tested.doGetAllStargazers(token, details, stargazersCount);
+		Collection<Stargazer> allStargazers = tested.doGetAllStargazers(token, details, stargazersCount, new TreeSet<Stargazer>());
 		// Then
 		Assertions.assertThat(allStargazers).hasSize(stargazersCount);
 	}

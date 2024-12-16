@@ -18,7 +18,7 @@
 }]]></entry>
     <entry key="stargazers_list"><![CDATA[{
   repository(owner: "%s", name: "%s") {
-    stargazers(first: 100, after: "%s") {
+    stargazers(first: 100, after: "%s", orderBy: {field: STARRED_AT, direction: DESC}) {
       pageInfo {
         endCursor
         hasNextPage
@@ -47,7 +47,7 @@ query {
     <entry key="stargazers_list_example_django"><![CDATA[
 query {
   repository(owner: "django", name: "django") {
-    stargazers(first: 100, after:"") {
+    stargazers(first: 100, after:"", orderBy: {field: STARRED_AT, direction: DESC}) {
       pageInfo {
         endCursor
         hasNextPage
@@ -61,6 +61,7 @@ query {
         }
       }
     }
+    stargazerCount
   }
 }
 ]]></entry>
