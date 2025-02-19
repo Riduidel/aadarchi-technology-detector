@@ -1,0 +1,29 @@
+projects_per_page: 10
+projects_per_platform: 1000
+
+quarkus:
+  log:
+    category:
+      "org.jboss.resteasy.reactive.client.logging":
+        level: WARN
+  rate-limiter:
+    buckets:
+      librariesio:
+        limits:
+          - permitted-uses: 60
+            period: 1m
+            shared: true
+          - permitted-uses: 60
+            period: 1m
+            shared: true
+  rest-client:
+    logging:
+      scope: request-response
+      body-limit: 1024
+    librariesio:
+      url: https://libraries.io/api
+
+
+# DEV Profile!
+"%dev":
+  projects_per_platform: 10
