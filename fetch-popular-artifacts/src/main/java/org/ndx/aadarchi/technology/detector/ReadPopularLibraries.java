@@ -35,10 +35,9 @@ public class ReadPopularLibraries extends RouteBuilder {
 		public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
 			List returned = oldExchange==null ? new ArrayList() : (List) oldExchange.getMessage().getBody();
 			returned.addAll((Collection) newExchange.getMessage().getBody());
-			Exchange output = ExchangeBuilder.anExchange(getCamelContext())
+			return ExchangeBuilder.anExchange(getCamelContext())
 					.withBody(returned)
 					.build();
-			return output;
 		}
 		
 	}
@@ -74,13 +73,13 @@ public class ReadPopularLibraries extends RouteBuilder {
     	
     	from("direct:extract-library-infos")
     		.description("Saves a JSON file containing library infos then export the library GUID")
-//    		.multicast(AggregationStrategies.groupedBody())
-//    			.to("direct:save-library-infos")
-    			.to("direct:get-library-guid")
+    		.multicast()
+    			.to("direct:save-library-infos")
+    			.to("direct:get-library-id")
     		.end()
     		;
     	
-    	from("direct:get-library-guid")
+    	from("direct:get-library-id")
     		.setBody(simple("${body.packageManagerUrl}"))
     		.choice()
     		// This is not good since we filter out dependencies of some
@@ -90,12 +89,12 @@ public class ReadPopularLibraries extends RouteBuilder {
     		.end()
     		;
     	from("direct:save-library-infos")
+    		.log("Writing ${body}")
     		// TODO find a way to use csimple (which won't run interpreter at runtime but rather compile some code)
     		.setHeader("CamelFileName", simple("libraries/${body.platform}/${body.name}.json"))
     		// I do prefer to have whitespaces
     		.marshal().json(true)
     		.to(String.format("file://%s", storageFolderPath))
-    		// Once file is written, we no more need it
     		.stop()
     		;
     }
