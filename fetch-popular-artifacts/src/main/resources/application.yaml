@@ -2,6 +2,12 @@ projects_per_page: 10
 projects_per_platform: 1000
 
 quarkus:
+  datasource:
+    db-kind: h2
+    reactive:
+      url: jdbc:h2:./storage/h2
+  hawtio:
+    authenticationEnabled: false
   log:
     category:
       "org.jboss.resteasy.reactive.client.logging":
