@@ -2,17 +2,13 @@ package org.ndx.aadarchi.technology.detector;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.AggregationStrategies;
 import org.apache.camel.builder.ExchangeBuilder;
 import org.apache.camel.builder.RouteBuilder;
@@ -21,11 +17,14 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.ndx.aadarchi.technology.detector.librariesio.LibrariesIOClient;
 import org.ndx.aadarchi.technology.detector.librariesio.model.Platform;
 import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
+import org.ndx.aadarchi.technology.detector.model.Technology;
+import org.ndx.aadarchi.technology.detector.model.TechnologyRepository;
 
 import io.quarkus.logging.Log;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ReadPopularLibraries extends RouteBuilder {
@@ -38,29 +37,23 @@ public class ReadPopularLibraries extends RouteBuilder {
 	private String storageFolderPath;
 	@ConfigProperty(name="libraries-list", defaultValue="libraries.json")
 	private String librariesListPath;
+	@ConfigProperty(name="rejected-platforms", defaultValue="Bower,Carthage,Alcatraz,SwiftPM,Nimble,PureScript")
+	private List<String> rejectedPlatforms;
+	
+	@Inject TechnologyRepository technologies;
 	
 	private class ReaggregateListsOfLibraries implements AggregationStrategy {
 
 		@Override
 		public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
 			List returned = oldExchange==null ? new ArrayList() : (List) oldExchange.getMessage().getBody();
-			returned.addAll((Collection) newExchange.getMessage().getBody());
-			return ExchangeBuilder.anExchange(getCamelContext())
-					.withBody(returned)
-					.build();
-		}
-		
-	}
-	
-	private class AggregateLibraryInfosAsMap implements AggregationStrategy {
-
-		public static final String LIBRARY_INFOS_KEY = "LIBRARY_INFOS_KEY";
-
-		@Override
-		public Exchange aggregate(Exchange oldExchange, Exchange newExchange) {
-			Map<String, Object> returned = oldExchange==null ? new TreeMap<String, Object>() : (Map<String, Object>) oldExchange.getMessage().getBody();
-			String key = newExchange.getMessage().getHeader(LIBRARY_INFOS_KEY, String.class);
-			returned.put(key, newExchange.getMessage().getBody());
+			Object body = newExchange.getMessage().getBody();
+			if (body instanceof Collection) {
+				Collection c = (Collection) body;
+				returned.addAll(c);
+			} else {
+				returned.add(body);
+			}
 			return ExchangeBuilder.anExchange(getCamelContext())
 					.withBody(returned)
 					.build();
@@ -88,15 +81,16 @@ public class ReadPopularLibraries extends RouteBuilder {
     		.description("Get all libraries platforms from libraries.io")
     		.process(this::getPlatforms)
     		.split(body(), new ReaggregateListsOfLibraries())
-	    		.description("Split per deployment platform")
-	    		.to("direct:get-all-libraries-of-platform")
-	    		.end()
-	    	// Now we have a list of maps, let's sort them!
-    		.setHeader("CamelFileName", constant("libraries.json"))
-    		.log("Writing libraries to ${headers.CamelFileName}")
-    		// I do prefer to have whitespaces
-    		.marshal().json(true)
-    		.to(String.format("file://%s", storageFolderPath))
+	    		.choice()
+	    		.when(this::isSupportedPlatform)
+	    			.log(LoggingLevel.INFO, "Processing libraries of ${body.name}")
+		    		.description("Split per deployment platform")
+		    		.to("direct:get-all-libraries-of-platform")
+		    	.otherwise()
+		    		.log(LoggingLevel.WARN, "Platform ${body.name} is rejected")
+		    		.stop()
+    		.end()
+	    	.log(LoggingLevel.INFO, "All libraries of platforms have been injected. Now computing indicators (from a different route)")
 	    	;
     	
     	from("direct:get-all-libraries-of-platform")
@@ -106,40 +100,15 @@ public class ReadPopularLibraries extends RouteBuilder {
     		.process(this::readTheLibrariesForTheGivenPlatform)
     		.split(body(), AggregationStrategies.groupedBody())
 	    		.description("Split per library")
-	    		.to("direct:extract-library-infos")
+	    		.to("direct:convert-library-infos")
 	    		.end()
 	    	;
     	
-    	from("direct:extract-library-infos")
-    		.routeId("3-extract-library-infos")
-    		.description("Saves a JSON file containing library infos then export the library GUID")
-    		.multicast(new AggregateLibraryInfosAsMap())
-    			.to("direct:get-package-manager-url")
-    			.to("direct:save-library-infos")
-    		.end()
-    		;
-    	
-    	from("direct:get-package-manager-url")
-    		.routeId("4-get-package-manager-url")
-    		.setBody(simple("${body.packageManagerUrl}"))
-    		.choice()
-    		// This is not good since we filter out dependencies of some
-    		// package managers (swift and so on)
-    		  .when(body().isEqualTo(null))
-    		   .stop()
-    		.end()
-    		.setHeader(AggregateLibraryInfosAsMap.LIBRARY_INFOS_KEY, constant("packageManagerUrl"))
-    		;
-    	from("direct:save-library-infos")
-    		.routeId("5-save-library-infos")
-    		.log("Writing ${body}")
-    		// TODO find a way to use csimple (which won't run interpreter at runtime but rather compile some code)
-    		.setHeader("CamelFileName", simple("libraries/${body.platform}/${body.name}.json"))
-    		// I do prefer to have whitespaces
-    		.marshal().json(true)
-    		.to(String.format("file://%s", storageFolderPath))
-    		.setHeader(AggregateLibraryInfosAsMap.LIBRARY_INFOS_KEY, constant("cachePath"))
-    		.setBody(simple("${headers.CamelFileName}"))
+    	from("direct:convert-library-infos")
+    		.routeId("3-convert-library-to-technology-entity")
+    		.description("Convert library infos to technology object and save it immediatly")
+    		.process(this::convertLibrariesIOLibraryToTechnology)
+    		// Library processing is over, we no more need to do anything
     		;
     }
     
@@ -154,9 +123,29 @@ public class ReadPopularLibraries extends RouteBuilder {
 			hasNextPage = libraries.size()==projectsPerPage;
 		}
     	exchange.getMessage().setBody(allLibraries);
+    	Log.infof("Loaded %d libraries for platform %s", allLibraries.size(), platform);
     }
 
 	private void getPlatforms(Exchange exchange) {
 		exchange.getMessage().setBody(librariesIo.getPlatforms());
+	}
+
+	private void convertLibrariesIOLibraryToTechnology(Exchange exchange) {
+		Technology returned = technologies.findOrCreateFromLibrariesIOLibrary((Project) exchange.getMessage().getBody());
+		exchange.getMessage().setBody(returned);
+	}
+
+	private boolean isSupportedPlatform(Exchange exchange) {
+		Platform platform = exchange.getMessage().getBody(Platform.class);
+		return isSupportedPlatform(platform);
+	}
+
+	/**
+	 * Filter some unsupported platforms (as defined in configuration)
+	 * @param platform
+	 * @return true if platform is not in 
+	 */
+	public boolean isSupportedPlatform(Platform platform) {
+		return !rejectedPlatforms.contains(platform.getName());
 	}
 }

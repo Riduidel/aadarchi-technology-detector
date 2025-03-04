@@ -3,9 +3,18 @@ projects_per_platform: 1000
 
 quarkus:
   datasource:
+    devservices:
+      enabled: false
+    dev-ui:
+      allow-sql: true
     db-kind: h2
+    jdbc:
+      url: jdbc:h2:./target/storage/h2
     reactive:
-      url: jdbc:h2:./storage/h2
+      url: jdbc:h2:./target/storage/h2
+  hibernate-orm:
+    database:
+      generation: update
   hawtio:
     authenticationEnabled: false
   log:
