@@ -40,6 +40,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>io.github.ncasaux</groupId>
+			<artifactId>camel-plantuml-jar</artifactId>
+			<version>1.8.0</version>
+		</dependency>
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-jdbc-h2</artifactId>
 		</dependency>
