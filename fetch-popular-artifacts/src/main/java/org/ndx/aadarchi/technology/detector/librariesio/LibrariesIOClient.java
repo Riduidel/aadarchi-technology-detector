@@ -15,7 +15,7 @@ import jakarta.ws.rs.QueryParam;
 
 @RateLimited(bucket = "librariesio")
 @RegisterRestClient(configKey = "librariesio")
-@ClientQueryParam(name="api_key", value="${LIBRARIES_IO_API_KEY}")
+@ClientQueryParam(name="api_key", value="${tech-trends.libraries.io.token}")
 public interface LibrariesIOClient {
 	@CacheResult(cacheName="libraries-io-platforms") 
 	@GET @Path("/platforms")

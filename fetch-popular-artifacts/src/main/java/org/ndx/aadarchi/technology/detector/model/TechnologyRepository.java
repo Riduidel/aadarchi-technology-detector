@@ -15,7 +15,6 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 	public Technology findOrCreateFromLibrariesIOLibrary(Project body) {
 		Technology returned = null;
 		// First find the reference url
-		String bodyReferenceUrl = body.getReferenceUrl();
 		if(returned==null && body.getReferenceUrl()!=null) {
 			returned = find("referenceUrl", body.getReferenceUrl()).firstResult();
 			if(returned!=null) {

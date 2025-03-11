@@ -49,6 +49,15 @@
 			<artifactId>quarkus-jdbc-h2</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-vertx</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-undertow</artifactId>
+		</dependency>
+		
+		<dependency>
 		    <groupId>io.quarkus</groupId>
 		    <artifactId>quarkus-flyway</artifactId>
 		</dependency>
@@ -109,6 +118,10 @@
 			<artifactId>camel-quarkus-ognl</artifactId>
 		</dependency>
 		<dependency>
+	        <groupId>org.apache.camel</groupId>
+	        <artifactId>camel-endpointdsl</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>io.hawt</groupId>
 			<artifactId>hawtio-quarkus</artifactId>
 			<version>4.3.0</version>
@@ -135,6 +148,12 @@
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.kohsuke</groupId>
+			<artifactId>github-api</artifactId>
+			<version>1.308</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -154,6 +173,12 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<systemProperties>
+						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
+						<tech-trends.libraries.io.token>${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+					</systemProperties>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>

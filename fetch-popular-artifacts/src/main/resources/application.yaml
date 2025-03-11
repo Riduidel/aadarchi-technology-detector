@@ -1,17 +1,18 @@
 projects_per_page: 10
 projects_per_platform: 1000
 
+# See https://camel.apache.org/camel-quarkus/3.15.x/user-guide/command-mode.html
+# It should stop Camel after the processing of one data batch, but currently fail to do so
+#camel:
+#  main:
+#    durationMaxMessages: 1
 quarkus:
   datasource:
     devservices:
       enabled: false
-    dev-ui:
-      allow-sql: true
     db-kind: h2
     jdbc:
-      url: jdbc:h2:./target/storage/h2
-    reactive:
-      url: jdbc:h2:./target/storage/h2
+      url: jdbc:h2:file:./target/storage/h2
   hibernate-orm:
     database:
       generation: update

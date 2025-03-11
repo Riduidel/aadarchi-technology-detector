@@ -1,6 +1,7 @@
 package org.ndx.aadarchi.technology.detector.model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -48,5 +49,20 @@ public class Technology extends PanacheEntityBase {
 	public String toString() {
 		return "Technology [" + (name != null ? "name=" + name + ", " : "")
 				+ (homepage != null ? "homepage=" + homepage : "") + "]";
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(referenceUrl);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Technology other = (Technology) obj;
+		return Objects.equals(referenceUrl, other.referenceUrl);
 	}
 }

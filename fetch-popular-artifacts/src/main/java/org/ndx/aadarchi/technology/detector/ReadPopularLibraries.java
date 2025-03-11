@@ -3,15 +3,15 @@ package org.ndx.aadarchi.technology.detector;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Objects;
 
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.AggregationStrategies;
+import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.ExchangeBuilder;
-import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.ndx.aadarchi.technology.detector.librariesio.LibrariesIOClient;
@@ -27,7 +27,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class ReadPopularLibraries extends RouteBuilder {
+public class ReadPopularLibraries extends EndpointRouteBuilder {
+	private static final String CONVERT_LIBRARY_TO_TECHNOLOGY = "direct:convert-library-infos";
+	private static final String GET_ALL_LIBRARIES_OF_PLATFORM = "direct:get-all-libraries-of-platform";
 	@ConfigProperty(name = "projects_per_page", defaultValue = "10")
 	private int projectsPerPage;
 	@ConfigProperty(name="projects_per_platform", defaultValue = "1000")
@@ -35,8 +37,6 @@ public class ReadPopularLibraries extends RouteBuilder {
 	// TODO convert to file
 	@ConfigProperty(name="storage-folder", defaultValue="./target/storage")
 	private String storageFolderPath;
-	@ConfigProperty(name="libraries-list", defaultValue="libraries.json")
-	private String librariesListPath;
 	@ConfigProperty(name="rejected-platforms", defaultValue="Bower,Carthage,Alcatraz,SwiftPM,Nimble,PureScript")
 	private List<String> rejectedPlatforms;
 	
@@ -75,9 +75,9 @@ public class ReadPopularLibraries extends RouteBuilder {
 	
     @Override
     public void configure() throws Exception {
-    	getContext().setManagementName(getClass().getSimpleName());
-    	from("timer:autostart?repeatCount=1")
-    		.routeId("1-get-all-platforms")
+		Objects.requireNonNull(technologies, "technologies have not been injected. HOW THE FUCK ?!");
+    	from(generateStarterEndpoint())
+    		.routeId(getClass().getSimpleName()+"-1-get-all-platforms")
     		.description("Get all libraries platforms from libraries.io")
     		.process(this::getPlatforms)
     		.split(body(), new ReaggregateListsOfLibraries())
@@ -85,32 +85,38 @@ public class ReadPopularLibraries extends RouteBuilder {
 	    		.when(this::isSupportedPlatform)
 	    			.log(LoggingLevel.INFO, "Processing libraries of ${body.name}")
 		    		.description("Split per deployment platform")
-		    		.to("direct:get-all-libraries-of-platform")
+		    		.to(GET_ALL_LIBRARIES_OF_PLATFORM)
 		    	.otherwise()
 		    		.log(LoggingLevel.WARN, "Platform ${body.name} is rejected")
 		    		.stop()
-    		.end()
-	    	.log(LoggingLevel.INFO, "All libraries of platforms have been injected. Now computing indicators (from a different route)")
+		    	.end()
+	    	.end()
+	    	.log(LoggingLevel.INFO, "Processed ${body.size} libraries. Now we have to do something with that data ...")
+	    	.to("seda:all-libraries-are-loaded")
 	    	;
     	
-    	from("direct:get-all-libraries-of-platform")
-    		.routeId("2-get-all-libraries-of-platform")
+    	from(GET_ALL_LIBRARIES_OF_PLATFORM)
+    		.routeId(getClass().getSimpleName()+"-2-get-all-libraries-of-platform")
     		.description("Get the first n libraries for the given platform from libraries.io.\n"
     				+ "Notice this also downloads all details (versions and so on) from libraries to put them in cache ... somewhere")
     		.process(this::readTheLibrariesForTheGivenPlatform)
     		.split(body(), AggregationStrategies.groupedBody())
 	    		.description("Split per library")
-	    		.to("direct:convert-library-infos")
+	    		.to(CONVERT_LIBRARY_TO_TECHNOLOGY)
 	    		.end()
 	    	;
     	
-    	from("direct:convert-library-infos")
-    		.routeId("3-convert-library-to-technology-entity")
+    	from(CONVERT_LIBRARY_TO_TECHNOLOGY)
+    		.routeId(getClass().getSimpleName()+"-3-convert-library-to-technology-entity")
     		.description("Convert library infos to technology object and save it immediatly")
     		.process(this::convertLibrariesIOLibraryToTechnology)
     		// Library processing is over, we no more need to do anything
     		;
     }
+
+	private EndpointConsumerBuilder generateStarterEndpoint() {
+		return direct(getClass().getSimpleName());
+	}
     
     public void readTheLibrariesForTheGivenPlatform(Exchange exchange) {
     	List<Project> allLibraries = new ArrayList<Project>();
