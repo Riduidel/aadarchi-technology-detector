@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 public class IndicatorRepository  implements PanacheRepository<Indicator> {
 
 	@Transactional
-	public void saveThisMonth(Technology technology, String indicatorIdentifier, String value) {
+	public void saveIndicator(Technology technology, String indicatorIdentifier, String value) {
 		Date firstDateOfMonth = atStartOfMonth();
 		Indicator i = new Indicator();
 		i.id = new Indicator.IndicatorId();
@@ -26,7 +26,7 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 		persist(i);
 	}
 
-	private Date atStartOfMonth() {
+	public static Date atStartOfMonth() {
 		LocalDate now = LocalDate.now();
 		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
 		Date firstDateOfMonth = Date.from( firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -34,11 +34,11 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 	}
 
 	@Transactional
-	public boolean hasIndicatorForThisMonth(Technology technology, String indicatorIdentifier) {
+	public boolean hasIndicatorForMonth(Technology technology, String indicatorIdentifier, Date month) {
 		return count("id.technology = ?1 and id.indicatorName = ?2 and id.date = ?3",
 				technology,
 				indicatorIdentifier,
-				atStartOfMonth())>0;
+				month)>0;
 	}
 
 }
