@@ -1,5 +1,50 @@
-projects_per_page: 10
-projects_per_platform: 1000
+tech-trends:
+  projects:
+    per:
+      page: 10
+      platform: 1000
+  indicators:
+    github:
+      stars:
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_STARS
+            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) 
+            ;
+
+        graphql:
+          today: |
+            query($owner:String!, $name:String!) {
+              repository(owner:$owner, name:$name) {
+                stargazerCount
+              }
+            }
+          # Notice that history is fetched backwards (from the most recent to the most ancient)
+          history: |
+            query($owner:String!, $name:String!, $before:String="") {
+              repository(owner: $owner, name: $name) {
+                stargazers(last: 100, before:$before) {
+                  pageInfo {
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                  }
+                  edges {
+                    starredAt
+                    node {
+                      login
+                    }
+                  }
+                }
+              }
+            }
 
 # See https://camel.apache.org/camel-quarkus/3.15.x/user-guide/command-mode.html
 # It should stop Camel after the processing of one data batch, but currently fail to do so
@@ -7,6 +52,12 @@ projects_per_platform: 1000
 #  main:
 #    durationMaxMessages: 1
 quarkus:
+  smallrye-graphql-client:
+    github:
+      url: https://api.github.com/graphql
+      header:
+        Authorization: Bearer ${tech-trends.github.token}
+        Content-Type: application/json; charset=utf-8
   datasource:
     devservices:
       enabled: false
@@ -22,6 +73,9 @@ quarkus:
     category:
       "org.jboss.resteasy.reactive.client.logging":
         level: WARN
+      "io.smallrye.graphql.client":
+        level: TRACE
+        min-level: TRACE
   rate-limiter:
     buckets:
       librariesio:
@@ -42,4 +96,9 @@ quarkus:
 
 # DEV Profile!
 "%dev":
-  projects_per_platform: 10
+  tech-trends:
+    projects:
+      per:
+        page: 10
+        platform: 10
+  

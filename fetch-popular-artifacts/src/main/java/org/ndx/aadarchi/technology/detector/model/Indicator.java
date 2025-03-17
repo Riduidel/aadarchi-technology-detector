@@ -56,4 +56,16 @@ public class Indicator extends PanacheEntityBase {
 	 */
 	@Column(columnDefinition = "text", name="INDICATOR_VALUE")
 	public String indicatorValue;
+	
+	public Indicator()  {
+		
+	}
+	
+	public Indicator(Technology t, String indicator, Date d, String value) {
+		this.id = new IndicatorId();
+		this.id.technology = t;
+		this.id.indicatorName = indicator;
+		this.id.date = d;
+		this.indicatorValue = value;
+	}
 }

@@ -11,9 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
-import org.apache.commons.lang3.StringUtils;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
+import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.TechnologyBased;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -27,11 +25,11 @@ public interface GitHubBased extends TechnologyBased {
 	}
 
 
-	public default Optional<GHRepository> getGHReposigtory(Exchange exchange) throws IOException {
-		return getGHRepository(getTechnology(exchange));
+	public default Optional<Pair<String>> getRepository(Exchange exchange) throws IOException {
+		return getRepository(getTechnology(exchange));
 	}
 	
-	public default Optional<GHRepository> getGHRepository(Technology technology) throws IOException {
+	public default Optional<Pair<String>> getRepository(Technology technology) throws IOException {
 		String fullRepositoryUrl = technology.repositoryUrl;
 		URL url;
 		try {
@@ -44,15 +42,11 @@ public interface GitHubBased extends TechnologyBased {
 			if(pathElements.size()>2) {
 				pathElements = pathElements.subList(0, 2);
 			}
-			path = pathElements.stream().collect(Collectors.joining("/"));
-			return Optional.ofNullable(getGitHub().getRepository(path));
+			return Optional.ofNullable(new Pair<>(pathElements.get(0), pathElements.get(1)));
 		} catch (IllegalArgumentException e) {
 			return Optional.empty();
 		} catch (MalformedURLException | URISyntaxException e) {
 			return Optional.empty();
 		}
 	}
-
-	public GitHub getGitHub();
-
 }

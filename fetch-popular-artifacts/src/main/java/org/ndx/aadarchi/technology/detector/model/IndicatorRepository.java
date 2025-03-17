@@ -41,4 +41,17 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 				month)>0;
 	}
 
+	@Transactional
+	public boolean maybePersist(Indicator persistent) {
+		if(count("id.technology = ?1 and id.indicatorName = ?2 and id.date = ?3", 
+				persistent.id.technology, 
+				persistent.id.indicatorName, 
+				persistent.id.date)==0) {
+			persistent.persist();
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

@@ -1,19 +1,20 @@
 package org.ndx.aadarchi.technology.detector.librariesio;
 
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.ndx.aadarchi.technology.detector.librariesio.model.Platform;
 import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
 
-import io.quarkiverse.bucket4j.runtime.RateLimited;
 import io.quarkus.cache.CacheResult;
 import io.quarkus.rest.client.reactive.ClientQueryParam;
+import io.smallrye.faulttolerance.api.RateLimit;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 
-@RateLimited(bucket = "librariesio")
+@RateLimit(value = 60, window = 1, windowUnit = ChronoUnit.MINUTES)
 @RegisterRestClient(configKey = "librariesio")
 @ClientQueryParam(name="api_key", value="${tech-trends.libraries.io.token}")
 public interface LibrariesIOClient {

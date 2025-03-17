@@ -30,9 +30,9 @@ import jakarta.inject.Inject;
 public class ReadPopularLibraries extends EndpointRouteBuilder {
 	private static final String CONVERT_LIBRARY_TO_TECHNOLOGY = "direct:convert-library-infos";
 	private static final String GET_ALL_LIBRARIES_OF_PLATFORM = "direct:get-all-libraries-of-platform";
-	@ConfigProperty(name = "projects_per_page", defaultValue = "10")
+	@ConfigProperty(name = "tech-trends.projects.per.page", defaultValue = "10")
 	private int projectsPerPage;
-	@ConfigProperty(name="projects_per_platform", defaultValue = "1000")
+	@ConfigProperty(name="tech-trends.projects.per.platform", defaultValue = "1000")
 	private int projectsPerPlatform;
 	// TODO convert to file
 	@ConfigProperty(name="storage-folder", defaultValue="./target/storage")

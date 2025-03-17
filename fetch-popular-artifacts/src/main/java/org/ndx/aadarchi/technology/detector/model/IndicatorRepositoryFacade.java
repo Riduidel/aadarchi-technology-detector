@@ -20,4 +20,8 @@ public class IndicatorRepositoryFacade {
 		repository.saveIndicator(technology, indicatorName, value);
 	}
 
+	public boolean maybePersist(Indicator indicator) {
+		return repository.maybePersist(indicator);
+	}
+
 }
