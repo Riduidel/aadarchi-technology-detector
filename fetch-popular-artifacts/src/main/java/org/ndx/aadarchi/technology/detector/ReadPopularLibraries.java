@@ -61,16 +61,6 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
 		
 	}
 	
-	@PostConstruct
-	public void initializeH2WithCSV() {
-		Log.error("TODO Implement csv loading at startup");
-	}
-	
-	@PreDestroy
-	public void dumpH2ToCSV() {
-		Log.error("TODO Implement csv dumping at shutdown");
-	}
-	
 	@RestClient LibrariesIOClient librariesIo;
 	
     @Override
