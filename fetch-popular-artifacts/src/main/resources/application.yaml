@@ -3,6 +3,8 @@ tech-trends:
     per:
       page: 10
       platform: 1000
+  csv:
+    folder: ./src/main/resources/csv
   indicators:
     github:
       stars:
