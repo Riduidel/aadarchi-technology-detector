@@ -65,7 +65,7 @@ quarkus:
       enabled: false
     db-kind: h2
     jdbc:
-      url: jdbc:h2:file:./target/storage/h2
+      url: jdbc:h2:file:./target/storage/h2;AUTO_SERVER=TRUE
   hibernate-orm:
     database:
       generation: update

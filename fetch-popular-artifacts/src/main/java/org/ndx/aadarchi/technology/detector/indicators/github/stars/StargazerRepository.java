@@ -30,10 +30,12 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 
 	@Transactional
 	public boolean maybePersist(Stargazer persistent) {
-		if(count("id.owner = ?1 and id.repo = ?2 and id.date = ?3", 
+		if(count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4", 
 				persistent.id.owner, 
 				persistent.id.repo, 
-				persistent.id.date)==0) {
+				persistent.id.date,
+				persistent.id.user
+				)==0) {
 			persistent.persist();
 			return true;
 		} else {
