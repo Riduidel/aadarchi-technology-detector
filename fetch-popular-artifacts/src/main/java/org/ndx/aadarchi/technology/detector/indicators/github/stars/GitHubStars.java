@@ -1,15 +1,13 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.stars;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
@@ -27,7 +25,6 @@ import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
 import io.quarkus.logging.Log;
-import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -93,19 +90,23 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	private void loadAllPastStargazers(Technology technology, Pair<String> path) {
 		long localCount = stargazersRepository.count(path);
 		int remoteCount = githubClient.getStargazers(path.getLeft(), path.getRight());
-		boolean forceRedownload = (remoteCount-localCount)/(remoteCount*1.0)>0.1;
+		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);
+		boolean forceRedownload = missingCountPercentage>10;
 		if(forceRedownload) {
-			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub. Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount);
+			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
 		} else {
-			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub", path.getLeft(), path.getRight(), localCount, remoteCount);
+			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%)", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
 		}
 		if(localCount<remoteCount) {
+			AtomicInteger processedCount = new AtomicInteger();
 			githubClient.getAllStargazers(path.getLeft(), path.getRight(), forceRedownload,
 				repositoryPage -> {
 					try {
+						processedCount.addAndGet(repositoryPage.stargazers.edges.size());
 						return this.processRepositoryPage(path, repositoryPage);
 					} finally {
-						Log.infof("Written %d/%d stargazers of %s/%s", 
+						Log.infof("Processed %d elements. Written %d/%d stargazers of %s/%s", 
+								processedCount.intValue(),
 								stargazersRepository.count(path),
 								remoteCount,
 								path.getLeft(),
