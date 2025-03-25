@@ -36,7 +36,6 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		returned.keywords = body.getKeywords();
 		returned.packageManagerUrl = body.getPackageManagerUrl();
 		returned.repositoryUrl = body.getRepositoryUrl();
-		returned.librariesIoProject = Optional.of(body);
 		return returned;
 		
 	}

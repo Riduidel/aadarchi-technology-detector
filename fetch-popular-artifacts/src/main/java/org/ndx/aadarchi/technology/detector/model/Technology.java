@@ -20,10 +20,6 @@ import jakarta.persistence.Id;
  */
 @Entity
 public class Technology extends PanacheEntityBase {
-	@JdbcTypeCode(SqlTypes.JSON)
-	@Column(nullable = true)
-	public Optional<Project> librariesIoProject;
-	
 	public String name;
 	@Column(columnDefinition = "text")
 	public String description;
