@@ -12,122 +12,49 @@
   </a>
 </p>
 
-> A Java project linked to aadarchi which aims to detect notable technologies in a variety of languages
+> A Java project loosely spawned aadarchi which aims to detect notable technologies in a variety of languages
 
 ### 🏠 [Homepage](https://github.com/Riduidel/aadarchi-technology-detector)
 
 ## Prerequisites
 
-. Install [jbang](https://www.jbang.dev/)
-. Clone [TechEmpower frameworks](https://github.com/TechEmpower/FrameworkBenchmarks/) repository beside this repository
+* Install Java 21
+* Create a [libraries.io API token](https://libraries.io/api#:~:text=API%20Docs-,authentication,-All%20API%20requests)
+* Create a [GitHub API token](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28)
 
 ## Usage
 
-### Fetching data from reports branches
+### Accessing to generated metrics
 
-This repository provides for each observed repository one branch containing in a given folder the file
-aggregating all informations.
+As of today, latest version of metrics are available in [src/main/resources/csv](https://github.com/Riduidel/aadarchi-technology-detector/tree/main/src/main/resources/csv).
+Once [#93](https://github.com/Riduidel/aadarchi-technology-detector/issues/93) will have been implemented, the CSV files will also be available as GitHub releases.
 
-#### Available sources
+### Building the JAR
 
-| Source website    | Branch name           | Path of artifacts file(s)    |
-| ----------------- | --------------------- | ---------------------------- |
-| mvnrepository.com | reports_mvnrepository | mvnrepository/artifacts.json |
-| npmjs.com         | reports_npmjs         | npmjs/artifacts.json         |
-| pypi.org          | reports_pypi          | pypi/artifacts.json          |
+Since we mainly use Camel Quarkus, the whole application can be built the usual maven way: `mvn install`
 
-If you take a look at these branches, 
-in each of them, you'll find one commit per month.
+### Developping new features
 
-### Produced file format
+This project is a "simple" Camel Quarkus project.
+But it also uses various API credentials (at least GitHub API and Libraries.io API).
 
-Each scrapper should produce a file with this structure
+So you first need to create in your maven settings a tech-trneds profile grouping these settings:
 
 ```
-[
-  // A list of artifacts
-  {
-    // Maven group id (when available)
-    "groupId": "group.id",
-    // Maven artifact id (when available)
-    "artifactId": "artifact.id",
-    // Artifact visible name
-    "name": "A project name",
-    // Artifact description (optionnal, but highly recommended)
-    "description": "Some text, in an unknown format",
-    // Artifact licenses (optionnal)
-    "license": [
-      "Apache 2.0"
-    ],
-    // Artifact categories (optionnal)
-    "categories": [
-      "Set of categories, not to be confused with tags"
-    ],
-    // Artifact tags (optionnal)
-    "tags": [
-      "annotations",
-      "metadata"
-    ],
-    // Artifact ranking in registry (1 is the most important artifact - optionnal)
-    "ranking": "114",
-    // Artifact users number (optionnal)
-    "users": 4307,
-    // Number of downloads of this artifact
-    "downloads": "-1",
-    // Urls for this project (will allow further research, such as GitHub stars)
-    "urls": {
-      // Each entry maps a domain (typically github when available) to the very project page
-      "github.com": "https://github.com/OWNER/PROJECT#README"
-    }
-   // Artifact repositories (optionnal)
-    "repositories": [
-      "Google",
-      "SciJava Public"
-    ],
-    // Artifact versions (optionnal, but highly recommended)
-    "versions": {
-      // Each version has a number
-      "1.8.0-alpha01": {
-        // usage count for this version
-        "usages": "3",
-        // version release date
-        "date": "Feb 21, 2024",
-        // users count for this version
-        "users": 3
-      },
-...
+		<profile>
+			<id>settings-tech-trends</id>
+			<properties>
+				<tech-trends.libraries.io.token><!-- Replace with your own Libraries.io token --></tech-trends.libraries.io.token>
+				<tech-trends.github.token><!-- Replace with your own GitHub API token --></tech-trends.github.token>
+			</properties>
+		</profile>
 ```
 
+Once this profile is created, developing is as easy as
 
-### Command line
-
-Each process can be run on your machine to validate everything is good
-
-#### MvnRepository
-
-```
-cd mvnrepository
-jbang ExtractPopularMvnRepositorytArtifacts.java
-```
-
-It will produce an `artifacts.json` file with the artifacts usage count at the time the command is run
-
-##### Extract MvnRepository
-Thanks to the Internet Wayback Machine, it is possible to get the whole history for mvn repository by running the command
-
-```
-jbang ExtractPopularMvnRepositorytArtifacts.java --generate-history
-```
-
-This will fetch the whole history for MvnRepository and generate in a branch called history one commit for each month since the first capture available at https://archive.org.
-This code is kept for tracability reason, to make sure the history fetching process is reproducable, but should not be run.
-
-## Architecture
-
-Each extractor **must** be written using Java/JBang
-(it's easy, fast, and make code easily runnable through GitHub Actions).
-Each extractor **must** provide a `--generate-history` flag that will generate an history covering at least the last ten years.
-Each extractor **must** write this history to a branch (ideally the `reports` one).
+1. Load project in your preferred IDE
+2. Run `mvn quarkus:dev -Psettings-tech-trends`
+3. Profit (you can even remote debug the application on port 5005)
 
 ## Author
 
