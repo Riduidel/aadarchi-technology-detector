@@ -60,6 +60,8 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 	@Transactional
 	public List<Indicator> groupStarsByMonths(Technology technology, Pair<String> pair) {
 		Query extractionQuery = entityManager.createNativeQuery(groupStarsByMonths);
+		extractionQuery.setParameter("owner", pair.getLeft());
+		extractionQuery.setParameter("name", pair.getRight());
 		List<Object[]> results = extractionQuery.getResultList();
 		return results.stream()
 			.map(row -> toIndicator(technology, row))
