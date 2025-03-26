@@ -28,7 +28,6 @@ public class Technology extends PanacheEntityBase {
 	 * The homepage is usually the technology vanity url
 	 */
 	public String homepage;
-	public List<String> keywords;
 	
 	/**
 	 * The reference url is to be used as an identifier for the whole model.

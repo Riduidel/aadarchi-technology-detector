@@ -33,7 +33,6 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		returned.name = body.getName();
 		returned.description = body.getDescription();
 		returned.homepage = body.getHomepage();
-		returned.keywords = body.getKeywords();
 		returned.packageManagerUrl = body.getPackageManagerUrl();
 		returned.repositoryUrl = body.getRepositoryUrl();
 		return returned;
