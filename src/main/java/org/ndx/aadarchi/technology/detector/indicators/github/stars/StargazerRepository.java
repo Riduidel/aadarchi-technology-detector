@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.hibernate.type.descriptor.DateTimeUtils;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -30,6 +31,7 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 
 	@Transactional
 	public boolean maybePersist(Stargazer persistent) {
+		// TODO Change how date is used here, since it clearly doesn't work correctly
 		if(count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4", 
 				persistent.id.owner, 
 				persistent.id.repo, 
