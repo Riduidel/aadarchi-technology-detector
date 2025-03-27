@@ -4,7 +4,7 @@ tech-trends:
       page: 10
       platform: 1000
   csv:
-    folder: ./src/main/resources/csv
+    folder: .cache/csv
   indicators:
     github:
       stars:
@@ -103,5 +103,5 @@ quarkus:
     projects:
       per:
         page: 10
-        platform: 10
+        platform: 20
   

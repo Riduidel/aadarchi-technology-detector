@@ -34,7 +34,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 	public static final String WRITE_TO_CSV_ROUTE = MapDatabaseToCSV.class.getSimpleName()+"_write";
 	public static final String READ_FROM_CSV_ROUTE = MapDatabaseToCSV.class.getSimpleName()+"_read";
 
-	@ConfigProperty(name = "tech-rends.csv.folder", defaultValue = "src/main/resources/csv")
+	@ConfigProperty(name = "tech-trends.csv.folder", defaultValue = ".cache/csv")
 	public Path csvBaseFolder;
 	
 	@Inject EntityManager entityManager;
