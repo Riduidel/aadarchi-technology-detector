@@ -38,7 +38,7 @@ Since we mainly use Camel Quarkus, the whole application can be built the usual 
 This project is a "simple" Camel Quarkus project.
 But it also uses various API credentials (at least GitHub API and Libraries.io API).
 
-So you first need to create in your maven settings a tech-trneds profile grouping these settings:
+So you first need to create in your maven settings a tech-trends profile grouping these settings:
 
 ```
 		<profile>
@@ -55,6 +55,13 @@ Once this profile is created, developing is as easy as
 1. Load project in your preferred IDE
 2. Run `mvn quarkus:dev -Psettings-tech-trends`
 3. Profit (you can even remote debug the application on port 5005)
+
+### Do not develop features without having discussed first with the team
+
+We do want to have new features.
+But we want to have these features discussed **first**.
+So if you want to develop a new feature, check first if there is an associated issue (and believe us, it's easy to add new issues on this project).
+Once the issue exists, you can create your PR and we will try to review it as fast as possible.
 
 ## Author
 
