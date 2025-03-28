@@ -1,0 +1,219 @@
+[
+    {
+        "name": "NPM",
+        "project_count": 4921526,
+        "homepage": "https://www.npmjs.com",
+        "color": "#f1e05a",
+        "default_language": "JavaScript"
+    },
+    {
+        "name": "Maven",
+        "project_count": 671565,
+        "homepage": "http://maven.org",
+        "color": "#b07219",
+        "default_language": "Java"
+    },
+    {
+        "name": "Pypi",
+        "project_count": 612593,
+        "homepage": "https://pypi.org/",
+        "color": "#3572A5",
+        "default_language": "Python"
+    },
+    {
+        "name": "Go",
+        "project_count": 579012,
+        "homepage": "https://pkg.go.dev",
+        "color": "#375eab",
+        "default_language": null
+    },
+    {
+        "name": "NuGet",
+        "project_count": 549215,
+        "homepage": "https://www.nuget.org",
+        "color": "#178600",
+        "default_language": "C#"
+    },
+    {
+        "name": "Packagist",
+        "project_count": 445085,
+        "homepage": "https://packagist.org",
+        "color": "#4F5D95",
+        "default_language": "PHP"
+    },
+    {
+        "name": "Rubygems",
+        "project_count": 188169,
+        "homepage": "https://rubygems.org",
+        "color": "#701516",
+        "default_language": "Ruby"
+    },
+    {
+        "name": "Cargo",
+        "project_count": 178199,
+        "homepage": "https://crates.io",
+        "color": "#dea584",
+        "default_language": "Rust"
+    },
+    {
+        "name": "CocoaPods",
+        "project_count": 101007,
+        "homepage": "https://cocoapods.org/",
+        "color": "#438eff",
+        "default_language": "Objective-C"
+    },
+    {
+        "name": "Bower",
+        "project_count": 68197,
+        "homepage": "http://bower.io",
+        "color": "#563d7c",
+        "default_language": "CSS"
+    },
+    {
+        "name": "Pub",
+        "project_count": 62174,
+        "homepage": "https://pub.dartlang.org",
+        "color": "#00B4AB",
+        "default_language": "Dart"
+    },
+    {
+        "name": "CPAN",
+        "project_count": 41518,
+        "homepage": "https://metacpan.org",
+        "color": "#0298c3",
+        "default_language": "Perl"
+    },
+    {
+        "name": "CRAN",
+        "project_count": 27780,
+        "homepage": "https://cran.r-project.org/",
+        "color": "#198CE7",
+        "default_language": "R"
+    },
+    {
+        "name": "Clojars",
+        "project_count": 24189,
+        "homepage": "https://clojars.org",
+        "color": "#db5855",
+        "default_language": "Clojure"
+    },
+    {
+        "name": "Conda",
+        "project_count": 19364,
+        "homepage": "https://anaconda.org",
+        "color": "#fff",
+        "default_language": null
+    },
+    {
+        "name": "Hackage",
+        "project_count": 18139,
+        "homepage": "http://hackage.haskell.org",
+        "color": "#29b544",
+        "default_language": null
+    },
+    {
+        "name": "Hex",
+        "project_count": 17581,
+        "homepage": "https://hex.pm",
+        "color": "#6e4a7e",
+        "default_language": "Elixir"
+    },
+    {
+        "name": "Meteor",
+        "project_count": 13343,
+        "homepage": "https://atmospherejs.com",
+        "color": "#f1e05a",
+        "default_language": "JavaScript"
+    },
+    {
+        "name": "Homebrew",
+        "project_count": 9470,
+        "homepage": "http://brew.sh/",
+        "color": "#555555",
+        "default_language": "C"
+    },
+    {
+        "name": "Puppet",
+        "project_count": 6920,
+        "homepage": "https://forge.puppet.com",
+        "color": "#302B6D",
+        "default_language": "Puppet"
+    },
+    {
+        "name": "Carthage",
+        "project_count": 4762,
+        "homepage": "https://github.com/Carthage/Carthage",
+        "color": "#ffac45",
+        "default_language": "Swift"
+    },
+    {
+        "name": "SwiftPM",
+        "project_count": 4208,
+        "homepage": "https://developer.apple.com/swift/",
+        "color": "#ffac45",
+        "default_language": "Swift"
+    },
+    {
+        "name": "Julia",
+        "project_count": 3032,
+        "homepage": "http://pkg.julialang.org/",
+        "color": "#a270ba",
+        "default_language": "Julia"
+    },
+    {
+        "name": "Elm",
+        "project_count": 3031,
+        "homepage": "http://package.elm-lang.org/",
+        "color": "#60B5CC",
+        "default_language": "Elm"
+    },
+    {
+        "name": "Dub",
+        "project_count": 2860,
+        "homepage": "http://code.dlang.org",
+        "color": "#ba595e",
+        "default_language": "D"
+    },
+    {
+        "name": "Racket",
+        "project_count": 2750,
+        "homepage": "http://pkgs.racket-lang.org/",
+        "color": "#375eab",
+        "default_language": null
+    },
+    {
+        "name": "Nimble",
+        "project_count": 2518,
+        "homepage": "https://github.com/nim-lang/nimble",
+        "color": "#37775b",
+        "default_language": "Nim"
+    },
+    {
+        "name": "Haxelib",
+        "project_count": 1702,
+        "homepage": "https://lib.haxe.org",
+        "color": "#df7900",
+        "default_language": "Haxe"
+    },
+    {
+        "name": "PureScript",
+        "project_count": 797,
+        "homepage": "https://github.com/purescript/psc-package",
+        "color": "#1D222D",
+        "default_language": "PureScript"
+    },
+    {
+        "name": "Alcatraz",
+        "project_count": 455,
+        "homepage": "http://alcatraz.io",
+        "color": "#438eff",
+        "default_language": "Objective-C"
+    },
+    {
+        "name": "Inqlude",
+        "project_count": 228,
+        "homepage": "https://inqlude.org/",
+        "color": "#f34b7d",
+        "default_language": "C++"
+    }
+]
