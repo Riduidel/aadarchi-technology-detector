@@ -68,18 +68,10 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	}
 
 	private void computePastStars(Technology technology) throws IOException {
-		Instant dayBefore = IndicatorRepository.atStartOfMonth()
-				.toInstant()
-				.minus(1, ChronoUnit.DAYS);
-		LocalDate monthBefore = LocalDate.ofInstant(dayBefore, ZoneId.systemDefault())
-				.with(TemporalAdjusters.firstDayOfMonth());
-		Date startOfPreviousMonth = Date.from(monthBefore.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		if(!indicators.hasIndicatorForMonth(technology, startOfPreviousMonth)) {
-			getRepository(technology).ifPresent(pair -> {
-				loadAllPastStargazers(technology, pair);
-				computeAllPastStars(technology, pair);
-			});
-		}
+		getRepository(technology).ifPresent(pair -> {
+			loadAllPastStargazers(technology, pair);
+			computeAllPastStars(technology, pair);
+		});
 	}
 
 	private void computeAllPastStars(Technology technology, Pair<String> pair) {
