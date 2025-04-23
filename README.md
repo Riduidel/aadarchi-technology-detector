@@ -29,6 +29,9 @@
 As of today, latest version of metrics are available in [src/main/resources/csv](https://github.com/Riduidel/aadarchi-technology-detector/tree/main/src/main/resources/csv).
 Once [#93](https://github.com/Riduidel/aadarchi-technology-detector/issues/93) will have been implemented, the CSV files will also be available as GitHub releases.
 
+## 🤝 Contributing
+
+
 ### Building the JAR
 
 Since we mainly use Camel Quarkus, the whole application can be built the usual maven way: `mvn install`
@@ -60,7 +63,7 @@ Once this profile is created, developing is as easy as
 
 We do want to have new features.
 But we want to have these features discussed **first**.
-So if you want to develop a new feature, check first if there is an associated issue (and believe us, it's easy to add new issues on this project).
+So if you want to develop a new feature, check first if there is an associated [issue](https://github.com/Riduidel/aadarchi-technology-detector/issues) (and believe us, it's easy to add new issues on this project).
 Once the issue exists, you can create your PR and we will try to review it as fast as possible.
 
 ## Author
@@ -69,10 +72,6 @@ Once the issue exists, you can create your PR and we will try to review it as fa
 
 * Github: [@Riduidel](https://github.com/riduidel)
 * Github: [@Helielzel](https://github.com/helielzel)
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/kefranabg/readme-md-generator/issues). You can also take a look at the [contributing guide](https://github.com/kefranabg/readme-md-generator/blob/master/CONTRIBUTING.md).
 
 ## Show your support
 
