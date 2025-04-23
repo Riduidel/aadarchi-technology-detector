@@ -97,12 +97,14 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 						processedCount.addAndGet(repositoryPage.stargazers.edges.size());
 						return this.processRepositoryPage(path, repositoryPage);
 					} finally {
-						Log.infof("Processed %d elements. Written %d/%d stargazers of %s/%s", 
-								processedCount.intValue(),
-								stargazersRepository.count(path),
-								remoteCount,
-								path.getLeft(),
-								path.getRight());
+						if(Log.isDebugEnabled()) {
+							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s", 
+									processedCount.intValue(),
+									stargazersRepository.count(path),
+									remoteCount,
+									path.getLeft(),
+									path.getRight());
+						}
 					}
 				});
 		}
