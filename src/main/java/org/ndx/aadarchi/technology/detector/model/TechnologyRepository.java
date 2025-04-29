@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.model;
 
-import java.util.Optional;
-
 import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -15,7 +13,7 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 	public Technology findOrCreateFromLibrariesIOLibrary(Project body) {
 		Technology returned = null;
 		// First find the reference url
-		if(returned==null && body.getReferenceUrl()!=null) {
+		if(body.getReferenceUrl() != null) {
 			returned = find("referenceUrl", body.getReferenceUrl()).firstResult();
 			if(returned!=null) {
 				return returned;

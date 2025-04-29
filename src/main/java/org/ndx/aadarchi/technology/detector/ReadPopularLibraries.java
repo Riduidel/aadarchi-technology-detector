@@ -21,8 +21,6 @@ import org.ndx.aadarchi.technology.detector.model.Technology;
 import org.ndx.aadarchi.technology.detector.model.TechnologyRepository;
 
 import io.quarkus.logging.Log;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 

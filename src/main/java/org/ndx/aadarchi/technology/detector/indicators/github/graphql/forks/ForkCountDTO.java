@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql.models;
+package org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks;
 
 /*
 * DTO pour la réponse de la requête du nombre total de forks
