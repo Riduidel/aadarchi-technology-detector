@@ -2,14 +2,12 @@ package org.ndx.aadarchi.technology.detector.indicators.github.stars;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.hibernate.type.descriptor.DateTimeUtils;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -23,7 +21,7 @@ import jakarta.transaction.Transactional;
 public class StargazerRepository implements PanacheRepository<Stargazer> {
 	@ConfigProperty(name = "tech-trends.indicators.github.stars.sql.indicator")
 	public String groupStarsByMonths;
-	private EntityManager entityManager;
+	private final EntityManager entityManager;
 
 	public StargazerRepository(EntityManager entityManager) {
 		this.entityManager = entityManager;
@@ -57,7 +55,7 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 	 * Group stargazers by month and year.
 	 * We simply return that and let the caller manipulate the database
 	 * @param technology TODO
-	 * @param pair
+	 * @param pair pair
 	 */
 	@Transactional
 	public List<Indicator> groupStarsByMonths(Technology technology, Pair<String> pair) {

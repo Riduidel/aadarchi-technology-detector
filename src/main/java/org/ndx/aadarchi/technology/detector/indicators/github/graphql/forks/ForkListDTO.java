@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql.models;
+package org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -16,9 +16,6 @@ public class ForkListDTO {
     }
 
     public static class ForkNode {
-        // Assurez-vous que le type correspond à ce que l'API GraphQL renvoie
-        // Si c'est une String ISO 8601, vous devrez la parser.
-        // Si SmallRye GraphQL Client peut le faire automatiquement, utilisez OffsetDateTime.
         public OffsetDateTime createdAt;
         public ForkOwner owner;
     }
@@ -27,8 +24,6 @@ public class ForkListDTO {
         public String login;
     }
 
-    // Réutilisez la classe PageInfo existante si elle est définie ailleurs,
-    // sinon définissez-la ici ou dans une classe commune.
     public static class PageInfo {
         public boolean hasPreviousPage;
         public String startCursor;

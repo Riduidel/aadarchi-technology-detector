@@ -20,7 +20,7 @@ public class GenerateIndicatorComputations extends EndpointRouteBuilder {
 
 	TechnologyRepositoryProcessor technologies;
 	IndicatorComputationProcessor indicators;
-	
+
 	@Inject Instance<IndicatorComputer> indicatorComputers;
 
 	private List<String> indicatorComputerRoutes;
@@ -31,12 +31,12 @@ public class GenerateIndicatorComputations extends EndpointRouteBuilder {
 			.map(IndicatorComputer::getFromRouteName)
 			.collect(Collectors.toList());
 	}
-	
+
 	@Inject
 	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
 		this.technologies = technologies;
 	}
-	
+
 	@Inject
 	public void setIndicators(IndicatorComputationProcessor indicators) {
 		this.indicators = indicators;

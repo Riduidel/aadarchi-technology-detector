@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
@@ -50,11 +51,11 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 //				.map(ClassPersister::new)
 //				.collect(Collectors.toSet())
 //				;
-		Set<ClassPersister> classes = Arrays.asList(
-				Technology.class,
+		Set<ClassPersister> classes = Stream.of(
+                        Technology.class,
 				Indicator.class
 //				Stargazer.class
-				).stream()
+                )
 				.map(ClassPersister::new)
 				.collect(Collectors.toSet());
 				
@@ -102,8 +103,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		private String filePath;
 
 		public ClassPersister(Class<?> clazz) {
-			this.clazz = clazz; 
-			name = clazz.getSimpleName();
+            name = clazz.getSimpleName();
 			generatedSelect = constructSelect(clazz);
 			writerRouteName = String.format("%s-%s", WRITE_TO_CSV_ROUTE, name);
 			readerRouteName = String.format("%s-%s", READ_FROM_CSV_ROUTE, name);
@@ -115,7 +115,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 					+ "&noop=true"
 					+ "&directoryMustExist=false"
 					+ "&filename=%s"
-					, 
+					,
 					csvBaseFolder.toUri().toString(),
 					fileName);
 		}
@@ -126,7 +126,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		EndpointConsumerBuilder routePath = direct(persister.readerRouteName);
 		from(routePath)
 			.id(persister.readerRouteName)
-			.description(String.format("Read all instances of %s from %s", 
+			.description(String.format("Read all instances of %s from %s",
 					persister.name, 
 					persister.fileName))
 			.log(String.format("Reading all instances of %s from CSV file %s", persister.name, persister.filePath))
@@ -197,13 +197,11 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 			}
 			JdbcTypeCode jdbcType = f.getAnnotation(JdbcTypeCode.class);
 			if(jdbcType!=null) {
-				switch(jdbcType.value()) {
-				case SqlTypes.JSON:
-					return String.format("UTF8TOSTRING(%s)", columnName);
-				default:
-					return columnName;
-				}
-			}
+                if (jdbcType.value() == SqlTypes.JSON) {
+                    return String.format("UTF8TOSTRING(%s)", columnName);
+                }
+                return columnName;
+            }
 			// There is a final subtelty: what if data type is collection?
 			// Then we must transform the h2 array into something more convenient...
 			return columnName;

@@ -1,3 +1,81 @@
+tech-trends:
+  projects:
+    per:
+      page: 10
+      platform: 1000
+  csv:
+    folder: .cache/csv
+  indicators:
+    github:
+      stars:
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_STARS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) 
+            ;
+
+        graphql:
+          today: |
+            query($owner:String!, $name:String!) {
+              repository(owner:$owner, name:$name) {
+                stargazerCount
+              }
+            }
+          # Notice that history is fetched backwards (from the most recent to the most ancient)
+          history: |
+            query($owner:String!, $name:String!, $before:String="") {
+              repository(owner: $owner, name: $name) {
+                stargazers(last: 100, before:$before) {
+                  pageInfo {
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                  }
+                  edges {
+                    starredAt
+                    node {
+                      login
+                    }
+                  }
+                }
+              }
+            }
+
+      forks: # Nouvelle section pour les forks
+        graphql:
+          today: | # Requête pour le nombre total de forks
+            query($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                forkCount
+              }
+            }
+          history: | # Requête pour l'historique des forks
+            query($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                forks(first: 100, orderBy: {field: CREATED_AT, direction: DESC}, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt # Important pour le regroupement par mois
+                    owner {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+            }
+
 ---
 '%dev':
   tech-trends:
@@ -16,7 +94,7 @@ quarkus:
     devservices:
       enabled: true
       port: 15432
-      volumes: 
+      volumes:
         "data/database/postgresql": /var/lib/postgresql/data
       reuse: true
       db-name: tech-trendz

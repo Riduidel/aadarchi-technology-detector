@@ -13,7 +13,7 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 	public Technology findOrCreateFromLibrariesIOLibrary(Project body) {
 		Technology returned = null;
 		// First find the reference url
-		if(returned==null && body.getPackageManagerUrl()!=null) {
+		if(body.getPackageManagerUrl() != null) {
 			returned = find("packageManagerUrl", body.getPackageManagerUrl()).firstResult();
 			if(returned!=null) {
 				return returned;
