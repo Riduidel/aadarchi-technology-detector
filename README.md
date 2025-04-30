@@ -38,6 +38,20 @@ Once [#93](https://github.com/Riduidel/aadarchi-technology-detector/issues/93) w
 
 Since we mainly use Camel Quarkus, the whole application can be built the usual maven way: `mvn install`
 
+### Data access
+
+Data is stored in a Zenika (the company I'm working in) Google Drive folder.
+Beside, a local remote is present in DVC to allow easy exploration.
+
+Everything is already configured in dvc.
+
+To start working, run 
+
+* `dvc pull --remote zdrive` to have data copied into the local data folder
+* `dvc push --remote local-backup` to store data in the local backup folder (useful when moving data)
+
+Don't forget to run `dvc status` and associated `dvc add && dvc commit` when data gets modified.
+
 ### Developping new features
 
 This project is a "simple" Camel Quarkus project.
