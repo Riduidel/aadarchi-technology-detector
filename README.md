@@ -19,6 +19,8 @@
 ## Prerequisites
 
 * Install Java 21
+* Install Maven 3.9
+* Install [DVC](https://dvc.org/doc/install)
 * Create a [libraries.io API token](https://libraries.io/api#:~:text=API%20Docs-,authentication,-All%20API%20requests)
 * Create a [GitHub API token](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28)
 
