@@ -72,6 +72,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 				.log("Reading all data from CSV files in "+csvBaseFolder)
 				.multicast().recipientList(constant(loaderRoutes)).parallelProcessing()
 				.end()
+				.setBody().simple("")
 				.log("All data have been read, we can safely start")
 				;
 	}
@@ -96,7 +97,6 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		private String generatedSelect;
 		private String writerRouteName;
 		private String fileName;
-		private String folderPath;
 		private Class<?> clazz;
 		private String readerRouteName;
 		private String filePath;
@@ -108,9 +108,16 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 			writerRouteName = String.format("%s-%s", WRITE_TO_CSV_ROUTE, name);
 			readerRouteName = String.format("%s-%s", READ_FROM_CSV_ROUTE, name);
 			fileName = String.format("%s.csv", extractSQLTableName(clazz).toLowerCase());
-			folderPath = String.format("%s?charset=UTF-8&delete=false&noop=true", 
-					csvBaseFolder.toUri().toString());
-			filePath = String.format("%s&fileName=%s", folderPath, fileName);
+			filePath = String.format("%s?charset=UTF-8"
+					// Don't delete file after reading
+					+ "&delete=false"
+					// Don't do anything to file, in fact
+					+ "&noop=true"
+					+ "&directoryMustExist=false"
+					+ "&filename=%s"
+					, 
+					csvBaseFolder.toUri().toString(),
+					fileName);
 		}
 		
 	}
@@ -119,15 +126,18 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		EndpointConsumerBuilder routePath = direct(persister.readerRouteName);
 		from(routePath)
 			.id(persister.readerRouteName)
-			.description(String.format("Persist all instances of %s to %s", 
+			.description(String.format("Read all instances of %s from %s", 
 					persister.name, 
 					persister.fileName))
 			.log(String.format("Reading all instances of %s from CSV file %s", persister.name, persister.filePath))
-			.pollEnrich(persister.filePath)
-			.unmarshal().csv()
-//			.log("${body}")
-			.to("jdbc:default")
-			.log(String.format("Written all instances of %s to JDBC", persister.name))
+			// We have no time to loose with missing files
+			.pollEnrich(persister.filePath, 10)
+			.choice()
+				.when(body().isNotNull())
+				.unmarshal().csv()
+				.to("jdbc:default")
+				.log(String.format("Written all instances of %s to JDBC", persister.name))
+			.endChoice()
 			;
 		return routePath.getUri();
 	}
