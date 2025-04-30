@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,13 +12,11 @@ import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.mapping.Collection;
 import org.hibernate.type.SqlTypes;
-import org.ndx.aadarchi.technology.detector.indicators.github.stars.GitHubStars;
-import org.ndx.aadarchi.technology.detector.indicators.github.stars.Stargazer;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
@@ -27,7 +24,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.metamodel.EntityType;
 
 @ApplicationScoped
 public class MapDatabaseToCSV extends EndpointRouteBuilder {
@@ -38,9 +34,8 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 	public Path csvBaseFolder;
 	
 	@Inject EntityManager entityManager;
-	
+
 	@Override
-	@ActivateRequestContext
 	public void configure() throws Exception {
 		// TODO make all that dynamic
 		// The following code quite works, excepted it may not load
@@ -56,8 +51,8 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 //				.collect(Collectors.toSet())
 //				;
 		Set<ClassPersister> classes = Arrays.asList(
-				Technology.class
-//				Indicator.class,
+				Technology.class,
+				Indicator.class
 //				Stargazer.class
 				).stream()
 				.map(ClassPersister::new)
@@ -127,12 +122,12 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 			.description(String.format("Persist all instances of %s to %s", 
 					persister.name, 
 					persister.fileName))
-			.log(String.format("Reading all instances of %s from CSV file", persister.name))
+			.log(String.format("Reading all instances of %s from CSV file %s", persister.name, persister.filePath))
 			.pollEnrich(persister.filePath)
 			.unmarshal().csv()
-			.log("${body}")
+//			.log("${body}")
 			.to("jdbc:default")
-			.log(String.format("Written all instances of %s using JDBC", persister.name))
+			.log(String.format("Written all instances of %s to JDBC", persister.name))
 			;
 		return routePath.getUri();
 	}
@@ -151,7 +146,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 			// TODO add header writing
 			.marshal().csv()
 			.to(persister.filePath)
-			.log("Written data to "+persister.fileName)
+			.log(String.format("Written all instances of %s to CSV file %s", persister.name, persister.filePath))
 			;
 		return routePath.getUri();
 	}
