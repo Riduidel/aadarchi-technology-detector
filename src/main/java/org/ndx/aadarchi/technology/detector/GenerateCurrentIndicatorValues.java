@@ -47,6 +47,7 @@ public class GenerateCurrentIndicatorValues extends EndpointRouteBuilder {
 			;
 		// For each technology, compute all indicators values
 		from(direct("compute-all-indicators-for-one-technology-today"))
+			.id(getClass().getSimpleName()+"-2-compute-all-indicators-for-one-technology")
 			.log("Computing indicators for ${body.name}")
 			.multicast()
 				.recipientList(constant(indicatorComputerRoutes))
