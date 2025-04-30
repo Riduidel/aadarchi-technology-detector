@@ -34,9 +34,6 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
 	private int projectsPerPage;
 	@ConfigProperty(name="tech-trends.projects.per.platform", defaultValue = "1000")
 	private int projectsPerPlatform;
-	// TODO convert to file
-	@ConfigProperty(name="storage-folder", defaultValue="./target/storage")
-	private String storageFolderPath;
 	@ConfigProperty(name="rejected-platforms", defaultValue="Bower,Carthage,Alcatraz,SwiftPM,Nimble,PureScript")
 	private List<String> rejectedPlatforms;
 	

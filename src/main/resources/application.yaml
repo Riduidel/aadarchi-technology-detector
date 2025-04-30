@@ -4,7 +4,7 @@ tech-trends:
       page: 10
       platform: 1000
   csv:
-    folder: .cache/csv
+    folder: data/csv
   indicators:
     github:
       stars:
@@ -66,7 +66,7 @@ quarkus:
       enabled: false
     db-kind: h2
     jdbc:
-      url: jdbc:h2:file:./target/storage/h2;AUTO_SERVER=TRUE
+      url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
   hibernate-orm:
     database:
       generation: update
