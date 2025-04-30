@@ -4,7 +4,7 @@ tech-trends:
       page: 10
       platform: 1000
   csv:
-    folder: .cache/csv
+    folder: data/csv
   indicators:
     github:
       stars:
