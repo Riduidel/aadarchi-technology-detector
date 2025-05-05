@@ -64,7 +64,7 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 		try {
 			computeGitHubStars(exchange.getMessage().getBody(Technology.class));
 		} catch(GitHubGraphqlException e) {
-			exchange.setException(e);
+			Log.warnf(e, "Unable to fetch stars for missing repo");
 		}
 	}
 
