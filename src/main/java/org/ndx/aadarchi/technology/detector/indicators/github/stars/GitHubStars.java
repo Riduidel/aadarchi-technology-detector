@@ -89,7 +89,8 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 		} else {
 			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%)", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
 		}
-		if(localCount<remoteCount) {
+		boolean shouldDownloadStars = localCount<remoteCount;
+		if(shouldDownloadStars) {
 			AtomicInteger processedCount = new AtomicInteger();
 			githubClient.getAllStargazers(path.getLeft(), path.getRight(), forceRedownload,
 				repositoryPage -> {
