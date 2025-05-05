@@ -16,6 +16,7 @@ import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.Direct
 import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlException;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerEvent;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerListRepository;
@@ -60,7 +61,11 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	}
 
 	private void computeGitHubStars(Exchange exchange) throws IOException {
-		computeGitHubStars(exchange.getMessage().getBody(Technology.class));
+		try {
+			computeGitHubStars(exchange.getMessage().getBody(Technology.class));
+		} catch(GitHubGraphqlException e) {
+			exchange.setException(e);
+		}
 	}
 
 	private void computeGitHubStars(Technology technology) throws IOException {

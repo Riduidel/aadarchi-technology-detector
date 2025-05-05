@@ -71,7 +71,7 @@ public class GitHubGraphqlFacade {
 	}
 
 	private RuntimeException processGraphqlErrors(Map<String, Object> arguments, Response response) {
-		return new RuntimeException(
+		return new GitHubGraphqlException(
 				String.format(
 						"Request\n"
 						+ "%s\n"
