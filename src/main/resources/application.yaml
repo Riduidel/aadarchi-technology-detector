@@ -62,11 +62,14 @@ quarkus:
         Authorization: Bearer ${tech-trends.github.token}
         Content-Type: application/json; charset=utf-8
   datasource:
+    health:
+      enabled: true
     devservices:
       enabled: false
     db-kind: h2
     jdbc:
       url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
+      max-size: 100
   hibernate-orm:
     database:
       generation: update
@@ -103,5 +106,5 @@ quarkus:
     projects:
       per:
         page: 10
-        platform: 30
+        platform: 100
   

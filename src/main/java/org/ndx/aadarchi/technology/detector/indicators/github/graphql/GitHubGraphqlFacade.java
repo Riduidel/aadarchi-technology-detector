@@ -1,8 +1,8 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
-import java.net.UnknownHostException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.TreeMap;
@@ -10,11 +10,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.BucketConfiguration;
+import io.github.bucket4j.BucketListener;
 import io.github.bucket4j.TokensInheritanceStrategy;
 import io.quarkus.logging.Log;
 import io.smallrye.graphql.client.GraphQLClient;
@@ -35,6 +37,29 @@ public class GitHubGraphqlFacade {
 	@ConfigProperty(name = "tech-trends.indicators.github.stars.graphql.history")
 	String githubStarsHistory;
 	
+	public class BucketThreadParkedLogger implements BucketListener {
+
+		@Override
+		public void onConsumed(long tokens) {}
+
+		@Override
+		public void onRejected(long tokens) {}
+
+		@Override
+		public void onParked(long nanos) {
+			Log.warnf("Thread was parked %s due to bucket having only %d tokens remaining",
+					DurationFormatUtils.formatDurationHMS(nanos/1000),
+					rateLimitingBucket.getAvailableTokens());
+		}
+
+		@Override
+		public void onInterrupted(InterruptedException e) {}
+
+		@Override
+		public void onDelayed(long nanos) {}
+		
+	}
+	
 	Bucket rateLimitingBucket = Bucket.builder()
 			// We initialize as a classical GitHub user
 			.addLimit(limit -> limit
@@ -43,7 +68,8 @@ public class GitHubGraphqlFacade {
 					.id("GitHub")
 				)
 			.withMillisecondPrecision()
-			.build();
+			.build()
+			.toListenable(new BucketThreadParkedLogger());
 
 	/**
 	 * Get total number of stargazers as of today
@@ -140,9 +166,9 @@ public class GitHubGraphqlFacade {
 		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
 		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
 		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
-		LocalDateTime resetInstant = LocalDateTime.ofEpochSecond(tokensResetInstant, 0, ZoneOffset.UTC);
+		LocalDateTime resetInstant = LocalDateTime.ofEpochSecond(tokensResetInstant, 0, OffsetDateTime.now().getOffset());
 		if(tokensRemaining<100) {
-			Log.infof("%s tokens remaining. Bucket refulling will happen at %s",
+			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
 					tokensRemaining,
 					resetInstant);
 		} else {
