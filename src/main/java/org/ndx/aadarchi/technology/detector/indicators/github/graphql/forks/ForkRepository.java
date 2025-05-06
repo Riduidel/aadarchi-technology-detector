@@ -30,9 +30,9 @@ public class ForkRepository implements PanacheRepository<Fork>{
     }
 
     /**
-     * Persiste un événement de fork s'il n'existe pas déjà.
-     * @param persistent L'entité Fork à persister.
-     * @return true si l'entité a été persistée (n'existait pas), false sinon.
+     * Persists a fork event if it doesn't already exist.
+     * @param persistent The Fork entity to persist.
+     * @return true if the entity was persisted (didn't exist), false otherwise.
      */
     @Transactional
     public boolean maybePersist(Fork persistent) {
@@ -53,9 +53,9 @@ public class ForkRepository implements PanacheRepository<Fork>{
     }
 
     /**
-     * Compte le nombre total de forks enregistrés localement pour un dépôt donné.
-     * @param path Paire contenant le propriétaire (gauche) et le nom du dépôt (droite).
-     * @return Le nombre de forks locaux pour ce dépôt.
+     * Counts the total number of locally registered forks for a given repository.
+     * @param path Pair containing the owner (left) and repository name (right).
+     * @return The number of local forks for this repository.
      */
     @Transactional
     public long count(Pair<String> path) {
@@ -66,10 +66,10 @@ public class ForkRepository implements PanacheRepository<Fork>{
     }
 
     /**
-     * Regroupe les forks par mois et année en utilisant une requête SQL native.
-     * @param technology La technologie associée à ces indicateurs.
-     * @param pair Paire contenant le propriétaire et le nom du dépôt.
-     * @return Une liste d'objets Indicator représentant le nombre de forks par mois.
+     * Groups forks by month and year using a native SQL query.
+     * @param technology The technology associated with these indicators.
+     * @param pair Pair containing the repository owner and name.
+     * @return A list of Indicator objects representing the number of forks per month.
      */
     @Transactional
     public List<Indicator> groupForksByMonths(Technology technology, Pair<String> pair) {
@@ -83,11 +83,11 @@ public class ForkRepository implements PanacheRepository<Fork>{
     }
 
     /**
-     * Convertit une ligne de résultat de la requête SQL native en un objet Indicator.
-     * S'attend à ce que la ligne contienne [Année, Mois, Compte].
-     * @param technology La technologie associée.
-     * @param row Un tableau d'objets représentant une ligne de résultat.
-     * @return Un objet Indicator.
+     * Converts a native SQL query result row into an Indicator object.
+     * Expects the row to contain [Year, Month, Count].
+     * @param technology The associated technology.
+     * @param row An array of objects representing a result row.
+     * @return An Indicator object.
      */
     private Indicator toForkIndicator(Technology technology, Object[] row) {
         LocalDate localDate = LocalDate.of(Integer.parseInt(row[0].toString()),

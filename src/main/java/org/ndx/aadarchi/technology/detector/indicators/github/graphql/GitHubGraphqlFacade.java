@@ -207,10 +207,10 @@ public class GitHubGraphqlFacade {
 	}
 
 	/**
-	 * Récupère le nombre total actuel de forks pour un dépôt.
-	 * @param owner Propriétaire du dépôt
-	 * @param name Nom du dépôt
-	 * @return Nombre total de forks
+	 * Retrieves the current total number of forks for a repository.
+	 * @param owner Repository owner
+	 * @param name Repository name
+	 * @return Total number of forks
 	 */
 	public int getCurrentTotalNumberOfFork(String owner, String name) {
 		try {
@@ -223,23 +223,23 @@ public class GitHubGraphqlFacade {
 				if (repo != null) {
 					return repo.forkCount;
 				} else {
-					Log.warnf("La réponse GraphQL pour getForkCount(%s, %s) ne contient pas de champ 'repository'. Réponse: %s", owner, name, response.getData());
+					Log.warnf("The GraphQL response for getForkCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
 					return 0;
 				}
 			} else {
 				throw processGraphqlErrors(arguments, response);
 			}
 		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException(String.format("Erreur lors de la récupération du nombre de forks pour %s/%s", owner, name), e);
+			throw new RuntimeException(String.format("Error retrieving fork count for %s/%s", owner, name), e);
 		}
 	}
 
 	/**
-	 * Récupère l'historique complet des forks pour un dépôt, page par page.
-	 * @param owner Propriétaire du dépôt
-	 * @param name Nom du dépôt
-	 * @param force Si true, continue même si une page ne contient pas de nouvelles données traitées.
-	 * @param processForks Fonction pour traiter chaque page de forks reçue. Doit retourner true si le traitement doit continuer.
+	 * Retrieves the complete fork history for a repository, page by page.
+	 * @param owner Repository owner
+	 * @param name Repository name
+	 * @param force If true, continues even if a page contains no new processed data.
+	 * @param processForks Function to process each received fork page. Must return true if processing should continue.
 	 */
 	public void getAllForks(String owner, String name, boolean force, Function<ForkListDTO, Boolean> processForks) {
 		try {
@@ -249,34 +249,34 @@ public class GitHubGraphqlFacade {
 			ForkListDTO repositoryPage;
 			boolean shouldContinue = true;
 			do {
-				Log.debugf("Récupération de la page de forks pour %s/%s avec arguments: %s", owner, name, arguments);
+				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
 				Response response = dynamicClient.executeSync(githubForksHistory, arguments);
 				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
 					repositoryPage = response.getObject(ForkListDTO.class, "repository");
 					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
-						Log.errorf("Réponse invalide ou incomplète de GraphQL pour getAllForks(%s, %s), arguments: %s. Réponse: %s", owner, name, arguments, response.getData());
-						throw new RuntimeException("Réponse GraphQL incomplète pour l'historique des forks.");
+						Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
+						throw new RuntimeException("Incomplete GraphQL response for fork history.");
 					}
 
 					shouldContinue = repositoryPage.forks.pageInfo.hasPreviousPage;
 					boolean hasProcessedSomething = processForks.apply(repositoryPage);
 
 					if(!force && !hasProcessedSomething) {
-						Log.infof("Aucun nouveau fork traité pour %s/%s dans cette page, arrêt anticipé.", owner, name);
+						Log.infof("No new forks processed for %s/%s in this page, early shutdown.", owner, name);
 						shouldContinue = false;
 					}
 
 					if (shouldContinue) {
-						Log.debugf("Page de forks traitée pour %s/%s. Page suivante à récupérer avant: %s", owner, name, repositoryPage.forks.pageInfo.startCursor);
+						Log.debugf("Processing fork page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.forks.pageInfo.startCursor);
 						arguments.put("before", repositoryPage.forks.pageInfo.startCursor);
 					}
 				} else {
-					Log.debugf("Traitement des forks terminé pour %s/%s.", owner, name);
+					Log.debugf("Fork processing complete for %s/%s.", owner, name);
 					throw processGraphqlErrors(arguments, response);
 				}
 			} while(shouldContinue);
 		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException(String.format("Erreur lors de la récupération de l'historique des forks pour %s/%s", owner, name), e);
+			throw new RuntimeException(String.format("Error retrieving fork history for %s/%s", owner, name), e);
 		}
 	}
 

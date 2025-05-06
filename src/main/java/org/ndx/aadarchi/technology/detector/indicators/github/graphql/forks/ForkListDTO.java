@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 /*
-* DTO pour la réponse de la requête d'historique des forks
+* DTO for the fork history query response
 * */
 public class ForkListDTO {
     public Forks forks;
