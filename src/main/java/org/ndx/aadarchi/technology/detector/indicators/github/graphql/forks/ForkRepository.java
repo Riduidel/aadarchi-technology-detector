@@ -36,18 +36,18 @@ public class ForkRepository implements PanacheRepository<Fork>{
      */
     @Transactional
     public boolean maybePersist(Fork persistent) {
-        if (count("id.repoOwner = ?1 and id.repoName = ?2 and id.forkOwnerLogin = ?3",                persistent.id.repoOwner,
-                persistent.id.repoName,
-                persistent.id.forkedAt,
-                persistent.id.forkOwnerLogin
+        if (count("id.repoOwner = ?1 and id.repoName = ?2 and id.forkOwnerLogin = ?3",                persistent.id.owner,
+                persistent.id.repo,
+                persistent.id.date,
+                persistent.id.user
         ) == 0) {
             persistent.persist();
             Log.debugf("Persisted new fork: %s/%s by %s",
-                    persistent.id.repoOwner, persistent.id.repoName, persistent.id.forkOwnerLogin);
+                    persistent.id.owner, persistent.id.repo, persistent.id.user);
             return true;
         } else {
             Log.tracef("Fork already exists, skipping persistence: %s/%s by %s",
-                    persistent.id.repoOwner, persistent.id.repoName, persistent.id.forkOwnerLogin);
+                    persistent.id.owner, persistent.id.repo, persistent.id.user);
             return false;
         }
     }

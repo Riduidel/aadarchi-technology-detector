@@ -75,6 +75,18 @@ tech-trends:
                 }
               }
             }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_STARS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) 
+            ;
 
 ---
 '%dev':

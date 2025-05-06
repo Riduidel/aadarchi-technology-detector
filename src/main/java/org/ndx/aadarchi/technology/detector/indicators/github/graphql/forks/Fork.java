@@ -14,10 +14,10 @@ public class Fork extends PanacheEntityBase {
 
     @Embeddable
     public static class ForkId implements Serializable {
-        @Column(name = "REPO_OWNER") public String repoOwner;
-        @Column(name = "REPO_NAME") public String repoName;
-        @Column(name = "FORK_DATE") public Date forkedAt;
-        @Column(name = "FORK_USER") public String forkOwnerLogin;
+        @Column(name = "REPO_OWNER") public String owner;
+        @Column(name = "REPO_NAME") public String repo;
+        @Column(name = "FORK_DATE") public Date date;
+        @Column(name = "FORK_USER") public String user;
 
     }
 
@@ -30,9 +30,9 @@ public class Fork extends PanacheEntityBase {
 
     public Fork(String owner, String repo, Date date, String user) {
         this.id = new Fork.ForkId();
-        this.id.repoOwner = owner;
-        this.id.repoName = repo;
-        this.id.forkedAt = date;
-        this.id.forkOwnerLogin = user;
+        this.id.owner = owner;
+        this.id.repo = repo;
+        this.id.date = date;
+        this.id.user = user;
     }
 }
