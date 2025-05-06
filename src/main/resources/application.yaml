@@ -49,21 +49,21 @@ tech-trends:
               }
             }
 
-      forks: # Nouvelle section pour les forks
+      forks: # New section for forks
         graphql:
-          today: | # Requête pour le nombre total de forks
+          today: | # Query for total number of forks
             query($owner: String!, $name: String!) {
               repository(owner: $owner, name: $name) {
                 forkCount
               }
             }
-          history: | # Requête pour l'historique des forks
+          history: | # Request for fork history
             query($owner: String!, $name: String!, $before: String) {
               repository(owner: $owner, name: $name) {
                 forks(first: 100, orderBy: {field: CREATED_AT, direction: DESC}, before: $before) {
                   totalCount
                   nodes {
-                    createdAt # Important pour le regroupement par mois
+                    createdAt 
                     owner {
                       login
                     }
