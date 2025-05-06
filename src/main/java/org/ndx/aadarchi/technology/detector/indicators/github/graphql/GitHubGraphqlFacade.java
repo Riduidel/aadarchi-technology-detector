@@ -227,7 +227,7 @@ public class GitHubGraphqlFacade {
 					return 0;
 				}
 			} else {
-				throw processGraphqlErrors(githubForksToday, arguments, response);
+				throw processGraphqlErrors(arguments, response);
 			}
 		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
 			throw new RuntimeException(String.format("Erreur lors de la récupération du nombre de forks pour %s/%s", owner, name), e);
@@ -272,78 +272,12 @@ public class GitHubGraphqlFacade {
 					}
 				} else {
 					Log.debugf("Traitement des forks terminé pour %s/%s.", owner, name);
-					throw processGraphqlErrors(githubForksHistory, arguments, response);
+					throw processGraphqlErrors(arguments, response);
 				}
 			} while(shouldContinue);
 		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
 			throw new RuntimeException(String.format("Erreur lors de la récupération de l'historique des forks pour %s/%s", owner, name), e);
 		}
-	}
-
-	/**
-	 * Calcule le nombre de forks par mois pour un dépôt donné.
-	 * @param owner Propriétaire du dépôt
-	 * @param name Nom du dépôt
-	 * @return Une Map où la clé est l'année/mois (YearMonth) et la valeur est le nombre de forks créés ce mois-là.
-	 */
-	public Map<YearMonth, Long> getForksPerMonth(String owner, String name) {
-		List<OffsetDateTime> allForkDates = new ArrayList<>();
-
-		// Utilise getAllForks pour récupérer toutes les dates de création des forks
-		getAllForks(owner, name, true, // force=true pour obtenir toutes les dates, même anciennes
-				repositoryPage -> {
-					if (repositoryPage.forks != null && repositoryPage.forks.nodes != null) {
-						List<OffsetDateTime> datesOnPage = repositoryPage.forks.nodes.stream()
-								.map(forkNode -> forkNode.createdAt)
-								.collect(Collectors.toList());
-						allForkDates.addAll(datesOnPage);
-						return !datesOnPage.isEmpty();
-					}
-					return false;
-				});
-
-		Log.infof("Total de %d dates de fork récupérées pour %s/%s.", allForkDates.size(), owner, name);
-
-		// Groupe les dates par année/mois et compte les occurrences
-		return allForkDates.stream()
-				.collect(Collectors.groupingBy(
-						date -> YearMonth.from(date),
-						TreeMap::new,
-						Collectors.counting()
-				));
-	}
-
-
-	/**
-	 * Traite les erreurs GraphQL et lance une RuntimeException.
-	 * @param query La requête GraphQL qui a échoué.
-	 * @param arguments Les arguments utilisés pour la requête.
-	 * @param response La réponse GraphQL contenant les erreurs.
-	 * @return Ne retourne jamais, lance toujours une exception.
-	 */
-	private RuntimeException processGraphqlErrors(String query, Map<String, Object> arguments, Response response) {
-		String errorDetails = "Erreurs inconnues";
-		if (response != null && response.getErrors() != null && !response.getErrors().isEmpty()) {
-			errorDetails = response.getErrors().stream()
-					.map(error -> String.format("\t- %s (Locations: %s, Path: %s, Extensions: %s)",
-							error.getMessage(), error.getLocations(), error.getPath(), error.getExtensions()))
-					.collect(Collectors.joining("\n"));
-		} else if (response != null && !response.hasData()) {
-			errorDetails = "La réponse ne contient pas de données ('data' est null ou vide).";
-		}
-
-		return new RuntimeException(
-				String.format(
-						"La requête GraphQL\n"
-								+ "--------------------\n"
-								+ "%s\n"
-								+ "--------------------\n"
-								+ "exécutée avec les paramètres %s\n"
-								+ "a généré les erreurs suivantes:\n"
-								+ "%s",
-						query,
-						arguments,
-						errorDetails));
 	}
 
 }
