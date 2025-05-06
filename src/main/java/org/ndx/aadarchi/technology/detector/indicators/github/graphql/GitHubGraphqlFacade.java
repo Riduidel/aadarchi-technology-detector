@@ -15,6 +15,8 @@ import io.smallrye.graphql.client.Response;
 import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks.ForkCountDTO;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks.ForkListDTO;
 
 @ApplicationScoped
 public class GitHubGraphqlFacade {
@@ -26,6 +28,11 @@ public class GitHubGraphqlFacade {
 	String githubStarsToday;
 	@ConfigProperty(name = "tech-trends.indicators.github.stars.graphql.history")
 	String githubStarsHistory;
+
+	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.today")
+	String githubForksToday;
+	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.history")
+	String githubForksHistory;
 
 	/**
 	 * Get total number of stargazers as of today
@@ -106,4 +113,79 @@ public class GitHubGraphqlFacade {
 		}
 		
 	}
+
+	/**
+	 * Retrieves the current total number of forks for a repository.
+	 * @param owner Repository owner
+	 * @param name Repository name
+	 * @return Total number of forks
+	 */
+	public int getCurrentTotalNumberOfFork(String owner, String name) {
+		try {
+			Map<String, Object> arguments = Map.of(
+					"owner", owner,
+					"name", name);
+			Response response = dynamicClient.executeSync(githubForksToday, arguments);
+			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+				ForkCountDTO repo = response.getObject(ForkCountDTO.class, "repository");
+				if (repo != null) {
+					return repo.forkCount;
+				} else {
+					Log.warnf("The GraphQL response for getForkCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
+					return 0;
+				}
+			} else {
+				throw processGraphqlErrors(arguments, response);
+			}
+		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+			throw new RuntimeException(String.format("Error retrieving fork count for %s/%s", owner, name), e);
+		}
+	}
+
+	/**
+	 * Retrieves the complete fork history for a repository, page by page.
+	 * @param owner Repository owner
+	 * @param name Repository name
+	 * @param force If true, continues even if a page contains no new processed data.
+	 * @param processForks Function to process each received fork page. Must return true if processing should continue.
+	 */
+	public void getAllForks(String owner, String name, boolean force, Function<ForkListDTO, Boolean> processForks) {
+		try {
+			Map<String, Object> arguments = new TreeMap<>(Map.of(
+					"owner", owner,
+					"name", name));
+			ForkListDTO repositoryPage;
+			boolean shouldContinue = true;
+			do {
+				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
+				Response response = dynamicClient.executeSync(githubForksHistory, arguments);
+				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+					repositoryPage = response.getObject(ForkListDTO.class, "repository");
+					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
+						Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
+						throw new RuntimeException("Incomplete GraphQL response for fork history.");
+					}
+
+					shouldContinue = repositoryPage.forks.pageInfo.hasPreviousPage;
+					boolean hasProcessedSomething = processForks.apply(repositoryPage);
+
+					if(!force && !hasProcessedSomething) {
+						Log.infof("No new forks processed for %s/%s in this page, early shutdown.", owner, name);
+						shouldContinue = false;
+					}
+
+					if (shouldContinue) {
+						Log.debugf("Processing fork page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.forks.pageInfo.startCursor);
+						arguments.put("before", repositoryPage.forks.pageInfo.startCursor);
+					}
+				} else {
+					Log.debugf("Fork processing complete for %s/%s.", owner, name);
+					throw processGraphqlErrors(arguments, response);
+				}
+			} while(shouldContinue);
+		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+			throw new RuntimeException(String.format("Error retrieving fork history for %s/%s", owner, name), e);
+		}
+	}
+
 }
