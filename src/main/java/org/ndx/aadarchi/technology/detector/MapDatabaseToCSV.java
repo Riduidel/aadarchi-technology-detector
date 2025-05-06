@@ -4,15 +4,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.mapping.Collection;
 import org.hibernate.type.SqlTypes;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
@@ -25,6 +26,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.metamodel.EntityType;
 
 @ApplicationScoped
 public class MapDatabaseToCSV extends EndpointRouteBuilder {
@@ -51,11 +53,11 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 //				.map(ClassPersister::new)
 //				.collect(Collectors.toSet())
 //				;
-		Set<ClassPersister> classes = Stream.of(
-                        Technology.class,
+		Set<ClassPersister> classes = Arrays.asList(
+				Technology.class,
 				Indicator.class
 //				Stargazer.class
-                )
+				).stream()
 				.map(ClassPersister::new)
 				.collect(Collectors.toSet());
 				
@@ -98,12 +100,14 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		private String generatedSelect;
 		private String writerRouteName;
 		private String fileName;
+		private String folderPath;
 		private Class<?> clazz;
 		private String readerRouteName;
 		private String filePath;
 
 		public ClassPersister(Class<?> clazz) {
-            name = clazz.getSimpleName();
+			this.clazz = clazz;
+			name = clazz.getSimpleName();
 			generatedSelect = constructSelect(clazz);
 			writerRouteName = String.format("%s-%s", WRITE_TO_CSV_ROUTE, name);
 			readerRouteName = String.format("%s-%s", READ_FROM_CSV_ROUTE, name);
@@ -197,11 +201,13 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 			}
 			JdbcTypeCode jdbcType = f.getAnnotation(JdbcTypeCode.class);
 			if(jdbcType!=null) {
-                if (jdbcType.value() == SqlTypes.JSON) {
-                    return String.format("UTF8TOSTRING(%s)", columnName);
-                }
-                return columnName;
-            }
+				switch(jdbcType.value()) {
+				case SqlTypes.JSON:
+					return String.format("UTF8TOSTRING(%s)", columnName);
+				default:
+					return columnName;
+				}
+			}
 			// There is a final subtelty: what if data type is collection?
 			// Then we must transform the h2 array into something more convenient...
 			return columnName;
