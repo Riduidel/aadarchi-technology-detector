@@ -65,7 +65,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
     }
 
     private void computeGitHubForks(Technology technology) throws IOException {
-        computePastForks(technology); // Appeler la logique pour les forks
+        computePastForks(technology);
     }
 
     private void computePastForks(Technology technology) throws IOException {
@@ -77,7 +77,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
         Date startOfPreviousMonth = Date.from(monthBefore.atStartOfDay(ZoneId.systemDefault()).toInstant());
         if(!indicators.hasIndicatorForMonth(technology, startOfPreviousMonth)) {
             getRepository(technology).ifPresent(pair -> {
-                loadAllPastForks(technology, pair);
+                loadAllPastForks(pair);
                 computeAllPastForks(technology, pair);
             });
         }
@@ -88,7 +88,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
                 .forEach(indicator -> indicators.maybePersist(indicator));
     }
 
-    private void loadAllPastForks(Technology technology, Pair<String> path) {
+    private void loadAllPastForks(Pair<String> path) {
         long localCount = forksRepository.count(path);
         int remoteCount = githubClient.getCurrentTotalNumberOfFork(path.getLeft(), path.getRight());
 
