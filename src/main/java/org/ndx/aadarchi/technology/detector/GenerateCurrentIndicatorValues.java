@@ -1,12 +1,15 @@
 package org.ndx.aadarchi.technology.detector;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
+import org.ndx.aadarchi.technology.detector.model.TechnologyRepository;
 import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
 
+import io.quarkus.logging.Log;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;

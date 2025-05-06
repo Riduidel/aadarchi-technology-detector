@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
+import java.util.Map;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
@@ -27,7 +29,8 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 	public static Date atStartOfMonth() {
 		LocalDate now = LocalDate.now();
 		LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
-        return Date.from( firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date firstDateOfMonth = Date.from( firstDayOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		return firstDateOfMonth;
 	}
 
 	@Transactional
