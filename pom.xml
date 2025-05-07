@@ -25,6 +25,42 @@
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 	</properties>
 
+    <url>https://riduidel.github.io/aadarchi-technology-detector/</url>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>Riduidel</id>
+            <name>Nicolas Delsaux</name>
+            <email>nicolas.delsaux@gmx.fr</email>
+            <roles>
+                <role>Tech Lead</role>
+            </roles>
+        </developer>
+    </developers>
+    <scm>
+        <!-- We use https connections for using aadarchi.github.token as
+		password -->
+        <connection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</connection>
+        <developerConnection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</developerConnection>
+        <url>https://github.com/Riduidel/aadarchi-technology-detector.git</url>
+        <tag>HEAD</tag>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Riduidel/aadarchi-technology-detector/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector</url>
+        </repository>
+    </distributionManagement>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
