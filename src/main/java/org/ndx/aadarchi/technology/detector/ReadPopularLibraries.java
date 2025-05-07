@@ -79,7 +79,7 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
 		    	.end()
 	    	.end()
 	    	.log(LoggingLevel.INFO, "Processed ${body.size} libraries. Now we have to do something with that data ...")
-	    	.to("seda:all-libraries-are-loaded")
+//	    	.to("seda:all-libraries-are-loaded")
 	    	;
     	
     	from(GET_ALL_LIBRARIES_OF_PLATFORM)
