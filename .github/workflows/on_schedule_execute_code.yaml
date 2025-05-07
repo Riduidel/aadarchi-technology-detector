@@ -99,7 +99,6 @@ jobs:
 #          REPO: self
 #          BRANCH: reports_pypi
 #          FOLDER: target
-#          TARGET_DIR: pypitech-trends.libraries.io.token>13f98335c689db6973af41eabd5ecbbb
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          MESSAGE: Updated npmjs infospypi
 #          COMMIT-NAME: 🤖 GitHub Action
