@@ -19,6 +19,7 @@
 		<quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
 		<quarkus.platform.version>3.17.5</quarkus.platform.version>
+		<camel.version>4.9.0</camel.version>
 		<skipITs>true</skipITs>
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 	</properties>
@@ -166,12 +167,13 @@
 			<version>2.12.1</version>
 		</dependency>
 
-		<dependency>
+<!--		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-csimple-joor</artifactId>
-			<version>4.9.0</version>
+			<version>${camel.version}</version>
+			<scope>provided</scope>
 		</dependency>
-		<dependency>
+-->		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.17.0</version>
