@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ndx.aadarchi.technology-detector</groupId>
+	<groupId>org.ndx.aadarchi.technology-detector</groupId>
 	<artifactId>fetch-popular-artifacts</artifactId>
-    <version>${revision}</version>
+	<version>${revision}</version>
 
 	<properties>
-        <!-- This version number makes no sense, cause it has to be changed in
+		<!-- This version number makes no sense, cause it has to be changed in
 		GitHub Actions (see on_release_build_version.yaml) -->
-        <revision>local-SNAPSHOT</revision>
+		<revision>local-SNAPSHOT</revision>
 		<compiler-plugin.version>3.13.0</compiler-plugin.version>
 		<maven.compiler.release>21</maven.compiler.release>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -41,11 +43,12 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<dependency>
+		<!--		<dependency>
 			<groupId>io.github.ncasaux</groupId>
 			<artifactId>camel-plantuml-jar</artifactId>
 			<version>1.8.0</version>
 		</dependency>
+-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-jdbc-h2</artifactId>
@@ -61,18 +64,18 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-graphql-client</artifactId>
-		</dependency>		
-		<dependency>
-		    <groupId>io.quarkus</groupId>
-		    <artifactId>quarkus-flyway</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>io.quarkus</groupId>
-		    <artifactId>quarkus-hibernate-orm-panache</artifactId>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-flyway</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.camel.quarkus</groupId>
-		    <artifactId>camel-quarkus-jpa</artifactId>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-hibernate-orm-panache</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.quarkus</groupId>
+			<artifactId>camel-quarkus-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -123,8 +126,8 @@
 			<artifactId>camel-quarkus-ognl</artifactId>
 		</dependency>
 		<dependency>
-	        <groupId>org.apache.camel</groupId>
-	        <artifactId>camel-endpointdsl</artifactId>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-endpointdsl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.hawt</groupId>
@@ -154,19 +157,26 @@
 		<dependency>
 			<groupId>io.quarkiverse.bucket4j</groupId>
 			<artifactId>quarkus-bucket4j</artifactId>
-            <version>1.0.4</version>
+			<version>1.0.4</version>
 		</dependency>
 
-<dependency>
-    <groupId>io.quarkus</groupId>
-    <artifactId>quarkus-junit5</artifactId>
-            <scope>test</scope>
-</dependency>
-        <dependency>
-            <groupId>io.smallrye</groupId>
-            <artifactId>smallrye-graphql-client-generator</artifactId>
-            <version>2.12.1</version>
-        </dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.smallrye</groupId>
+			<artifactId>smallrye-graphql-client-generator</artifactId>
+			<version>2.12.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-csimple-joor</artifactId>
+			<version>4.9.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -189,7 +199,8 @@
 				<configuration>
 					<systemProperties>
 						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
-						<tech-trends.libraries.io.token>${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+						<tech-trends.libraries.io.token>
+							${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -205,7 +216,8 @@
 				<version>${surefire-plugin.version}</version>
 				<configuration>
 					<systemPropertyVariables>
-						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<java.util.logging.manager>
+							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
@@ -223,8 +235,10 @@
 				</executions>
 				<configuration>
 					<systemPropertyVariables>
-						<native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
-						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+						<native.image.path>
+							${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+						<java.util.logging.manager>
+							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
 				</configuration>
@@ -254,8 +268,10 @@
 						<artifactId>jsonschema2pojo-maven-plugin</artifactId>
 						<version>1.2.2</version>
 						<configuration>
-							<sourceDirectory>${basedir}/src/build/resources/examples</sourceDirectory>
-							<targetPackage>org.ndx.aadarchi.technology.detector.librariesio.model</targetPackage>
+							<sourceDirectory>
+								${basedir}/src/build/resources/examples</sourceDirectory>
+							<targetPackage>
+								org.ndx.aadarchi.technology.detector.librariesio.model</targetPackage>
 							<sourceType>json</sourceType>
 							<useJakartaValidation>true</useJakartaValidation>
 						</configuration>
