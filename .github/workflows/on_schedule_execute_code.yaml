@@ -71,7 +71,7 @@ jobs:
       - name: Download artifact in current folder
         run: |
           mvn dependency:copy \
-            -Dartifact=org.ndx.aadarchi.technology-detector:fetch-popular-artifacts:$VERSION:jar:jar-with-dependencies \
+            -Dartifact=org.ndx.aadarchi.technology-detector:fetch-popular-artifacts:$VERSION:jar:runner \
             -DoutputDirectory=. \
             -DstripClassifier=true \
             -DstripVersion=true
@@ -82,7 +82,7 @@ jobs:
 
       - name: Run everything in the same step
         run: |
-          java -jar fetch-popular-artifacts-$VERSION-jar-with-dependencies.jar -Dtech-trends.github.token=${GITHUB_COM_TOKEN} -Dtech-trends.libraries.io.token=${LIBRARIES_IO_TOKEN}
+          java -Dtech-trends.github.token=${GITHUB_COM_TOKEN} -Dtech-trends.libraries.io.token=${LIBRARIES_IO_TOKEN} -jar fetch-popular-artifacts-$VERSION-runner.jar
         env:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_COM_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -93,7 +93,7 @@ jobs:
 #          REPO: self
 #          BRANCH: reports_pypi
 #          FOLDER: target
-#          TARGET_DIR: pypi
+#          TARGET_DIR: pypitech-trends.libraries.io.token>13f98335c689db6973af41eabd5ecbbb
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #          MESSAGE: Updated npmjs infospypi
 #          COMMIT-NAME: 🤖 GitHub Action
