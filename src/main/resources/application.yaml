@@ -1,33 +1,68 @@
+---
+'%dev':
+  tech-trends:
+    projects:
+      per:
+        page: 10
+        platform: 100
+# See https://camel.apache.org/camel-quarkus/3.15.x/user-guide/command-mode.html
+# It should stop Camel after the processing of one data batch, but currently fail to do so
+#camel:
+#  main:
+#    durationMaxMessages: 1
+quarkus:
+  datasource:
+    db-kind: h2
+    devservices:
+      enabled: false
+    health:
+      enabled: true
+    jdbc:
+      max-size: 100
+      url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
+  flyway:
+    migrate-at-start: true
+  hawtio:
+    authenticationEnabled: false
+  hibernate-orm:
+    database:
+      generation: update
+  log:
+    category:
+      io.smallrye.graphql.client:
+        level: TRACE
+        min-level: TRACE
+      org.jboss.resteasy.reactive.client.logging:
+        level: WARN
+  rate-limiter:
+    buckets:
+      librariesio:
+        limits:
+          - period: 1m
+            permitted-uses: 60
+            shared: true
+          - period: 1m
+            permitted-uses: 60
+            shared: true
+  rest-client:
+    librariesio:
+      url: https://libraries.io/api
+    logging:
+      body-limit: 1024
+      scope: request-response
+  smallrye-graphql-client:
+    github:
+      header:
+        Authorization: Bearer ${tech-trends.github.token}
+        Content-Type: application/json; charset=utf-8
+      url: https://api.github.com/graphql
 tech-trends:
-  projects:
-    per:
-      page: 10
-      platform: 1000
   csv:
     folder: data/csv
   indicators:
     github:
       stars:
-        sql:
-          # Build the global indicator from individual stargazers
-          indicator: |
-            SELECT
-              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
-              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
-              COUNT(STAR_DATE) AS STARS_BY_MONTH
-            FROM
-              GITHUB_STARS
-            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
-            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) 
-            ;
-
         graphql:
-          today: |
-            query($owner:String!, $name:String!) {
-              repository(owner:$owner, name:$name) {
-                stargazerCount
-              }
-            }
           # Notice that history is fetched backwards (from the most recent to the most ancient)
           history: |
             query($owner:String!, $name:String!, $before:String="") {
@@ -48,65 +83,22 @@ tech-trends:
                 }
               }
             }
-
-# See https://camel.apache.org/camel-quarkus/3.15.x/user-guide/command-mode.html
-# It should stop Camel after the processing of one data batch, but currently fail to do so
-#camel:
-#  main:
-#    durationMaxMessages: 1
-quarkus:
-  smallrye-graphql-client:
-    github:
-      url: https://api.github.com/graphql
-      header:
-        Authorization: Bearer ${tech-trends.github.token}
-        Content-Type: application/json; charset=utf-8
-  datasource:
-    health:
-      enabled: true
-    devservices:
-      enabled: false
-    db-kind: h2
-    jdbc:
-      url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
-      max-size: 100
-  flyway:
-    migrate-at-start: true
-  hibernate-orm:
-    database:
-      generation: update
-  hawtio:
-    authenticationEnabled: false
-  log:
-    category:
-      "org.jboss.resteasy.reactive.client.logging":
-        level: WARN
-      "io.smallrye.graphql.client":
-        level: TRACE
-        min-level: TRACE
-  rate-limiter:
-    buckets:
-      librariesio:
-        limits:
-          - permitted-uses: 60
-            period: 1m
-            shared: true
-          - permitted-uses: 60
-            period: 1m
-            shared: true
-  rest-client:
-    logging:
-      scope: request-response
-      body-limit: 1024
-    librariesio:
-      url: https://libraries.io/api
-
-
-# DEV Profile!
-"%dev":
-  tech-trends:
-    projects:
-      per:
-        page: 10
-        platform: 100
-  
+          today: |
+            query($owner:String!, $name:String!) {
+              repository(owner:$owner, name:$name) {
+                stargazerCount
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_STARS WHERE REPO_OWNER=:owner AND REPO_NAME=:name GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) ;
+  projects:
+    per:
+      page: 10
+      platform: 1000
