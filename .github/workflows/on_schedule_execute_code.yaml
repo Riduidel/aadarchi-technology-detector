@@ -12,11 +12,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  read_pypi:
+  fetch_popular_libraries:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            .dvcignore
+            data.dvc
+      - uses: iterative/setup-dvc@v1
       - name: Get latest version from repo
         id: version
         uses: pozetroninc/github-action-get-latest-release@master
