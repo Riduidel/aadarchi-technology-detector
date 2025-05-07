@@ -70,6 +70,8 @@ quarkus:
     jdbc:
       url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
       max-size: 100
+  flyway:
+    migrate-at-start: true
   hibernate-orm:
     database:
       generation: update
