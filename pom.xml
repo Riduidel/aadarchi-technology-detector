@@ -9,6 +9,7 @@
 	<version>${revision}</version>
 
 	<properties>
+		<quarkus.package.jar.type>uber-jar</quarkus.package.jar.type>
 		<!-- This version number makes no sense, cause it has to be changed in
 		GitHub Actions (see on_release_build_version.yaml) -->
 		<revision>local-SNAPSHOT</revision>
