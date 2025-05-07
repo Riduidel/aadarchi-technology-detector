@@ -1,12 +1,16 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -44,11 +48,18 @@ public class GitHubGraphqlFacade {
 
 		@Override
 		public void onRejected(long tokens) {}
+		
+		@Override
+		public void beforeParking(long nanos) {
+			Log.warnf("Thread will be parked %s due to bucket having only %d tokens remaining",
+					DurationFormatUtils.formatDurationHMS(TimeUnit.NANOSECONDS.toMillis(nanos)),
+					rateLimitingBucket.getAvailableTokens());
+		}
 
 		@Override
 		public void onParked(long nanos) {
-			Log.warnf("Thread was parked %s due to bucket having only %d tokens remaining",
-					DurationFormatUtils.formatDurationHMS(nanos/1000),
+			Log.warnf("Thread was parked %s due to bucket having only %d tokens remaining. Operations resume NOW!",
+					DurationFormatUtils.formatDurationHMS(TimeUnit.NANOSECONDS.toMillis(nanos)),
 					rateLimitingBucket.getAvailableTokens());
 		}
 
@@ -166,11 +177,12 @@ public class GitHubGraphqlFacade {
 		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
 		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
 		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
-		LocalDateTime resetInstant = LocalDateTime.ofEpochSecond(tokensResetInstant, 0, OffsetDateTime.now().getOffset());
+		Instant resetInstant = Instant.ofEpochSecond(tokensResetInstant);
 		if(tokensRemaining<100) {
 			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
 					tokensRemaining,
-					resetInstant);
+					resetInstant.atZone(ZoneId.systemDefault())
+					);
 		} else {
 			Log.debugf("%s tokens remaining locally, and %s tokens remaining on GitHub side.",
 					rateLimitingBucket.getAvailableTokens(), 
@@ -180,7 +192,7 @@ public class GitHubGraphqlFacade {
 				BucketConfiguration.builder()
 					.addLimit(limit ->
 						limit.capacity(tokensRemaining)
-							.refillIntervallyAligned(tokensPerHour, Duration.ofHours(1), resetInstant.toInstant(ZoneOffset.UTC))
+							.refillIntervallyAligned(tokensPerHour, Duration.ofHours(1), resetInstant)
 					)
 					.build(), 
 				TokensInheritanceStrategy.RESET);
