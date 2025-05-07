@@ -42,6 +42,11 @@ public interface GitHubBased extends TechnologyBased {
 			if(pathElements.size()>2) {
 				pathElements = pathElements.subList(0, 2);
 			}
+			if(pathElements.getLast().endsWith(".git")) {
+				String repoName = pathElements.getLast();
+				repoName = repoName.substring(0, repoName.lastIndexOf(".git"));
+				pathElements = Arrays.asList(pathElements.getFirst(), repoName);
+			}
 			return Optional.ofNullable(new Pair<>(pathElements.get(0), pathElements.get(1)));
 		} catch (IllegalArgumentException e) {
 			return Optional.empty();
