@@ -22,6 +22,7 @@ quarkus:
       url: jdbc:h2:file:./data/database/h2;AUTO_SERVER=TRUE
   flyway:
     migrate-at-start: true
+    baseline-on-migrate: true
   hawtio:
     authenticationEnabled: false
   hibernate-orm:

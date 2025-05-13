@@ -1,18 +1,12 @@
 package org.ndx.aadarchi.technology.detector.model;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /**
@@ -28,16 +22,9 @@ public class Technology extends PanacheEntityBase {
 	 * The homepage is usually the technology vanity url
 	 */
 	public String homepage;
-	
-	/**
-	 * The reference url is to be used as an identifier for the whole model.
-	 * Obviously, it should NEVER be null.
-	 */
-	@Id
-	public String referenceUrl;
-	/**
-	 * When possible, this can be used as the reference
-	 */
+
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TECHNOLOGY_ID_SEQ")
+	public Long id;
 	public String packageManagerUrl;
 	public String repositoryUrl;
 	@Override
@@ -47,7 +34,7 @@ public class Technology extends PanacheEntityBase {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(referenceUrl);
+		return Objects.hash(id);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -58,6 +45,6 @@ public class Technology extends PanacheEntityBase {
 		if (getClass() != obj.getClass())
 			return false;
 		Technology other = (Technology) obj;
-		return Objects.equals(referenceUrl, other.referenceUrl);
+		return Objects.equals(id, other.id);
 	}
 }
