@@ -464,10 +464,4 @@ public class Project {
 				&& Objects.equals(name, other.name) && Objects.equals(packageManagerUrl, other.packageManagerUrl)
 				&& Objects.equals(repositoryUrl, other.repositoryUrl);
 	}
-
-	public String getReferenceUrl() {
-		if(packageManagerUrl!=null)
-			return packageManagerUrl;
-		throw new UnsupportedOperationException("TODO implement Project#getReferenceUrl");
-	}
 }
