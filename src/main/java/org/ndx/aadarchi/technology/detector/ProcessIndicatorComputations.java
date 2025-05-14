@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
+import org.ndx.aadarchi.technology.detector.model.IndicatorComputation;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 import org.ndx.aadarchi.technology.detector.processors.IndicatorComputationProcessor;
 import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
@@ -16,8 +17,8 @@ import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class GenerateIndicatorComputations extends EndpointRouteBuilder {
-
+public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
+	private static final String INDICATOR_ROUTE_HEADER = "route";
 	TechnologyRepositoryProcessor technologies;
 	IndicatorComputationProcessor indicators;
 	
@@ -45,27 +46,36 @@ public class GenerateIndicatorComputations extends EndpointRouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		from(direct(getClass().getSimpleName()))
-			.id(getClass().getSimpleName()+"-1-fetch-all-technologies")
-			.log("Searching for technologies")
-			// Load all technologies
+			.id(getClass().getSimpleName()+"-1-fetch-all-indicator-computations")
+			.log("Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
-			.process(technologies::findAllTechnologies)
+			.process(this::findAllOldestFirst)
 			.log("Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
-				.process(this::generateIndicatorComputationsFor)
+				// Mark the indicator computation as LOADED
+				.process(this::convertToTechnology)
+				// Dynamically route it
+				.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
+				.process(this::convertBackToIndicatorComputation)
 				.end()
-			.log("All indicators computations have been created, now searching them by date")
+			.log("All indicators computations have been processed")
 			;
 	}
-
-	private void generateIndicatorComputationsFor(Exchange exchange) {
-		generateIndicatorComputationsFor(exchange.getMessage().getBody(Technology.class));
+	public void findAllOldestFirst(Exchange exchange) {
+		exchange.getMessage().setBody(indicators.findAllOldestFirst());
 	}
-
-	private void generateIndicatorComputationsFor(Technology technology) {
-		for(String r : indicatorComputerRoutes) {
-			indicators.generateIndicatorComputationFor(technology, r);
-		}
+	
+	public void convertToTechnology(Exchange exchange) {
+		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
+		indicators.markIndicator(indicator, IndicatorComputation.IndicatorComputationStatus.LOADED);
+		exchange.getMessage().setHeader("indicatorComputation", indicator);
+		exchange.getMessage().setHeader(INDICATOR_ROUTE_HEADER, indicator.id.indicatorRoute);
+		exchange.getMessage().setBody(indicator.id.technology);
+	}
+	public void convertBackToIndicatorComputation(Exchange exchange) {
+		IndicatorComputation indicatorComputation = exchange.getMessage().getHeader("indicatorComputation", IndicatorComputation.class);
+		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD);
+		exchange.getMessage().setBody(indicatorComputation);
 	}
 }

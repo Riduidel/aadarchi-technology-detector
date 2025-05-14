@@ -4,27 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * An indicator refers to a technology, so the technology has to be part of the id
  * @see https://javanexus.com/blog/mastering-hibernate-composite-ids
  */
 @Entity
+@Table(name="INDICATOR")
 public class Indicator extends PanacheEntityBase {
 	@Embeddable
 	public static class IndicatorId implements Serializable {
 	    @ManyToOne
-	    @JoinColumn(name = "technology",insertable = false, updatable = false)
+	    @JoinColumn(name = "TECHNOLOGY_ID",insertable = false, updatable = false, foreignKey = @ForeignKey(name="fk_technology_id"))
 		public Technology technology;
 		@Column(name = "INDICATOR_NAME")
 		public String indicatorName;

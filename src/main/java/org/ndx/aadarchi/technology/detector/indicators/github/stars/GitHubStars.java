@@ -80,12 +80,12 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	}
 
 	private void computeAllPastStars(Technology technology, Pair<String> pair) {
-		stargazersRepository.groupStarsByMonths(technology, pair).stream()
+		stargazersRepository.groupStarsByMonths(technology).stream()
 			.forEach(indicator -> indicators.maybePersist(indicator));
 	}
 
 	private void loadAllPastStargazers(Technology technology, Pair<String> path) {
-		long localCount = stargazersRepository.count(path);
+		long localCount = stargazersRepository.count(technology);
 		int remoteCount = githubClient.getStargazers(path.getLeft(), path.getRight());
 		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);
 		boolean forceRedownload = missingCountPercentage>10;
@@ -101,12 +101,12 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 				repositoryPage -> {
 					try {
 						processedCount.addAndGet(repositoryPage.stargazers.edges.size());
-						return this.processRepositoryPage(path, repositoryPage);
+						return this.processRepositoryPage(technology, repositoryPage);
 					} finally {
 						if(Log.isDebugEnabled()) {
 							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s", 
 									processedCount.intValue(),
-									stargazersRepository.count(path),
+									stargazersRepository.count(technology),
 									remoteCount,
 									path.getLeft(),
 									path.getRight());
@@ -122,10 +122,10 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	 * @param repositoryPage
 	 * @return true if we have to continue the process (in other words, if at least one event was persisted)
 	 */
-	private boolean processRepositoryPage(Pair<String> path, StargazerListRepository repositoryPage) {
+	private boolean processRepositoryPage(Technology technology, StargazerListRepository repositoryPage) {
 		return repositoryPage.stargazers.edges
 			.stream()
-			.map(event -> maybePersist(path, repositoryPage, event))
+			.map(event -> maybePersist(technology, repositoryPage, event))
 			.collect(Collectors.reducing((a, b) -> a||b))
 			.orElse(false);
 	}
@@ -137,9 +137,9 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	 * @param event
 	 * @return true if database changed, false if event already existed in db
 	 */
-	private boolean maybePersist(Pair<String> path, StargazerListRepository repositoryPage, StargazerEvent event) {
+	private boolean maybePersist(Technology technology, StargazerListRepository repositoryPage, StargazerEvent event) {
 		Stargazer toPersist = new Stargazer(
-				path.getLeft(), path.getRight(),
+				technology,
 				event.starredAt,
 				event.node.login
 				);

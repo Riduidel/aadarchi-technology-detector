@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.type.descriptor.DateTimeUtils;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
@@ -32,9 +31,8 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 	@Transactional
 	public boolean maybePersist(Stargazer persistent) {
 		// TODO Change how date is used here, since it clearly doesn't work correctly
-		if(count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4", 
-				persistent.id.owner, 
-				persistent.id.repo, 
+		if(count("id.technology = ?1 and id.date = ?2 and id.user = ?3", 
+				persistent.id.technology, 
 				persistent.id.date,
 				persistent.id.user
 				)==0) {
@@ -46,24 +44,19 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 	}
 
 	@Transactional
-	public long count(Pair<String> path) {
-		return count("id.owner = ?1 and id.repo = ?2",
-				path.getLeft(), 
-				path.getRight()
-				);
+	public long count(Technology t) {
+		return count("id.technology", t);
 	}
 
 	/**
 	 * Group stargazers by month and year.
 	 * We simply return that and let the caller manipulate the database
 	 * @param technology TODO
-	 * @param pair
 	 */
 	@Transactional
-	public List<Indicator> groupStarsByMonths(Technology technology, Pair<String> pair) {
+	public List<Indicator> groupStarsByMonths(Technology technology) {
 		Query extractionQuery = entityManager.createNativeQuery(groupStarsByMonths);
-		extractionQuery.setParameter("owner", pair.getLeft());
-		extractionQuery.setParameter("name", pair.getRight());
+		extractionQuery.setParameter("technology_id", technology.id);
 		List<Object[]> results = extractionQuery.getResultList();
 		return results.stream()
 			.map(row -> toIndicator(technology, row))
