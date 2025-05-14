@@ -1,18 +1,13 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.stars;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
 import java.util.Date;
-
-import org.ndx.aadarchi.technology.detector.model.Technology;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity(name = "GITHUB_STARS")
 public class Stargazer extends PanacheEntityBase {

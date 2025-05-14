@@ -1,18 +1,13 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.stars;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
+import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
@@ -21,7 +16,6 @@ import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGrap
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerEvent;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerListRepository;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
-import org.ndx.aadarchi.technology.detector.model.IndicatorRepository;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -46,6 +40,9 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 			.routeId(ROUTE_NAME)
 			.choice()
 				.when(this::usesGitHubRepository)
+				.idempotentConsumer()
+					.body(Technology.class, t -> t.repositoryUrl)
+					.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
 				.process(this::computeGitHubStars)
 			.end()
 			;
