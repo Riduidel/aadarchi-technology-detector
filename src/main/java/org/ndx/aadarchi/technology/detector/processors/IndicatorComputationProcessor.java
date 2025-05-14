@@ -25,12 +25,16 @@ public class IndicatorComputationProcessor {
 
 	@Transactional
 	public Iterable<IndicatorComputation> findAllOldestFirst() {
-		List<IndicatorComputation> returned = indicators.findAll(Sort.by("date", Direction.Ascending).and("id", Direction.Ascending)).list();
+		List<IndicatorComputation> returned = indicators.findAll(
+				// This ensure we first finish currently computing indicators prior to computing new ones
+				Sort.by("status", Direction.Descending)
+				.and("date", Direction.Ascending)
+				.and("id", Direction.Ascending)).list();
 		return returned;
 	}
 
 	@Transactional
-	public void markIndicator(IndicatorComputation indicator, IndicatorComputationStatus status) {
+	public void markIndicator(IndicatorComputation indicator, IndicatorComputationStatus status, boolean updateDate) {
 		IndicatorComputation updated = indicators.find("id", indicator.id).firstResult();
 		updated.status = status;
 		updated.date = new Date();

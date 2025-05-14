@@ -68,14 +68,14 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	
 	public void convertToTechnology(Exchange exchange) {
 		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
-		indicators.markIndicator(indicator, IndicatorComputation.IndicatorComputationStatus.LOADED);
+		indicators.markIndicator(indicator, IndicatorComputation.IndicatorComputationStatus.LOADED, false);
 		exchange.getMessage().setHeader("indicatorComputation", indicator);
 		exchange.getMessage().setHeader(INDICATOR_ROUTE_HEADER, indicator.id.indicatorRoute);
 		exchange.getMessage().setBody(indicator.id.technology);
 	}
 	public void convertBackToIndicatorComputation(Exchange exchange) {
 		IndicatorComputation indicatorComputation = exchange.getMessage().getHeader("indicatorComputation", IndicatorComputation.class);
-		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD);
+		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, true);
 		exchange.getMessage().setBody(indicatorComputation);
 	}
 }
