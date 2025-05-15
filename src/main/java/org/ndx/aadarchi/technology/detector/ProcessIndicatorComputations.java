@@ -53,7 +53,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.log("Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
-				.log("Running ${body}")
+				.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
 				// Mark the indicator computation as LOADED
 				.process(this::convertToTechnology)
 				// Dynamically route it
