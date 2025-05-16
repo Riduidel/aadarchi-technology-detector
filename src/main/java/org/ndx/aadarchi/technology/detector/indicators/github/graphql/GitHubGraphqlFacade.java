@@ -2,11 +2,7 @@ package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
@@ -88,6 +84,11 @@ public class GitHubGraphqlFacade {
 			.withMillisecondPrecision()
 			.build()
 			.toListenable(new BucketThreadParkedLogger());
+
+	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.today")
+	String githubForksToday;
+	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.history")
+	String githubForksHistory;
 
 	/**
 	 * Get total number of stargazers as of today
