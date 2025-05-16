@@ -13,8 +13,8 @@ import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlException;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerEvent;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.StargazerListRepository;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList.StargazerEvent;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
 import org.ndx.aadarchi.technology.detector.model.Technology;
@@ -119,7 +119,7 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	 * @param repositoryPage
 	 * @return true if we have to continue the process (in other words, if at least one event was persisted)
 	 */
-	private boolean processRepositoryPage(Pair<String> path, StargazerListRepository repositoryPage) {
+	private boolean processRepositoryPage(Pair<String> path, RepositoryWithStargazerList repositoryPage) {
 		return repositoryPage.stargazers.edges
 			.stream()
 			.map(event -> maybePersist(path, repositoryPage, event))
@@ -134,7 +134,7 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	 * @param event
 	 * @return true if database changed, false if event already existed in db
 	 */
-	private boolean maybePersist(Pair<String> path, StargazerListRepository repositoryPage, StargazerEvent event) {
+	private boolean maybePersist(Pair<String> path, RepositoryWithStargazerList repositoryPage, StargazerEvent event) {
 		Stargazer toPersist = new Stargazer(
 				path.getLeft(), path.getRight(),
 				event.starredAt,

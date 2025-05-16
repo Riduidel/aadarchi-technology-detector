@@ -1,4 +1,3 @@
----
 '%dev':
   tech-trends:
     projects:
@@ -16,7 +15,7 @@ quarkus:
     devservices:
       enabled: true
       port: 15432
-      volumes: 
+      volumes:
         "data/database/postgresql": /var/lib/postgresql/data
       reuse: true
       db-name: tech-trendz
@@ -105,6 +104,44 @@ tech-trends:
               COUNT(STAR_DATE) AS STARS_BY_MONTH
             FROM
               GITHUB_STARS WHERE REPO_OWNER=:owner AND REPO_NAME=:name GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) ;
+      forks: # New section for forks
+        graphql:
+          today: | # Query for total number of forks
+            query($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                forkCount
+              }
+            }
+          history: | # Request for fork history
+            query($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                forks(first: 100, orderBy: {field: CREATED_AT, direction: DESC}, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt 
+                    owner {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_FORKS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE);
+
   projects:
     per:
       page: 10

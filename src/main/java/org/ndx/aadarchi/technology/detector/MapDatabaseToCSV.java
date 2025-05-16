@@ -102,7 +102,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		private String filePath;
 
 		public ClassPersister(Class<?> clazz) {
-			this.clazz = clazz; 
+			this.clazz = clazz;
 			name = clazz.getSimpleName();
 			generatedSelect = constructSelect(clazz);
 			writerRouteName = String.format("%s-%s", WRITE_TO_CSV_ROUTE, name);
@@ -115,7 +115,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 					+ "&noop=true"
 					+ "&directoryMustExist=false"
 					+ "&filename=%s"
-					, 
+					,
 					csvBaseFolder.toUri().toString(),
 					fileName);
 		}
@@ -126,7 +126,7 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		EndpointConsumerBuilder routePath = direct(persister.readerRouteName);
 		from(routePath)
 			.id(persister.readerRouteName)
-			.description(String.format("Read all instances of %s from %s", 
+			.description(String.format("Read all instances of %s from %s",
 					persister.name, 
 					persister.fileName))
 			.log(String.format("Reading all instances of %s from CSV file %s", persister.name, persister.filePath))

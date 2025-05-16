@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
+package org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities;
 
 public class PageInfo {
 	public String endCursor;
