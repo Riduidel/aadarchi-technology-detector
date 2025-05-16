@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks;
+package org.ndx.aadarchi.technology.detector.indicators.github.forks;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;

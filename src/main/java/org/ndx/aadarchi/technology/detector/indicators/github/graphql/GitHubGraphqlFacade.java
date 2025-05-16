@@ -25,8 +25,11 @@ import io.smallrye.graphql.client.Response;
 import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks.ForkCountDTO;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks.ForkListDTO;
+
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
 
 @ApplicationScoped
 public class GitHubGraphqlFacade {
@@ -38,13 +41,12 @@ public class GitHubGraphqlFacade {
 	String githubStarsToday;
 	@ConfigProperty(name = "tech-trends.indicators.github.stars.graphql.history")
 	String githubStarsHistory;
-
-	public class BucketThreadParkedLogger implements BucketListener {
-
 	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.today")
 	String githubForksToday;
 	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.history")
 	String githubForksHistory;
+
+	public class BucketThreadParkedLogger implements BucketListener {
 
 		@Override
 		public void onConsumed(long tokens) {}
@@ -85,10 +87,6 @@ public class GitHubGraphqlFacade {
 			.build()
 			.toListenable(new BucketThreadParkedLogger());
 
-	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.today")
-	String githubForksToday;
-	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.history")
-	String githubForksHistory;
 
 	/**
 	 * Get total number of stargazers as of today
@@ -106,7 +104,7 @@ public class GitHubGraphqlFacade {
 					"name", name);
 			Response response = executeSync(githubStarsToday, arguments, 1);
 			if(response.getErrors()==null || response.getErrors().isEmpty()) {
-				return response.getObject(StargazerCountRepository.class, "repository").stargazerCount;
+				return response.getObject(RepositoryWithStargazerCount.class, "repository").stargazerCount;
 			} else {
 				throw processGraphqlErrors(arguments, response);
 			}
@@ -141,17 +139,17 @@ public class GitHubGraphqlFacade {
 	 * at least one was persisted)
 	 */
 	@Retry(maxRetries = 3)
-	public void getAllStargazers(String owner, String name, boolean force, Function<StargazerListRepository, Boolean> processStargazers) {
+	public void getAllStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerList, Boolean> processStargazers) {
 		try {
 			Map<String, Object> arguments = new TreeMap<>(Map.of(
 					"owner", owner,
 					"name", name));
-			StargazerListRepository repositoryPage = null;
+			RepositoryWithStargazerList repositoryPage = null;
 			boolean shouldContinue = true;
 			do {
 				Response response = executeSync(githubStarsHistory, arguments, 100);
 				if(response.getErrors()==null || response.getErrors().isEmpty()) {
-					repositoryPage = response.getObject(StargazerListRepository.class, "repository");
+					repositoryPage = response.getObject(RepositoryWithStargazerList.class, "repository");
 					shouldContinue = repositoryPage.stargazers.pageInfo.hasPreviousPage;
 					boolean hasSavedSomething = processStargazers.apply(repositoryPage);
 					if(!force) {
@@ -220,7 +218,7 @@ public class GitHubGraphqlFacade {
 					"name", name);
 			Response response = dynamicClient.executeSync(githubForksToday, arguments);
 			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-				ForkCountDTO repo = response.getObject(ForkCountDTO.class, "repository");
+				RepositoryWithForkCount repo = response.getObject(RepositoryWithForkCount.class, "repository");
 				if (repo != null) {
 					return repo.forkCount;
 				} else {
@@ -242,18 +240,18 @@ public class GitHubGraphqlFacade {
 	 * @param force If true, continues even if a page contains no new processed data.
 	 * @param processForks Function to process each received fork page. Must return true if processing should continue.
 	 */
-	public void getAllForks(String owner, String name, boolean force, Function<ForkListDTO, Boolean> processForks) {
+	public void getAllForks(String owner, String name, boolean force, Function<RepositoryWithForkList, Boolean> processForks) {
 		try {
 			Map<String, Object> arguments = new TreeMap<>(Map.of(
 					"owner", owner,
 					"name", name));
-			ForkListDTO repositoryPage;
+			RepositoryWithForkList repositoryPage;
 			boolean shouldContinue = true;
 			do {
 				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
 				Response response = dynamicClient.executeSync(githubForksHistory, arguments);
 				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-					repositoryPage = response.getObject(ForkListDTO.class, "repository");
+					repositoryPage = response.getObject(RepositoryWithForkList.class, "repository");
 					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
 						Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
 						throw new RuntimeException("Incomplete GraphQL response for fork history.");

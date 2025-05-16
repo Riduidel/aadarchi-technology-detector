@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks;
+package org.ndx.aadarchi.technology.detector.indicators.github.forks;
 
 import java.io.IOException;
 import java.time.Instant;
@@ -17,6 +17,7 @@ import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepository;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
@@ -133,7 +134,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
      * @param forkListPage The page data received from GraphQL
      * @return true if we have to continue the process (if at least one fork event was persisted)
      */
-    private boolean processForkPage(Pair<String> path, ForkListDTO forkListPage) {
+    private boolean processForkPage(Pair<String> path, RepositoryWithForkList forkListPage) {
         if (forkListPage.forks == null || forkListPage.forks.nodes == null) {
             Log.warnf("Received an empty or invalid fork page for %s/%s", path.getLeft(), path.getRight());
             return false;
@@ -150,7 +151,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
      * @param forkNode The fork node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistFork(Pair<String> path, ForkListDTO.ForkNode forkNode) {
+    private boolean maybePersistFork(Pair<String> path, RepositoryWithForkList.ForkNode forkNode) {
         Fork toPersist = new Fork(
                 path.getLeft(), path.getRight(),
                 Date.from(forkNode.createdAt.toInstant()),

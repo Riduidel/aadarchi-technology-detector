@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.model;
 
-import java.util.Optional;
-
 import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;

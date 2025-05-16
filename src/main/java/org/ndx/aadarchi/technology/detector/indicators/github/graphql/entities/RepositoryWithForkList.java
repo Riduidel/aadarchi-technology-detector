@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql.forks;
+package org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 /*
 * DTO for the fork history query response
 * */
-public class ForkListDTO {
+public class RepositoryWithForkList {
     public Forks forks;
 
     public static class Forks {

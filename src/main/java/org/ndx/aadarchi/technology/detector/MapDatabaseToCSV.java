@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -13,7 +12,6 @@ import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.mapping.Collection;
 import org.hibernate.type.SqlTypes;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
@@ -26,7 +24,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.metamodel.EntityType;
 
 @ApplicationScoped
 public class MapDatabaseToCSV extends EndpointRouteBuilder {
@@ -100,7 +97,6 @@ public class MapDatabaseToCSV extends EndpointRouteBuilder {
 		private String generatedSelect;
 		private String writerRouteName;
 		private String fileName;
-		private String folderPath;
 		private Class<?> clazz;
 		private String readerRouteName;
 		private String filePath;

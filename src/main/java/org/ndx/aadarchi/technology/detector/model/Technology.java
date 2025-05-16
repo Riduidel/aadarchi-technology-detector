@@ -1,14 +1,7 @@
 package org.ndx.aadarchi.technology.detector.model;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
-import org.ndx.aadarchi.technology.detector.librariesio.model.Project;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
