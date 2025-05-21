@@ -39,8 +39,8 @@ public class TechnologyRepositoryProcessor {
 
 	private ComputedIndicators toComputedIndicators(Technology technology) {
 		ComputedIndicators returned = new ComputedIndicators();
-		returned.technology = technology;
-		returned.indicators = indicators.toMap(technology);
+		returned.setTechnology(technology);
+		returned.setIndicators(indicators.toMap(technology));
 		return returned;
 	}
 }

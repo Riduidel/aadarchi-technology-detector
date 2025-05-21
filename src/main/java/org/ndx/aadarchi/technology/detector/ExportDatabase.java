@@ -49,9 +49,9 @@ public class ExportDatabase extends EndpointRouteBuilder {
 				    .pick(body()))
 				.parallelProcessing()
 				.process(technologies::toComputedIndicators)
-				.log("Technology ${body.technology.name} indicators have been aggregated")
+				.log("Technology ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body.technology.name} indicators have been aggregated")
 			.end()
-			.recipientList(constant(exportToJson /*, exportToParquet */))
+			.recipientList(constant(exportToJson , exportToParquet ))
 			;
 		from(exportToJson)
 			.setHeader("exportJson", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.json"))
@@ -62,7 +62,7 @@ public class ExportDatabase extends EndpointRouteBuilder {
 			;
 		from(exportToParquet)
 			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
-			.marshal().parquetAvro()
+			.marshal().parquetAvro(ComputedIndicators.class)
 			.log("Exporting to ${header.exportParquet}")
 			.toD("${header.exportJson}")
 			.log("Exported to ${header.exportParquet}")

@@ -54,7 +54,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.process(this::findAllOldestFirst)
 			.log("Found ${body.size} technologies")
 			.split(body())
-//				.parallelProcessing()
+				.parallelProcessing()
 				.choice()
 					.when(this::canComputeIndicator)
 						.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
