@@ -1,0 +1,71 @@
+package org.ndx.aadarchi.technology.detector;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+
+import org.apache.camel.builder.AggregationStrategies;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
+import org.apache.camel.model.dataformat.JsonLibrary;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators;
+import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+
+@ApplicationScoped
+public class ExportDatabase extends EndpointRouteBuilder {
+	public static final String READ_FROM_CSV_ROUTE = ExportDatabase.class.getSimpleName()+"_read";
+	TechnologyRepositoryProcessor technologies;
+	
+	@Inject
+	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
+		this.technologies = technologies;
+	}
+	
+	@ConfigProperty(name = "tech-trends.export.folder", defaultValue = "data/export")
+	public Path exportBaseFolder;
+	
+	@Inject EntityManager entityManager;
+
+	@Override
+	public void configure() throws Exception {
+		DirectEndpointBuilder exportToJson = direct(getClass().getSimpleName()+"-export-to-json");
+		DirectEndpointBuilder exportToParquet = direct(getClass().getSimpleName()+"-export-to-parquet");
+		from(direct(getClass().getSimpleName()))
+			.id(getClass().getSimpleName()+"-1-export-all-database-informations")
+			.setHeader("exportBaseFolder", () -> exportBaseFolder.toUri().toString())
+			// Get all technologies
+			// Add all indicators for each technology
+			.log("Searching for technologies")
+			// Load all technologies
+			// I think it will be necessary to have some kind of batch processing
+			.process(technologies::findAllTechnologies)
+			.log("Found ${body.size} technologies")
+			.split(body(), AggregationStrategies.flexible(ComputedIndicators.class)
+				    .accumulateInCollection(ArrayList.class)
+				    .pick(body()))
+				.parallelProcessing()
+				.process(technologies::toComputedIndicators)
+				.log("Technology ${body.technology.name} indicators have been aggregated")
+			.end()
+			.recipientList(constant(exportToJson /*, exportToParquet */))
+			;
+		from(exportToJson)
+			.setHeader("exportJson", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.json"))
+			.marshal().json(JsonLibrary.Jackson, true)
+			.log("Exporting to ${header.exportJson}")
+			.toD("${header.exportJson}")
+			.log("Exported to ${header.exportJson}")
+			;
+		from(exportToParquet)
+			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
+			.marshal().parquetAvro()
+			.log("Exporting to ${header.exportParquet}")
+			.toD("${header.exportJson}")
+			.log("Exported to ${header.exportParquet}")
+			;
+	}
+}

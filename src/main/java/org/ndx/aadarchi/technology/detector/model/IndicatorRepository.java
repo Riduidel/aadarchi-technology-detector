@@ -3,16 +3,27 @@ package org.ndx.aadarchi.technology.detector.model;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators.IndicatorDataPoint;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
-import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class IndicatorRepository  implements PanacheRepository<Indicator> {
+	private final EntityManager entityManager;
+
+	public IndicatorRepository(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 
 	@Transactional
 	public void saveIndicator(Technology technology, String indicatorIdentifier, String value) {
@@ -52,6 +63,30 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 		} else {
 			return false;
 		}
+	}
+
+	public Map<String, Collection<IndicatorDataPoint>> toMap(Technology technology) {
+		Query extractIndicatorNames = entityManager.createQuery("""
+				select distinct i.id.indicatorName
+				from Indicator i
+				where i.id.technology = :technology
+				""", String.class);
+		extractIndicatorNames.setParameter("technology", technology);
+		List<String> indicators = extractIndicatorNames.getResultList();
+		Map<String, Collection<IndicatorDataPoint>> returned = new TreeMap<String, Collection<IndicatorDataPoint>>();
+		for(String indicator : indicators) {
+			Query extractIndicatorValues = entityManager.createQuery("""
+					select i.id.date as date, i.indicatorValue as value
+					from Indicator i
+					where i.id.technology = :technology and i.id.indicatorName = :indicatorName
+					order by i.id.date asc
+					""", IndicatorDataPoint.class);
+			extractIndicatorValues.setParameter("technology", technology);
+			extractIndicatorValues.setParameter("indicatorName", indicator);
+			List<IndicatorDataPoint> results = extractIndicatorValues.getResultList();
+			returned.put(indicator, results);
+		}
+		return returned;
 	}
 
 }

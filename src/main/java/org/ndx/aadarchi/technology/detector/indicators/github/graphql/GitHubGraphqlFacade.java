@@ -215,7 +215,7 @@ public class GitHubGraphqlFacade {
 			RepositoryWithStargazerList repositoryPage = null;
 			boolean shouldContinue = true;
 			do {
-				Response response = executeSync(githubStarsHistory, arguments, 100);
+				Response response = executeSync(githubStarsHistory, arguments, 1);
 				if(response.getErrors()==null || response.getErrors().isEmpty()) {
 					repositoryPage = response.getObject(RepositoryWithStargazerList.class, "repository");
 					shouldContinue = repositoryPage.stargazers.pageInfo.hasPreviousPage;
