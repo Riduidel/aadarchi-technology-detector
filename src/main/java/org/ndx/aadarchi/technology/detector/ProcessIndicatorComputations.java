@@ -67,7 +67,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 					.otherwise()
 						.log(LoggingLevel.WARN, "Cannot currently compute ${body}")
 						.endChoice()
-				.endChoice()
+				.end()
 			.end()
 			.log("All indicators computations have been processed")
 			;
