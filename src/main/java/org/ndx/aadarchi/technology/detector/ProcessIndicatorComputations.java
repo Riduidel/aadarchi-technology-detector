@@ -1,16 +1,18 @@
 package org.ndx.aadarchi.technology.detector;
 
-import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.model.IndicatorComputation;
-import org.ndx.aadarchi.technology.detector.model.Technology;
 import org.ndx.aadarchi.technology.detector.processors.IndicatorComputationProcessor;
 import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
 
+import io.quarkus.logging.Log;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
@@ -24,13 +26,13 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	
 	@Inject Instance<IndicatorComputer> indicatorComputers;
 
-	private List<String> indicatorComputerRoutes;
+	private Map<String, IndicatorComputer> indicatorComputerRoutes;
 	
 	@PostConstruct
 	public void construct() {
 		indicatorComputerRoutes = indicatorComputers.stream()
-			.map(IndicatorComputer::getFromRouteName)
-			.collect(Collectors.toList());
+				.collect(Collectors.toMap(IndicatorComputer::getFromRouteName, Function.identity()))
+				;
 	}
 	
 	@Inject
@@ -52,19 +54,38 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.process(this::findAllOldestFirst)
 			.log("Found ${body.size} technologies")
 			.split(body())
-				.parallelProcessing()
-				.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
-				// Mark the indicator computation as LOADED
-				.process(this::convertToTechnology)
-				// Dynamically route it
-				.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
-				.process(this::convertBackToIndicatorComputation)
-				.end()
+//				.parallelProcessing()
+				.choice()
+					.when(this::canComputeIndicator)
+						.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
+						// Mark the indicator computation as LOADED
+						.process(this::convertToTechnology)
+						// Dynamically route it
+						.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
+						.process(this::convertBackToIndicatorComputation)
+						.endChoice()
+					.otherwise()
+						.log(LoggingLevel.WARN, "Cannot currently compute ${body}")
+						.endChoice()
+				.endChoice()
+			.end()
 			.log("All indicators computations have been processed")
 			;
 	}
 	public void findAllOldestFirst(Exchange exchange) {
 		exchange.getMessage().setBody(indicators.findAllOldestFirst());
+	}
+	public boolean canComputeIndicator(Exchange exchange) {
+		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
+		IndicatorComputer computer = indicatorComputerRoutes.get(indicator.id.indicatorRoute);
+		if(computer==null) {
+			Log.errorf("Indicator computation %s routes to missing indicator computer %s. It won't be computed AT ALL",
+					indicator,
+					indicator.id.indicatorRoute);
+		} else {
+			return computer.canCompute(indicator.id.technology);
+		}
+		return false;
 	}
 	
 	public void convertToTechnology(Exchange exchange) {

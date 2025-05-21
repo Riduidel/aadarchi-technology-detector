@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RateLimit;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkCount;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerCount;
@@ -35,6 +36,8 @@ import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class GitHubGraphqlFacade {
+	private static final int TOKEN_LOWER_BOUND = 100;
+
 	@Inject
 	@GraphQLClient("github")
 	DynamicGraphQLClient dynamicClient;
@@ -112,11 +115,11 @@ public class GitHubGraphqlFacade {
 	private Response executeSync(String query, Map<String, Object> arguments, long tokens) throws ExecutionException, InterruptedException {
 		rateLimitingBucket.asBlocking().consume(tokens);
 		Response returned = dynamicClient.executeSync(query, arguments);
-		updateBucketConfiguration(returned);
+		updateBucketConfiguration(returned, tokens);
 		return returned;
 	}
 
-	private void updateBucketConfiguration(Response returned) {
+	private void updateBucketConfiguration(Response returned, long tokens) {
 		Map<String, String> metadata = returned.getTransportMeta()
 				.entrySet()
 				.stream()
@@ -126,9 +129,13 @@ public class GitHubGraphqlFacade {
 		int tokensPerHour = Integer.parseInt(metadata.get("x-ratelimit-limit"));
 		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
 		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
+		// Immediatly get rate limit cost if possible
+		if(returned.hasData() && !returned.hasError()) {
+			evaluateRateLimitCost(returned, tokens);
+		}
 		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
 		Instant resetInstant = Instant.ofEpochSecond(tokensResetInstant);
-		if(tokensRemaining<100) {
+		if(tokensRemaining<TOKEN_LOWER_BOUND) {
 			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
 					tokensRemaining,
 					resetInstant.atZone(ZoneId.systemDefault())
@@ -149,6 +156,21 @@ public class GitHubGraphqlFacade {
 							)
 					.build(),
 				TokensInheritanceStrategy.RESET);
+	}
+
+
+	private void evaluateRateLimitCost(Response returned, long tokens) {
+		RateLimit rateLimit = returned.getObject(RateLimit.class, "rateLimit");
+		if(rateLimit.cost!=tokens) {
+			StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+			// 0 is getStackTrace
+			// 1 is this method,
+			// 2 is updateBucketConfiguration
+			// 3 is executeSync
+			// 4 is caller method where tokens count is defined
+			StackTraceElement callerMethod = stackTraceElements[4];
+			Log.errorf("The query defined in %s doesn't consume %d tokens, but %d", callerMethod, tokens, rateLimit.cost);
+		}
 	}
 
 	/**
@@ -227,7 +249,7 @@ public class GitHubGraphqlFacade {
 			Map<String, Object> arguments = Map.of(
 					"owner", owner,
 					"name", name);
-			Response response = executeSync(githubForksToday, arguments, 100);
+			Response response = executeSync(githubForksToday, arguments, 1);
 			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
 				RepositoryWithForkCount repo = response.getObject(RepositoryWithForkCount.class, "repository");
 				if (repo != null) {
@@ -260,7 +282,7 @@ public class GitHubGraphqlFacade {
 			boolean shouldContinue = true;
 			do {
 				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
-				Response response = executeSync(githubForksHistory, arguments, 100);
+				Response response = executeSync(githubForksHistory, arguments, 1);
 				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
 					repositoryPage = response.getObject(RepositoryWithForkList.class, "repository");
 					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
@@ -288,6 +310,11 @@ public class GitHubGraphqlFacade {
 		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
 			throw new RuntimeException(String.format("Error retrieving fork history for %s/%s", owner, name), e);
 		}
+	}
+
+
+	public boolean canComputeIndicator() {
+		return rateLimitingBucket.getAvailableTokens()>TOKEN_LOWER_BOUND;
 	}
 
 }

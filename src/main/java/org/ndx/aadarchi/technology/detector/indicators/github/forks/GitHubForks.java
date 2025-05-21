@@ -1,11 +1,6 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.forks;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -21,7 +16,6 @@ import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGrap
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
-import org.ndx.aadarchi.technology.detector.model.IndicatorRepository;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -43,13 +37,10 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
     public void configure() throws Exception {
         from(getFromRoute())
                 .routeId(ROUTE_NAME)
-                .choice()
-	                .when(this::usesGitHubRepository)
-					.idempotentConsumer()
-						.body(Technology.class, t -> t.repositoryUrl)
-						.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
-	                .process(this::computeGitHubForks)
-                .end()
+				.idempotentConsumer()
+					.body(Technology.class, t -> String.format("%s-%s", GITHUB_FORKS, t.repositoryUrl))
+					.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
+                .process(this::computeGitHubForks)
         ;
     }
 
@@ -150,5 +141,10 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
         );
         return forksRepository.maybePersist(toPersist);
     }
+
+	@Override
+	public boolean canCompute(Technology technology) {
+		return usesGitHubRepository(technology) && githubClient.canComputeIndicator();
+	}
 }
 

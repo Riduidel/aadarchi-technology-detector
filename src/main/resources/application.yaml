@@ -88,11 +88,17 @@ tech-trends:
                   }
                 }
               }
+              rateLimit {
+                cost
+              }
             }
           today: |
             query($owner:String!, $name:String!) {
               repository(owner:$owner, name:$name) {
                 stargazerCount
+              }
+              rateLimit {
+                cost
               }
             }
         sql:
@@ -111,6 +117,9 @@ tech-trends:
               repository(owner: $owner, name: $name) {
                 forkCount
               }
+              rateLimit {
+                cost
+              }
             }
           history: |
             query($owner: String!, $name: String!, $before: String) {
@@ -128,6 +137,9 @@ tech-trends:
                     startCursor
                   }
                 }
+              }
+              rateLimit {
+                cost
               }
             }
         sql:

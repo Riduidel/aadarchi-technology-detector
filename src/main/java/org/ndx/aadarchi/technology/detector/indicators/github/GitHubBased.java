@@ -15,10 +15,6 @@ import org.ndx.aadarchi.technology.detector.indicators.TechnologyBased;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
 public interface GitHubBased extends TechnologyBased {
-	default boolean usesGitHubRepository(Exchange exchange) {
-		return usesGitHubRepository(getTechnology(exchange));
-	}
-
 	default boolean usesGitHubRepository(Technology technology) {
 		return technology.repositoryUrl!=null && technology.repositoryUrl.contains("//github.com");
 	}

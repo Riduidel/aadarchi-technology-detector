@@ -37,13 +37,10 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	public void configure() throws Exception {
 		from(getFromRoute())
 			.routeId(ROUTE_NAME)
-			.choice()
-				.when(this::usesGitHubRepository)
-				.idempotentConsumer()
-					.body(Technology.class, t -> t.repositoryUrl)
-					.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
-				.process(this::computeGitHubStars)
-			.end()
+			.idempotentConsumer()
+				.body(Technology.class, t -> String.format("%s-%s", GITHUB_STARS, t.repositoryUrl))
+				.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
+			.process(this::computeGitHubStars)
 			;
 	}
 	
@@ -141,6 +138,11 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 				);
 		
 		return stargazersRepository.maybePersist(toPersist);
+	}
+
+	@Override
+	public boolean canCompute(Technology technology) {
+		return usesGitHubRepository(technology) && githubClient.canComputeIndicator();
 	}
 
 }
