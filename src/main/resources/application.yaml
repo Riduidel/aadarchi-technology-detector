@@ -112,10 +112,10 @@ tech-trends:
                 forkCount
               }
             }
-          history: | # Request for fork history
+          history: |
             query($owner: String!, $name: String!, $before: String) {
               repository(owner: $owner, name: $name) {
-                forks(first: 100, orderBy: {field: CREATED_AT, direction: DESC}, before: $before) {
+                forks(last: 100, before: $before) {
                   totalCount
                   nodes {
                     createdAt 
@@ -134,13 +134,13 @@ tech-trends:
           # Build the global indicator from individual stargazers
           indicator: |
             SELECT
-              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
-              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
-              COUNT(STAR_DATE) AS STARS_BY_MONTH
+              EXTRACT(YEAR FROM FORK_DATE) AS FORK_YEAR,
+              EXTRACT(MONTH FROM FORK_DATE) AS FORK_MONTH,
+              COUNT(FORK_DATE) AS FORK_BY_MONTH
             FROM
               GITHUB_FORKS
             WHERE REPO_OWNER=:owner AND REPO_NAME=:name
-            GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE);
+            GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
 
   projects:
     per:

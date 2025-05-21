@@ -12,7 +12,7 @@ public class RepositoryWithStargazerList {
 		public PageInfo pageInfo;
 		public List<StargazerEvent> edges;
 	}
-	public class StargazerEvent {
+	public static class StargazerEvent {
 		@JsonbDateFormat(locale = "en-US", value = "yyyy-MM-dd'T'HH:mm:ss'Z'")
 		public Date starredAt;
 		public User node;

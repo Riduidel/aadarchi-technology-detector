@@ -17,7 +17,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
-
 @ApplicationScoped
 public class ForkRepository implements PanacheRepository<Fork>{
 
@@ -36,7 +35,8 @@ public class ForkRepository implements PanacheRepository<Fork>{
      */
     @Transactional
     public boolean maybePersist(Fork persistent) {
-        if (count("id.repoOwner = ?1 and id.repoName = ?2 and id.forkOwnerLogin = ?3",                persistent.id.owner,
+        if (count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4",
+        		persistent.id.owner,
                 persistent.id.repo,
                 persistent.id.date,
                 persistent.id.user
@@ -59,7 +59,7 @@ public class ForkRepository implements PanacheRepository<Fork>{
      */
     @Transactional
     public long count(Pair<String> path) {
-        return count("id.repoOwner = ?1 and id.repoName = ?2",
+        return count("id.owner = ?1 and id.repo = ?2",
                 path.getLeft(),
                 path.getRight()
         );
@@ -74,8 +74,8 @@ public class ForkRepository implements PanacheRepository<Fork>{
     @Transactional
     public List<Indicator> groupForksByMonths(Technology technology, Pair<String> pair) {
         Query extractionQuery = entityManager.createNativeQuery(groupForksByMonthsSql);
-        extractionQuery.setParameter("repoOwner", pair.getLeft());
-        extractionQuery.setParameter("repoName", pair.getRight());
+        extractionQuery.setParameter("owner", pair.getLeft());
+        extractionQuery.setParameter("name", pair.getRight());
         List<Object[]> results = extractionQuery.getResultList();
         return results.stream()
                 .map(row -> toForkIndicator(technology, row))
