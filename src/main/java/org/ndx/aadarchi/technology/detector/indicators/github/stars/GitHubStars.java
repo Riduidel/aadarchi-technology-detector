@@ -27,7 +27,6 @@ import jakarta.inject.Inject;
 public class GitHubStars extends EndpointRouteBuilder implements IndicatorComputer, GitHubBased {
 
 	public static final String GITHUB_STARS = "github.stars";
-
 	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
 
 	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
@@ -98,7 +97,7 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 				repositoryPage -> {
 					try {
 						processedCount.addAndGet(repositoryPage.stargazers.edges.size());
-						return this.processRepositoryPage(path, repositoryPage);
+						return this.processPage(path, repositoryPage);
 					} finally {
 						if(Log.isDebugEnabled()) {
 							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s", 
@@ -119,7 +118,7 @@ public class GitHubStars extends EndpointRouteBuilder implements IndicatorComput
 	 * @param repositoryPage
 	 * @return true if we have to continue the process (in other words, if at least one event was persisted)
 	 */
-	private boolean processRepositoryPage(Pair<String> path, RepositoryWithStargazerList repositoryPage) {
+	private boolean processPage(Pair<String> path, RepositoryWithStargazerList repositoryPage) {
 		return repositoryPage.stargazers.edges
 			.stream()
 			.map(event -> maybePersist(path, repositoryPage, event))

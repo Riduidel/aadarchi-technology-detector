@@ -2,6 +2,7 @@ package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Map;
 import java.util.TreeMap;
@@ -13,7 +14,13 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
 
+import graphql.GraphQLError;
+import io.github.bucket4j.BandwidthBuilder;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.BucketConfiguration;
 import io.github.bucket4j.BucketListener;
@@ -25,11 +32,6 @@ import io.smallrye.graphql.client.Response;
 import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkCount;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerCount;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
 
 @ApplicationScoped
 public class GitHubGraphqlFacade {
@@ -56,8 +58,9 @@ public class GitHubGraphqlFacade {
 
 		@Override
 		public void beforeParking(long nanos) {
-			Log.warnf("Thread will be parked %s due to bucket having only %d tokens remaining",
-					DurationFormatUtils.formatDurationHMS(TimeUnit.NANOSECONDS.toMillis(nanos)),
+			LocalDateTime until = LocalDateTime.now().plusNanos(nanos);
+			Log.warnf("Thread will be parked until %s due to bucket having only %d tokens remaining",
+					until,
 					rateLimitingBucket.getAvailableTokens());
 		}
 
@@ -88,6 +91,66 @@ public class GitHubGraphqlFacade {
 			.toListenable(new BucketThreadParkedLogger());
 
 
+
+	private RuntimeException processGraphqlErrors(Map<String, Object> arguments, Response response) {
+		return new GitHubGraphqlException(
+				String.format(
+						"Request\n"
+						+ "%s\n"
+						+ "when executed with parameters %s\n"
+						+ "generated errors\n"
+						+ "%s", 
+						githubStarsToday,
+						arguments,
+						response.getErrors().stream()
+							.map((error -> String.format("\t%s", 
+									error.getMessage()))
+						).collect(Collectors.joining("\n"))));
+	}
+
+
+	private Response executeSync(String query, Map<String, Object> arguments, long tokens) throws ExecutionException, InterruptedException {
+		rateLimitingBucket.asBlocking().consume(tokens);
+		Response returned = dynamicClient.executeSync(query, arguments);
+		updateBucketConfiguration(returned);
+		return returned;
+	}
+
+	private void updateBucketConfiguration(Response returned) {
+		Map<String, String> metadata = returned.getTransportMeta()
+				.entrySet()
+				.stream()
+				.collect(Collectors.toMap(
+						entry -> entry.getKey().toLowerCase(),
+						entry -> entry.getValue().stream().collect(Collectors.joining())));
+		int tokensPerHour = Integer.parseInt(metadata.get("x-ratelimit-limit"));
+		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
+		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
+		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
+		Instant resetInstant = Instant.ofEpochSecond(tokensResetInstant);
+		if(tokensRemaining<100) {
+			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
+					tokensRemaining,
+					resetInstant.atZone(ZoneId.systemDefault())
+					);
+		} else {
+			Log.debugf("%s tokens remaining locally, and %s tokens remaining on GitHub side.",
+					rateLimitingBucket.getAvailableTokens(),
+					tokensRemaining);
+		}
+		rateLimitingBucket.replaceConfiguration(
+				BucketConfiguration.builder()
+					.addLimit(BandwidthBuilder
+							.builder()
+							.capacity(tokensPerHour)
+							.refillIntervallyAligned(tokensPerHour, Duration.ofHours(1), resetInstant)
+							.initialTokens(tokensRemaining)
+							.build()
+							)
+					.build(),
+				TokensInheritanceStrategy.RESET);
+	}
+
 	/**
 	 * Get total number of stargazers as of today
 	 * @param owner
@@ -112,23 +175,6 @@ public class GitHubGraphqlFacade {
 			throw new RuntimeException("TODO handle Exception", e);
 		}
 	}
-
-	private RuntimeException processGraphqlErrors(Map<String, Object> arguments, Response response) {
-		return new GitHubGraphqlException(
-				String.format(
-						"Request\n"
-						+ "%s\n"
-						+ "when executed with parameters %s\n"
-						+ "generated errors\n"
-						+ "%s", 
-						githubStarsToday,
-						arguments,
-						response.getErrors().stream()
-							.map((error -> String.format("\t%s", 
-									error.getMessage()))
-						).collect(Collectors.joining("\n"))));
-	}
-
 	/**
 	 * Execute all the requests required to have the whole stargazers set.
 	 * So this will run a bunch of requests and process all their results.
@@ -170,41 +216,6 @@ public class GitHubGraphqlFacade {
 		
 	}
 
-	private Response executeSync(String query, Map<String, Object> arguments, long tokens) throws ExecutionException, InterruptedException {
-		rateLimitingBucket.asBlocking().consume(tokens);
-		Response returned = dynamicClient.executeSync(query, arguments);
-		Map<String, String> metadata = returned.getTransportMeta()
-				.entrySet()
-				.stream()
-				.collect(Collectors.toMap(
-						entry -> entry.getKey().toLowerCase(),
-						entry -> entry.getValue().stream().collect(Collectors.joining())));
-		int tokensPerHour = Integer.parseInt(metadata.get("x-ratelimit-limit"));
-		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
-		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
-		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
-		Instant resetInstant = Instant.ofEpochSecond(tokensResetInstant);
-		if(tokensRemaining<100) {
-			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
-					tokensRemaining,
-					resetInstant.atZone(ZoneId.systemDefault())
-					);
-		} else {
-			Log.debugf("%s tokens remaining locally, and %s tokens remaining on GitHub side.",
-					rateLimitingBucket.getAvailableTokens(),
-					tokensRemaining);
-		}
-		rateLimitingBucket.replaceConfiguration(
-				BucketConfiguration.builder()
-					.addLimit(limit ->
-						limit.capacity(tokensRemaining)
-							.refillIntervallyAligned(tokensPerHour, Duration.ofHours(1), resetInstant)
-					)
-					.build(),
-				TokensInheritanceStrategy.RESET);
-		return returned;
-	}
-
 	/**
 	 * Retrieves the current total number of forks for a repository.
 	 * @param owner Repository owner
@@ -216,7 +227,7 @@ public class GitHubGraphqlFacade {
 			Map<String, Object> arguments = Map.of(
 					"owner", owner,
 					"name", name);
-			Response response = dynamicClient.executeSync(githubForksToday, arguments);
+			Response response = executeSync(githubForksToday, arguments, 100);
 			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
 				RepositoryWithForkCount repo = response.getObject(RepositoryWithForkCount.class, "repository");
 				if (repo != null) {
@@ -249,7 +260,7 @@ public class GitHubGraphqlFacade {
 			boolean shouldContinue = true;
 			do {
 				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
-				Response response = dynamicClient.executeSync(githubForksHistory, arguments);
+				Response response = executeSync(githubForksHistory, arguments, 100);
 				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
 					repositoryPage = response.getObject(RepositoryWithForkList.class, "repository");
 					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
