@@ -1,5 +1,6 @@
 package org.ndx.aadarchi.technology.detector.model;
 
+import java.util.Collection;
 import java.util.Date;
 
 public class IndicatorRepositoryFacade {
@@ -22,6 +23,10 @@ public class IndicatorRepositoryFacade {
 
 	public boolean maybePersist(Indicator indicator) {
 		return repository.maybePersist(indicator);
+	}
+
+	public Collection<Indicator> findAll(Technology t) {
+		return repository.findAll(t, indicatorName);
 	}
 
 }
