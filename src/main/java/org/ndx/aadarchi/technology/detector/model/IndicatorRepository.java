@@ -75,18 +75,28 @@ public class IndicatorRepository  implements PanacheRepository<Indicator> {
 		List<String> indicators = extractIndicatorNames.getResultList();
 		Map<String, Collection<IndicatorDataPoint>> returned = new TreeMap<String, Collection<IndicatorDataPoint>>();
 		for(String indicator : indicators) {
-			Query extractIndicatorValues = entityManager.createQuery("""
-					select i.id.date as date, i.indicatorValue as value
-					from Indicator i
-					where i.id.technology = :technology and i.id.indicatorName = :indicatorName
-					order by i.id.date asc
-					""", IndicatorDataPoint.class);
-			extractIndicatorValues.setParameter("technology", technology);
-			extractIndicatorValues.setParameter("indicatorName", indicator);
-			List<IndicatorDataPoint> results = extractIndicatorValues.getResultList();
+			List<IndicatorDataPoint> results = findAllIndicatorDataPointsFor(technology, indicator);
 			returned.put(indicator, results);
 		}
 		return returned;
+	}
+
+	public List<IndicatorDataPoint> findAllIndicatorDataPointsFor(Technology technology, String indicator) {
+		Query extractIndicatorValues = entityManager.createQuery("""
+				select i.id.date as date, i.indicatorValue as value
+				from Indicator i
+				where i.id.technology = :technology and i.id.indicatorName = :indicatorName
+				order by i.id.date asc
+				""", IndicatorDataPoint.class);
+		extractIndicatorValues.setParameter("technology", technology);
+		extractIndicatorValues.setParameter("indicatorName", indicator);
+		List<IndicatorDataPoint> results = extractIndicatorValues.getResultList();
+		return results;
+	}
+
+	@Transactional
+	public Collection<Indicator> findAll(Technology t, String indicatorName) {
+		return find("id.technology = ?1 and id.indicatorName = ?2", t, indicatorName).list();
 	}
 
 }
