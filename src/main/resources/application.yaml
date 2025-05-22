@@ -34,12 +34,14 @@ quarkus:
     database:
       generation: update
   log:
+    console:
+      level: DEBUG
     category:
       io.smallrye.graphql.client:
         level: TRACE
         min-level: TRACE
       org.jboss.resteasy.reactive.client.logging:
-        level: WARN
+        level: INFO
   rate-limiter:
     buckets:
       librariesio:
@@ -51,11 +53,15 @@ quarkus:
             permitted-uses: 60
             shared: true
   rest-client:
+    npmjs-api:
+      url: https://api.npmjs.org/
     librariesio:
       url: https://libraries.io/api
     logging:
       body-limit: 1024
       scope: request-response
+      extensions-api:
+        scope: all
   smallrye-graphql-client:
     github:
       header:
