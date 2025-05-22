@@ -3,10 +3,12 @@ package org.ndx.aadarchi.technology.detector.processors;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.camel.Exchange;
 import org.ndx.aadarchi.technology.detector.model.IndicatorComputation;
 import org.ndx.aadarchi.technology.detector.model.IndicatorComputation.IndicatorComputationStatus;
 import org.ndx.aadarchi.technology.detector.model.IndicatorComputationRepository;
 import org.ndx.aadarchi.technology.detector.model.Technology;
+import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators;
 
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
@@ -39,5 +41,4 @@ public class IndicatorComputationProcessor {
 		updated.status = status;
 		updated.date = new Date();
 	}
-
 }
