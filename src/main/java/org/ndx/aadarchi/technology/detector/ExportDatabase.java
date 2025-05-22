@@ -64,7 +64,7 @@ public class ExportDatabase extends EndpointRouteBuilder {
 			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
 			.marshal().parquetAvro(ComputedIndicators.class)
 			.log("Exporting to ${header.exportParquet}")
-			.toD("${header.exportJson}")
+			.toD("${header.exportParquet}")
 			.log("Exported to ${header.exportParquet}")
 			;
 	}
