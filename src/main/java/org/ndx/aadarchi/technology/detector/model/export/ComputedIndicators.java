@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroEncode;
+import org.apache.avro.reflect.AvroIgnore;
+import org.apache.avro.reflect.AvroMeta;
+import org.apache.avro.reflect.AvroMeta.AvroMetas;
 import org.apache.avro.reflect.DateAsLongEncoding;
 import org.apache.avro.reflect.Nullable;
 import org.ndx.aadarchi.technology.detector.model.Technology;
@@ -15,7 +19,12 @@ import org.ndx.aadarchi.technology.detector.model.Technology;
  */
 public class ComputedIndicators {
 	public static class IndicatorDataPoint {
+		@AvroDoc("Indicator date")
+		@AvroMetas({
+			@AvroMeta(key = "logicalType", value = "date")
+		})
 		private long date;
+		@AvroDoc("Indicator value")
 		private String value;
 		public IndicatorDataPoint() {}
 		public IndicatorDataPoint(Timestamp t, String v) {
@@ -35,7 +44,9 @@ public class ComputedIndicators {
 			this.value = value;
 		}
 	}
+	@AvroDoc("Indicators computed for that technology. Key is the indicator name, and value is the collection of data points (dated values for that indicator)")
 	private @Nullable Map<String, Collection<IndicatorDataPoint>> indicators;
+	@AvroDoc("The technology for which we have computed indicators")
 	private Technology technology;
 	public ComputedIndicators() {}
 	public Map<String, Collection<IndicatorDataPoint>> getIndicators() {

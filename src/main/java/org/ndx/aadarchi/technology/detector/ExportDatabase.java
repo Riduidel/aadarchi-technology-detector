@@ -2,11 +2,15 @@ package org.ndx.aadarchi.technology.detector;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.AggregationStrategies;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import org.apache.camel.model.dataformat.ParquetAvroDataFormat;
+import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators;
 import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
@@ -59,13 +63,19 @@ public class ExportDatabase extends EndpointRouteBuilder {
 			.log("Exporting to ${header.exportJson}")
 			.toD("${header.exportJson}")
 			.log("Exported to ${header.exportJson}")
+			.end()
 			;
+		// Thanks https://github.com/apache/camel/pull/10576/files#diff-7454d0ee361c52f7f30ae0924618f456969606f52303b6baf9274cf04cd2d20bR145
+		ParquetAvroDataFormat parquet = new ParquetAvroDataFormat();
+		parquet.setCompressionCodecName(CompressionCodecName.GZIP.name());
+		parquet.setUnmarshalType(ComputedIndicators.class);
 		from(exportToParquet)
 			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
-			.marshal().parquetAvro(ComputedIndicators.class)
+			.marshal(parquet)
 			.log("Exporting to ${header.exportParquet}")
 			.toD("${header.exportParquet}")
 			.log("Exported to ${header.exportParquet}")
+			.end()
 			;
 	}
 }
