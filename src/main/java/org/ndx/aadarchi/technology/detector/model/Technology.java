@@ -2,6 +2,9 @@ package org.ndx.aadarchi.technology.detector.model;
 
 import java.util.Objects;
 
+import org.apache.avro.reflect.AvroDoc;
+import org.apache.avro.reflect.AvroIgnore;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,20 +15,27 @@ import jakarta.persistence.Id;
 /**
  * Class containing stored informations of technologies.
  */
+@AvroDoc("A technology (see glossary). This class is mainly modeled from libraries.io representation")
 @Entity
 public class Technology extends PanacheEntityBase {
+	@AvroDoc("Common name of that technology")
 	public String name;
+	@AvroDoc("A longer description of technology")
 	@Column(columnDefinition = "text")
 	public String description;
 
 	/**
 	 * The homepage is usually the technology vanity url
 	 */
+	@AvroDoc("The homepage is usually the technology vanity url")
 	public String homepage;
 
+	@AvroIgnore
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TECHNOLOGY_ID_SEQ")
 	public Long id;
+	@AvroDoc("url of that technology in the package manager used to distribute it")
 	public String packageManagerUrl;
+	@AvroDoc("source code repository url")
 	public String repositoryUrl;
 	@Override
 	public String toString() {
