@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.model.IndicatorComputation;
 import org.ndx.aadarchi.technology.detector.processors.IndicatorComputationProcessor;
@@ -47,6 +48,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 
 	@Override
 	public void configure() throws Exception {
+		DirectEndpointBuilder PROCESS_ONE_TECHNOLOGY = direct(getClass().getSimpleName()+"-process-one-technology");
 		from(direct(getClass().getSimpleName()))
 			.id(getClass().getSimpleName()+"-1-fetch-all-indicator-computations")
 			.log("Searching for indicator computations")
@@ -55,15 +57,23 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.log("Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
-					.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
-					// Mark the indicator computation as LOADED
-					.process(this::convertToTechnology)
-					// Dynamically route it
-					.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
-					.process(this::convertBackToIndicatorComputation)
+					.to(PROCESS_ONE_TECHNOLOGY)
 				.end()
 			.end()
 			.log("All indicators computations have been processed")
+			;
+		from(PROCESS_ONE_TECHNOLOGY)
+			.onCompletion().onCompleteOnly()
+				.process(e -> convertBackToIndicatorComputation(e, true))
+				.end()
+			.onCompletion().onFailureOnly()
+				.process(e -> convertBackToIndicatorComputation(e, false))
+				.end()
+			.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
+			// Mark the indicator computation as LOADED
+			.process(this::convertToTechnology)
+			// Dynamically route it
+			.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
 			;
 	}
 	public void findAllOldestFirst(Exchange exchange) {
@@ -89,9 +99,9 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 		exchange.getMessage().setHeader(INDICATOR_ROUTE_HEADER, indicator.id.indicatorRoute);
 		exchange.getMessage().setBody(indicator.id.technology);
 	}
-	public void convertBackToIndicatorComputation(Exchange exchange) {
+	public void convertBackToIndicatorComputation(Exchange exchange, boolean updateDate) {
 		IndicatorComputation indicatorComputation = exchange.getMessage().getHeader("indicatorComputation", IndicatorComputation.class);
-		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, true);
+		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, updateDate);
 		exchange.getMessage().setBody(indicatorComputation);
 	}
 }
