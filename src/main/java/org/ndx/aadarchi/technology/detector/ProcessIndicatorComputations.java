@@ -55,18 +55,12 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.log("Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
-				.choice()
-					.when(this::canComputeIndicator)
-						.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
-						// Mark the indicator computation as LOADED
-						.process(this::convertToTechnology)
-						// Dynamically route it
-						.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
-						.process(this::convertBackToIndicatorComputation)
-						.endChoice()
-					.otherwise()
-						.log(LoggingLevel.WARN, "Cannot currently compute ${body}")
-						.endChoice()
+					.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
+					// Mark the indicator computation as LOADED
+					.process(this::convertToTechnology)
+					// Dynamically route it
+					.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
+					.process(this::convertBackToIndicatorComputation)
 				.end()
 			.end()
 			.log("All indicators computations have been processed")
