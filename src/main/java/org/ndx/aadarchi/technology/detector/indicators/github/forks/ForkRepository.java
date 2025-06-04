@@ -95,7 +95,7 @@ public class ForkRepository implements PanacheRepository<Fork>{
         Date d = Date.from(localDate.atStartOfDay(ZoneId.of("UTC")).toInstant());
         return new Indicator(
                 technology,
-                GitHubForks.GITHUB_FORKS,
+                GitHubForksIndicatorComputer.GITHUB_FORKS,
                 d,
                 row[2].toString()
         );

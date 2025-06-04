@@ -4,11 +4,11 @@
       per:
         page: 10
         platform: 100
-# See https://camel.apache.org/camel-quarkus/3.15.x/user-guide/command-mode.html
-# It should stop Camel after the processing of one data batch, but currently fail to do so
-#camel:
-#  main:
-#    durationMaxMessages: 1
+camel:
+  threadpool:
+    pool-size: 5
+    max-pool-size: 10
+    max-queue-size: -1
 quarkus:
   datasource:
     db-kind: postgresql
@@ -116,7 +116,8 @@ tech-trends:
               GITHUB_STARS WHERE REPO_OWNER=:owner AND REPO_NAME=:name GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) ;
       forks: # New section for forks
         graphql:
-          today: | # Query for total number of forks
+          # Query for total number of forks
+          today: | 
             query($owner: String!, $name: String!) {
               repository(owner: $owner, name: $name) {
                 forkCount
