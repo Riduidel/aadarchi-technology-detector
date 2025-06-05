@@ -58,7 +58,8 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
 		try {
 			computeGitHubForks(exchange.getMessage().getBody(Technology.class));
 		} catch(GitHubGraphqlException e) {
-			Log.warnf(e, "Unable to fetch stars for missing repo");
+//			Log.warnf(e, "Unable to fetch stars for missing repo");
+			throw e;
 		}
     }
 
