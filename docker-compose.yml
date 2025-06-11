@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  metabase:
+    image: metabase/metabase:latest
+    ports:
+      - "23000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: metabase
+      MB_DB_PASS: metabase
+      MB_DB_HOST: postgres
+    networks:
+      - metabase-network
+
+  postgres:
+    image: postgres:latest
+    # See https://stackoverflow.com/a/68711840/15619
+    user: "${DOCKER_USER}"
+    ports:
+      - "54320:5432"
+    volumes:
+      - ./data/metabase:/var/lib/postgresql/data
+      - /etc/passwd:/etc/passwd:ro
+    environment:
+      POSTGRES_DB: metabase
+      POSTGRES_USER: metabase
+      POSTGRES_PASSWORD: metabase
+    networks:
+      - metabase-network
+
+networks:
+  metabase-network:
+    driver: bridge
