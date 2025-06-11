@@ -74,6 +74,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.process(this::convertToTechnology)
 			// Dynamically route it
 			.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
+			.end()
 			;
 	}
 	public void findAllOldestFirst(Exchange exchange) {
