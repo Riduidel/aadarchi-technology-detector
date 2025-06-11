@@ -74,7 +74,7 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 		Date d = Date.from(localDate.atStartOfDay(ZoneId.of("UTC")).toInstant());
 		return new Indicator(
 				technology,
-				GitHubStars.GITHUB_STARS,
+				GitHubStarsIndicatorComputer.GITHUB_STARS,
 				d,
 				row[2].toString()
 				);

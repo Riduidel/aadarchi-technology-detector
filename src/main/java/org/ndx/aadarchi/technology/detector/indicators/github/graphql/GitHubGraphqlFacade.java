@@ -4,6 +4,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
@@ -11,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -62,15 +66,15 @@ public class GitHubGraphqlFacade {
 		@Override
 		public void beforeParking(long nanos) {
 			LocalDateTime until = LocalDateTime.now().plusNanos(nanos);
-			Log.warnf("Thread will be parked until %s due to bucket having only %d tokens remaining",
-					until,
+			Log.warnf("Thread will be parked by Bucket4J until %s due to bucket having only %d tokens remaining",
+					DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM).format(until),
 					rateLimitingBucket.getAvailableTokens());
 		}
 
 		@Override
 		public void onParked(long nanos) {
-			Log.warnf("Thread was parked %s due to bucket having only %d tokens remaining. Operations resume NOW!",
-					DurationFormatUtils.formatDurationHMS(TimeUnit.NANOSECONDS.toMillis(nanos)),
+			Log.warnf("Thread was parked by Bucket4J %s due to bucket having only %d tokens remaining. Operations resume NOW!",
+					DurationFormatUtils.formatDuration(TimeUnit.NANOSECONDS.toMillis(nanos),"HH:mm:ss"),
 					rateLimitingBucket.getAvailableTokens());
 		}
 
@@ -95,20 +99,33 @@ public class GitHubGraphqlFacade {
 
 
 
-	private RuntimeException processGraphqlErrors(Map<String, Object> arguments, Response response) {
+	private GitHubGraphqlException processGraphqlErrors(Map<String, Object> arguments, Response response) {
+		List<io.smallrye.graphql.client.GraphQLError> errors = response.getErrors();
+		String errorsMessage = errors.stream()
+			.map((error -> String.format("\t%s", 
+					error.getMessage()))
+		).collect(Collectors.joining("\n"));
+		String fullMessage = String.format(
+				"Request\n"
+				+ "%s\n"
+				+ "when executed with parameters %s\n"
+				+ "generated errors\n------------\n"
+				+ "%s\n------------\n", 
+				githubStarsToday,
+				arguments,
+				errorsMessage);
+		if(errors.size()==1) {
+			if(errorsMessage.contains("Could not resolve to a Repository with the name")) {
+				return new NoSuchRepository(
+						fullMessage, errors);
+			} else if(errorsMessage.contains("API rate limit exceeded for user ID")) {
+				return new RateLimitExceeded(
+						fullMessage, errors,
+						new RateLimitMetadata(response));
+			}
+		}
 		return new GitHubGraphqlException(
-				String.format(
-						"Request\n"
-						+ "%s\n"
-						+ "when executed with parameters %s\n"
-						+ "generated errors\n"
-						+ "%s", 
-						githubStarsToday,
-						arguments,
-						response.getErrors().stream()
-							.map((error -> String.format("\t%s", 
-									error.getMessage()))
-						).collect(Collectors.joining("\n"))));
+				fullMessage, errors);
 	}
 
 
@@ -118,40 +135,55 @@ public class GitHubGraphqlFacade {
 		updateBucketConfiguration(returned, tokens);
 		return returned;
 	}
+	
+	public static class RateLimitMetadata {
+		public final int tokensPerHour;
+		public final int tokensRemaining;
+		public final int tokensUsed;
+		public final int tokensResetInstant;
+
+		public RateLimitMetadata(Response returned) {
+			Map<String, String> metadata = returned.getTransportMeta()
+					.entrySet()
+					.stream()
+					.collect(Collectors.toMap(
+							entry -> entry.getKey().toLowerCase(),
+							entry -> entry.getValue().stream().collect(Collectors.joining())));
+			tokensPerHour = Integer.parseInt(metadata.get("x-ratelimit-limit"));
+			tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
+			tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
+			tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
+		}
+
+		public Instant getResetInstant() {
+			return Instant.ofEpochSecond(tokensResetInstant);
+		}
+	}
 
 	private void updateBucketConfiguration(Response returned, long tokens) {
-		Map<String, String> metadata = returned.getTransportMeta()
-				.entrySet()
-				.stream()
-				.collect(Collectors.toMap(
-						entry -> entry.getKey().toLowerCase(),
-						entry -> entry.getValue().stream().collect(Collectors.joining())));
-		int tokensPerHour = Integer.parseInt(metadata.get("x-ratelimit-limit"));
-		int tokensRemaining = Integer.parseInt(metadata.get("x-ratelimit-remaining"));
-		int tokensUsed = Integer.parseInt(metadata.get("x-ratelimit-used"));
+		RateLimitMetadata rateLimitMetadata = new RateLimitMetadata(returned);
 		// Immediatly get rate limit cost if possible
 		if(returned.hasData() && !returned.hasError()) {
 			evaluateRateLimitCost(returned, tokens);
 		}
-		int tokensResetInstant = Integer.parseInt(metadata.get("x-ratelimit-reset"));
-		Instant resetInstant = Instant.ofEpochSecond(tokensResetInstant);
-		if(tokensRemaining<TOKEN_LOWER_BOUND) {
+		Instant resetInstant = rateLimitMetadata.getResetInstant();
+		if(rateLimitMetadata.tokensRemaining<TOKEN_LOWER_BOUND) {
 			Log.warnf("%s tokens remaining. Bucket refulling will happen at %s",
-					tokensRemaining,
+					rateLimitMetadata.tokensRemaining,
 					resetInstant.atZone(ZoneId.systemDefault())
 					);
 		} else {
 			Log.debugf("%s tokens remaining locally, and %s tokens remaining on GitHub side.",
 					rateLimitingBucket.getAvailableTokens(),
-					tokensRemaining);
+					rateLimitMetadata.tokensRemaining);
 		}
 		rateLimitingBucket.replaceConfiguration(
 				BucketConfiguration.builder()
 					.addLimit(BandwidthBuilder
 							.builder()
-							.capacity(tokensPerHour)
-							.refillIntervallyAligned(tokensPerHour, Duration.ofHours(1), resetInstant)
-							.initialTokens(tokensRemaining)
+							.capacity(rateLimitMetadata.tokensPerHour)
+							.refillIntervallyAligned(rateLimitMetadata.tokensPerHour, Duration.ofHours(1), resetInstant)
+							.initialTokens(rateLimitMetadata.tokensRemaining)
 							.build()
 							)
 					.build(),

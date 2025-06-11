@@ -1,30 +1,16 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
+import java.util.List;
+
+import io.github.bucket4j.Bucket;
+import io.smallrye.graphql.client.GraphQLError;
+
 public class GitHubGraphqlException extends RuntimeException {
 
-	public GitHubGraphqlException() {
-		// TODO Auto-generated constructor stub
-	}
+	private List<GraphQLError> errors;
 
-	public GitHubGraphqlException(String message) {
+	public GitHubGraphqlException(String message, List<GraphQLError> errors) {
 		super(message);
-		// TODO Auto-generated constructor stub
+		this.errors = errors;
 	}
-
-	public GitHubGraphqlException(Throwable cause) {
-		super(cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	public GitHubGraphqlException(String message, Throwable cause) {
-		super(message, cause);
-		// TODO Auto-generated constructor stub
-	}
-
-	public GitHubGraphqlException(String message, Throwable cause, boolean enableSuppression,
-			boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-		// TODO Auto-generated constructor stub
-	}
-
 }

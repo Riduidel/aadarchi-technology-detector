@@ -26,6 +26,8 @@ public interface GitHubBased extends TechnologyBased {
 	
 	default Optional<Pair<String>> getRepository(Technology technology) throws IOException {
 		String fullRepositoryUrl = technology.repositoryUrl;
+		if(fullRepositoryUrl==null || fullRepositoryUrl.isBlank())
+			return Optional.empty();
 		URL url;
 		try {
 			url = new URI(fullRepositoryUrl).toURL();

@@ -10,9 +10,12 @@ import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.Direct
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
+import org.ndx.aadarchi.technology.detector.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlException;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.NoSuchRepository;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.RateLimitExceeded;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList.StargazerEvent;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
@@ -24,17 +27,17 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class GitHubStars extends EndpointRouteBuilder implements IndicatorComputer, GitHubBased {
+public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBuilder implements IndicatorComputer, GitHubBased {
 
 	public static final String GITHUB_STARS = "github.stars";
 	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
-
 	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
 	@Inject StargazerRepository stargazersRepository;
 	@Inject GitHubGraphqlFacade githubClient;
 
 	@Override
 	public void configure() throws Exception {
+		super.configureExceptions();
 		from(getFromRoute())
 			.routeId(ROUTE_NAME)
 			.idempotentConsumer()

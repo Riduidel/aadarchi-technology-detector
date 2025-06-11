@@ -6,11 +6,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
+import org.ndx.aadarchi.technology.detector.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlException;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
@@ -24,7 +24,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class GitHubForks extends EndpointRouteBuilder  implements IndicatorComputer, GitHubBased {
+public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBuilder  implements IndicatorComputer, GitHubBased {
 
     public static final String GITHUB_FORKS = "github.forks";
     private static final String ROUTE_NAME = "compute-"+GITHUB_FORKS.replace('.', '-');
@@ -35,6 +35,7 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
 
     @Override
     public void configure() throws Exception {
+    	super.configureExceptions();
         from(getFromRoute())
                 .routeId(ROUTE_NAME)
 				.idempotentConsumer()
@@ -57,7 +58,8 @@ public class GitHubForks extends EndpointRouteBuilder  implements IndicatorCompu
 		try {
 			computeGitHubForks(exchange.getMessage().getBody(Technology.class));
 		} catch(GitHubGraphqlException e) {
-			Log.warnf(e, "Unable to fetch stars for missing repo");
+//			Log.warnf(e, "Unable to fetch stars for missing repo");
+			throw e;
 		}
     }
 

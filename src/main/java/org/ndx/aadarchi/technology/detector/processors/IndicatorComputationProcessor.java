@@ -39,6 +39,8 @@ public class IndicatorComputationProcessor {
 	public void markIndicator(IndicatorComputation indicator, IndicatorComputationStatus status, boolean updateDate) {
 		IndicatorComputation updated = indicators.find("id", indicator.id).firstResult();
 		updated.status = status;
-		updated.date = new Date();
+		if(updateDate) {
+			updated.date = new Date();
+		}
 	}
 }
