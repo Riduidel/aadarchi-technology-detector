@@ -3,10 +3,10 @@ package org.ndx.aadarchi.technology.detector.processors;
 import java.util.List;
 
 import org.apache.camel.Exchange;
+import org.ndx.aadarchi.technology.detector.export.ComputedIndicators;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepository;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 import org.ndx.aadarchi.technology.detector.model.TechnologyRepository;
-import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.Dependent;

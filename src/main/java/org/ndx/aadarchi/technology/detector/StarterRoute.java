@@ -1,6 +1,8 @@
 package org.ndx.aadarchi.technology.detector;
 
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.ndx.aadarchi.technology.detector.export.CopyToBigQuery;
+import org.ndx.aadarchi.technology.detector.export.ExportToFile;
 
 public class StarterRoute extends EndpointRouteBuilder {
 	
@@ -12,7 +14,8 @@ public class StarterRoute extends EndpointRouteBuilder {
 			.to(direct(ReadPopularLibraries.class.getSimpleName()))
 			.to(direct(GenerateIndicatorComputations.class.getSimpleName()))
 			.to(direct(ProcessIndicatorComputations.class.getSimpleName()))
-			.to(direct(ExportDatabase.class.getSimpleName()))
+			.to(direct(ExportToFile.class.getSimpleName()))
+//			.to(direct(CopyToBigQuery.class.getSimpleName()))
 			.log("Everything should be terminated now.")
 			;
 	}

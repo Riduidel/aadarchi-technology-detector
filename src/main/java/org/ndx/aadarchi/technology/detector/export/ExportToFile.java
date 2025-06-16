@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector;
+package org.ndx.aadarchi.technology.detector.export;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.dataformat.ParquetAvroDataFormat;
 import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators;
 import org.ndx.aadarchi.technology.detector.processors.TechnologyRepositoryProcessor;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -20,8 +19,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-public class ExportDatabase extends EndpointRouteBuilder {
-	public static final String READ_FROM_CSV_ROUTE = ExportDatabase.class.getSimpleName()+"_read";
+public class ExportToFile extends EndpointRouteBuilder {
+	public static final String READ_FROM_CSV_ROUTE = ExportToFile.class.getSimpleName()+"_read";
 	TechnologyRepositoryProcessor technologies;
 	
 	@Inject
