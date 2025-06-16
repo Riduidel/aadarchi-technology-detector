@@ -11,26 +11,28 @@ camel:
     max-queue-size: -1
 quarkus:
   datasource:
-    db-kind: postgresql
-    devservices:
-      enabled: true
-      port: 15432
-      volumes:
-        "data/database/postgresql": /var/lib/postgresql/data
-      reuse: true
-      db-name: tech-trendz
-      username: tech-trendz
-      password: tech-trendz
-    health:
-      enabled: true
-    jdbc:
-      max-size: 100
+    tech-trendz:
+      db-kind: postgresql
+      devservices:
+        enabled: true
+        port: 15432
+        volumes:
+          "data/database/postgresql": /var/lib/postgresql/data
+        reuse: true
+        db-name: tech-trendz
+        username: tech-trendz
+        password: tech-trendz
+      health:
+        enabled: true
+      jdbc:
+        max-size: 100
   flyway:
     migrate-at-start: true
     baseline-on-migrate: true
   hawtio:
     authenticationEnabled: false
   hibernate-orm:
+    datasource: tech-trendz
     database:
       generation: update
   log:
