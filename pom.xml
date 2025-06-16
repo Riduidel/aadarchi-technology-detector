@@ -174,7 +174,11 @@
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-ognl</artifactId>
 		</dependency>
-		<dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-sql</artifactId>
+        </dependency>
+   		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-endpointdsl</artifactId>
 		</dependency>
@@ -222,6 +226,11 @@
 		  <!-- use the same version as your Camel core version -->
 		</dependency>
 
+<dependency>
+    <groupId>org.apache.camel.quarkus</groupId>
+    <artifactId>camel-quarkus-google-bigquery</artifactId>
+</dependency>
+
 		<!--		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-csimple-joor</artifactId>
@@ -264,6 +273,7 @@
 						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
 						<tech-trends.libraries.io.token>
 							${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+						<tech-trends.export.big-query.project-id>${tech-trends.bigQuery.projectId}</tech-trends.export.big-query.project-id>
 					</systemProperties>
 				</configuration>
 			</plugin>
