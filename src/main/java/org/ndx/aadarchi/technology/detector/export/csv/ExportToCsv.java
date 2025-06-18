@@ -58,7 +58,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 		String exportPath = String.format("%s?"
 				+ "?charset=utf-8&noop=true&directoryMustExist=false&filename=%s.csv", 
 				exportBaseFolder.toUri().toString(),
-				export.table);
+				export.table.toUpperCase());
 		from(direct(export.route()))
 			.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
 			.to(sql(export.readTable())
