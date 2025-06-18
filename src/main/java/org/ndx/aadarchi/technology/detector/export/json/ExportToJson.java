@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector;
+package org.ndx.aadarchi.technology.detector.export.json;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -20,8 +20,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
 @ApplicationScoped
-public class ExportDatabase extends EndpointRouteBuilder {
-	public static final String READ_FROM_CSV_ROUTE = ExportDatabase.class.getSimpleName()+"_read";
+public class ExportToJson extends EndpointRouteBuilder {
+	public static final String READ_FROM_CSV_ROUTE = ExportToJson.class.getSimpleName()+"_read";
 	TechnologyRepositoryProcessor technologies;
 	
 	@Inject
@@ -66,16 +66,16 @@ public class ExportDatabase extends EndpointRouteBuilder {
 			.end()
 			;
 		// Thanks https://github.com/apache/camel/pull/10576/files#diff-7454d0ee361c52f7f30ae0924618f456969606f52303b6baf9274cf04cd2d20bR145
-		ParquetAvroDataFormat parquet = new ParquetAvroDataFormat();
-		parquet.setCompressionCodecName(CompressionCodecName.GZIP.name());
-		parquet.setUnmarshalType(ComputedIndicators.class);
-		from(exportToParquet)
-			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
-			.marshal(parquet)
-			.log("Exporting to ${header.exportParquet}")
-			.toD("${header.exportParquet}")
-			.log("Exported to ${header.exportParquet}")
-			.end()
-			;
+//		ParquetAvroDataFormat parquet = new ParquetAvroDataFormat();
+//		parquet.setCompressionCodecName(CompressionCodecName.GZIP.name());
+//		parquet.setUnmarshalType(ComputedIndicators.class);
+//		from(exportToParquet)
+//			.setHeader("exportParquet", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.parquet"))
+//			.marshal(parquet)
+//			.log("Exporting to ${header.exportParquet}")
+//			.toD("${header.exportParquet}")
+//			.log("Exported to ${header.exportParquet}")
+//			.end()
+//			;
 	}
 }
