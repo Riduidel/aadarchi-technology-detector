@@ -3,7 +3,7 @@
     projects:
       per:
         page: 10
-        platform: 100
+        platform: 200
 camel:
   threadpool:
     pool-size: 5
@@ -71,6 +71,55 @@ quarkus:
         Content-Type: application/json; charset=utf-8
       url: https://api.github.com/graphql
 tech-trends:
+  exporter:
+    bigquery:
+      project:
+        id: tendances-tech-et-opportunites
+      technology:
+        read_as_stream: false
+        read_locally: select * from technology;
+        id: tendances-tech-et-opportunites:aadarchi_technology_detector:technology
+      # The 02:00 here stands for the Europe/Paris Timezone, I don't know what is its impact ...
+      indicator:
+        read_locally: |
+          select indicator_name,
+            indicator_value,
+            technology_id,
+            concat(to_char(indicator_date, 'YYYY-MM-DD'), ' 02:00') as indicator_date
+          from indicator
+          order by indicator_date asc, technology_id asc, indicator_name asc;
+        find_latest_remote: |
+          select max(indicator_date) from aadarchi_technology_detector.indicator;
+        id: tendances-tech-et-opportunites:aadarchi_technology_detector:indicator
+        read_as_stream: true
+      github_stars:
+        read_locally: |
+          select 
+            to_char(star_date, 'YYYY-MM-DD HH:MM:SS') as star_date,
+            repo_owner,
+            repo_name,
+            star_user
+          from github_stars
+          order by star_date asc, repo_owner asc, repo_name asc, star_user asc;
+        find_latest_remote: |
+          select max(star_date) from aadarchi_technology_detector.github_stars;
+        id: tendances-tech-et-opportunites:aadarchi_technology_detector:github_stars
+        log_message: GitHub Stars ⭐️
+        read_as_stream: true
+      github_forks:
+        read_locally: |
+          select 
+            to_char(fork_date, 'YYYY-MM-DD HH:MM:SS') as fork_date,
+            repo_owner,
+            repo_name,
+            fork_user
+          from github_forks
+          order by fork_date asc, repo_owner asc, repo_name asc, fork_user asc;
+        find_latest_remote: |
+          select max(fork_date) from aadarchi_technology_detector.github_forks;
+        id: tendances-tech-et-opportunites:aadarchi_technology_detector:github_forks
+        log_message: GitHub Forks 🍽️
+        read_as_stream: true
   indicators:
     github:
       stars:

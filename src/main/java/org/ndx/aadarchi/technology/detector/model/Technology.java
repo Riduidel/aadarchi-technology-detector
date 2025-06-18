@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroIgnore;
+import org.ndx.aadarchi.technology.detector.export.bigquery.annotations.BigQueryTable;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -15,6 +16,7 @@ import jakarta.persistence.Id;
 /**
  * Class containing stored informations of technologies.
  */
+// @BigQueryTable
 @AvroDoc("A technology (see glossary). This class is mainly modeled from libraries.io representation")
 @Entity
 public class Technology extends PanacheEntityBase {

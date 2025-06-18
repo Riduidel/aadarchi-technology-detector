@@ -5,11 +5,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "GITHUB_FORKS")
+import org.ndx.aadarchi.technology.detector.export.bigquery.annotations.BigQueryTable;
+
+@BigQueryTable
+@Entity
+@Table(name = "GITHUB_FORKS")
 public class Fork extends PanacheEntityBase {
 
     @Embeddable

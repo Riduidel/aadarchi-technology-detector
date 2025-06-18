@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.ndx.aadarchi.technology.detector.export.bigquery.annotations.BigQueryTable;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -19,6 +20,7 @@ import jakarta.persistence.Table;
  * An indicator refers to a technology, so the technology has to be part of the id
  * @see https://javanexus.com/blog/mastering-hibernate-composite-ids
  */
+@BigQueryTable
 @Entity
 @Table(name="INDICATOR")
 public class Indicator extends PanacheEntityBase {
