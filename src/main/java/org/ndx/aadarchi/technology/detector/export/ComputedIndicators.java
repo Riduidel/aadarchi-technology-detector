@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.model.export;
+package org.ndx.aadarchi.technology.detector.export;
 
 import java.sql.Timestamp;
 import java.util.Collection;

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators.IndicatorDataPoint;
+import org.ndx.aadarchi.technology.detector.export.ComputedIndicators.IndicatorDataPoint;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;

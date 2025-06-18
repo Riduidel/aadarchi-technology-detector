@@ -3,7 +3,7 @@ package org.ndx.aadarchi.technology.detector.model;
 import java.util.Map;
 import java.util.SortedSet;
 
-import org.ndx.aadarchi.technology.detector.model.export.ComputedIndicators.IndicatorDataPoint;
+import org.ndx.aadarchi.technology.detector.export.ComputedIndicators.IndicatorDataPoint;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;

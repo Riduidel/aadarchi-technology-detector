@@ -3,13 +3,18 @@ package org.ndx.aadarchi.technology.detector.indicators.github.stars;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.ndx.aadarchi.technology.detector.export.bigquery.annotations.BigQueryTable;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-@Entity(name = "GITHUB_STARS")
+@BigQueryTable
+@Entity
+@Table(name = "GITHUB_STARS")
 public class Stargazer extends PanacheEntityBase {
 	@Embeddable
 	public static class StargazerId implements Serializable {
