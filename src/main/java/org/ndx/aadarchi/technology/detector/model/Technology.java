@@ -11,12 +11,25 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 
 /**
  * Class containing stored informations of technologies.
  */
 @AvroDoc("A technology (see glossary). This class is mainly modeled from libraries.io representation")
 @Entity
+@NamedNativeQueries({
+	@NamedNativeQuery(name="TECHNOLOGY.CSV.EXPORT", query="""
+select id,
+trim(regexp_replace(description, '[\n\r]+', ' ', 'g')) as description,
+trim(regexp_replace(homepage, '[\n\r]+', ' ', 'g')) as homepage,
+trim(regexp_replace(name, '[\n\r]+', ' ', 'g')) as name,
+trim(regexp_replace(packagemanagerurl, '[\n\r]+', ' ', 'g')) as packagemanagerurl,
+trim(regexp_replace(repositoryurl, '[\n\r]+', ' ', 'g')) as repositoryurl
+from technology
+			""")
+})
 public class Technology extends PanacheEntityBase {
 	@AvroDoc("Common name of that technology")
 	public String name;
