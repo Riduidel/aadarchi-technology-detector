@@ -1,15 +1,29 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.forks;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-
-import java.io.Serializable;
-import java.util.Date;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 
 @Entity(name = "GITHUB_FORKS")
+@NamedNativeQueries({
+	 @NamedNativeQuery(
+			 name="GITHUB_FORKS.CSV.EXPORT", 
+			 query="""
+select 
+to_char(fork_date, 'YYYY-MM-DD HH:MM:SS') as fork_date,
+repo_owner,
+repo_name,
+fork_user
+from github_forks;
+			 		""")
+})
 public class Fork extends PanacheEntityBase {
 
     @Embeddable

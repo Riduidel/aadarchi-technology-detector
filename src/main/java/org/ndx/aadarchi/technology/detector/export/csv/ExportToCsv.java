@@ -25,6 +25,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.metamodel.EntityType;
 
@@ -124,9 +125,10 @@ public class ExportToCsv extends EndpointRouteBuilder {
 		final String DEFAULT_EXPORT_REQUEST = "select * from "+TABLE_NAME;
 		Supplier<String> getDefaultExportRequest = () -> {
 			Log.warnf("Using default request to export values of %s.\n"
-					+ "To change that, create in %s a @NamedQuery(name=\"%s\", query=\"%s\")", 
+					+ "To change that, create in %s a @%s(name=\"%s\", query=\"%s\")", 
 					TABLE_NAME,
 					bindable.getSimpleName(),
+					NamedNativeQuery.class.getSimpleName(),
 					EXPORT_TO_CSV,
 					DEFAULT_EXPORT_REQUEST);
 			return DEFAULT_EXPORT_REQUEST;

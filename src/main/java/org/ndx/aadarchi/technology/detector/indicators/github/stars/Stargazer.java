@@ -8,8 +8,22 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 
 @Entity(name = "GITHUB_STARS")
+@NamedNativeQueries({
+	@NamedNativeQuery(
+			name="GITHUB_STARS.CSV.EXPORT", 
+			query="""
+select 
+to_char(star_date, 'YYYY-MM-DD HH:MM:SS') as star_date,
+repo_owner,
+repo_name,
+star_user
+from github_stars;					
+					""")
+})
 public class Stargazer extends PanacheEntityBase {
 	@Embeddable
 	public static class StargazerId implements Serializable {
