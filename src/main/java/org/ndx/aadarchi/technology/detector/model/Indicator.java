@@ -13,6 +13,8 @@ import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 
 /**
@@ -21,6 +23,16 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name="INDICATOR")
+@NamedNativeQueries({
+	@NamedNativeQuery(name="INDICATOR.CSV.EXPORT", query="""
+select 
+to_char(indicator_date, 'YYYY-MM-DD') as indicator_date,
+indicator_name ,
+indicator_value,
+technology_id
+from indicator;			
+			""")
+})
 public class Indicator extends PanacheEntityBase {
 	@Embeddable
 	public static class IndicatorId implements Serializable {
