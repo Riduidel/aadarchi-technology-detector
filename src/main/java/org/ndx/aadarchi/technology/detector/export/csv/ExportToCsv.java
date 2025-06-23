@@ -16,6 +16,7 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.builder.endpoint.dsl.FileEndpointBuilderFactory.FileEndpointBuilder;
 import org.apache.camel.component.file.GenericFileExist;
+import org.apache.camel.component.google.storage.GoogleCloudStorageConstants;
 import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.ndx.aadarchi.technology.detector.StarterRoute;
@@ -86,17 +87,37 @@ public class ExportToCsv extends EndpointRouteBuilder {
 			.to(exportPath.fileExist(GenericFileExist.Append))
 			.end();
 		
+		String EXPORT = "tech-trends.export."+export.table+".csv";
+		String GLOBALLY_ENABLED = EXPORT+".enabled";
+		String GCP_ENABLED = EXPORT+".to.gcp.enabled";
+		
 		from(direct(export.route()))
 			.id(export.route())
-			.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
-			.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
-			.setBody(constant(export.readTable()))
-			.to(jdbc("default").outputType("StreamList"))
-			.multicast()
-				.to(direct(export.route()+"-marshal-headers"))
-				.to(direct(export.route()+"-marshal-rows"))
+			.choice()
+			.when(simple("{{"+GLOBALLY_ENABLED+":true}}"))
+				.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
+				.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
+				.setBody(constant(export.readTable()))
+				.to(jdbc("default").outputType("StreamList"))
+				.multicast()
+					.to(direct(export.route()+"-marshal-headers"))
+					.to(direct(export.route()+"-marshal-rows"))
+					.choice()
+					.when(simple("{{"+GCP_ENABLED+":true}}"))
+						.log(LoggingLevel.INFO, "📤 Pushing "+export.table+" to GCP")
+						.pollEnrich(exportPath)
+						.setHeader(GoogleCloudStorageConstants.OBJECT_NAME, constant(FILE_NAME))
+						.to(googleStorage("aadarchi"))
+					.endChoice()
+					.otherwise()
+						.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" to GCP is disabled due to property "+GCP_ENABLED+" resolving to false")
+					.end()
+				.end()
+				.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
+				.endChoice()
+			.otherwise()
+				.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" is disabled due to property "+GLOBALLY_ENABLED+" resolving to false")
 			.end()
-			.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
 			;
 	}
 	

@@ -1,9 +1,21 @@
 '%dev':
   tech-trends:
+    export:
+      INDICATOR:
+        csv:
+          to:
+            gcp:
+              enabled: false
+      TECHNOLOGY:
+        csv:
+          to:
+            gcp:
+              enabled: false
     projects:
       per:
         page: 10
         platform: 100
+
 camel:
   threadpool:
     pool-size: 5
@@ -69,6 +81,21 @@ quarkus:
         Content-Type: application/json; charset=utf-8
       url: https://api.github.com/graphql
 tech-trends:
+  export:
+    INDICATOR_COMPUTATION:
+      csv:
+        enabled: false
+    GITHUB_STARS:
+      csv:
+        to:
+          gcp:
+            enabled: false
+    GITHUB_FORKS:
+      csv:
+        to:
+          gcp:
+            enabled: false
+      
   indicators:
     github:
       stars:
