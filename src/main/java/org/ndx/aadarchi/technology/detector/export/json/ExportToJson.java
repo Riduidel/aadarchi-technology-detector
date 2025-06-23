@@ -43,11 +43,11 @@ public class ExportToJson extends EndpointRouteBuilder {
 			.setHeader("exportBaseFolder", () -> exportBaseFolder.toUri().toString())
 			// Get all technologies
 			// Add all indicators for each technology
-			.log("Searching for technologies")
+			.log("🔍 Searching for technologies")
 			// Load all technologies
 			// I think it will be necessary to have some kind of batch processing
 			.process(technologies::findAllTechnologies)
-			.log("Found ${body.size} technologies")
+			.log("✅ Found ${body.size} technologies")
 			.split(body(), AggregationStrategies.flexible(ComputedIndicators.class)
 				    .accumulateInCollection(ArrayList.class)
 				    .pick(body()))
@@ -60,9 +60,9 @@ public class ExportToJson extends EndpointRouteBuilder {
 		from(exportToJson)
 			.setHeader("exportJson", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.json"))
 			.marshal().json(JsonLibrary.Jackson, true)
-			.log("Exporting to ${header.exportJson}")
+			.log("⌛ Exporting to ${header.exportJson}")
 			.toD("${header.exportJson}")
-			.log("Exported to ${header.exportJson}")
+			.log("🎉 Exported to ${header.exportJson}")
 			.end()
 			;
 		// Thanks https://github.com/apache/camel/pull/10576/files#diff-7454d0ee361c52f7f30ae0924618f456969606f52303b6baf9274cf04cd2d20bR145
