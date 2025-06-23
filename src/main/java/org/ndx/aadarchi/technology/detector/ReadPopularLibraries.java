@@ -70,15 +70,15 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
     		.split(body(), new ReaggregateListsOfLibraries())
 	    		.choice()
 	    		.when(this::isSupportedPlatform)
-	    			.log(LoggingLevel.INFO, "Processing libraries of ${body.name}")
+	    			.log(LoggingLevel.INFO, "📥 Processing libraries of ${body.name}")
 		    		.description("Split per deployment platform")
 		    		.to(GET_ALL_LIBRARIES_OF_PLATFORM)
 		    	.otherwise()
-		    		.log(LoggingLevel.WARN, "Platform ${body.name} is rejected")
+		    		.log(LoggingLevel.WARN, "⛔ Platform ${body.name} is rejected")
 		    		.stop()
 		    	.end()
 	    	.end()
-	    	.log(LoggingLevel.INFO, "Processed ${body.size} libraries. Now we have to do something with that data ...")
+	    	.log(LoggingLevel.INFO, "🎉 Processed ${body.size} libraries.")
 //	    	.to("seda:all-libraries-are-loaded")
 	    	;
     	
@@ -116,7 +116,7 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
 			hasNextPage = libraries.size()==projectsPerPage;
 		}
     	exchange.getMessage().setBody(allLibraries);
-    	Log.infof("Loaded %d libraries for platform %s", allLibraries.size(), platform);
+    	Log.infof("✅ Loaded %d libraries for platform %s", allLibraries.size(), platform);
     }
 
 	private void getPlatforms(Exchange exchange) {

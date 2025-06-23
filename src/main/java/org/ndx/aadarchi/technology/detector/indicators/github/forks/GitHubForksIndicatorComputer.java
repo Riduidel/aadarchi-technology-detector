@@ -85,7 +85,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
         int missingCountPercentage = (remoteCount > 0) ? (int) (((remoteCount - localCount) / (remoteCount * 1.0)) * 100.0) : 0;
         boolean forceRedownload = missingCountPercentage > 10;
         if(forceRedownload) {
-            Log.infof("For %s/%s, we have %d forks locally, and there are %d forks on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
+            Log.infof("📥 For %s/%s, we have %d forks locally, and there are %d forks on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
         } else {
             Log.infof("For %s/%s, we have %d forks locally, and there are %d forks on GitHub (we lack %d %%)", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
         }

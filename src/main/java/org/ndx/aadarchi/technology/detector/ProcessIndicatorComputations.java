@@ -51,16 +51,16 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 		DirectEndpointBuilder PROCESS_ONE_TECHNOLOGY = direct(getClass().getSimpleName()+"-process-one-technology");
 		from(direct(getClass().getSimpleName()))
 			.id(getClass().getSimpleName()+"-1-fetch-all-indicator-computations")
-			.log("Searching for indicator computations")
+			.log("🔍 Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
 			.process(this::findAllOldestFirst)
-			.log("Found ${body.size} technologies")
+			.log("✅ Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
 					.to(PROCESS_ONE_TECHNOLOGY)
 				.end()
 			.end()
-			.log("All indicators computations have been processed")
+			.log("🎉 All indicators computations have been processed")
 			;
 		from(PROCESS_ONE_TECHNOLOGY)
 			.onCompletion().onCompleteOnly()
@@ -84,7 +84,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
 		IndicatorComputer computer = indicatorComputerRoutes.get(indicator.id.indicatorRoute);
 		if(computer==null) {
-			Log.errorf("Indicator computation %s routes to missing indicator computer %s. It won't be computed AT ALL",
+			Log.errorf("🛑 Indicator computation %s routes to missing indicator computer %s. It won't be computed AT ALL",
 					indicator,
 					indicator.id.indicatorRoute);
 		} else {

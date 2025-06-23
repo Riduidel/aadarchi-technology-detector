@@ -46,16 +46,16 @@ public class GenerateIndicatorComputations extends EndpointRouteBuilder {
 	public void configure() throws Exception {
 		from(direct(getClass().getSimpleName()))
 			.id(getClass().getSimpleName()+"-1-fetch-all-technologies")
-			.log("Searching for technologies")
+			.log("🔍 Searching for technologies")
 			// Load all technologies
 			// I think it will be necessary to have some kind of batch processing
 			.process(technologies::findAllTechnologies)
-			.log("Found ${body.size} technologies")
+			.log("✅  Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
 				.process(this::generateIndicatorComputationsFor)
 				.end()
-			.log("All indicators computations have been created, now searching them by date")
+			.log("🎉 All indicators computations have been created, now searching them by date")
 			;
 	}
 
