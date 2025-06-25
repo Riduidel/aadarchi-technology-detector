@@ -44,6 +44,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 				.body(Technology.class, t -> String.format("%s-%s", GITHUB_STARS, t.repositoryUrl))
 				.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
 			.process(this::computeGitHubStars)
+			.end()
 			;
 	}
 	

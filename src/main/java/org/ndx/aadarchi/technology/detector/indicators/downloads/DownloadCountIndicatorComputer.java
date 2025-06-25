@@ -48,11 +48,12 @@ public class DownloadCountIndicatorComputer extends EndpointRouteBuilder impleme
 	@Override
 	public void configure() throws Exception {
 		from(getFromRoute())
-		.routeId(ROUTE_NAME)
-		.idempotentConsumer()
-			.body(Technology.class, t -> String.format("%s-%s", DOWNLOAD_COUNT, t.packageManagerUrl))
-			.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
-		.process(this::countDownloads)
+			.routeId(ROUTE_NAME)
+			.idempotentConsumer()
+				.body(Technology.class, t -> String.format("%s-%s", DOWNLOAD_COUNT, t.packageManagerUrl))
+				.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
+			.process(this::countDownloads)
+			.end()
 		;
 	}
 
