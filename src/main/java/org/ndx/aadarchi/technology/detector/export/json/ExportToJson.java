@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.AggregationStrategies;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
@@ -53,9 +54,9 @@ public class ExportToJson extends EndpointRouteBuilder {
 				    .pick(body()))
 				.parallelProcessing()
 				.process(technologies::toComputedIndicators)
-				.log("Technology ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body.technology.name} indicators have been aggregated")
+				.log(LoggingLevel.DEBUG, "Technology ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body.technology.name} indicators have been aggregated")
 			.end()
-			.recipientList(constant(exportToJson , exportToParquet ))
+			.recipientList(constant(exportToJson /*, exportToParquet */))
 			;
 		from(exportToJson)
 			.setHeader("exportJson", simple("${header.exportBaseFolder}?charset=utf-8&noop=true&directoryMustExist=false&filename=export.json"))
