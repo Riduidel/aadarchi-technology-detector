@@ -37,11 +37,12 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
     public void configure() throws Exception {
     	super.configureExceptions();
         from(getFromRoute())
-                .routeId(ROUTE_NAME)
-				.idempotentConsumer()
-					.body(Technology.class, t -> String.format("%s-%s", GITHUB_FORKS, t.repositoryUrl))
-					.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
-                .process(this::computeGitHubForks)
+            .routeId(ROUTE_NAME)
+			.idempotentConsumer()
+				.body(Technology.class, t -> String.format("%s-%s", GITHUB_FORKS, t.repositoryUrl))
+				.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
+            .process(this::computeGitHubForks)
+			.end()
         ;
     }
 
