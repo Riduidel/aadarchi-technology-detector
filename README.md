@@ -31,7 +31,6 @@ Metrics can only be accessed as BigQuery dataset. They may appear one day as Hug
 
 ## 🤝 Contributing
 
-
 ### Building the JAR
 
 Since we mainly use Camel Quarkus, the whole application can be built the usual maven way: `mvn install`
@@ -69,6 +68,12 @@ We do want to have new features.
 But we want to have these features discussed **first**.
 So if you want to develop a new feature, check first if there is an associated [issue](https://github.com/Riduidel/aadarchi-technology-detector/issues) (and believe us, it's easy to add new issues on this project).
 Once the issue exists, you can create your PR and we will try to review it as fast as possible.
+
+### Validating data
+
+Most of the data we aggregate here can be seen on other websites.
+Since we currently focus on git community metrics (stars, forks, and so on), 
+it's a good idea to compare the values we have with the ones available in sites like [OSSInsights](https://ossinsight.io/analyze) or [daily-stars-explorer](https://emanuelef.github.io/daily-stars-explorer)
 
 ## Author
 
