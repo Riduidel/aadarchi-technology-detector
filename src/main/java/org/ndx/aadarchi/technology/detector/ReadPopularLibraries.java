@@ -111,7 +111,7 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
     	boolean hasNextPage = true;
 		// Now read the 1000 first libraries for that platform
     	for (int i = 1; allLibraries.size()<projectsPerPlatform && hasNextPage; i++) {
-			List<Project> libraries = librariesIo.searchProjects(i, projectsPerPage, platform);
+			List<Project> libraries = librariesIo.searchProjectsForPlatform(i, projectsPerPage, platform);
 			allLibraries.addAll(libraries);
 			hasNextPage = libraries.size()==projectsPerPage;
 		}
