@@ -20,7 +20,6 @@
 
 * Install Java 21
 * Install Maven 3.9
-* Install [DVC](https://dvc.org/doc/install)
 * Create a [libraries.io API token](https://libraries.io/api#:~:text=API%20Docs-,authentication,-All%20API%20requests)
 * Create a [GitHub API token](https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28)
 
@@ -28,11 +27,9 @@
 
 ### Accessing to generated metrics
 
-As of today, latest version of metrics are available in [src/main/resources/csv](https://github.com/Riduidel/aadarchi-technology-detector/tree/main/src/main/resources/csv).
-Once [#93](https://github.com/Riduidel/aadarchi-technology-detector/issues/93) will have been implemented, the CSV files will also be available as GitHub releases.
+Metrics can only be accessed as BigQuery dataset. They may appear one day as HuggingFace dataset ...
 
 ## 🤝 Contributing
-
 
 ### Building the JAR
 
@@ -41,16 +38,6 @@ Since we mainly use Camel Quarkus, the whole application can be built the usual 
 ### Data access
 
 Data is stored in a Zenika (the company I'm working in) Google Drive folder.
-Beside, a local remote is present in DVC to allow easy exploration.
-
-Everything is already configured in dvc.
-
-To start working, run 
-
-* `dvc pull --remote zdrive` to have data copied into the local data folder
-* `dvc push --remote local-backup` to store data in the local backup folder (useful when moving data)
-
-Don't forget to run `dvc status` and associated `dvc add && dvc commit` when data gets modified.
 
 ### Developping new features
 
@@ -81,6 +68,12 @@ We do want to have new features.
 But we want to have these features discussed **first**.
 So if you want to develop a new feature, check first if there is an associated [issue](https://github.com/Riduidel/aadarchi-technology-detector/issues) (and believe us, it's easy to add new issues on this project).
 Once the issue exists, you can create your PR and we will try to review it as fast as possible.
+
+### Validating data
+
+Most of the data we aggregate here can be seen on other websites.
+Since we currently focus on git community metrics (stars, forks, and so on), 
+it's a good idea to compare the values we have with the ones available in sites like [OSSInsights](https://ossinsight.io/analyze) or [daily-stars-explorer](https://emanuelef.github.io/daily-stars-explorer)
 
 ## Author
 

@@ -50,6 +50,8 @@ public class Technology extends PanacheEntityBase {
 	public String packageManagerUrl;
 	@AvroDoc("source code repository url")
 	public String repositoryUrl;
+	@AvroDoc("Distyribution platform for the technology. It doesn't implies a specific language is used.")
+	public String platform;
 	@Override
 	public String toString() {
 		return "Technology [" + (name != null ? "name=" + name + ", " : "")

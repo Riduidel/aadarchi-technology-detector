@@ -1,9 +1,0 @@
-[core]
-    remote = zdrive
-    hardlink_lock = true
-['remote "zdrive"']
-    url = https://drive.google.com/drive/folders/13dA8evm5SqZ3nAGD8e4NqtbiZYgQ9QVN
-['remote "local-backup"']
-    url = ../../aadarchi-technology-detector-dvc-backup
-['db "docker"']
-  url = "postgresql://tech-trendz@localhost/tech-trendz"
