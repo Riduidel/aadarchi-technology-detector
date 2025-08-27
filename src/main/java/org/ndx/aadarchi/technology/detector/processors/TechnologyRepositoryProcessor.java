@@ -1,6 +1,7 @@
 package org.ndx.aadarchi.technology.detector.processors;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.apache.camel.Exchange;
 import org.ndx.aadarchi.technology.detector.model.IndicatorRepository;
@@ -42,5 +43,20 @@ public class TechnologyRepositoryProcessor {
 		returned.setTechnology(technology);
 		returned.setIndicators(indicators.toMap(technology));
 		return returned;
+	}
+
+
+	/**
+	 * Update the given technology after having applied the given consumer.
+	 * @param technology
+	 * @param updater updater function to apply
+	 * @return updated technology
+	 */
+	@Transactional
+	public Technology update(Technology technology, Consumer<Technology> updater) {
+		Technology persistent = technologies.findById(technology.id);
+		updater.accept(persistent);
+		technologies.persist(persistent);
+		return persistent;
 	}
 }
