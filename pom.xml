@@ -278,6 +278,8 @@
 						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
 						<tech-trends.libraries.io.token>
 							${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+						<tech-trendz.stackexchange.api.key>
+							${tech-trendz.stackexchange.api.key}</tech-trendz.stackexchange.api.key>
 					</systemProperties>
 				</configuration>
 			</plugin>
