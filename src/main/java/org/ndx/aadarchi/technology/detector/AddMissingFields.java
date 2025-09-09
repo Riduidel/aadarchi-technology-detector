@@ -53,7 +53,6 @@ public class AddMissingFields extends EndpointRouteBuilder {
     	from(ADD_MISSING_FIELDS)
 			.routeId(getClass().getSimpleName()+"-2-add-missing-fields")
 			.description("Add missing fields to technology")
-			.log("📦️ Adding missing fields to ${body}")
 			.process(this::addPlatform)
 			    		;
     }
@@ -65,6 +64,7 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	private void addPlatform(Exchange exchange1) {
 		Technology body = (Technology) exchange1.getMessage().getBody();
 		if(body.platform==null) {
+			Log.infof("🚚 Adding missing platform to %s", body);
 			Technology technology = addPlatform(body);
 			exchange1.getMessage().setBody(technology);
 		}
