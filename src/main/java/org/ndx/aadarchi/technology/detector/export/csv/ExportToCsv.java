@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.ndx.aadarchi.technology.detector.StarterRoute;
 
 import io.quarkus.logging.Log;
+import io.smallrye.config.SmallRyeConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManagerFactory;
@@ -64,6 +66,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 	}
 	
 	private void configureTableExportFor(CSVTableExport export) {
+		SmallRyeConfig config = org.eclipse.microprofile.config.ConfigProvider.getConfig().unwrap(SmallRyeConfig.class);
 		// This generates the file:// prefix, so no need to add it afterwards
 		String FILE_NAME = export.table.toUpperCase()+".csv";
 		FileEndpointBuilder exportPath = file(exportBaseFolder.toFile().getPath())
@@ -91,34 +94,43 @@ public class ExportToCsv extends EndpointRouteBuilder {
 		String GLOBALLY_ENABLED = EXPORT+".enabled";
 		String GCP_ENABLED = EXPORT+".to.gcp.enabled";
 		
-		from(direct(export.route()))
-			.id(export.route())
-			.choice()
-			.when(simple("{{"+GLOBALLY_ENABLED+":true}}"))
-				.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
-				.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
-				.setBody(constant(export.readTable()))
-				.to(jdbc("default").outputType("StreamList"))
-				.multicast()
-					.to(direct(export.route()+"-marshal-headers"))
-					.to(direct(export.route()+"-marshal-rows"))
-					.choice()
-					.when(simple("{{"+GCP_ENABLED+":true}}"))
-						.log(LoggingLevel.INFO, "📤 Pushing "+export.table+" to GCP")
-						.pollEnrich(exportPath)
-						.setHeader(GoogleCloudStorageConstants.OBJECT_NAME, constant(FILE_NAME))
-						.to(googleStorage("aadarchi"))
-						.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
-					.endChoice()
-					.otherwise()
-						.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" to GCP is disabled due to property "+GCP_ENABLED+" resolving to false")
+		Optional<Boolean> globallyEnabled = config.getOptionalValue(GLOBALLY_ENABLED, Boolean.class);
+		if(globallyEnabled.orElse(false)) {
+			from(direct(export.route()))
+				.id(export.route())
+				.choice()
+				.when(simple("{{"+GLOBALLY_ENABLED+":true}}"))
+					.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
+					.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
+					.setBody(constant(export.readTable()))
+					.to(jdbc("default").outputType("StreamList"))
+					.multicast()
+						.to(direct(export.route()+"-marshal-headers"))
+						.to(direct(export.route()+"-marshal-rows"))
+						.choice()
+						.when(simple("{{"+GCP_ENABLED+":true}}"))
+							.log(LoggingLevel.INFO, "📤 Pushing "+export.table+" to GCP")
+							.pollEnrich(exportPath)
+							.setHeader(GoogleCloudStorageConstants.OBJECT_NAME, constant(FILE_NAME))
+							.to(googleStorage("aadarchi"))
+							.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
+						.endChoice()
+						.otherwise()
+							.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" to GCP is disabled due to property "+GCP_ENABLED+" resolving to false")
+						.end()
 					.end()
+					.endChoice()
+				.otherwise()
+					.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" is disabled due to property "+GLOBALLY_ENABLED+" resolving to false")
 				.end()
-				.endChoice()
-			.otherwise()
-				.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" is disabled due to property "+GLOBALLY_ENABLED+" resolving to false")
-			.end()
-			;
+				;
+		} else {
+			// Generate a fake empty route
+			from(direct(export.route()))
+				.id(export.route())
+				.log(LoggingLevel.WARN, "Exporting "+export.table+" is globally disabled")
+				.end();
+		}
 	}
 	
 	private void putJdbcColumnNamesInBody(Exchange exchange) {
