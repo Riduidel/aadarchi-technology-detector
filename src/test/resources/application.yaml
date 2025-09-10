@@ -1,0 +1,8 @@
+tech-trends:
+  export:
+    INDICATOR:
+      csv:
+        enabled: false
+    TECHNOLOGY:
+      csv:
+        enabled: false

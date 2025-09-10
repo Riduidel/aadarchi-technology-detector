@@ -30,7 +30,12 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	private List<String> rejectedPlatforms;
 	@RestClient LibrariesIOClient librariesIo;
 
-	@Inject TechnologyRepositoryProcessor technologies;
+	TechnologyRepositoryProcessor technologies;
+
+	@Inject
+	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
+		this.technologies = technologies;
+	}
 
 	private Map<String, String> platformMappings;
 	
