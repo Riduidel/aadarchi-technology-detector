@@ -15,6 +15,17 @@
       per:
         page: 10
         platform: 100
+'%test':
+      INDICATOR:
+        csv:
+          to:
+            gcp:
+              enabled: false
+      TECHNOLOGY:
+        csv:
+          to:
+            gcp:
+              enabled: false
 
 camel:
   threadpool:
