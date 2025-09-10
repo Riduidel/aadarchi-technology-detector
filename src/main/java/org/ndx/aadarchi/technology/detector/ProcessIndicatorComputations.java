@@ -54,7 +54,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.log("🔍 Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
 			.process(this::findAllOldestFirst)
-			.log("✅ Found ${body.size} technologies")
+			.log("✅ Found ${body.size} indicators to compute")
 			.split(body())
 				.parallelProcessing()
 					.to(PROCESS_ONE_TECHNOLOGY)
@@ -78,7 +78,8 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			;
 	}
 	public void findAllOldestFirst(Exchange exchange) {
-		exchange.getMessage().setBody(indicators.findAllOldestFirst());
+		Iterable<IndicatorComputation> allOldestFirst = indicators.findAllOldestFirst();
+		exchange.getMessage().setBody(allOldestFirst);
 	}
 	public boolean canComputeIndicator(Exchange exchange) {
 		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);

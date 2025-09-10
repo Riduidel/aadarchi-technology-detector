@@ -97,6 +97,13 @@ tech-trends:
             enabled: false
       
   indicators:
+    computations:
+      # The "interesting" technologies are the ones for which we want indicators to be computed first
+      interesting:
+        technologies:
+          - 2 # React
+          - 17 # Vue
+          - 2410 # Angular
     github:
       stars:
         graphql:
