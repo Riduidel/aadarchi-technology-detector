@@ -11,11 +11,6 @@
           to:
             gcp:
               enabled: false
-    github:
-      stars:
-        missing-count-percentage-threshold: 10
-      forks:
-        missing-count-percentage-threshold: 10
     projects:
       per:
         page: 10
