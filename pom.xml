@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.ndx.aadarchi.technology-detector</groupId>
-	<artifactId>fetch-popular-artifacts</artifactId>
+	<groupId>org.ndx.tech-lab</groupId>
+	<artifactId>tech-lab-ingester</artifactId>
 	<version>${revision}</version>
 
 	<properties>
@@ -275,9 +275,9 @@
 				</executions>
 				<configuration>
 					<systemProperties>
-						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
-						<tech-trends.libraries.io.token>
-							${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+						<tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+						<tech-lab-ingester.libraries.io.token>
+							${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -296,7 +296,7 @@
 						<java.util.logging.manager>
 							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
-                        <tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
+                        <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
                     </systemPropertyVariables>
                 </configuration>
 			</plugin>

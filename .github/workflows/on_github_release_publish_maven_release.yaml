@@ -29,7 +29,7 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Publish package
-        run: "mvn --batch-mode deploy -Drevision=$VERSION -Dtech-trends.github.token=${GITHUB_TOKEN} -Dtech-trends.libraries.io.token=${LIBRARIES_IO_TOKEN}"
+        run: "mvn --batch-mode deploy -Drevision=$VERSION -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN}"
         env:
           VERSION: "${{steps.release_number.outputs.tag_name}}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

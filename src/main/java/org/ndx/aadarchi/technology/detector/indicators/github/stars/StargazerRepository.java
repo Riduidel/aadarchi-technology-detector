@@ -19,7 +19,7 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class StargazerRepository implements PanacheRepository<Stargazer> {
-	@ConfigProperty(name = "tech-trends.indicators.github.stars.sql.indicator")
+	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.sql.indicator")
 	public String groupStarsByMonths;
 	private final EntityManager entityManager;
 

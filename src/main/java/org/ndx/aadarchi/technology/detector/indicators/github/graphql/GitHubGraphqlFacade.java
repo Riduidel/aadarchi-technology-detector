@@ -46,13 +46,13 @@ public class GitHubGraphqlFacade {
 	@GraphQLClient("github")
 	DynamicGraphQLClient dynamicClient;
 	
-	@ConfigProperty(name = "tech-trends.indicators.github.stars.graphql.today")
+	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.graphql.today")
 	String githubStarsToday;
-	@ConfigProperty(name = "tech-trends.indicators.github.stars.graphql.history")
+	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.graphql.history")
 	String githubStarsHistory;
-	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.today")
+	@ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.graphql.today")
 	String githubForksToday;
-	@ConfigProperty(name = "tech-trends.indicators.github.forks.graphql.history")
+	@ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.graphql.history")
 	String githubForksHistory;
 
 	public class BucketThreadParkedLogger implements BucketListener {

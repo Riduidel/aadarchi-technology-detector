@@ -88,7 +88,7 @@ jobs:
 
       - name: Run everything in the same step
         run: |
-          java -Dtech-trends.github.token=${GITHUB_COM_TOKEN} -Dtech-trends.libraries.io.token=${LIBRARIES_IO_TOKEN} -jar fetch-popular-artifacts-$VERSION-runner.jar
+          java -Dtech-lab-ingester.github.token=${GITHUB_COM_TOKEN} -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN} -jar fetch-popular-artifacts-$VERSION-runner.jar
         env:
           VERSION: "${{steps.version.outputs.release}}"
           GITHUB_COM_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

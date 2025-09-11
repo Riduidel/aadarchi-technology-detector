@@ -30,7 +30,7 @@ public class ExportToJson extends EndpointRouteBuilder {
 		this.technologies = technologies;
 	}
 	
-	@ConfigProperty(name = "tech-trends.export.folder", defaultValue = "data/export")
+	@ConfigProperty(name = "tech-lab-ingester.export.folder", defaultValue = "data/export")
 	public Path exportBaseFolder;
 	
 	@Inject EntityManager entityManager;

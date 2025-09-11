@@ -17,7 +17,7 @@ import jakarta.ws.rs.QueryParam;
 
 @RateLimit(value = 60, window = 1, windowUnit = ChronoUnit.MINUTES)
 @RegisterRestClient(configKey = "librariesio")
-@ClientQueryParam(name="api_key", value="${tech-trends.libraries.io.token}")
+@ClientQueryParam(name="api_key", value="${tech-lab-ingester.libraries.io.token}")
 public interface LibrariesIOClient {
 	@CacheResult(cacheName="libraries-io-platforms") 
 	@GET @Path("/platforms")

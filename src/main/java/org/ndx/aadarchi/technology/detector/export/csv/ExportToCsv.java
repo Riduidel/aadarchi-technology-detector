@@ -36,7 +36,7 @@ import jakarta.persistence.metamodel.EntityType;
 public class ExportToCsv extends EndpointRouteBuilder {
 	@Inject
 	EntityManagerFactory entityManagerFactory;
-	@ConfigProperty(name = "tech-trends.export.folder", defaultValue = "data/export")
+	@ConfigProperty(name = "tech-lab-ingester.export.folder", defaultValue = "data/export")
 	public Path exportBaseFolder;
 
 	public static record CSVTableExport(String table, String readTable) {
@@ -90,7 +90,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 			.to(exportPath.fileExist(GenericFileExist.Append))
 			.end();
 		
-		String EXPORT = "tech-trends.export."+export.table+".csv";
+		String EXPORT = "tech-lab-ingester.export."+export.table+".csv";
 		String GLOBALLY_ENABLED = EXPORT+".enabled";
 		String GCP_ENABLED = EXPORT+".to.gcp.enabled";
 		

@@ -20,7 +20,7 @@ import jakarta.transaction.Transactional;
 @ApplicationScoped
 public class ForkRepository implements PanacheRepository<Fork>{
 
-    @ConfigProperty(name = "tech-trends.indicators.github.forks.sql.indicator")
+    @ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.sql.indicator")
     public String groupForksByMonthsSql;
     private final EntityManager entityManager;
 
