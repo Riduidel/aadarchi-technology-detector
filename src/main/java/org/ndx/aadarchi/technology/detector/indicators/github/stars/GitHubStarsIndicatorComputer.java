@@ -9,6 +9,7 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
@@ -31,6 +32,9 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 
 	public static final String GITHUB_STARS = "github.stars";
 	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
+
+    @ConfigProperty(name = "tech-trends.github.stars.missing-count-percentage-threshold", defaultValue = "10")
+    int missingCountPercentageThreshold;
 	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
 	@Inject StargazerRepository stargazersRepository;
 	@Inject GitHubGraphqlFacade githubClient;
@@ -85,7 +89,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 		long localCount = stargazersRepository.count(path);
 		int remoteCount = githubClient.getStargazers(path.getLeft(), path.getRight());
 		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);
-		boolean forceRedownload = missingCountPercentage>10;
+		boolean forceRedownload = missingCountPercentage > missingCountPercentageThreshold;
 		if(forceRedownload) {
 			Log.infof("📥 For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
 		} else {
