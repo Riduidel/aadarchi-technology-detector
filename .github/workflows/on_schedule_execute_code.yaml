@@ -28,7 +28,7 @@ jobs:
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: Riduidel
-          repo: aadarchi-technology-detector
+          repo: tech-lab-ingester
       - run: echo "Using version $VERSION"
         env:
           VERSION: "${{steps.version.outputs.release}}"
@@ -70,7 +70,7 @@ jobs:
               {
                 "id":"github",
                 "name":"github",
-                "url":"https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector",
+                "url":"https://maven.pkg.github.com/Riduidel/tech-lab-ingester",
                 "snapshots":{"enabled":true}
               }
             ]

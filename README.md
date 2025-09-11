@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to aadarchi-technology-detector 👋</h1>
+<h1 align="center">Welcome to tech-lab-ingester 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.00-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/kefranabg/readme-md-generator#readme" target="_blank">
@@ -8,13 +8,13 @@
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/kefranabg/readme-md-generator/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/kefranabg/aadarchi-technology-detector" />
+    <img alt="License: MIT" src="https://img.shields.io/github/license/kefranabg/tech-lab-ingester" />
   </a>
 </p>
 
 > A Java project loosely spawned aadarchi which aims to detect notable technologies in a variety of languages
 
-### 🏠 [Homepage](https://github.com/Riduidel/aadarchi-technology-detector)
+### 🏠 [Homepage](https://github.com/Riduidel/tech-lab-ingester)
 
 ## Prerequisites
 
@@ -66,7 +66,7 @@ Once this profile is created, developing is as easy as
 
 We do want to have new features.
 But we want to have these features discussed **first**.
-So if you want to develop a new feature, check first if there is an associated [issue](https://github.com/Riduidel/aadarchi-technology-detector/issues) (and believe us, it's easy to add new issues on this project).
+So if you want to develop a new feature, check first if there is an associated [issue](https://github.com/Riduidel/tech-lab-ingester/issues) (and believe us, it's easy to add new issues on this project).
 Once the issue exists, you can create your PR and we will try to review it as fast as possible.
 
 ### Validating data

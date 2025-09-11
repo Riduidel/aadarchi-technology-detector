@@ -25,7 +25,7 @@
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 	</properties>
 
-    <url>https://riduidel.github.io/aadarchi-technology-detector/</url>
+    <url>https://riduidel.github.io/tech-lab-ingester/</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -45,20 +45,20 @@
     <scm>
         <!-- We use https connections for using aadarchi.github.token as
 		password -->
-        <connection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</connection>
-        <developerConnection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</developerConnection>
-        <url>https://github.com/Riduidel/aadarchi-technology-detector.git</url>
+        <connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
+        <developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>
+        <url>https://github.com/Riduidel/tech-lab-ingester.git</url>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/Riduidel/aadarchi-technology-detector/issues</url>
+        <url>https://github.com/Riduidel/tech-lab-ingester/issues</url>
     </issueManagement>
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector</url>
+            <url>https://maven.pkg.github.com/Riduidel/tech-lab-ingester</url>
         </repository>
     </distributionManagement>
 	<dependencyManagement>
