@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.ndx.tech-lab</groupId>
+	<groupId>com.zenika.tech-lab</groupId>
 	<artifactId>tech-lab-ingester</artifactId>
 	<version>${revision}</version>
 
@@ -349,7 +349,7 @@
 							<sourceDirectory>
 								${basedir}/src/build/resources/examples</sourceDirectory>
 							<targetPackage>
-								org.ndx.aadarchi.technology.detector.librariesio.model</targetPackage>
+								com.zenika.tech.lab.ingester.librariesio.model</targetPackage>
 							<sourceType>json</sourceType>
 							<useJakartaValidation>true</useJakartaValidation>
 						</configuration>

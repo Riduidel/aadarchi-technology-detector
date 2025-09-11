@@ -10,6 +10,8 @@ import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
+
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
