@@ -186,6 +186,52 @@ tech-trends:
             WHERE REPO_OWNER=:owner AND REPO_NAME=:name
             GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
 
+      issues:
+        graphql:
+          # Query for total number of issues
+          today: |
+            query ($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                issues {
+                  totalCount
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query ($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                issues(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt
+                    author {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual issues
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM ISSUE_DATE) AS ISSUE_YEAR,
+              EXTRACT(MONTH FROM ISSUE_DATE) AS ISSUE_MONTH,
+              COUNT(ISSUE_DATE) AS ISSUE_BY_MONTH
+            FROM
+              GITHUB_ISSUES
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM ISSUE_DATE), EXTRACT(MONTH FROM ISSUE_DATE);
   projects:
     per:
       page: 10

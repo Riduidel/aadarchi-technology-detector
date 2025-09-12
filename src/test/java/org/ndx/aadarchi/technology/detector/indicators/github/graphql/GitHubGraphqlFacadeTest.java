@@ -1,7 +1,5 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
-import static org.assertj.core.api.Assertions.from;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.camel.RoutesBuilder;
@@ -18,10 +16,10 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
 	@Inject GitHubGraphqlFacade facade;
 	
 	@Override
-	protected RoutesBuilder createRouteBuilder() throws Exception {
+	protected RoutesBuilder createRouteBuilder() {
 		return new RouteBuilder() {
 			@Override
-			public void configure() throws Exception {
+			public void configure() {
 				from("direct:start").transform().simple("Hello ${body}").to("mock:result");
 			}
 		};
@@ -33,6 +31,11 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
 			.isGreaterThan(100);
 	}
 
+    @Test
+    void can_count_Issues_for_one_popular_project() {
+        Assertions.assertThat(facade.getCurrentTotalNumberOfIssue("microsoft", "TypeScript"))
+                .isGreaterThan(42000);
+    }
 
 	@Test
 	void can_get_more_than_100_forks_for_one_popular_project() {
