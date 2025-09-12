@@ -37,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.*;
+
 @ApplicationScoped
 public class GitHubGraphqlFacade {
 	private static final int TOKEN_LOWER_BOUND = 100;
@@ -57,6 +59,10 @@ public class GitHubGraphqlFacade {
     String githubIssuesToday;
     @ConfigProperty(name = "tech-trends.indicators.github.issues.graphql.history")
     String githubIssuesHistory;
+    @ConfigProperty(name = "tech-trends.indicators.github.discussions.graphql.today")
+    String githubDiscussionsToday;
+    @ConfigProperty(name = "tech-trends.indicators.github.discussions.graphql.history")
+    String githubDiscussionsHistory;
 
 	public class BucketThreadParkedLogger implements BucketListener {
 
@@ -422,6 +428,80 @@ public class GitHubGraphqlFacade {
             } while(shouldContinue);
         } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(String.format("Error retrieving issue history for %s/%s", owner, name), e);
+        }
+    }
+
+    /**
+     * Retrieves the current total number of discussions for a repository.
+     * @param owner Repository owner
+     * @param name Repository name
+     * @return Total number of discussions
+     */
+    public int getCurrentTotalNumberOfDiscussion(String owner, String name) {
+        try {
+            Map<String, Object> arguments = Map.of(
+                    "owner", owner,
+                    "name", name);
+            Response response = executeSync(githubDiscussionsToday, arguments, 1);
+            if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                RepositoryWithDiscussionCount repo = response.getObject(RepositoryWithDiscussionCount.class, "repository");
+                if (repo != null) {
+                    return repo.discussions.totalCount;
+                } else {
+                    Log.warnf("The GraphQL response for getDiscussionCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
+                    return 0;
+                }
+            } else {
+                throw processGraphqlErrors(arguments, response);
+            }
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(String.format("Error retrieving discussion count for %s/%s", owner, name), e);
+        }
+    }
+
+    /**
+     * Retrieves the complete discussion history for a repository, page by page.
+     * @param owner Repository owner
+     * @param name Repository name
+     * @param force If true, continues even if a page contains no new processed data.
+     * @param processDiscussions Function to process each received discussion page. Must return true if processing should continue.
+     */
+    public void getAllDiscussions(String owner, String name, boolean force, Function<RepositoryWithDiscussionList, Boolean> processDiscussions) {
+        try {
+            Map<String, Object> arguments = new TreeMap<>(Map.of(
+                    "owner", owner,
+                    "name", name));
+            RepositoryWithDiscussionList repositoryPage;
+            boolean shouldContinue = true;
+            do {
+                Log.debugf("Fetching discussions page for %s/%s with arguments: %s", owner, name, arguments);
+                Response response = executeSync(githubDiscussionsHistory, arguments, 1);
+                if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                    repositoryPage = response.getObject(RepositoryWithDiscussionList.class, "repository");
+                    if (repositoryPage == null || repositoryPage.discussions == null || repositoryPage.discussions.pageInfo == null) {
+                        Log.errorf("Invalid or incomplete response from GraphQL for getAllDiscussions(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
+                        throw new RuntimeException("Incomplete GraphQL response for discussion history.");
+                    }
+
+                    shouldContinue = repositoryPage.discussions.pageInfo.hasPreviousPage;
+                    boolean hasProcessedSomething = processDiscussions.apply(repositoryPage);
+
+                    if(!force && !hasProcessedSomething) {
+                        Log.infof("No new discussions processed for %s/%s in this page, early shutdown.", owner, name);
+                        shouldContinue = false;
+                    }
+
+                    if (shouldContinue) {
+                        Log.debugf("Processing discussion page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.discussions.pageInfo.startCursor);
+                        arguments.put("before", repositoryPage.discussions.pageInfo.startCursor);
+                    }
+                } else {
+                    Log.debugf("Discussion processing complete for %s/%s.", owner, name);
+                    throw processGraphqlErrors(arguments, response);
+                }
+            } while(shouldContinue);
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(String.format("Error retrieving discussion history for %s/%s", owner, name), e);
         }
     }
 }
