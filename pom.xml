@@ -43,7 +43,7 @@
         </developer>
     </developers>
     <scm>
-        <!-- We use https connections for using aadarchi.github.token as
+        <!-- We use https connections for using tech-lab-ingester.github.token as
 		password -->
         <connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
         <developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>

@@ -30,9 +30,9 @@ quarkus:
       volumes:
         "data/database/postgresql": /var/lib/postgresql/data
       reuse: true
-      db-name: tech-trendz
-      username: tech-trendz
-      password: tech-trendz
+      db-name: tech-lab-ingester
+      username: tech-lab-ingester
+      password: tech-lab-ingester
     health:
       enabled: true
     jdbc:

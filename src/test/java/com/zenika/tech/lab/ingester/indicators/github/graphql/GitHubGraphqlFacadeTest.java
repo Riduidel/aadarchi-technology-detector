@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
+package com.zenika.tech.lab.ingester.indicators.github.graphql;
 
 import static org.assertj.core.api.Assertions.from;
 
