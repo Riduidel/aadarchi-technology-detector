@@ -394,15 +394,15 @@ public class GitHubGraphqlFacade {
                 if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
                     repositoryPage = response.getObject(RepositoryWithIssueList.class, "repository");
                     if (repositoryPage == null || repositoryPage.issues == null || repositoryPage.issues.pageInfo == null) {
-                        Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
-                        throw new RuntimeException("Incomplete GraphQL response for fork history.");
+                        Log.errorf("Invalid or incomplete response from GraphQL for getAllIssues(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
+                        throw new RuntimeException("Incomplete GraphQL response for issue history.");
                     }
 
                     shouldContinue = repositoryPage.issues.pageInfo.hasPreviousPage;
                     boolean hasProcessedSomething = processIssues.apply(repositoryPage);
 
                     if(!force && !hasProcessedSomething) {
-                        Log.infof("No new forks processed for %s/%s in this page, early shutdown.", owner, name);
+                        Log.infof("No new issues processed for %s/%s in this page, early shutdown.", owner, name);
                         shouldContinue = false;
                     }
 
@@ -411,7 +411,7 @@ public class GitHubGraphqlFacade {
                         arguments.put("before", repositoryPage.issues.pageInfo.startCursor);
                     }
                 } else {
-                    Log.debugf("Fork processing complete for %s/%s.", owner, name);
+                    Log.debugf("Issue processing complete for %s/%s.", owner, name);
                     throw processGraphqlErrors(arguments, response);
                 }
             } while(shouldContinue);

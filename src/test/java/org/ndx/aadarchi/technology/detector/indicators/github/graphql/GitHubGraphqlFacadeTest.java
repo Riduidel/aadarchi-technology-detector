@@ -34,7 +34,7 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
     @Test
     void can_count_Issues_for_one_popular_project() {
         Assertions.assertThat(facade.getCurrentTotalNumberOfIssue("microsoft", "TypeScript"))
-                .isGreaterThan(100);
+                .isGreaterThan(42000);
     }
 
 	@Test

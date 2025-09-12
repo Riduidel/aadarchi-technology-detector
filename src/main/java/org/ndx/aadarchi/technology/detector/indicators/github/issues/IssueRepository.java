@@ -8,7 +8,6 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.ndx.aadarchi.technology.detector.indicators.github.forks.GitHubForksIndicatorComputer;
 import org.ndx.aadarchi.technology.detector.model.Indicator;
 import org.ndx.aadarchi.technology.detector.model.Technology;
 
@@ -96,7 +95,7 @@ public class IssueRepository implements PanacheRepository<Issue>{
         Date d = Date.from(localDate.atStartOfDay(ZoneId.of("UTC")).toInstant());
         return new Indicator(
                 technology,
-                GitHubForksIndicatorComputer.GITHUB_FORKS,
+                GitHubIssuesIndicatorComputer.GITHUB_ISSUES,
                 d,
                 row[2].toString()
         );

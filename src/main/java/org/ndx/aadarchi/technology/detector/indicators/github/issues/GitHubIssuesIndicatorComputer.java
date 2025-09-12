@@ -10,7 +10,6 @@ import org.apache.camel.util.Pair;
 import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
 import org.ndx.aadarchi.technology.detector.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlException;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
 import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithIssueList;
 import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
@@ -20,7 +19,6 @@ import org.ndx.aadarchi.technology.detector.model.Technology;
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBuilder  implements IndicatorComputer, GitHubBased {

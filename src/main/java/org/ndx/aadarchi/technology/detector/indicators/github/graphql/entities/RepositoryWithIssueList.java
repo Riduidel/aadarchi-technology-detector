@@ -4,7 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 /*
-* DTO for the fork history query response
+* DTO for the issue history query response
 * */
 public class RepositoryWithIssueList {
     public Issues issues;
