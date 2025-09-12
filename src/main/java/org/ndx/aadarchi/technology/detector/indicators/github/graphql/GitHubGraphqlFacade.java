@@ -1,5 +1,28 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.graphql;
 
+import io.github.bucket4j.BandwidthBuilder;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.BucketConfiguration;
+import io.github.bucket4j.BucketListener;
+import io.github.bucket4j.TokensInheritanceStrategy;
+import io.quarkus.logging.Log;
+import io.smallrye.graphql.client.GraphQLClient;
+import io.smallrye.graphql.client.InvalidResponseException;
+import io.smallrye.graphql.client.Response;
+import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.apache.commons.lang3.time.DurationFormatUtils;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RateLimit;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithForkList;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithIssueCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithIssueList;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerCount;
+import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithStargazerList;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -13,24 +36,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.time.DurationFormatUtils;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.faulttolerance.Retry;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.*;
-
-import io.github.bucket4j.BandwidthBuilder;
-import io.github.bucket4j.Bucket;
-import io.github.bucket4j.BucketConfiguration;
-import io.github.bucket4j.BucketListener;
-import io.github.bucket4j.TokensInheritanceStrategy;
-import io.quarkus.logging.Log;
-import io.smallrye.graphql.client.GraphQLClient;
-import io.smallrye.graphql.client.InvalidResponseException;
-import io.smallrye.graphql.client.Response;
-import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class GitHubGraphqlFacade {
