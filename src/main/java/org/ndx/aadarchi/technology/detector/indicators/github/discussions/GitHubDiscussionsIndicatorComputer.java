@@ -126,14 +126,14 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRo
     /**
      * Persist discussion event if it doesn't exist.
      * @param path Repository path (owner/name)
-     * @param discussionNade The discussion node data from GraphQL
+     * @param discussionNode The discussion node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistDiscussion(Pair<String> path, RepositoryWithDiscussionList.DiscussionNode discussionNade) {
+    private boolean maybePersistDiscussion(Pair<String> path, RepositoryWithDiscussionList.DiscussionNode discussionNode) {
         Discussion toPersist = new Discussion(
                 path.getLeft(), path.getRight(),
-                Date.from(discussionNade.createdAt.toInstant()),
-                discussionNade.author.login
+                Date.from(discussionNode.createdAt.toInstant()),
+                discussionNode.author.login
         );
         return discussionRepository.maybePersist(toPersist);
     }
