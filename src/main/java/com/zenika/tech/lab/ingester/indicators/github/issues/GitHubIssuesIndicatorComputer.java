@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues.IssueNode;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues.RepositoryWithIssueCountHistory;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
@@ -13,7 +15,6 @@ import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueList;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -91,7 +92,7 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
             githubClient.getAllIssues(path.getLeft(), path.getRight(), forceRedownload,
                     issueListPage -> {
                         try {
-    						processedCount.addAndGet(issueListPage.issues.nodes.size());
+    						processedCount.addAndGet(issueListPage.issues().nodes().size());
                             return this.processPage(path, issueListPage);
                         } finally {
     						if(Log.isDebugEnabled()) {
@@ -114,12 +115,12 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
      * @param issuesListPage The page data received from GraphQL
      * @return true if we have to continue the process (if at least one issues event was persisted)
      */
-    private boolean processPage(Pair<String> path, RepositoryWithIssueList issuesListPage) {
-        if (issuesListPage.issues == null || issuesListPage.issues.nodes == null) {
+    private boolean processPage(Pair<String> path, RepositoryWithIssueCountHistory issuesListPage) {
+        if (issuesListPage.issues() == null || issuesListPage.issues().nodes() == null) {
             Log.warnf("Received an empty or invalid issue page for %s/%s", path.getLeft(), path.getRight());
             return false;
         }
-        return issuesListPage.issues.nodes
+        return issuesListPage.issues().nodes()
                 .stream()
                 .map(issueNode -> maybePersistIssue(path, issueNode))
                 .reduce(false, (a, b) -> a || b); // Default to false if stream is empty
@@ -131,11 +132,11 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
      * @param issueNode The issue node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistIssue(Pair<String> path, RepositoryWithIssueList.IssueNode issueNode) {
+    private boolean maybePersistIssue(Pair<String> path, IssueNode issueNode) {
         Issue toPersist = new Issue(
                 path.getLeft(), path.getRight(),
-                Date.from(issueNode.createdAt.toInstant()),
-                issueNode.author.login
+                Date.from(issueNode.createdAt().toInstant()),
+                issueNode.author().login()
         );
         return issueRepository.maybePersist(toPersist);
     }
