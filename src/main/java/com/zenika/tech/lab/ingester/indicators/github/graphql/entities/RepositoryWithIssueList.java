@@ -16,7 +16,7 @@ public class RepositoryWithIssueList {
 
     public static class IssueNode {
         public OffsetDateTime createdAt;
-        public IssueAuthor owner;
+        public IssueAuthor author;
     }
 
     public static class IssueAuthor {
