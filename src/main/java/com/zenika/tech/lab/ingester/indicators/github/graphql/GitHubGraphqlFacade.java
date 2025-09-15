@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -22,10 +21,11 @@ import org.eclipse.microprofile.faulttolerance.Retry;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RateLimit;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkList;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueCount;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueList;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerList;
 
-import graphql.GraphQLError;
 import io.github.bucket4j.BandwidthBuilder;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.BucketConfiguration;
@@ -55,6 +55,10 @@ public class GitHubGraphqlFacade {
 	String githubForksToday;
 	@ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.graphql.history")
 	String githubForksHistory;
+    @ConfigProperty(name = "tech-trends.indicators.github.issues.graphql.today")
+    String githubIssuesToday;
+    @ConfigProperty(name = "tech-trends.indicators.github.issues.graphql.history")
+    String githubIssuesHistory;
 
 	public class BucketThreadParkedLogger implements BucketListener {
 
@@ -111,7 +115,7 @@ public class GitHubGraphqlFacade {
 				+ "%s\n"
 				+ "when executed with parameters %s\n"
 				+ "generated errors\n------------\n"
-				+ "%s\n------------\n", 
+				+ "%s\n------------\n",
 				githubStarsToday,
 				arguments,
 				errorsMessage);
@@ -345,9 +349,81 @@ public class GitHubGraphqlFacade {
 		}
 	}
 
-
 	public boolean canComputeIndicator() {
 		return rateLimitingBucket.getAvailableTokens()>TOKEN_LOWER_BOUND;
 	}
 
+    /**
+     * Retrieves the current total number of issues for a repository.
+     * @param owner Repository owner
+     * @param name Repository name
+     * @return Total number of issues
+     */
+    public int getCurrentTotalNumberOfIssue(String owner, String name) {
+        try {
+            Map<String, Object> arguments = Map.of(
+                    "owner", owner,
+                    "name", name);
+            Response response = executeSync(githubIssuesToday, arguments, 1);
+            if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                RepositoryWithIssueCount repo = response.getObject(RepositoryWithIssueCount.class, "repository");
+                if (repo != null) {
+                    return repo.issues.totalCount;
+                } else {
+                    Log.warnf("The GraphQL response for getIssueCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
+                    return 0;
+                }
+            } else {
+                throw processGraphqlErrors(arguments, response);
+            }
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(String.format("Error retrieving issue count for %s/%s", owner, name), e);
+        }
+    }
+
+    /**
+     * Retrieves the complete issue history for a repository, page by page.
+     * @param owner Repository owner
+     * @param name Repository name
+     * @param force If true, continues even if a page contains no new processed data.
+     * @param processIssues Function to process each received issue page. Must return true if processing should continue.
+     */
+    public void getAllIssues(String owner, String name, boolean force, Function<RepositoryWithIssueList, Boolean> processIssues) {
+        try {
+            Map<String, Object> arguments = new TreeMap<>(Map.of(
+                    "owner", owner,
+                    "name", name));
+            RepositoryWithIssueList repositoryPage;
+            boolean shouldContinue = true;
+            do {
+                Log.debugf("Fetching issues page for %s/%s with arguments: %s", owner, name, arguments);
+                Response response = executeSync(githubIssuesHistory, arguments, 1);
+                if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                    repositoryPage = response.getObject(RepositoryWithIssueList.class, "repository");
+                    if (repositoryPage == null || repositoryPage.issues == null || repositoryPage.issues.pageInfo == null) {
+                        Log.errorf("Invalid or incomplete response from GraphQL for getAllIssues(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
+                        throw new RuntimeException("Incomplete GraphQL response for issue history.");
+                    }
+
+                    shouldContinue = repositoryPage.issues.pageInfo.hasPreviousPage;
+                    boolean hasProcessedSomething = processIssues.apply(repositoryPage);
+
+                    if(!force && !hasProcessedSomething) {
+                        Log.infof("No new issues processed for %s/%s in this page, early shutdown.", owner, name);
+                        shouldContinue = false;
+                    }
+
+                    if (shouldContinue) {
+                        Log.debugf("Processing issue page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.issues.pageInfo.startCursor);
+                        arguments.put("before", repositoryPage.issues.pageInfo.startCursor);
+                    }
+                } else {
+                    Log.debugf("Issue processing complete for %s/%s.", owner, name);
+                    throw processGraphqlErrors(arguments, response);
+                }
+            } while(shouldContinue);
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            throw new RuntimeException(String.format("Error retrieving issue history for %s/%s", owner, name), e);
+        }
+    }
 }

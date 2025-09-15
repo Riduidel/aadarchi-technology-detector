@@ -9,6 +9,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
@@ -29,6 +30,9 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
 
     public static final String GITHUB_FORKS = "github.forks";
     private static final String ROUTE_NAME = "compute-"+GITHUB_FORKS.replace('.', '-');
+
+    @ConfigProperty(name = "tech-trends.github.forks.missing-count-percentage-threshold", defaultValue = "10")
+    int missingCountPercentageThreshold;
 
     @Inject @IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators;
     @Inject ForkRepository forksRepository;
@@ -85,7 +89,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
         long localCount = forksRepository.count(path);
         int remoteCount = githubClient.getCurrentTotalNumberOfFork(path.getLeft(), path.getRight());
         int missingCountPercentage = (remoteCount > 0) ? (int) (((remoteCount - localCount) / (remoteCount * 1.0)) * 100.0) : 0;
-        boolean forceRedownload = missingCountPercentage > 10;
+        boolean forceRedownload = missingCountPercentage > missingCountPercentageThreshold;
         if(forceRedownload) {
             Log.infof("📥 For %s/%s, we have %d forks locally, and there are %d forks on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
         } else {
