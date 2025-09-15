@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.issues;
+package com.zenika.tech.lab.ingester.indicators.github.issues;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;

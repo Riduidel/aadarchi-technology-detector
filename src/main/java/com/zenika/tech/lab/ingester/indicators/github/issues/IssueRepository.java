@@ -1,4 +1,16 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.issues;
+package com.zenika.tech.lab.ingester.indicators.github.issues;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.camel.util.Pair;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import com.zenika.tech.lab.ingester.model.Indicator;
+import com.zenika.tech.lab.ingester.model.Technology;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.logging.Log;
@@ -6,16 +18,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-import org.apache.camel.util.Pair;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.ndx.aadarchi.technology.detector.model.Indicator;
-import org.ndx.aadarchi.technology.detector.model.Technology;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class IssueRepository implements PanacheRepository<Issue>{
