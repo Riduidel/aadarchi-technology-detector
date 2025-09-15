@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.ndx.aadarchi.technology-detector</groupId>
-	<artifactId>fetch-popular-artifacts</artifactId>
+	<groupId>com.zenika.tech-lab</groupId>
+	<artifactId>tech-lab-ingester</artifactId>
 	<version>${revision}</version>
 
 	<properties>
@@ -25,7 +25,7 @@
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 	</properties>
 
-    <url>https://riduidel.github.io/aadarchi-technology-detector/</url>
+    <url>https://riduidel.github.io/tech-lab-ingester/</url>
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
@@ -43,22 +43,22 @@
         </developer>
     </developers>
     <scm>
-        <!-- We use https connections for using aadarchi.github.token as
+        <!-- We use https connections for using tech-lab-ingester.github.token as
 		password -->
-        <connection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</connection>
-        <developerConnection>scm:git:https://git@github.com/Riduidel/aadarchi-technology-detector.git</developerConnection>
-        <url>https://github.com/Riduidel/aadarchi-technology-detector.git</url>
+        <connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
+        <developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>
+        <url>https://github.com/Riduidel/tech-lab-ingester.git</url>
         <tag>HEAD</tag>
     </scm>
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/Riduidel/aadarchi-technology-detector/issues</url>
+        <url>https://github.com/Riduidel/tech-lab-ingester/issues</url>
     </issueManagement>
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Riduidel/aadarchi-technology-detector</url>
+            <url>https://maven.pkg.github.com/Riduidel/tech-lab-ingester</url>
         </repository>
     </distributionManagement>
 	<dependencyManagement>
@@ -275,9 +275,9 @@
 				</executions>
 				<configuration>
 					<systemProperties>
-						<tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
-						<tech-trends.libraries.io.token>
-							${tech-trends.libraries.io.token}</tech-trends.libraries.io.token>
+						<tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+						<tech-lab-ingester.libraries.io.token>
+							${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
 					</systemProperties>
 				</configuration>
 			</plugin>
@@ -296,7 +296,7 @@
 						<java.util.logging.manager>
 							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
-                        <tech-trends.github.token>${tech-trends.github.token}</tech-trends.github.token>
+                        <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
                     </systemPropertyVariables>
                 </configuration>
 			</plugin>
@@ -349,7 +349,7 @@
 							<sourceDirectory>
 								${basedir}/src/build/resources/examples</sourceDirectory>
 							<targetPackage>
-								org.ndx.aadarchi.technology.detector.librariesio.model</targetPackage>
+								com.zenika.tech.lab.ingester.librariesio.model</targetPackage>
 							<sourceType>json</sourceType>
 							<useJakartaValidation>true</useJakartaValidation>
 						</configuration>

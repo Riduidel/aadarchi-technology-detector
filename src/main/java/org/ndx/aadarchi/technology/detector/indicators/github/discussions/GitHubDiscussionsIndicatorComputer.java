@@ -1,5 +1,13 @@
 package org.ndx.aadarchi.technology.detector.indicators.github.discussions;
 
+import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
+import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
+import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithDiscussionList;
+import com.zenika.tech.lab.ingester.model.IndicatorNamed;
+import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
+import com.zenika.tech.lab.ingester.model.Technology;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -7,29 +15,23 @@ import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
-import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
-import org.ndx.aadarchi.technology.detector.indicators.github.AbstractGitHubEndpointRouteBuilder;
-import org.ndx.aadarchi.technology.detector.indicators.github.GitHubBased;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.GitHubGraphqlFacade;
-import org.ndx.aadarchi.technology.detector.indicators.github.graphql.entities.RepositoryWithDiscussionList;
-import org.ndx.aadarchi.technology.detector.model.IndicatorNamed;
-import org.ndx.aadarchi.technology.detector.model.IndicatorRepositoryFacade;
-import org.ndx.aadarchi.technology.detector.model.Technology;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped
-public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRouteBuilder  implements IndicatorComputer, GitHubBased {
+public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRouteBuilder implements IndicatorComputer, GitHubBased {
 
     public static final String GITHUB_DISCUSSIONS = "github.discussions";
     private static final String ROUTE_NAME = "compute-"+ GITHUB_DISCUSSIONS.replace('.', '-');
 
-    @Inject @IndicatorNamed(GITHUB_DISCUSSIONS) IndicatorRepositoryFacade indicators;
+    @Inject @IndicatorNamed(GITHUB_DISCUSSIONS)
+    IndicatorRepositoryFacade indicators;
     @Inject
     DiscussionRepository discussionRepository;
-    @Inject GitHubGraphqlFacade githubClient;
+    @Inject
+    GitHubGraphqlFacade githubClient;
 
     @Override
     public void configure() throws Exception {
