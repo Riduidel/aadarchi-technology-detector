@@ -6,14 +6,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.quarkus.logging.Log;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
@@ -22,7 +23,7 @@ import jakarta.transaction.Transactional;
 @ApplicationScoped
 public class ForkRepository implements PanacheRepository<Fork>{
 
-    @ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.sql.indicator")
+    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.sql.indicator")
     public String groupForksByMonthsSql;
     private final EntityManager entityManager;
 

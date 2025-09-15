@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 
@@ -20,7 +21,7 @@ import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class StargazerRepository implements PanacheRepository<Stargazer> {
-	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.sql.indicator")
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.sql.indicator")
 	public String groupStarsByMonths;
 	private final EntityManager entityManager;
 

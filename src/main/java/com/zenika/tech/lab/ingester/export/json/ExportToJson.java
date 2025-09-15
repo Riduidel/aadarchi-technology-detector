@@ -2,18 +2,15 @@ package com.zenika.tech.lab.ingester.export.json;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.AggregationStrategies;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.model.dataformat.ParquetAvroDataFormat;
-import org.apache.parquet.hadoop.metadata.CompressionCodecName;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators;
 import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
 
@@ -31,7 +28,7 @@ public class ExportToJson extends EndpointRouteBuilder {
 		this.technologies = technologies;
 	}
 	
-	@ConfigProperty(name = "tech-lab-ingester.export.folder", defaultValue = "data/export")
+	@ConfigProperty(name = Configuration.EXPORT_PREFIX+"folder", defaultValue = "data/export")
 	public Path exportBaseFolder;
 	
 	@Inject EntityManager entityManager;

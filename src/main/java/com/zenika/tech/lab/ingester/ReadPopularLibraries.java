@@ -31,9 +31,9 @@ import jakarta.inject.Inject;
 public class ReadPopularLibraries extends EndpointRouteBuilder {
 	private static final String CONVERT_LIBRARY_TO_TECHNOLOGY = "direct:convert-library-infos";
 	private static final String GET_ALL_LIBRARIES_OF_PLATFORM = "direct:get-all-libraries-of-platform";
-	@ConfigProperty(name = "tech-lab-ingester.projects.per.page", defaultValue = "10")
+	@ConfigProperty(name = Configuration.CONFIGURATION_PREFIX+"projects.per.page", defaultValue = "10")
 	private int projectsPerPage;
-	@ConfigProperty(name="tech-lab-ingester.projects.per.platform", defaultValue = "1000")
+	@ConfigProperty(name=Configuration.CONFIGURATION_PREFIX+"projects.per.platform", defaultValue = "1000")
 	private int projectsPerPlatform;
 	@ConfigProperty(name="rejected-platforms", defaultValue="Bower,Carthage,Alcatraz,SwiftPM,Nimble,PureScript")
 	private List<String> rejectedPlatforms;

@@ -21,6 +21,7 @@ import org.apache.camel.component.google.storage.GoogleCloudStorageConstants;
 import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.StarterRoute;
 
 import io.quarkus.logging.Log;
@@ -37,9 +38,9 @@ import jakarta.persistence.metamodel.EntityType;
 public class ExportToCsv extends EndpointRouteBuilder {
 	@Inject
 	EntityManagerFactory entityManagerFactory;
-	@ConfigProperty(name = "tech-lab-ingester.export.folder", defaultValue = "data/export")
+	@ConfigProperty(name = Configuration.EXPORT_PREFIX+"folder", defaultValue = "data/export")
 	public Path exportBaseFolder;
-	@ConfigProperty(name = "tech-lab-ingester.export.csv.to.gcp.bucket", defaultValue = "tech-lab-ingester")
+	@ConfigProperty(name = Configuration.EXPORT_PREFIX+"csv.to.gcp.bucket", defaultValue = "tech-lab-ingester")
 	public String exportGcpBucket;
 
 	public static record CSVTableExport(String table, String readTable) {
@@ -93,7 +94,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 			.to(exportPath.fileExist(GenericFileExist.Append))
 			.end();
 		
-		String EXPORT = "tech-lab-ingester.export."+export.table+".csv";
+		String EXPORT = Configuration.CONFIGURATION_PREFIX+"export."+export.table+".csv";
 		String GLOBALLY_ENABLED = EXPORT+".enabled";
 		String GCP_ENABLED = EXPORT+".to.gcp.enabled";
 		

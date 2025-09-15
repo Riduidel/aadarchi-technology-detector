@@ -18,6 +18,7 @@ import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RateLimit;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkList;
@@ -47,17 +48,17 @@ public class GitHubGraphqlFacade {
 	@GraphQLClient("github")
 	DynamicGraphQLClient dynamicClient;
 	
-	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.graphql.today")
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.graphql.today")
 	String githubStarsToday;
-	@ConfigProperty(name = "tech-lab-ingester.indicators.github.stars.graphql.history")
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.graphql.history")
 	String githubStarsHistory;
-	@ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.graphql.today")
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.graphql.today")
 	String githubForksToday;
-	@ConfigProperty(name = "tech-lab-ingester.indicators.github.forks.graphql.history")
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.graphql.history")
 	String githubForksHistory;
-    @ConfigProperty(name = "tech-trends.indicators.github.issues.graphql.today")
+    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.issues.graphql.today")
     String githubIssuesToday;
-    @ConfigProperty(name = "tech-trends.indicators.github.issues.graphql.history")
+    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.issues.graphql.history")
     String githubIssuesHistory;
 
 	public class BucketThreadParkedLogger implements BucketListener {
