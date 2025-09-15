@@ -128,14 +128,14 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
     /**
      * Persist issue event if it doesn't exist.
      * @param path Repository path (owner/name)
-     * @param issueNade The issue node data from GraphQL
+     * @param issueNode The issue node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistIssue(Pair<String> path, RepositoryWithIssueList.IssueNode issueNade) {
+    private boolean maybePersistIssue(Pair<String> path, RepositoryWithIssueList.IssueNode issueNode) {
         Issue toPersist = new Issue(
                 path.getLeft(), path.getRight(),
-                Date.from(issueNade.createdAt.toInstant()),
-                issueNade.owner.login
+                Date.from(issueNode.createdAt.toInstant()),
+                issueNode.author.login
         );
         return issueRepository.maybePersist(toPersist);
     }
