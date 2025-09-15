@@ -135,7 +135,7 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
         Issue toPersist = new Issue(
                 path.getLeft(), path.getRight(),
                 Date.from(issueNode.createdAt.toInstant()),
-                issueNode.owner.login
+                issueNode.author.login
         );
         return issueRepository.maybePersist(toPersist);
     }
