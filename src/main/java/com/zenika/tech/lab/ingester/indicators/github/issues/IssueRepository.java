@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 
@@ -22,7 +23,7 @@ import jakarta.transaction.Transactional;
 @ApplicationScoped
 public class IssueRepository implements PanacheRepository<Issue>{
 
-    @ConfigProperty(name = "tech-trends.indicators.github.issues.sql.indicator")
+    @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.issues.sql.indicator")
     String groupIssuesByMonthsSql;
     private final EntityManager entityManager;
 
