@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.StargazerEvent;
 import org.apache.camel.Exchange;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
@@ -16,10 +17,6 @@ import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRout
 import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlException;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.NoSuchRepository;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.RateLimitExceeded;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerList;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerList.StargazerEvent;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -102,7 +99,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 			githubClient.getAllStargazers(path.getLeft(), path.getRight(), forceRedownload,
 				repositoryPage -> {
 					try {
-						processedCount.addAndGet(repositoryPage.stargazers.edges.size());
+						processedCount.addAndGet(repositoryPage.stargazers().edges().size());
 						return this.processPage(path, repositoryPage);
 					} finally {
 						if(Log.isDebugEnabled()) {
@@ -124,8 +121,8 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 	 * @param repositoryPage
 	 * @return true if we have to continue the process (in other words, if at least one event was persisted)
 	 */
-	private boolean processPage(Pair<String> path, RepositoryWithStargazerList repositoryPage) {
-		return repositoryPage.stargazers.edges
+	private boolean processPage(Pair<String> path, RepositoryWithStargazerCountHistory repositoryPage) {
+		return repositoryPage.stargazers().edges()
 			.stream()
 			.map(event -> maybePersist(path, repositoryPage, event))
 			.collect(Collectors.reducing((a, b) -> a||b))
@@ -139,11 +136,11 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 	 * @param event
 	 * @return true if database changed, false if event already existed in db
 	 */
-	private boolean maybePersist(Pair<String> path, RepositoryWithStargazerList repositoryPage, StargazerEvent event) {
+	private boolean maybePersist(Pair<String> path, RepositoryWithStargazerCountHistory repositoryPage, StargazerEvent event) {
 		Stargazer toPersist = new Stargazer(
 				path.getLeft(), path.getRight(),
-				event.starredAt,
-				event.node.login
+				event.starredAt(),
+				event.node().login
 				);
 		
 		return stargazersRepository.maybePersist(toPersist);

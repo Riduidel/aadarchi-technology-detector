@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountToday;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountToday;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
@@ -24,8 +26,6 @@ import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RateLimit;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueList;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerCount;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerList;
 
 import io.github.bucket4j.BandwidthBuilder;
 import io.github.bucket4j.Bucket;
@@ -227,7 +227,7 @@ public class GitHubGraphqlFacade {
 					"name", name);
 			Response response = executeSync(githubStarsToday, arguments, 1);
 			if(response.getErrors()==null || response.getErrors().isEmpty()) {
-				return response.getObject(RepositoryWithStargazerCount.class, "repository").stargazerCount;
+				return response.getObject(RepositoryWithStargazerCountToday.class, "repository").stargazerCount();
 			} else {
 				throw processGraphqlErrors(arguments, response);
 			}
@@ -245,18 +245,18 @@ public class GitHubGraphqlFacade {
 	 * at least one was persisted)
 	 */
 	@Retry(maxRetries = 3)
-	public void getAllStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerList, Boolean> processStargazers) {
+	public void getAllStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerCountHistory, Boolean> processStargazers) {
 		try {
 			Map<String, Object> arguments = new TreeMap<>(Map.of(
 					"owner", owner,
 					"name", name));
-			RepositoryWithStargazerList repositoryPage = null;
+            RepositoryWithStargazerCountHistory repositoryPage = null;
 			boolean shouldContinue = true;
 			do {
 				Response response = executeSync(githubStarsHistory, arguments, 1);
 				if(response.getErrors()==null || response.getErrors().isEmpty()) {
-					repositoryPage = response.getObject(RepositoryWithStargazerList.class, "repository");
-					shouldContinue = repositoryPage.stargazers.pageInfo.hasPreviousPage();
+					repositoryPage = response.getObject(RepositoryWithStargazerCountHistory.class, "repository");
+					shouldContinue = repositoryPage.stargazers().pageInfo().hasPreviousPage();
 					boolean hasSavedSomething = processStargazers.apply(repositoryPage);
 					if(!force) {
 						if(hasSavedSomething) {
@@ -265,7 +265,7 @@ public class GitHubGraphqlFacade {
 							shouldContinue = false;
 						}
 					}
-					arguments.put("before", repositoryPage.stargazers.pageInfo.startCursor());
+					arguments.put("before", repositoryPage.stargazers().pageInfo().startCursor());
 				} else {
 					throw processGraphqlErrors(arguments, response);
 				}
