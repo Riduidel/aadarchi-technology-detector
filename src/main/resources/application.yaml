@@ -1,5 +1,5 @@
 '%dev':
-  tech-trends:
+  tech-lab-ingester:
     export:
       INDICATOR:
         csv:
@@ -30,9 +30,9 @@ quarkus:
       volumes:
         "data/database/postgresql": /var/lib/postgresql/data
       reuse: true
-      db-name: tech-trendz
-      username: tech-trendz
-      password: tech-trendz
+      db-name: tech-lab-ingester
+      username: tech-lab-ingester
+      password: tech-lab-ingester
     health:
       enabled: true
     jdbc:
@@ -77,10 +77,10 @@ quarkus:
   smallrye-graphql-client:
     github:
       header:
-        Authorization: Bearer ${tech-trends.github.token}
+        Authorization: Bearer ${tech-lab-ingester.github.token}
         Content-Type: application/json; charset=utf-8
       url: https://api.github.com/graphql
-tech-trends:
+tech-lab-ingester:
   export:
     INDICATOR_COMPUTATION:
       csv:
