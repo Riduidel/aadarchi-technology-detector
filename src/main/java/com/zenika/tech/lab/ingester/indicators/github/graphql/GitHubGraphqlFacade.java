@@ -14,14 +14,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountToday;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.faulttolerance.Retry;
 
 import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RateLimit;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkCount;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkList;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithIssueList;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithStargazerCount;
@@ -256,7 +256,7 @@ public class GitHubGraphqlFacade {
 				Response response = executeSync(githubStarsHistory, arguments, 1);
 				if(response.getErrors()==null || response.getErrors().isEmpty()) {
 					repositoryPage = response.getObject(RepositoryWithStargazerList.class, "repository");
-					shouldContinue = repositoryPage.stargazers.pageInfo.hasPreviousPage;
+					shouldContinue = repositoryPage.stargazers.pageInfo.hasPreviousPage();
 					boolean hasSavedSomething = processStargazers.apply(repositoryPage);
 					if(!force) {
 						if(hasSavedSomething) {
@@ -265,7 +265,7 @@ public class GitHubGraphqlFacade {
 							shouldContinue = false;
 						}
 					}
-					arguments.put("before", repositoryPage.stargazers.pageInfo.startCursor);
+					arguments.put("before", repositoryPage.stargazers.pageInfo.startCursor());
 				} else {
 					throw processGraphqlErrors(arguments, response);
 				}
@@ -289,9 +289,9 @@ public class GitHubGraphqlFacade {
 					"name", name);
 			Response response = executeSync(githubForksToday, arguments, 1);
 			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-				RepositoryWithForkCount repo = response.getObject(RepositoryWithForkCount.class, "repository");
+				RepositoryWithForkCountToday repo = response.getObject(RepositoryWithForkCountToday.class, "repository");
 				if (repo != null) {
-					return repo.forkCount;
+					return repo.forkCount();
 				} else {
 					Log.warnf("The GraphQL response for getForkCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
 					return 0;
@@ -311,24 +311,24 @@ public class GitHubGraphqlFacade {
 	 * @param force If true, continues even if a page contains no new processed data.
 	 * @param processForks Function to process each received fork page. Must return true if processing should continue.
 	 */
-	public void getAllForks(String owner, String name, boolean force, Function<RepositoryWithForkList, Boolean> processForks) {
+	public void getAllForks(String owner, String name, boolean force, Function<RepositoryWithForkCountHistory, Boolean> processForks) {
 		try {
 			Map<String, Object> arguments = new TreeMap<>(Map.of(
 					"owner", owner,
 					"name", name));
-			RepositoryWithForkList repositoryPage;
+			RepositoryWithForkCountHistory repositoryPage;
 			boolean shouldContinue = true;
 			do {
 				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
 				Response response = executeSync(githubForksHistory, arguments, 1);
 				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-					repositoryPage = response.getObject(RepositoryWithForkList.class, "repository");
-					if (repositoryPage == null || repositoryPage.forks == null || repositoryPage.forks.pageInfo == null) {
+					repositoryPage = response.getObject(RepositoryWithForkCountHistory.class, "repository");
+					if (repositoryPage == null || repositoryPage.forks() == null || repositoryPage.forks().pageInfo() == null) {
 						Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
 						throw new RuntimeException("Incomplete GraphQL response for fork history.");
 					}
 
-					shouldContinue = repositoryPage.forks.pageInfo.hasPreviousPage;
+					shouldContinue = repositoryPage.forks().pageInfo().hasPreviousPage();
 					boolean hasProcessedSomething = processForks.apply(repositoryPage);
 
 					if(!force && !hasProcessedSomething) {
@@ -337,8 +337,8 @@ public class GitHubGraphqlFacade {
 					}
 
 					if (shouldContinue) {
-						Log.debugf("Processing fork page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.forks.pageInfo.startCursor);
-						arguments.put("before", repositoryPage.forks.pageInfo.startCursor);
+						Log.debugf("Processing fork page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.forks().pageInfo().startCursor());
+						arguments.put("before", repositoryPage.forks().pageInfo().startCursor());
 					}
 				} else {
 					Log.debugf("Fork processing complete for %s/%s.", owner, name);

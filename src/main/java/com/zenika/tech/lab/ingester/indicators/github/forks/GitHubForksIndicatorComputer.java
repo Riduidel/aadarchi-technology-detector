@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.ForkNode;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.util.Pair;
+import org.apache.commons.collections.CollectionUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
@@ -16,7 +19,6 @@ import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRout
 import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlException;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithForkList;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -101,11 +103,11 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
             githubClient.getAllForks(path.getLeft(), path.getRight(), forceRedownload,
                     forkListPage -> {
                         try {
-    						processedCount.addAndGet(forkListPage.forks.nodes.size());
+    						processedCount.addAndGet(forkListPage.forks().nodes().size());
                             return this.processPage(path, forkListPage);
                         } finally {
     						if(Log.isDebugEnabled()) {
-    							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s", 
+    							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s",
                                     processedCount.intValue(),
                                     forksRepository.count(path),
                                     remoteCount,
@@ -124,12 +126,12 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
      * @param forkListPage The page data received from GraphQL
      * @return true if we have to continue the process (if at least one fork event was persisted)
      */
-    private boolean processPage(Pair<String> path, RepositoryWithForkList forkListPage) {
-        if (forkListPage.forks == null || forkListPage.forks.nodes == null) {
+    private boolean processPage(Pair<String> path, RepositoryWithForkCountHistory forkListPage) {
+        if (forkListPage.forks() == null || CollectionUtils.isEmpty(forkListPage.forks().nodes())) {
             Log.warnf("Received an empty or invalid fork page for %s/%s", path.getLeft(), path.getRight());
             return false;
         }
-        return forkListPage.forks.nodes
+        return forkListPage.forks().nodes()
                 .stream()
                 .map(forkNode -> maybePersistFork(path, forkNode))
                 .collect(Collectors.reducing(false, (a, b) -> a || b)); // Default to false if stream is empty
@@ -141,11 +143,11 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
      * @param forkNode The fork node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistFork(Pair<String> path, RepositoryWithForkList.ForkNode forkNode) {
+    private boolean maybePersistFork(Pair<String> path, ForkNode forkNode) {
         Fork toPersist = new Fork(
                 path.getLeft(), path.getRight(),
-                Date.from(forkNode.createdAt.toInstant()),
-                forkNode.owner.login
+                Date.from(forkNode.createdAt().toInstant()),
+                forkNode.owner().login()
         );
         return forksRepository.maybePersist(toPersist);
     }
