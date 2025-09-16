@@ -49,28 +49,38 @@ import jakarta.inject.Inject;
 public class GitHubGraphqlFacade {
 	private static final int TOKEN_LOWER_BOUND = 100;
 
-	@Inject
-	@GraphQLClient("github")
-	DynamicGraphQLClient dynamicClient;
-	
-	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.graphql.today")
-	String githubStarsToday;
-	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.graphql.history")
-	String githubStarsHistory;
-	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.graphql.today")
-	String githubForksToday;
-	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.graphql.history")
-	String githubForksHistory;
-    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.issues.graphql.today")
-    String githubIssuesToday;
-    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.issues.graphql.history")
-    String githubIssuesHistory;
-    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.today")
-    String githubDiscussionsToday;
-    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.history")
-    String githubDiscussionsHistory;
+    private final DynamicGraphQLClient dynamicClient;
+    private final String githubStarsToday;
+    private final String githubStarsHistory;
+    private final String githubForksToday;
+    private final String githubForksHistory;
+    private final String githubIssuesToday;
+    private final String githubIssuesHistory;
+    private final String githubDiscussionsToday;
+    private final String githubDiscussionsHistory;
 
-	public class BucketThreadParkedLogger implements BucketListener {
+    @Inject
+    public GitHubGraphqlFacade(@GraphQLClient("github") DynamicGraphQLClient dynamicClient,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.today") String githubStarsToday,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.history") String githubStarsHistory,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.forks.graphql.today") String githubForksToday,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.forks.graphql.history") String githubForksHistory,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.issues.graphql.today") String githubIssuesToday,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.issues.graphql.history") String githubIssuesHistory,
+                               @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.today") String githubDiscussionsToday,
+    @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.history") String githubDiscussionsHistory) {
+        this.dynamicClient = dynamicClient;
+        this.githubStarsToday = githubStarsToday;
+        this.githubStarsHistory = githubStarsHistory;
+        this.githubForksToday = githubForksToday;
+        this.githubForksHistory = githubForksHistory;
+        this.githubIssuesToday = githubIssuesToday;
+        this.githubIssuesHistory = githubIssuesHistory;
+        this.githubDiscussionsToday = githubDiscussionsToday;
+        this.githubDiscussionsHistory = githubDiscussionsHistory;
+    }
+
+    class BucketThreadParkedLogger implements BucketListener {
 
 		@Override
 		public void onConsumed(long tokens) {}
@@ -121,11 +131,15 @@ public class GitHubGraphqlFacade {
 					error.getMessage()))
 		).collect(Collectors.joining("\n"));
 		String fullMessage = String.format(
-				"Request\n"
-				+ "%s\n"
-				+ "when executed with parameters %s\n"
-				+ "generated errors\n------------\n"
-				+ "%s\n------------\n",
+                """
+                Request
+                %s
+                when executed with parameters %s
+                generated errors
+                ------------
+                %s
+                ------------
+                """,
                 graphqlQueryUsed,
 				arguments,
 				errorsMessage);
@@ -151,7 +165,7 @@ public class GitHubGraphqlFacade {
 		return returned;
 	}
 	
-	public static class RateLimitMetadata {
+    public static class RateLimitMetadata {
 		public final int tokensPerHour;
 		public final int tokensRemaining;
 		public final int tokensUsed;
@@ -257,7 +271,7 @@ public class GitHubGraphqlFacade {
 
     @Retry
     public void getHistoryCountForDiscussions(String owner, String name, boolean force, Function<RepositoryWithDiscussionCountHistory, Boolean> processIndicator) {
-        getHistoryCountFor(owner, name, githubIssuesHistory, force, RepositoryWithDiscussionCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.discussions() == null || repositoryPage.discussions().pageInfo() == null);
+        getHistoryCountFor(owner, name, githubDiscussionsHistory, force, RepositoryWithDiscussionCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.discussions() == null || repositoryPage.discussions().pageInfo() == null);
     }
 
     /**
@@ -286,7 +300,7 @@ public class GitHubGraphqlFacade {
             }
         } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException(String.format("Error retrieving %s count for %s/%s", pageClass.getSimpleName(), owner, name), e);
+            throw new GitHubGraphqlException(String.format("Error retrieving %s count for %s/%s", pageClass.getSimpleName(), owner, name), e);
         }
     }
 
@@ -318,7 +332,7 @@ public class GitHubGraphqlFacade {
                     repositoryPage = response.getObject(pageClass, "repository");
                     if (isNullPage.test(repositoryPage)) {
                         Log.errorf("Invalid or incomplete response from GraphQL for getHistoryFor(%s, %s, %s), arguments: %s. Response: %s", owner, name, pageClass.getSimpleName(), arguments, response.getData());
-                        throw new RuntimeException(String.format("Incomplete GraphQL response for %s history.", pageClass.getSimpleName()));
+                        throw new GitHubGraphqlException(String.format("Incomplete GraphQL response for %s history.", pageClass.getSimpleName()));
                     }
 
                     shouldContinue = repositoryPage.hasPreviousPage();
@@ -340,7 +354,7 @@ public class GitHubGraphqlFacade {
             } while (shouldContinue);
         } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new RuntimeException(String.format("Error retrieving %s history for %s/%s", pageClass.getSimpleName(), owner, name), e);
+            throw new GitHubGraphqlException(String.format("Error retrieving %s history for %s/%s", pageClass.getSimpleName(), owner, name), e);
         }
 
     }
@@ -348,4 +362,5 @@ public class GitHubGraphqlFacade {
 	public boolean canComputeIndicator() {
 		return rateLimitingBucket.getAvailableTokens()>TOKEN_LOWER_BOUND;
 	}
+
 }

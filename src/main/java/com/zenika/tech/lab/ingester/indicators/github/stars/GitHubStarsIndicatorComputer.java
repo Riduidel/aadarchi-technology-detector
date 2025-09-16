@@ -72,7 +72,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 
 	private void computePastStars(Technology technology) throws IOException {
 		getRepository(technology).ifPresent(pair -> {
-			loadAllPastStargazers(technology, pair);
+			loadAllPastStargazers(pair);
 			computeAllPastStars(technology, pair);
 		});
 	}
@@ -82,7 +82,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 			.forEach(indicator -> indicators.maybePersist(indicator));
 	}
 
-	private void loadAllPastStargazers(Technology technology, Pair<String> path) {
+	private void loadAllPastStargazers(Pair<String> path) {
 		long localCount = stargazersRepository.count(path);
 		int remoteCount = githubClient.getTodayCountForStargazers(path.getLeft(), path.getRight());
 		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);

@@ -12,18 +12,19 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
 @QuarkusTest
-class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
-	@Inject GitHubGraphqlFacade facade;
-	
-	@Override
-	protected RoutesBuilder createRouteBuilder() {
-		return new RouteBuilder() {
-			@Override
-			public void configure() {
-				from("direct:start").transform().simple("Hello ${body}").to("mock:result");
-			}
-		};
-	}
+class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport {
+    @Inject
+    GitHubGraphqlFacade facade;
+
+    @Override
+    protected RoutesBuilder createRouteBuilder() {
+        return new RouteBuilder() {
+            @Override
+            public void configure() {
+                from("direct:start").transform().simple("Hello ${body}").to("mock:result");
+            }
+        };
+    }
 
     @Test
     void can_count_today_discussion_for_one_popular_project() {
@@ -49,16 +50,16 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
                 .isGreaterThan(105000);
     }
 
-	@Test
-	void can_get_history_forks_for_one_popular_project() {
-		// Given
-		AtomicLong forkCount = new AtomicLong();
-		// When
-		facade.getHistoryCountForForks("microsoft", "TypeScript", false, forkList -> {
-			forkCount.addAndGet(forkList.forks().nodes().size());
-			return forkCount.longValue()<=200;
-		});
-		// Then
-		Assertions.assertThat(forkCount.longValue()).isGreaterThan(100);
-	}
+    @Test
+    void can_get_history_forks_for_one_popular_project() {
+        // Given
+        AtomicLong forkCount = new AtomicLong();
+        // When
+        facade.getHistoryCountForForks("microsoft", "TypeScript", false, forkList -> {
+            forkCount.addAndGet(forkList.forks().nodes().size());
+            return forkCount.longValue() <= 200;
+        });
+        // Then
+        Assertions.assertThat(forkCount.longValue()).isGreaterThan(100);
+    }
 }
