@@ -2,7 +2,6 @@ package com.zenika.tech.lab.ingester.indicators.github.stars;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountHistory;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.StargazerEvent;
@@ -31,7 +30,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 	public static final String GITHUB_STARS = "github.stars";
 	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
 
-    @ConfigProperty(name = "tech-trends.github.stars.missing-count-percentage-threshold", defaultValue = "10")
+    @ConfigProperty(name = "tech-lab-ingester.github.stars.missing-count-percentage-threshold", defaultValue = "10")
     int missingCountPercentageThreshold;
 	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
 	@Inject StargazerRepository stargazersRepository;
@@ -85,7 +84,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 
 	private void loadAllPastStargazers(Technology technology, Pair<String> path) {
 		long localCount = stargazersRepository.count(path);
-		int remoteCount = githubClient.getStargazers(path.getLeft(), path.getRight());
+		int remoteCount = githubClient.getTodayCountForStargazers(path.getLeft(), path.getRight());
 		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);
 		boolean forceRedownload = missingCountPercentage > missingCountPercentageThreshold;
 		if(forceRedownload) {
@@ -96,7 +95,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 		boolean shouldDownloadStars = localCount<remoteCount;
 		if(shouldDownloadStars) {
 			AtomicInteger processedCount = new AtomicInteger();
-			githubClient.getAllStargazers(path.getLeft(), path.getRight(), forceRedownload,
+			githubClient.getHistoryCountForStargazers(path.getLeft(), path.getRight(), forceRedownload,
 				repositoryPage -> {
 					try {
 						processedCount.addAndGet(repositoryPage.stargazers().edges().size());
@@ -125,7 +124,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 		return repositoryPage.stargazers().edges()
 			.stream()
 			.map(event -> maybePersist(path, repositoryPage, event))
-			.collect(Collectors.reducing((a, b) -> a||b))
+			.reduce((a, b) -> a || b)
 			.orElse(false);
 	}
 

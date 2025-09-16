@@ -33,7 +33,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
     public static final String GITHUB_FORKS = "github.forks";
     private static final String ROUTE_NAME = "compute-"+GITHUB_FORKS.replace('.', '-');
 
-    @ConfigProperty(name = "tech-trends.github.forks.missing-count-percentage-threshold", defaultValue = "10")
+    @ConfigProperty(name = "tech-lab-ingester.github.forks.missing-count-percentage-threshold", defaultValue = "10")
     int missingCountPercentageThreshold;
 
     @Inject @IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators;
@@ -89,7 +89,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
 
     private void loadAllPastForks(Pair<String> path) {
         long localCount = forksRepository.count(path);
-        int remoteCount = githubClient.getCurrentTotalNumberOfFork(path.getLeft(), path.getRight());
+        int remoteCount = githubClient.getTodayCountForForks(path.getLeft(), path.getRight());
         int missingCountPercentage = (remoteCount > 0) ? (int) (((remoteCount - localCount) / (remoteCount * 1.0)) * 100.0) : 0;
         boolean forceRedownload = missingCountPercentage > missingCountPercentageThreshold;
         if(forceRedownload) {
@@ -100,7 +100,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
 		boolean shouldDownloadStars = localCount<remoteCount;
 		if(shouldDownloadStars) {
             AtomicInteger processedCount = new AtomicInteger();
-            githubClient.getAllForks(path.getLeft(), path.getRight(), forceRedownload,
+            githubClient.getHistoryCountForForks(path.getLeft(), path.getRight(), forceRedownload,
                     forkListPage -> {
                         try {
     						processedCount.addAndGet(forkListPage.forks().nodes().size());

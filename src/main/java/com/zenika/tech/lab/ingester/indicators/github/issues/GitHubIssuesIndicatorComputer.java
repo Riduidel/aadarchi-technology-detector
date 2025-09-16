@@ -78,7 +78,7 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
 
     private void loadAllPastIssues(Pair<String> path) {
         long localCount = issueRepository.count(path);
-        int remoteCount = githubClient.getCurrentTotalNumberOfIssue(path.getLeft(), path.getRight());
+        int remoteCount = githubClient.getTodayCountForIssues(path.getLeft(), path.getRight());
         int missingCountPercentage = (remoteCount > 0) ? (int) (((remoteCount - localCount) / (remoteCount * 1.0)) * 100.0) : 0;
         boolean forceRedownload = missingCountPercentage > 10;
         if(forceRedownload) {
@@ -89,7 +89,7 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubEndpointRouteBu
 		boolean shouldDownloadStars = localCount<remoteCount;
 		if(shouldDownloadStars) {
             AtomicInteger processedCount = new AtomicInteger();
-            githubClient.getAllIssues(path.getLeft(), path.getRight(), forceRedownload,
+            githubClient.getHistoryCountForIssues(path.getLeft(), path.getRight(), forceRedownload,
                     issueListPage -> {
                         try {
     						processedCount.addAndGet(issueListPage.issues().nodes().size());

@@ -8,8 +8,6 @@ import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
@@ -28,24 +26,30 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport{
 	}
 
 	@Test
-	void can_count_forks_for_one_popular_project() {
-		Assertions.assertThat(facade.getCurrentTotalNumberOfFork("microsoft", "TypeScript"))
+	void can_count_today_forks_for_one_popular_project() {
+		Assertions.assertThat(facade.getTodayCountForForks("microsoft", "TypeScript"))
 			.isGreaterThan(100);
 	}
 
     @Test
-    void can_count_Issues_for_one_popular_project() {
-        Assertions.assertThat(facade.getCurrentTotalNumberOfIssue("microsoft", "TypeScript"))
+    void can_count_today_issues_for_one_popular_project() {
+        Assertions.assertThat(facade.getTodayCountForIssues("microsoft", "TypeScript"))
                 .isGreaterThan(42000);
     }
 
+    @Test
+    void can_count_today_stargazer_for_one_popular_project() {
+        Assertions.assertThat(facade.getTodayCountForStargazers("microsoft", "TypeScript"))
+                .isGreaterThan(105000);
+    }
+
 	@Test
-	void can_get_more_than_100_forks_for_one_popular_project() {
+	void can_get_history_forks_for_one_popular_project() {
 		// Given
 		AtomicLong forkCount = new AtomicLong();
 		// When
-		facade.getAllForks("microsoft", "TypeScript", false, forkList -> {
-			forkCount.addAndGet(forkList.forks.nodes.size());
+		facade.getHistoryCountForForks("microsoft", "TypeScript", false, forkList -> {
+			forkCount.addAndGet(forkList.forks().nodes().size());
 			return forkCount.longValue()<=200;
 		});
 		// Then

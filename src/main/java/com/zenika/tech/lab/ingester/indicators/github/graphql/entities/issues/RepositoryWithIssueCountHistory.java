@@ -1,4 +1,17 @@
 package com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues;
 
-public record RepositoryWithIssueCountHistory(Issues issues) {
+
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.PageableHistory;
+
+public record RepositoryWithIssueCountHistory(Issues issues) implements PageableHistory {
+
+    @Override
+    public boolean hasPreviousPage() {
+        return issues.pageInfo().hasPreviousPage();
+    }
+
+    @Override
+    public String startCursor() {
+        return issues.pageInfo().startCursor();
+    }
 }

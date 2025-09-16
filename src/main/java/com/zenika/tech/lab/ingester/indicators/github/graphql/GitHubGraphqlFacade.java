@@ -12,8 +12,11 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.PageableHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.TodayCount;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountToday;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues.RepositoryWithIssueCountHistory;
@@ -105,7 +108,7 @@ public class GitHubGraphqlFacade {
 
 
 
-	private GitHubGraphqlException processGraphqlErrors(Map<String, Object> arguments, Response response) {
+	private GitHubGraphqlException processGraphqlErrors(String graphqlQueryUsed, Map<String, Object> arguments, Response response) {
 		List<io.smallrye.graphql.client.GraphQLError> errors = response.getErrors();
 		String errorsMessage = errors.stream()
 			.map((error -> String.format("\t%s", 
@@ -117,7 +120,7 @@ public class GitHubGraphqlFacade {
 				+ "when executed with parameters %s\n"
 				+ "generated errors\n------------\n"
 				+ "%s\n------------\n",
-				githubStarsToday,
+                graphqlQueryUsed,
 				arguments,
 				errorsMessage);
 		if(errors.size()==1) {
@@ -211,220 +214,123 @@ public class GitHubGraphqlFacade {
 		}
 	}
 
-	/**
-	 * Get total number of stargazers as of today
-	 * @param owner
-	 * @param name
-	 * @return number of stargazers
-	 * @throws InterruptedException 
-	 * @throws ExecutionException 
-	 */
-	@Retry(maxRetries = 3)
-	public int getStargazers(String owner, String name) {
-		try {
-			Map<String, Object> arguments = Map.of(
-					"owner", owner,
-					"name", name);
-			Response response = executeSync(githubStarsToday, arguments, 1);
-			if(response.getErrors()==null || response.getErrors().isEmpty()) {
-				return response.getObject(RepositoryWithStargazerCountToday.class, "repository").stargazerCount();
-			} else {
-				throw processGraphqlErrors(arguments, response);
-			}
-		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException("TODO handle Exception", e);
-		}
-	}
-	/**
-	 * Execute all the requests required to have the whole stargazers set.
-	 * So this will run a bunch of requests and process all their results.
-	 * @param owner
-	 * @param name
-	 * @param processStargazers function that will process all received stargazers 
-	 * and return true if we must continue (implementation will usually return true if 
-	 * at least one was persisted)
-	 */
-	@Retry(maxRetries = 3)
-	public void getAllStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerCountHistory, Boolean> processStargazers) {
-		try {
-			Map<String, Object> arguments = new TreeMap<>(Map.of(
-					"owner", owner,
-					"name", name));
-            RepositoryWithStargazerCountHistory repositoryPage = null;
-			boolean shouldContinue = true;
-			do {
-				Response response = executeSync(githubStarsHistory, arguments, 1);
-				if(response.getErrors()==null || response.getErrors().isEmpty()) {
-					repositoryPage = response.getObject(RepositoryWithStargazerCountHistory.class, "repository");
-					shouldContinue = repositoryPage.stargazers().pageInfo().hasPreviousPage();
-					boolean hasSavedSomething = processStargazers.apply(repositoryPage);
-					if(!force) {
-						if(hasSavedSomething) {
-						} else {
-							Log.infof("We had no new stargazer of %s/%s in this result, stopping", owner, name);
-							shouldContinue = false;
-						}
-					}
-					arguments.put("before", repositoryPage.stargazers().pageInfo().startCursor());
-				} else {
-					throw processGraphqlErrors(arguments, response);
-				}
-			} while(shouldContinue);
-		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException("TODO handle Exception", e);
-		}
-		
-	}
+    @Retry
+    public int getTodayCountForStargazers(String owner, String name) {
+        return getTodayCountFor(owner, name, githubStarsToday, RepositoryWithStargazerCountToday.class);
+    }
 
-	/**
-	 * Retrieves the current total number of forks for a repository.
-	 * @param owner Repository owner
-	 * @param name Repository name
-	 * @return Total number of forks
-	 */
-	public int getCurrentTotalNumberOfFork(String owner, String name) {
-		try {
-			Map<String, Object> arguments = Map.of(
-					"owner", owner,
-					"name", name);
-			Response response = executeSync(githubForksToday, arguments, 1);
-			if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-				RepositoryWithForkCountToday repo = response.getObject(RepositoryWithForkCountToday.class, "repository");
-				if (repo != null) {
-					return repo.forkCount();
-				} else {
-					Log.warnf("The GraphQL response for getForkCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
-					return 0;
-				}
-			} else {
-				throw processGraphqlErrors(arguments, response);
-			}
-		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException(String.format("Error retrieving fork count for %s/%s", owner, name), e);
-		}
-	}
+    @Retry
+    public int getTodayCountForForks(String owner, String name) {
+        return getTodayCountFor(owner, name, githubForksToday, RepositoryWithForkCountToday.class);
+    }
 
-	/**
-	 * Retrieves the complete fork history for a repository, page by page.
-	 * @param owner Repository owner
-	 * @param name Repository name
-	 * @param force If true, continues even if a page contains no new processed data.
-	 * @param processForks Function to process each received fork page. Must return true if processing should continue.
-	 */
-	public void getAllForks(String owner, String name, boolean force, Function<RepositoryWithForkCountHistory, Boolean> processForks) {
-		try {
-			Map<String, Object> arguments = new TreeMap<>(Map.of(
-					"owner", owner,
-					"name", name));
-			RepositoryWithForkCountHistory repositoryPage;
-			boolean shouldContinue = true;
-			do {
-				Log.debugf("Fetching forks page for %s/%s with arguments: %s", owner, name, arguments);
-				Response response = executeSync(githubForksHistory, arguments, 1);
-				if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-					repositoryPage = response.getObject(RepositoryWithForkCountHistory.class, "repository");
-					if (repositoryPage == null || repositoryPage.forks() == null || repositoryPage.forks().pageInfo() == null) {
-						Log.errorf("Invalid or incomplete response from GraphQL for getAllForks(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
-						throw new RuntimeException("Incomplete GraphQL response for fork history.");
-					}
+    @Retry
+    public int getTodayCountForIssues(String owner, String name) {
+        return getTodayCountFor(owner, name, githubIssuesToday, RepositoryWithIssueCountToday.class);
+    }
 
-					shouldContinue = repositoryPage.forks().pageInfo().hasPreviousPage();
-					boolean hasProcessedSomething = processForks.apply(repositoryPage);
+    @Retry
+    public void getHistoryCountForStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerCountHistory, Boolean> processIndicator) {
+        getHistoryCountFor(owner, name, githubStarsHistory, force, RepositoryWithStargazerCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.stargazers() == null || repositoryPage.stargazers().pageInfo() == null);
+    }
 
-					if(!force && !hasProcessedSomething) {
-						Log.infof("No new forks processed for %s/%s in this page, early shutdown.", owner, name);
-						shouldContinue = false;
-					}
+    @Retry
+    public void getHistoryCountForForks(String owner, String name, boolean force, Function<RepositoryWithForkCountHistory, Boolean> processIndicator) {
+        getHistoryCountFor(owner, name, githubForksHistory, force, RepositoryWithForkCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.forks() == null || repositoryPage.forks().pageInfo() == null);
+    }
 
-					if (shouldContinue) {
-						Log.debugf("Processing fork page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.forks().pageInfo().startCursor());
-						arguments.put("before", repositoryPage.forks().pageInfo().startCursor());
-					}
-				} else {
-					Log.debugf("Fork processing complete for %s/%s.", owner, name);
-					throw processGraphqlErrors(arguments, response);
-				}
-			} while(shouldContinue);
-		} catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-			throw new RuntimeException(String.format("Error retrieving fork history for %s/%s", owner, name), e);
-		}
-	}
+    @Retry
+    public void getHistoryCountForIssues(String owner, String name, boolean force, Function<RepositoryWithIssueCountHistory, Boolean> processIndicator) {
+        getHistoryCountFor(owner, name, githubIssuesHistory, force, RepositoryWithIssueCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.issues() == null || repositoryPage.issues().pageInfo() == null);
+    }
+
+    /**
+     * Get total number of the indicator as of today
+     *
+     * @param owner the owner of the repository
+     * @param name  the name of the repository
+     * @return number of the indicator
+     */
+    private <T extends TodayCount> int getTodayCountFor(String owner, String name, String graphqlQueryToUse, Class<T> pageClass) {
+        try {
+            Map<String, Object> arguments = Map.of(
+                    "owner", owner,
+                    "name", name);
+            Response response = executeSync(graphqlQueryToUse, arguments, 1);
+            if (response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                T repo = response.getObject(pageClass, "repository");
+                if (repo != null) {
+                    return repo.getCount();
+                } else {
+                    Log.warnf("The GraphQL response for getTodayCountFor(%s, %s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, pageClass.getSimpleName(), response.getData());
+                    return 0;
+                }
+            } else {
+                throw processGraphqlErrors(graphqlQueryToUse, arguments, response);
+            }
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(String.format("Error retrieving %s count for %s/%s", pageClass.getSimpleName(), owner, name), e);
+        }
+    }
+
+    /**
+     * Execute all the requests required to have the whole indicator set.
+     * So this will run a bunch of requests and process all their results.
+     *
+     * @param owner            the repository owner
+     * @param name             the repository name
+     * @param graphqlQueryToUse     the GraphQL query to use
+     * @param force            force to download again the indicator
+     * @param pageClass        the classof the pageable to use
+     * @param processIndicator function that will process all received indicators
+     *                         and return true if we must continue (implementation will usually return true if
+     *                         at least one was persisted)
+     * @param isNullPage       predicate to check if the page is null (ex: no repository found)
+     */
+    private <T extends PageableHistory> void getHistoryCountFor(String owner, String name, String graphqlQueryToUse, boolean force, Class<T> pageClass, Function<T, Boolean> processIndicator, Predicate<T> isNullPage) {
+        try {
+            Map<String, Object> arguments = new TreeMap<>(Map.of(
+                    "owner", owner,
+                    "name", name));
+            T repositoryPage;
+            boolean shouldContinue;
+            do {
+                Log.debugf("Fetching %s page for %s/%s with arguments: %s", owner, name, arguments);
+                Response response = executeSync(graphqlQueryToUse, arguments, 1);
+                if (response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
+                    repositoryPage = response.getObject(pageClass, "repository");
+                    if (isNullPage.test(repositoryPage)) {
+                        Log.errorf("Invalid or incomplete response from GraphQL for getHistoryFor(%s, %s, %s), arguments: %s. Response: %s", owner, name, pageClass.getSimpleName(), arguments, response.getData());
+                        throw new RuntimeException(String.format("Incomplete GraphQL response for %s history.", pageClass.getSimpleName()));
+                    }
+
+                    shouldContinue = repositoryPage.hasPreviousPage();
+                    boolean hasProcessedSomething = processIndicator.apply(repositoryPage);
+
+                    if (!force && !hasProcessedSomething) {
+                        Log.infof("No new %s processed for %s/%s in this page, early shutdown.", pageClass.getSimpleName(), owner, name);
+                        shouldContinue = false;
+                    }
+
+                    if (shouldContinue) {
+                        Log.debugf("Processing %s page for %s/%s. Next page to fetch before: %s", pageClass.getSimpleName(), owner, name, repositoryPage.startCursor());
+                        arguments.put("before", repositoryPage.startCursor());
+                    }
+                } else {
+                    Log.debugf("%s processing complete for %s/%s.", pageClass.getSimpleName(), owner, name);
+                    throw processGraphqlErrors(graphqlQueryToUse, arguments, response);
+                }
+            } while (shouldContinue);
+        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(String.format("Error retrieving %s history for %s/%s", pageClass.getSimpleName(), owner, name), e);
+        }
+
+    }
 
 	public boolean canComputeIndicator() {
 		return rateLimitingBucket.getAvailableTokens()>TOKEN_LOWER_BOUND;
 	}
 
-    /**
-     * Retrieves the current total number of issues for a repository.
-     * @param owner Repository owner
-     * @param name Repository name
-     * @return Total number of issues
-     */
-    public int getCurrentTotalNumberOfIssue(String owner, String name) {
-        try {
-            Map<String, Object> arguments = Map.of(
-                    "owner", owner,
-                    "name", name);
-            Response response = executeSync(githubIssuesToday, arguments, 1);
-            if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-                RepositoryWithIssueCountToday repo = response.getObject(RepositoryWithIssueCountToday.class, "repository");
-                if (repo != null) {
-                    return repo.issues().totalCount();
-                } else {
-                    Log.warnf("The GraphQL response for getIssueCount(%s, %s) does not contain a 'repository' field. Response: %s\"", owner, name, response.getData());
-                    return 0;
-                }
-            } else {
-                throw processGraphqlErrors(arguments, response);
-            }
-        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-            throw new RuntimeException(String.format("Error retrieving issue count for %s/%s", owner, name), e);
-        }
-    }
-
-    /**
-     * Retrieves the complete issue history for a repository, page by page.
-     * @param owner Repository owner
-     * @param name Repository name
-     * @param force If true, continues even if a page contains no new processed data.
-     * @param processIssues Function to process each received issue page. Must return true if processing should continue.
-     */
-    public void getAllIssues(String owner, String name, boolean force, Function<RepositoryWithIssueCountHistory, Boolean> processIssues) {
-        try {
-            Map<String, Object> arguments = new TreeMap<>(Map.of(
-                    "owner", owner,
-                    "name", name));
-            RepositoryWithIssueCountHistory repositoryPage;
-            boolean shouldContinue = true;
-            do {
-                Log.debugf("Fetching issues page for %s/%s with arguments: %s", owner, name, arguments);
-                Response response = executeSync(githubIssuesHistory, arguments, 1);
-                if(response.hasData() && (response.getErrors() == null || response.getErrors().isEmpty())) {
-                    repositoryPage = response.getObject(RepositoryWithIssueCountHistory.class, "repository");
-                    if (repositoryPage == null || repositoryPage.issues() == null || repositoryPage.issues().pageInfo() == null) {
-                        Log.errorf("Invalid or incomplete response from GraphQL for getAllIssues(%s, %s), arguments: %s. Response: %s", owner, name, arguments, response.getData());
-                        throw new RuntimeException("Incomplete GraphQL response for issue history.");
-                    }
-
-                    shouldContinue = repositoryPage.issues().pageInfo().hasPreviousPage();
-                    boolean hasProcessedSomething = processIssues.apply(repositoryPage);
-
-                    if(!force && !hasProcessedSomething) {
-                        Log.infof("No new issues processed for %s/%s in this page, early shutdown.", owner, name);
-                        shouldContinue = false;
-                    }
-
-                    if (shouldContinue) {
-                        Log.debugf("Processing issue page for %s/%s. Next page to fetch before: %s", owner, name, repositoryPage.issues().pageInfo().startCursor());
-                        arguments.put("before", repositoryPage.issues().pageInfo().startCursor());
-                    }
-                } else {
-                    Log.debugf("Issue processing complete for %s/%s.", owner, name);
-                    throw processGraphqlErrors(arguments, response);
-                }
-            } while(shouldContinue);
-        } catch (InvalidResponseException | ExecutionException | InterruptedException e) {
-            throw new RuntimeException(String.format("Error retrieving issue history for %s/%s", owner, name), e);
-        }
-    }
 }
