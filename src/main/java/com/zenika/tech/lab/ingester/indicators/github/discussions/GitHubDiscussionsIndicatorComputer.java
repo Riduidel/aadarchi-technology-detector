@@ -1,10 +1,11 @@
-package org.ndx.aadarchi.technology.detector.indicators.github.discussions;
+package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
 import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
 import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.RepositoryWithDiscussionList;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.DiscussionNode;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.RepositoryWithDiscussionCountHistory;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -77,7 +78,7 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRo
 
     private void loadAllPastDiscussions(Pair<String> path) {
         long localCount = discussionRepository.count(path);
-        int remoteCount = githubClient.getCurrentTotalNumberOfDiscussion(path.getLeft(), path.getRight());
+        int remoteCount = githubClient.getTodayCountForDiscussions(path.getLeft(), path.getRight());
         int missingCountPercentage = (remoteCount > 0) ? (int) (((remoteCount - localCount) / (remoteCount * 1.0)) * 100.0) : 0;
         boolean forceRedownload = missingCountPercentage > 10;
         if(forceRedownload) {
@@ -88,10 +89,10 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRo
 		boolean shouldDownloadStars = localCount<remoteCount;
 		if(shouldDownloadStars) {
             AtomicInteger processedCount = new AtomicInteger();
-            githubClient.getAllDiscussions(path.getLeft(), path.getRight(), forceRedownload,
+            githubClient.getHistoryCountForDiscussions(path.getLeft(), path.getRight(), forceRedownload,
                     discussionListPage -> {
                         try {
-    						processedCount.addAndGet(discussionListPage.discussions.nodes.size());
+    						processedCount.addAndGet(discussionListPage.discussions().nodes().size());
                             return this.processPage(path, discussionListPage);
                         } finally {
     						if(Log.isDebugEnabled()) {
@@ -114,12 +115,12 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRo
      * @param discussionsListPage The page data received from GraphQL
      * @return true if we have to continue the process (if at least one discussions event was persisted)
      */
-    private boolean processPage(Pair<String> path, RepositoryWithDiscussionList discussionsListPage) {
-        if (discussionsListPage.discussions == null || discussionsListPage.discussions.nodes == null) {
+    private boolean processPage(Pair<String> path, RepositoryWithDiscussionCountHistory discussionsListPage) {
+        if (discussionsListPage.discussions() == null || discussionsListPage.discussions().nodes() == null) {
             Log.warnf("Received an empty or invalid discussion page for %s/%s", path.getLeft(), path.getRight());
             return false;
         }
-        return discussionsListPage.discussions.nodes
+        return discussionsListPage.discussions().nodes()
                 .stream()
                 .map(discussionNode -> maybePersistDiscussion(path, discussionNode))
                 .reduce(false, (a, b) -> a || b); // Default to false if stream is empty
@@ -131,11 +132,11 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubEndpointRo
      * @param discussionNode The discussion node data from GraphQL
      * @return true if database changed, false if event already existed in db
      */
-    private boolean maybePersistDiscussion(Pair<String> path, RepositoryWithDiscussionList.DiscussionNode discussionNode) {
+    private boolean maybePersistDiscussion(Pair<String> path, DiscussionNode discussionNode) {
         Discussion toPersist = new Discussion(
                 path.getLeft(), path.getRight(),
-                Date.from(discussionNode.createdAt.toInstant()),
-                discussionNode.author.login
+                Date.from(discussionNode.createdAt().toInstant()),
+                discussionNode.author().login()
         );
         return discussionRepository.maybePersist(toPersist);
     }
