@@ -34,7 +34,7 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBui
 	public static final String GITHUB_STARS = "github.stars";
 	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
 
-    @ConfigProperty(name = "tech-trends.github.stars.missing-count-percentage-threshold", defaultValue = "10")
+    @ConfigProperty(name = "tech-lab-ingester.github.stars.missing-count-percentage-threshold", defaultValue = "10")
     int missingCountPercentageThreshold;
 	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
 	@Inject StargazerRepository stargazersRepository;

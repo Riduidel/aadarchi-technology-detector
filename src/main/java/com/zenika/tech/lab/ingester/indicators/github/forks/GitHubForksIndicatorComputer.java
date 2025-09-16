@@ -31,7 +31,7 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubEndpointRouteBui
     public static final String GITHUB_FORKS = "github.forks";
     private static final String ROUTE_NAME = "compute-"+GITHUB_FORKS.replace('.', '-');
 
-    @ConfigProperty(name = "tech-trends.github.forks.missing-count-percentage-threshold", defaultValue = "10")
+    @ConfigProperty(name = "tech-lab-ingester.github.forks.missing-count-percentage-threshold", defaultValue = "10")
     int missingCountPercentageThreshold;
 
     @Inject @IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators;
