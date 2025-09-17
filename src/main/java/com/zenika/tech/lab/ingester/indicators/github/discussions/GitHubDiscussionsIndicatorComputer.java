@@ -1,6 +1,6 @@
 package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
-import com.zenika.tech.lab.ingester.indicators.AbstractGitHubIndicatorComputer;
+import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubIndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.Author;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.DiscussionNode;

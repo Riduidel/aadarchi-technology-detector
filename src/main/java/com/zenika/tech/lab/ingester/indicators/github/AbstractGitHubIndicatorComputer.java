@@ -1,9 +1,6 @@
-package com.zenika.tech.lab.ingester.indicators;
+package com.zenika.tech.lab.ingester.indicators.github;
 
-import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
-import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
-import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorRepository;
-import com.zenika.tech.lab.ingester.indicators.github.HasGithubIndicatorId;
+import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlException;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.PageableHistory;
