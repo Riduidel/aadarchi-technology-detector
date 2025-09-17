@@ -19,45 +19,45 @@ import java.util.function.Predicate;
 @ApplicationScoped
 public class GitHubForksIndicatorComputer extends AbstractGitHubIndicatorComputer<Fork, RepositoryWithForkCountHistory> {
 
-    public static final String GITHUB_FORKS = "github.forks";
+	public static final String GITHUB_FORKS = "github.forks";
 
-    public GitHubForksIndicatorComputer() {
-        super(null, null, null, GITHUB_FORKS);
-    }
+	public GitHubForksIndicatorComputer() {
+		super(null, null, null, GITHUB_FORKS);
+	}
 
-    @Inject
-    public GitHubForksIndicatorComputer(
-            @IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators,
-            ForkRepository repository,
-            GitHubGraphqlFacade githubClient) {
-        super(indicators, repository, githubClient, GITHUB_FORKS);
-    }
+	@Inject
+	public GitHubForksIndicatorComputer(
+			@IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators,
+			ForkRepository repository,
+			GitHubGraphqlFacade githubClient) {
+		super(indicators, repository, githubClient, GITHUB_FORKS);
+	}
 
-    @Override
-    protected Fork toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent) {
+	@Override
+	protected Fork toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent) {
 
-        if(!(rawEvent instanceof ForkNode(OffsetDateTime createdAt, Owner owner))){
-            throw new IllegalArgumentException("Expected ForkNode, got "+rawEvent.getClass().getName());
-        }
-        return new Fork(
-                ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
-                Date.from(createdAt.toInstant()),
-                owner.login());
-    }
+		if (!(rawEvent instanceof ForkNode(OffsetDateTime createdAt, Owner owner))) {
+			throw new IllegalArgumentException("Expected ForkNode, got " + rawEvent.getClass().getName());
+		}
+		return new Fork(
+				ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
+				Date.from(createdAt.toInstant()),
+				owner.login());
+	}
 
-    @Override
-    protected List<?> getEvents(RepositoryWithForkCountHistory repositoryPage) {
-        return repositoryPage.forks().nodes();
-    }
+	@Override
+	protected List<?> getEvents(RepositoryWithForkCountHistory repositoryPage) {
+		return repositoryPage.forks().nodes();
+	}
 
-    @Override
-    protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
-        return githubClient.getTodayCountAsOfTodayForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
-    }
+	@Override
+	protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
+		return githubClient.getTodayCountAsOfTodayForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
+	}
 
-    @Override
-    protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithForkCountHistory> processIndicator) {
-        githubClient.getHistoryCountForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
-    }
+	@Override
+	protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithForkCountHistory> processIndicator) {
+		githubClient.getHistoryCountForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
+	}
 }
 

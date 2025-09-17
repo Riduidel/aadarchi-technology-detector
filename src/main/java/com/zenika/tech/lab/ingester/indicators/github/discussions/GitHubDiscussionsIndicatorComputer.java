@@ -19,44 +19,44 @@ import java.util.function.Predicate;
 @ApplicationScoped
 public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorComputer<Discussion, RepositoryWithDiscussionCountHistory> {
 
-    public static final String GITHUB_DISCUSSIONS = "github.discussions";
+	public static final String GITHUB_DISCUSSIONS = "github.discussions";
 
-    public GitHubDiscussionsIndicatorComputer() {
-        super(null, null, null, GITHUB_DISCUSSIONS);
-    }
+	public GitHubDiscussionsIndicatorComputer() {
+		super(null, null, null, GITHUB_DISCUSSIONS);
+	}
 
-    @Inject
-    public GitHubDiscussionsIndicatorComputer(@IndicatorNamed(GITHUB_DISCUSSIONS) IndicatorRepositoryFacade indicators,
-                                              DiscussionRepository repository,
-                                              GitHubGraphqlFacade githubClient) {
-        super(indicators, repository, githubClient, GITHUB_DISCUSSIONS);
-    }
+	@Inject
+	public GitHubDiscussionsIndicatorComputer(@IndicatorNamed(GITHUB_DISCUSSIONS) IndicatorRepositoryFacade indicators,
+											  DiscussionRepository repository,
+											  GitHubGraphqlFacade githubClient) {
+		super(indicators, repository, githubClient, GITHUB_DISCUSSIONS);
+	}
 
-    @Override
-    protected Discussion toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent) {
-        if(!(rawEvent instanceof DiscussionNode(OffsetDateTime createdAt, Author author))) {
-            throw new IllegalArgumentException("Expected DiscussionNode, got "+rawEvent.getClass().getName());
-        }
-        return new Discussion(
-                ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
-                Date.from(createdAt.toInstant()),
-                author.login()
-        );
-    }
+	@Override
+	protected Discussion toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent) {
+		if (!(rawEvent instanceof DiscussionNode(OffsetDateTime createdAt, Author author))) {
+			throw new IllegalArgumentException("Expected DiscussionNode, got " + rawEvent.getClass().getName());
+		}
+		return new Discussion(
+				ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
+				Date.from(createdAt.toInstant()),
+				author.login()
+		);
+	}
 
-    @Override
-    protected List<?> getEvents(RepositoryWithDiscussionCountHistory repositoryPage) {
-        return repositoryPage.discussions().nodes();
-    }
+	@Override
+	protected List<?> getEvents(RepositoryWithDiscussionCountHistory repositoryPage) {
+		return repositoryPage.discussions().nodes();
+	}
 
-    @Override
-    protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
-        return githubClient.getTodayCountAsOfTodayForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
-    }
+	@Override
+	protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
+		return githubClient.getTodayCountAsOfTodayForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
+	}
 
-    @Override
-    protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithDiscussionCountHistory> processIndicator) {
-        githubClient.getHistoryCountForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
-    }
+	@Override
+	protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithDiscussionCountHistory> processIndicator) {
+		githubClient.getHistoryCountForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
+	}
 }
 

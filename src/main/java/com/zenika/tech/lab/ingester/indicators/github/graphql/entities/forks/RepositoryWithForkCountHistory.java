@@ -4,18 +4,18 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.PageableH
 
 public record RepositoryWithForkCountHistory(Forks forks) implements PageableHistory {
 
-    @Override
-    public boolean hasPreviousPage() {
-        return forks.pageInfo().hasPreviousPage();
-    }
+	@Override
+	public boolean hasPreviousPage() {
+		return forks.pageInfo().hasPreviousPage();
+	}
 
-    @Override
-    public String startCursor() {
-        return forks.pageInfo().startCursor();
-    }
+	@Override
+	public String startCursor() {
+		return forks.pageInfo().startCursor();
+	}
 
-    @Override
-    public boolean hasNoData() {
-        return forks == null || forks.pageInfo() == null;
-    }
+	@Override
+	public boolean hasNoData() {
+		return forks == null || forks.pageInfo() == null;
+	}
 }

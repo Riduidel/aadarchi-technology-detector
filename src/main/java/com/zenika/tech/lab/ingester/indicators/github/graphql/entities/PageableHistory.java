@@ -2,9 +2,9 @@ package com.zenika.tech.lab.ingester.indicators.github.graphql.entities;
 
 public interface PageableHistory {
 
-    boolean hasPreviousPage();
+	boolean hasPreviousPage();
 
-    String startCursor();
+	String startCursor();
 
-    boolean hasNoData();
+	boolean hasNoData();
 }

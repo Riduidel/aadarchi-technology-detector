@@ -13,15 +13,14 @@ import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 
-import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class StargazerRepository implements GithubIndicatorRepository<Stargazer>, PanacheRepository<Stargazer> {
-	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.sql.indicator")
+public class StargazerRepository implements GithubIndicatorRepository<Stargazer> {
+	@ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.sql.indicator")
 	public String groupStarsByMonths;
 	private final EntityManager entityManager;
 
@@ -32,12 +31,12 @@ public class StargazerRepository implements GithubIndicatorRepository<Stargazer>
 	@Transactional
 	public boolean maybePersist(Stargazer persistent) {
 		// TODO Change how date is used here, since it clearly doesn't work correctly
-		if(count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4", 
-				persistent.id.owner, 
-				persistent.id.repo, 
+		if (count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4",
+				persistent.id.owner,
+				persistent.id.repo,
 				persistent.id.date,
 				persistent.id.user
-				)==0) {
+		) == 0) {
 			persistent.persist();
 			return true;
 		} else {
@@ -48,16 +47,17 @@ public class StargazerRepository implements GithubIndicatorRepository<Stargazer>
 	@Transactional
 	public long count(Pair<String> path) {
 		return count("id.owner = ?1 and id.repo = ?2",
-				path.getLeft(), 
+				path.getLeft(),
 				path.getRight()
-				);
+		);
 	}
 
 	/**
 	 * Group stargazers by month and year.
 	 * We simply return that and let the caller manipulate the database
+	 *
 	 * @param technology TODO
-	 * @param pair pair
+	 * @param pair       pair
 	 */
 	@Transactional
 	public List<Indicator> groupIndicatorsByMonths(Technology technology, Pair<String> pair) {
@@ -66,12 +66,12 @@ public class StargazerRepository implements GithubIndicatorRepository<Stargazer>
 		extractionQuery.setParameter("name", pair.getRight());
 		List<Object[]> results = extractionQuery.getResultList();
 		return results.stream()
-			.map(row -> toIndicator(technology, row))
-			.toList();
+				.map(row -> toIndicator(technology, row))
+				.toList();
 	}
 
 	private Indicator toIndicator(Technology technology, Object[] row) {
-		LocalDate localDate = LocalDate.of(Integer.parseInt(row[0].toString()), 
+		LocalDate localDate = LocalDate.of(Integer.parseInt(row[0].toString()),
 				Integer.parseInt(row[1].toString()), 1);
 		Date d = Date.from(localDate.atStartOfDay(ZoneId.of("UTC")).toInstant());
 		return new Indicator(
@@ -79,7 +79,7 @@ public class StargazerRepository implements GithubIndicatorRepository<Stargazer>
 				GitHubStarsIndicatorComputer.GITHUB_STARS,
 				d,
 				row[2].toString()
-				);
+		);
 	}
 
 }

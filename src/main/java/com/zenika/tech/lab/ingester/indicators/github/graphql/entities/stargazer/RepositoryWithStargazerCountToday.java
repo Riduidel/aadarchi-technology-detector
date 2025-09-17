@@ -3,8 +3,8 @@ package com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargaze
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.TodayCount;
 
 public record RepositoryWithStargazerCountToday(int stargazerCount) implements TodayCount {
-    @Override
-    public int getCount() {
-        return stargazerCount;
-    }
+	@Override
+	public int getCount() {
+		return stargazerCount;
+	}
 }
