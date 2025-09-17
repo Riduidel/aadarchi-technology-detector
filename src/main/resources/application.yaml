@@ -14,7 +14,7 @@
     projects:
       per:
         page: 10
-        platform: 100
+        platform: 1000
 
 camel:
   threadpool:
@@ -45,6 +45,8 @@ quarkus:
   hibernate-orm:
     database:
       generation: update
+  http:
+    port: 9000
   log:
     console:
       level: DEBUG
