@@ -1,5 +1,6 @@
 package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
+import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorRepository;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -17,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
-public class DiscussionRepository implements PanacheRepository<Discussion>{
+public class DiscussionRepository implements GithubIndicatorRepository<Discussion>, PanacheRepository<Discussion>{
 
     @ConfigProperty(name = "tech-lab-ingester.indicators.github.discussions.sql.indicator")
     String groupDiscussionsByMonthsSql;
@@ -71,7 +72,7 @@ public class DiscussionRepository implements PanacheRepository<Discussion>{
      * @return A list of Indicator objects representing the number of discussions per month.
      */
     @Transactional
-    public List<Indicator> groupDiscussionsByMonths(Technology technology, Pair<String> pair) {
+    public List<Indicator> groupIndicatorsByMonths(Technology technology, Pair<String> pair) {
         Query extractionQuery = entityManager.createNativeQuery(groupDiscussionsByMonthsSql);
         extractionQuery.setParameter("owner", pair.getLeft());
         extractionQuery.setParameter("name", pair.getRight());

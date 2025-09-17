@@ -13,4 +13,9 @@ public record RepositoryWithStargazerCountHistory(Stargazers stargazers) impleme
     public String startCursor() {
         return stargazers.pageInfo().startCursor();
     }
+
+    @Override
+    public boolean hasNoData() {
+        return stargazers == null || stargazers.pageInfo() == null;
+    }
 }

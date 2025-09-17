@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorRepository;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -21,7 +21,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class ForkRepository implements PanacheRepository<Fork>{
+public class ForkRepository implements GithubIndicatorRepository<Fork>, PanacheRepository<Fork>{
 
     @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.forks.sql.indicator")
     public String groupForksByMonthsSql;
@@ -75,14 +75,14 @@ public class ForkRepository implements PanacheRepository<Fork>{
      * @return A list of Indicator objects representing the number of forks per month.
      */
     @Transactional
-    public List<Indicator> groupForksByMonths(Technology technology, Pair<String> pair) {
+    public List<Indicator> groupIndicatorsByMonths(Technology technology, Pair<String> pair) {
         Query extractionQuery = entityManager.createNativeQuery(groupForksByMonthsSql);
         extractionQuery.setParameter("owner", pair.getLeft());
         extractionQuery.setParameter("name", pair.getRight());
         List<Object[]> results = extractionQuery.getResultList();
         return results.stream()
                 .map(row -> toForkIndicator(technology, row))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**

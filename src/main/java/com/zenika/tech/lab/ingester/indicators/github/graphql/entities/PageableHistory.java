@@ -5,4 +5,6 @@ public interface PageableHistory {
     boolean hasPreviousPage();
 
     String startCursor();
+
+    boolean hasNoData();
 }

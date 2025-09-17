@@ -281,7 +281,7 @@ public class GitHubGraphqlFacade {
      * @param name  the name of the repository
      * @return number of the indicator
      */
-    private <T extends TodayCount> int getTodayCountFor(String owner, String name, String graphqlQueryToUse, Class<T> pageClass) {
+    public <T extends TodayCount> int getTodayCountFor(String owner, String name, String graphqlQueryToUse, Class<T> pageClass) {
         try {
             Map<String, Object> arguments = Map.of(
                     "owner", owner,
@@ -318,7 +318,7 @@ public class GitHubGraphqlFacade {
      *                         at least one was persisted)
      * @param isNullPage       predicate to check if the page is null (ex: no repository found)
      */
-    private <T extends PageableHistory> void getHistoryCountFor(String owner, String name, String graphqlQueryToUse, boolean force, Class<T> pageClass, Function<T, Boolean> processIndicator, Predicate<T> isNullPage) {
+    public <T extends PageableHistory> void getHistoryCountFor(String owner, String name, String graphqlQueryToUse, boolean force, Class<T> pageClass, Function<T, Boolean> processIndicator, Predicate<T> isNullPage) {
         try {
             Map<String, Object> arguments = new TreeMap<>(Map.of(
                     "owner", owner,

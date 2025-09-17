@@ -13,4 +13,9 @@ public record RepositoryWithForkCountHistory(Forks forks) implements PageableHis
     public String startCursor() {
         return forks.pageInfo().startCursor();
     }
+
+    @Override
+    public boolean hasNoData() {
+        return forks == null || forks.pageInfo() == null;
+    }
 }

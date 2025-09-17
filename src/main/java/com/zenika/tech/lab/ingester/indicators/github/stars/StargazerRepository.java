@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorRepository;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -20,7 +20,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class StargazerRepository implements PanacheRepository<Stargazer> {
+public class StargazerRepository implements GithubIndicatorRepository<Stargazer>, PanacheRepository<Stargazer> {
 	@ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.stars.sql.indicator")
 	public String groupStarsByMonths;
 	private final EntityManager entityManager;
@@ -60,14 +60,14 @@ public class StargazerRepository implements PanacheRepository<Stargazer> {
 	 * @param pair pair
 	 */
 	@Transactional
-	public List<Indicator> groupStarsByMonths(Technology technology, Pair<String> pair) {
+	public List<Indicator> groupIndicatorsByMonths(Technology technology, Pair<String> pair) {
 		Query extractionQuery = entityManager.createNativeQuery(groupStarsByMonths);
 		extractionQuery.setParameter("owner", pair.getLeft());
 		extractionQuery.setParameter("name", pair.getRight());
 		List<Object[]> results = extractionQuery.getResultList();
 		return results.stream()
 			.map(row -> toIndicator(technology, row))
-			.collect(Collectors.toList());
+			.toList();
 	}
 
 	private Indicator toIndicator(Technology technology, Object[] row) {

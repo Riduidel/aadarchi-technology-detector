@@ -1,9 +1,14 @@
 package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
+import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorId;
+import com.zenika.tech.lab.ingester.indicators.github.HasGithubIndicatorId;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.NamedNativeQuery;
 
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity(name = "GITHUB_DISCUSSIONS")
@@ -17,9 +22,14 @@ import java.util.Date;
                 discussion_user
                 from github_discussions;
                 """)
-public class Discussion extends PanacheEntityBase {
+public class Discussion extends PanacheEntityBase implements HasGithubIndicatorId {
+    @Override
+    public GithubIndicatorId getId() {
+        return id;
+    }
+
     @Embeddable
-    public static class DiscussionsId implements Serializable {
+    public static class DiscussionsId extends GithubIndicatorId {
         @Column(name = "REPO_OWNER")
         public String owner;
         @Column(name = "REPO_NAME")

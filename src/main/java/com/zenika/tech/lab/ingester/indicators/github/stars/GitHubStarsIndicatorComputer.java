@@ -1,153 +1,55 @@
 package com.zenika.tech.lab.ingester.indicators.github.stars;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import com.zenika.tech.lab.ingester.Configuration;
+import com.zenika.tech.lab.ingester.indicators.AbstractGitHubIndicatorComputer;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.User;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountHistory;
+import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountToday;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.StargazerEvent;
-import org.apache.camel.Exchange;
-import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
-import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
+import com.zenika.tech.lab.ingester.model.IndicatorNamed;
+import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
-import com.zenika.tech.lab.ingester.indicators.github.AbstractGitHubEndpointRouteBuilder;
-import com.zenika.tech.lab.ingester.indicators.github.GitHubBased;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlException;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
-import com.zenika.tech.lab.ingester.model.IndicatorNamed;
-import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
-import com.zenika.tech.lab.ingester.model.Technology;
-
-import io.quarkus.logging.Log;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import java.util.Date;
+import java.util.List;
 
 @ApplicationScoped
-public class GitHubStarsIndicatorComputer extends AbstractGitHubEndpointRouteBuilder implements IndicatorComputer, GitHubBased {
+public class GitHubStarsIndicatorComputer extends AbstractGitHubIndicatorComputer<Stargazer, RepositoryWithStargazerCountToday, RepositoryWithStargazerCountHistory> {
 
-	public static final String GITHUB_STARS = "github.stars";
-	private static final String ROUTE_NAME = "compute-"+GITHUB_STARS.replace('.', '-');
+    public static final String GITHUB_STARS = "github.stars";
 
-    @ConfigProperty(name = "tech-lab-ingester.github.stars.missing-count-percentage-threshold", defaultValue = "10")
-    int missingCountPercentageThreshold;
-	@Inject @IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators;
-	@Inject StargazerRepository stargazersRepository;
-	@Inject GitHubGraphqlFacade githubClient;
+    public GitHubStarsIndicatorComputer() {
+        super(null, null, null, null, null, null, null, GITHUB_STARS);
+    }
 
-	@Override
-	public void configure() throws Exception {
-		super.configureExceptions();
-		from(getFromRoute())
-			.routeId(ROUTE_NAME)
-			.idempotentConsumer()
-				.body(Technology.class, t -> String.format("%s-%s", GITHUB_STARS, t.repositoryUrl))
-				.idempotentRepository(MemoryIdempotentRepository.memoryIdempotentRepository(10*2))
-			.process(this::computeGitHubStars)
-			.end()
-			;
-	}
-	
-	private DirectEndpointBuilder getFromRoute() {
-		return direct(ROUTE_NAME);
-	}
-	
-	@Override
-	public String getFromRouteName() {
-		return getFromRoute().getUri();
-	}
+    @Inject
+    public GitHubStarsIndicatorComputer(@IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators,
+                                        StargazerRepository repository,
+                                        GitHubGraphqlFacade githubClient,
+                                        @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.today") String githubStarsToday,
+                                        @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.history") String githubStarsHistory) {
+        super(indicators, repository, RepositoryWithStargazerCountToday.class, RepositoryWithStargazerCountHistory.class, githubClient, githubStarsToday, githubStarsHistory, GITHUB_STARS);
+    }
 
-	private void computeGitHubStars(Exchange exchange) throws IOException {
-		try {
-			computeGitHubStars(exchange.getMessage().getBody(Technology.class));
-		} catch(GitHubGraphqlException e) {
-			Log.warnf(e, "Unable to fetch stars for missing repo");
-		}
-	}
+    @Override
+    protected Stargazer toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent) {
+        if (!(rawEvent instanceof StargazerEvent(Date starredAt, User node))) {
+            throw new IllegalArgumentException("Expected StargazerEvent, got " + rawEvent.getClass().getName());
+        }
+        return new Stargazer(
+                ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
+                starredAt,
+                node.login
+        );
+    }
 
-	private void computeGitHubStars(Technology technology) throws IOException {
-		computePastStars(technology);
-	}
-
-	private void computePastStars(Technology technology) throws IOException {
-		getRepository(technology).ifPresent(pair -> {
-			loadAllPastStargazers(pair);
-			computeAllPastStars(technology, pair);
-		});
-	}
-
-	private void computeAllPastStars(Technology technology, Pair<String> pair) {
-		stargazersRepository.groupStarsByMonths(technology, pair).stream()
-			.forEach(indicator -> indicators.maybePersist(indicator));
-	}
-
-	private void loadAllPastStargazers(Pair<String> path) {
-		long localCount = stargazersRepository.count(path);
-		int remoteCount = githubClient.getTodayCountForStargazers(path.getLeft(), path.getRight());
-		int missingCountPercentage = (int) (((remoteCount-localCount)/(remoteCount*1.0))*100.0);
-		boolean forceRedownload = missingCountPercentage > missingCountPercentageThreshold;
-		if(forceRedownload) {
-			Log.infof("📥 For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%). Forcing full redownload", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
-		} else {
-			Log.infof("For %s/%s, we have %d stars locally, and there are %d stars on GitHub (we lack %d %%)", path.getLeft(), path.getRight(), localCount, remoteCount, missingCountPercentage);
-		}
-		boolean shouldDownloadStars = localCount<remoteCount;
-		if(shouldDownloadStars) {
-			AtomicInteger processedCount = new AtomicInteger();
-			githubClient.getHistoryCountForStargazers(path.getLeft(), path.getRight(), forceRedownload,
-				repositoryPage -> {
-					try {
-						processedCount.addAndGet(repositoryPage.stargazers().edges().size());
-						return this.processPage(path, repositoryPage);
-					} finally {
-						if(Log.isDebugEnabled()) {
-							Log.debugf("Processed %d elements. Written %d/%d stargazers of %s/%s", 
-									processedCount.intValue(),
-									stargazersRepository.count(path),
-									remoteCount,
-									path.getLeft(),
-									path.getRight());
-						}
-					}
-				});
-		}
-	}
-
-	/**
-	 * Process one page of graphql query result
-	 * @param path
-	 * @param repositoryPage
-	 * @return true if we have to continue the process (in other words, if at least one event was persisted)
-	 */
-	private boolean processPage(Pair<String> path, RepositoryWithStargazerCountHistory repositoryPage) {
-		return repositoryPage.stargazers().edges()
-			.stream()
-			.map(event -> maybePersist(path, repositoryPage, event))
-			.reduce((a, b) -> a || b)
-			.orElse(false);
-	}
-
-	/**
-	 * Persist event
-	 * @param path
-	 * @param repositoryPage
-	 * @param event
-	 * @return true if database changed, false if event already existed in db
-	 */
-	private boolean maybePersist(Pair<String> path, RepositoryWithStargazerCountHistory repositoryPage, StargazerEvent event) {
-		Stargazer toPersist = new Stargazer(
-				path.getLeft(), path.getRight(),
-				event.starredAt(),
-				event.node().login
-				);
-		
-		return stargazersRepository.maybePersist(toPersist);
-	}
-
-	@Override
-	public boolean canCompute(Technology technology) {
-		return usesGitHubRepository(technology) && githubClient.canComputeIndicator();
-	}
+    @Override
+    protected List<?> getEvents(RepositoryWithStargazerCountHistory repositoryPage) {
+        return repositoryPage.stargazers().edges();
+    }
 
 }

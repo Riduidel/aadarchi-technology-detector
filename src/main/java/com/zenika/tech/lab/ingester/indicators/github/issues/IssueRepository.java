@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.github.GithubIndicatorRepository;
 import org.apache.camel.util.Pair;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
@@ -21,7 +21,7 @@ import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class IssueRepository implements PanacheRepository<Issue>{
+public class IssueRepository implements GithubIndicatorRepository<Issue>, PanacheRepository<Issue> {
 
     @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.issues.sql.indicator")
     String groupIssuesByMonthsSql;
@@ -33,13 +33,14 @@ public class IssueRepository implements PanacheRepository<Issue>{
 
     /**
      * Persists a issue event if it doesn't already exist.
+     *
      * @param persistent The Issue entity to persist.
      * @return true if the entity was persisted (didn't exist), false otherwise.
      */
     @Transactional
     public boolean maybePersist(Issue persistent) {
         if (count("id.owner = ?1 and id.repo = ?2 and id.date = ?3 and id.user = ?4",
-        		persistent.id.owner,
+                persistent.id.owner,
                 persistent.id.repo,
                 persistent.id.date,
                 persistent.id.user
@@ -57,6 +58,7 @@ public class IssueRepository implements PanacheRepository<Issue>{
 
     /**
      * Counts the total number of locally registered issues for a given repository.
+     *
      * @param path Pair containing the owner (left) and repository name (right).
      * @return The number of local issues for this repository.
      */
@@ -70,26 +72,28 @@ public class IssueRepository implements PanacheRepository<Issue>{
 
     /**
      * Groups issues by month and year using a native SQL query.
+     *
      * @param technology The technology associated with these indicators.
-     * @param pair Pair containing the repository owner and name.
+     * @param pair       Pair containing the repository owner and name.
      * @return A list of Indicator objects representing the number of issues per month.
      */
     @Transactional
-    public List<Indicator> groupIssuesByMonths(Technology technology, Pair<String> pair) {
+    public List<Indicator> groupIndicatorsByMonths(Technology technology, Pair<String> pair) {
         Query extractionQuery = entityManager.createNativeQuery(groupIssuesByMonthsSql);
         extractionQuery.setParameter("owner", pair.getLeft());
         extractionQuery.setParameter("name", pair.getRight());
         List<Object[]> results = extractionQuery.getResultList();
         return results.stream()
                 .map(row -> toIssueIndicator(technology, row))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     /**
      * Converts a native SQL query result row into an Indicator object.
      * Expects the row to contain [Year, Month, Count].
+     *
      * @param technology The associated technology.
-     * @param row An array of objects representing a result row.
+     * @param row        An array of objects representing a result row.
      * @return An Indicator object.
      */
     private Indicator toIssueIndicator(Technology technology, Object[] row) {

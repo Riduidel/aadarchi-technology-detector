@@ -4,6 +4,11 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.PageableH
 
 public record RepositoryWithDiscussionCountHistory(Discussions discussions) implements PageableHistory {
     @Override
+    public boolean hasNoData() {
+        return false;
+    }
+
+    @Override
     public boolean hasPreviousPage() {
         return false;
     }

@@ -14,4 +14,9 @@ public record RepositoryWithIssueCountHistory(Issues issues) implements Pageable
     public String startCursor() {
         return issues.pageInfo().startCursor();
     }
+
+    @Override
+    public boolean hasNoData() {
+        return issues == null || issues.pageInfo() == null;
+    }
 }
