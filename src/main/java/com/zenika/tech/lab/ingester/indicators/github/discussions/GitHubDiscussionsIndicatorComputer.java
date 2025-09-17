@@ -1,39 +1,35 @@
 package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
-import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.AbstractGitHubIndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.Author;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.DiscussionNode;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.RepositoryWithDiscussionCountHistory;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.RepositoryWithDiscussionCountToday;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 @ApplicationScoped
-public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorComputer<Discussion, RepositoryWithDiscussionCountToday, RepositoryWithDiscussionCountHistory> {
+public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorComputer<Discussion, RepositoryWithDiscussionCountHistory> {
 
     public static final String GITHUB_DISCUSSIONS = "github.discussions";
 
     public GitHubDiscussionsIndicatorComputer() {
-        super(null, null, null, null, null, null, null, GITHUB_DISCUSSIONS);
+        super(null, null, null, GITHUB_DISCUSSIONS);
     }
 
     @Inject
     public GitHubDiscussionsIndicatorComputer(@IndicatorNamed(GITHUB_DISCUSSIONS) IndicatorRepositoryFacade indicators,
                                               DiscussionRepository repository,
-                                              GitHubGraphqlFacade githubClient,
-                                              @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.today") String todayGraphqlQuery,
-                                              @ConfigProperty(name = Configuration.INDICATORS_PREFIX+"github.discussions.graphql.history") String historyGraphqlQuery) {
-        super(indicators, repository, RepositoryWithDiscussionCountToday.class, RepositoryWithDiscussionCountHistory.class, githubClient, todayGraphqlQuery, historyGraphqlQuery, GITHUB_DISCUSSIONS);
+                                              GitHubGraphqlFacade githubClient) {
+        super(indicators, repository, githubClient, GITHUB_DISCUSSIONS);
     }
 
     @Override
@@ -51,6 +47,16 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorC
     @Override
     protected List<?> getEvents(RepositoryWithDiscussionCountHistory repositoryPage) {
         return repositoryPage.discussions().nodes();
+    }
+
+    @Override
+    protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
+        return githubClient.getTodayCountAsOfTodayForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
+    }
+
+    @Override
+    protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithDiscussionCountHistory> processIndicator) {
+        githubClient.getHistoryCountForDiscussions(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
     }
 }
 

@@ -1,40 +1,36 @@
 package com.zenika.tech.lab.ingester.indicators.github.forks;
 
-import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.AbstractGitHubIndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.Owner;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.ForkNode;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountToday;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 @ApplicationScoped
-public class GitHubForksIndicatorComputer extends AbstractGitHubIndicatorComputer<Fork, RepositoryWithForkCountToday, RepositoryWithForkCountHistory> {
+public class GitHubForksIndicatorComputer extends AbstractGitHubIndicatorComputer<Fork, RepositoryWithForkCountHistory> {
 
     public static final String GITHUB_FORKS = "github.forks";
 
     public GitHubForksIndicatorComputer() {
-        super(null, null, null, null, null, null, null, GITHUB_FORKS);
+        super(null, null, null, GITHUB_FORKS);
     }
 
     @Inject
     public GitHubForksIndicatorComputer(
             @IndicatorNamed(GITHUB_FORKS) IndicatorRepositoryFacade indicators,
             ForkRepository repository,
-            GitHubGraphqlFacade githubClient,
-            @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.forks.graphql.today") String todayGraphqlQuery,
-            @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.forks.graphql.history") String historyGraphqlQuery) {
-        super(indicators, repository, RepositoryWithForkCountToday.class, RepositoryWithForkCountHistory.class, githubClient, todayGraphqlQuery, historyGraphqlQuery, GITHUB_FORKS);
+            GitHubGraphqlFacade githubClient) {
+        super(indicators, repository, githubClient, GITHUB_FORKS);
     }
 
     @Override
@@ -52,6 +48,16 @@ public class GitHubForksIndicatorComputer extends AbstractGitHubIndicatorCompute
     @Override
     protected List<?> getEvents(RepositoryWithForkCountHistory repositoryPage) {
         return repositoryPage.forks().nodes();
+    }
+
+    @Override
+    protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
+        return githubClient.getTodayCountAsOfTodayForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
+    }
+
+    @Override
+    protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithForkCountHistory> processIndicator) {
+        githubClient.getHistoryCountForForks(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
     }
 }
 

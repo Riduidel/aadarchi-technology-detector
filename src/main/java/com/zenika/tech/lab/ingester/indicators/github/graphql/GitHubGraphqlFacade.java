@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -235,42 +234,42 @@ public class GitHubGraphqlFacade {
 	}
 
     @Retry
-    public int getTodayCountForStargazers(String owner, String name) {
-        return getTodayCountFor(owner, name, githubStarsToday, RepositoryWithStargazerCountToday.class);
+    public int getTodayCountAsOfTodayForStargazers(String owner, String name) {
+        return getTotalCountAsOfTodayFor(owner, name, githubStarsToday, RepositoryWithStargazerCountToday.class);
     }
 
     @Retry
-    public int getTodayCountForForks(String owner, String name) {
-        return getTodayCountFor(owner, name, githubForksToday, RepositoryWithForkCountToday.class);
+    public int getTodayCountAsOfTodayForForks(String owner, String name) {
+        return getTotalCountAsOfTodayFor(owner, name, githubForksToday, RepositoryWithForkCountToday.class);
     }
 
     @Retry
-    public int getTodayCountForIssues(String owner, String name) {
-        return getTodayCountFor(owner, name, githubIssuesToday, RepositoryWithIssueCountToday.class);
+    public int getTodayCountAsOfTodayForIssues(String owner, String name) {
+        return getTotalCountAsOfTodayFor(owner, name, githubIssuesToday, RepositoryWithIssueCountToday.class);
     }
 
     @Retry
-    public int getTodayCountForDiscussions(String owner, String name) {
-        return getTodayCountFor(owner, name, githubDiscussionsToday, RepositoryWithDiscussionCountToday.class);
+    public int getTodayCountAsOfTodayForDiscussions(String owner, String name) {
+        return getTotalCountAsOfTodayFor(owner, name, githubDiscussionsToday, RepositoryWithDiscussionCountToday.class);
     }
 
     @Retry
-    public void getHistoryCountForStargazers(String owner, String name, boolean force, Function<RepositoryWithStargazerCountHistory, Boolean> processIndicator) {
+    public void getHistoryCountForStargazers(String owner, String name, boolean force, Predicate<RepositoryWithStargazerCountHistory> processIndicator) {
         getHistoryCountFor(owner, name, githubStarsHistory, force, RepositoryWithStargazerCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.stargazers() == null || repositoryPage.stargazers().pageInfo() == null);
     }
 
     @Retry
-    public void getHistoryCountForForks(String owner, String name, boolean force, Function<RepositoryWithForkCountHistory, Boolean> processIndicator) {
+    public void getHistoryCountForForks(String owner, String name, boolean force, Predicate<RepositoryWithForkCountHistory> processIndicator) {
         getHistoryCountFor(owner, name, githubForksHistory, force, RepositoryWithForkCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.forks() == null || repositoryPage.forks().pageInfo() == null);
     }
 
     @Retry
-    public void getHistoryCountForIssues(String owner, String name, boolean force, Function<RepositoryWithIssueCountHistory, Boolean> processIndicator) {
+    public void getHistoryCountForIssues(String owner, String name, boolean force, Predicate<RepositoryWithIssueCountHistory> processIndicator) {
         getHistoryCountFor(owner, name, githubIssuesHistory, force, RepositoryWithIssueCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.issues() == null || repositoryPage.issues().pageInfo() == null);
     }
 
     @Retry
-    public void getHistoryCountForDiscussions(String owner, String name, boolean force, Function<RepositoryWithDiscussionCountHistory, Boolean> processIndicator) {
+    public void getHistoryCountForDiscussions(String owner, String name, boolean force, Predicate<RepositoryWithDiscussionCountHistory> processIndicator) {
         getHistoryCountFor(owner, name, githubDiscussionsHistory, force, RepositoryWithDiscussionCountHistory.class, processIndicator, repositoryPage -> repositoryPage == null || repositoryPage.discussions() == null || repositoryPage.discussions().pageInfo() == null);
     }
 
@@ -281,7 +280,7 @@ public class GitHubGraphqlFacade {
      * @param name  the name of the repository
      * @return number of the indicator
      */
-    public <T extends TodayCount> int getTodayCountFor(String owner, String name, String graphqlQueryToUse, Class<T> pageClass) {
+    private <T extends TodayCount> int getTotalCountAsOfTodayFor(String owner, String name, String graphqlQueryToUse, Class<T> pageClass) {
         try {
             Map<String, Object> arguments = Map.of(
                     "owner", owner,
@@ -318,7 +317,7 @@ public class GitHubGraphqlFacade {
      *                         at least one was persisted)
      * @param isNullPage       predicate to check if the page is null (ex: no repository found)
      */
-    public <T extends PageableHistory> void getHistoryCountFor(String owner, String name, String graphqlQueryToUse, boolean force, Class<T> pageClass, Function<T, Boolean> processIndicator, Predicate<T> isNullPage) {
+    private <T extends PageableHistory> void getHistoryCountFor(String owner, String name, String graphqlQueryToUse, boolean force, Class<T> pageClass, Predicate<T> processIndicator, Predicate<T> isNullPage) {
         try {
             Map<String, Object> arguments = new TreeMap<>(Map.of(
                     "owner", owner,
@@ -336,7 +335,7 @@ public class GitHubGraphqlFacade {
                     }
 
                     shouldContinue = repositoryPage.hasPreviousPage();
-                    boolean hasProcessedSomething = processIndicator.apply(repositoryPage);
+                    boolean hasProcessedSomething = processIndicator.test(repositoryPage);
 
                     if (!force && !hasProcessedSomething) {
                         Log.infof("No new %s processed for %s/%s in this page, early shutdown.", pageClass.getSimpleName(), owner, name);

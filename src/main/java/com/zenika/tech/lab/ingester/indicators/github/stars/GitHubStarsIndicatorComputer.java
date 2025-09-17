@@ -1,38 +1,34 @@
 package com.zenika.tech.lab.ingester.indicators.github.stars;
 
-import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.indicators.AbstractGitHubIndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.User;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountHistory;
-import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.RepositoryWithStargazerCountToday;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.StargazerEvent;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.util.Date;
 import java.util.List;
+import java.util.function.Predicate;
 
 @ApplicationScoped
-public class GitHubStarsIndicatorComputer extends AbstractGitHubIndicatorComputer<Stargazer, RepositoryWithStargazerCountToday, RepositoryWithStargazerCountHistory> {
+public class GitHubStarsIndicatorComputer extends AbstractGitHubIndicatorComputer<Stargazer, RepositoryWithStargazerCountHistory> {
 
     public static final String GITHUB_STARS = "github.stars";
 
     public GitHubStarsIndicatorComputer() {
-        super(null, null, null, null, null, null, null, GITHUB_STARS);
+        super(null, null, null, GITHUB_STARS);
     }
 
     @Inject
     public GitHubStarsIndicatorComputer(@IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators,
                                         StargazerRepository repository,
-                                        GitHubGraphqlFacade githubClient,
-                                        @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.today") String githubStarsToday,
-                                        @ConfigProperty(name = Configuration.INDICATORS_PREFIX + "github.stars.graphql.history") String githubStarsHistory) {
-        super(indicators, repository, RepositoryWithStargazerCountToday.class, RepositoryWithStargazerCountHistory.class, githubClient, githubStarsToday, githubStarsHistory, GITHUB_STARS);
+                                        GitHubGraphqlFacade githubClient) {
+        super(indicators, repository, githubClient, GITHUB_STARS);
     }
 
     @Override
@@ -52,4 +48,13 @@ public class GitHubStarsIndicatorComputer extends AbstractGitHubIndicatorCompute
         return repositoryPage.stargazers().edges();
     }
 
+    @Override
+    protected int getTotalCountAsOfTodayFor(Pair<String> ownerAndRepositoryName) {
+        return githubClient.getTodayCountAsOfTodayForStargazers(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight());
+    }
+
+    @Override
+    protected void getHistoryCountFor(Pair<String> ownerAndRepositoryName, boolean forceRedownload, Predicate<RepositoryWithStargazerCountHistory> processIndicator) {
+        githubClient.getHistoryCountForStargazers(ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(), forceRedownload, processIndicator);
+    }
 }

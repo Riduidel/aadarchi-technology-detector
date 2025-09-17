@@ -28,25 +28,25 @@ class GitHubGraphqlFacadeTest extends CamelQuarkusTestSupport {
 
     @Test
     void can_count_today_discussion_for_one_popular_project() {
-        Assertions.assertThat(facade.getTodayCountForDiscussions("community", "community"))
+        Assertions.assertThat(facade.getTodayCountAsOfTodayForDiscussions("community", "community"))
                 .isGreaterThan(90000);
     }
 
 	@Test
 	void can_count_today_forks_for_one_popular_project() {
-		Assertions.assertThat(facade.getTodayCountForForks("microsoft", "TypeScript"))
+		Assertions.assertThat(facade.getTodayCountAsOfTodayForForks("microsoft", "TypeScript"))
 			.isGreaterThan(100);
 	}
 
     @Test
     void can_count_today_issues_for_one_popular_project() {
-        Assertions.assertThat(facade.getTodayCountForIssues("microsoft", "TypeScript"))
+        Assertions.assertThat(facade.getTodayCountAsOfTodayForIssues("microsoft", "TypeScript"))
                 .isGreaterThan(42000);
     }
 
     @Test
     void can_count_today_stargazer_for_one_popular_project() {
-        Assertions.assertThat(facade.getTodayCountForStargazers("microsoft", "TypeScript"))
+        Assertions.assertThat(facade.getTodayCountAsOfTodayForStargazers("microsoft", "TypeScript"))
                 .isGreaterThan(105000);
     }
 
