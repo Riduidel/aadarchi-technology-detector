@@ -5,7 +5,7 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import com.zenika.tech.lab.ingester.export.csv.ExportToCsv;
 import com.zenika.tech.lab.ingester.export.json.ExportToJson;
 
-public class StarterRoute extends EndpointRouteBuilder {
+public class Main extends EndpointRouteBuilder {
 	
 	@Override
 	public void configure() throws Exception {
