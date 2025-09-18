@@ -17,31 +17,31 @@ import com.zenika.tech.lab.ingester.model.Technology;
 
 public interface GitHubBased extends TechnologyBased {
 	default boolean usesGitHubRepository(Technology technology) {
-		return technology.repositoryUrl!=null && technology.repositoryUrl.contains("//github.com");
+		return technology.repositoryUrl != null && technology.repositoryUrl.contains("//github.com");
 	}
 
 
 	default Optional<Pair<String>> getRepository(Exchange exchange) throws IOException {
 		return getRepository(getTechnology(exchange));
 	}
-	
+
 	default Optional<Pair<String>> getRepository(Technology technology) throws IOException {
 		String fullRepositoryUrl = technology.repositoryUrl;
-		if(fullRepositoryUrl==null || fullRepositoryUrl.isBlank())
+		if (fullRepositoryUrl == null || fullRepositoryUrl.isBlank())
 			return Optional.empty();
 		URL url;
 		try {
 			url = new URI(fullRepositoryUrl).toURL();
 			String path = url.getPath();
-			if(path.startsWith("/")) {
+			if (path.startsWith("/")) {
 				path = path.substring(1);
 			}
 			List<String> pathElements = Arrays.asList(path.split("/"));
-			if(pathElements.size()>2) {
+			if (pathElements.size() > 2) {
 				pathElements = pathElements.subList(0, 2);
 			}
-			if(pathElements.size()==2) {
-						if(pathElements.getLast().endsWith(".git")) {
+			if (pathElements.size() == 2) {
+				if (pathElements.getLast().endsWith(".git")) {
 					String repoName = pathElements.getLast();
 					repoName = repoName.substring(0, repoName.lastIndexOf(".git"));
 					pathElements = Arrays.asList(pathElements.getFirst(), repoName);
@@ -50,10 +50,8 @@ public interface GitHubBased extends TechnologyBased {
 			} else {
 				return Optional.empty();
 			}
-		} catch (IllegalArgumentException e) {
-			return Optional.empty();
-		} catch (MalformedURLException | URISyntaxException e) {
+		} catch (IllegalArgumentException | MalformedURLException | URISyntaxException e) {
 			return Optional.empty();
 		}
-    }
+	}
 }
