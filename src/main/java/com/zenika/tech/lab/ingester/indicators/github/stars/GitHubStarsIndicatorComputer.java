@@ -7,7 +7,7 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.stargazer.StargazerEvent;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
 
@@ -15,14 +15,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-@ApplicationScoped
+@Dependent
 public class GitHubStarsIndicatorComputer extends AbstractGitHubIndicatorComputer<Stargazer, RepositoryWithStargazerCountHistory> {
 
     public static final String GITHUB_STARS = "github.stars";
-
-    public GitHubStarsIndicatorComputer() {
-        super(null, null, null, GITHUB_STARS);
-    }
 
     @Inject
     public GitHubStarsIndicatorComputer(@IndicatorNamed(GITHUB_STARS) IndicatorRepositoryFacade indicators,

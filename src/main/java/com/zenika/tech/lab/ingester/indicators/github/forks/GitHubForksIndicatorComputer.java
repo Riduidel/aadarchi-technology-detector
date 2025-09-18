@@ -7,7 +7,7 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.For
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.forks.RepositoryWithForkCountHistory;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
 
@@ -16,14 +16,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-@ApplicationScoped
+@Dependent
 public class GitHubForksIndicatorComputer extends AbstractGitHubIndicatorComputer<Fork, RepositoryWithForkCountHistory> {
 
 	public static final String GITHUB_FORKS = "github.forks";
-
-	public GitHubForksIndicatorComputer() {
-		super(null, null, null, GITHUB_FORKS);
-	}
 
 	@Inject
 	public GitHubForksIndicatorComputer(

@@ -7,7 +7,7 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussio
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.discussions.RepositoryWithDiscussionCountHistory;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
 
@@ -16,14 +16,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-@ApplicationScoped
+@Dependent
 public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorComputer<Discussion, RepositoryWithDiscussionCountHistory> {
 
 	public static final String GITHUB_DISCUSSIONS = "github.discussions";
-
-	public GitHubDiscussionsIndicatorComputer() {
-		super(null, null, null, GITHUB_DISCUSSIONS);
-	}
 
 	@Inject
 	public GitHubDiscussionsIndicatorComputer(@IndicatorNamed(GITHUB_DISCUSSIONS) IndicatorRepositoryFacade indicators,

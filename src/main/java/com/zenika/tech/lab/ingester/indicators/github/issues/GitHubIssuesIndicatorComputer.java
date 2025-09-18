@@ -7,7 +7,7 @@ import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues.Is
 import com.zenika.tech.lab.ingester.indicators.github.graphql.entities.issues.RepositoryWithIssueCountHistory;
 import com.zenika.tech.lab.ingester.model.IndicatorNamed;
 import com.zenika.tech.lab.ingester.model.IndicatorRepositoryFacade;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import org.apache.camel.util.Pair;
 
@@ -16,14 +16,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
 
-@ApplicationScoped
+@Dependent
 public class GitHubIssuesIndicatorComputer extends AbstractGitHubIndicatorComputer<Issue, RepositoryWithIssueCountHistory> {
 
 	public static final String GITHUB_ISSUES = "github.issues";
 
-	public GitHubIssuesIndicatorComputer() {
-		super(null, null, null, GITHUB_ISSUES);
-	}
 
 	@Inject
 	public GitHubIssuesIndicatorComputer(@IndicatorNamed(GITHUB_ISSUES) IndicatorRepositoryFacade indicators,
