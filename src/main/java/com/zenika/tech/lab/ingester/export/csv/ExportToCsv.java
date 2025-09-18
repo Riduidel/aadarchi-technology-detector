@@ -22,7 +22,7 @@ import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.zenika.tech.lab.ingester.Configuration;
-import com.zenika.tech.lab.ingester.StarterRoute;
+import com.zenika.tech.lab.ingester.Main;
 
 import io.quarkus.logging.Log;
 import io.smallrye.config.SmallRyeConfig;
@@ -145,7 +145,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 	}
 
 	private List<CSVTableExport> createTableDefinitions() {
-		String rootPackage = StarterRoute.class.getPackageName();
+		String rootPackage = Main.class.getPackageName();
 		Set<EntityType<?>> entities = entityManagerFactory.createEntityManager().getMetamodel().getEntities();
 		return entities.stream()
 			.map(e -> Map.entry(e, e.getBindableJavaType()))
