@@ -20,15 +20,18 @@ import java.util.function.Predicate;
 
 public abstract class AbstractGitHubIndicatorComputer<T, V extends PageableHistory> extends AbstractGitHubEndpointRouteBuilder implements IndicatorComputer, GitHubBased {
 
-	public final String githubIndicatorsName;
-	private final String routeName;
+	public String githubIndicatorsName;
+	private String routeName;
 
 
 	@ConfigProperty(name = "tech-lab-ingester.github.missing-count-percentage-threshold", defaultValue = "10")
 	int missingCountPercentageThreshold;
-	private final IndicatorRepositoryFacade indicators;
-	protected final GitHubGraphqlFacade githubClient;
-	private final GithubIndicatorRepository<T> repository;
+	private IndicatorRepositoryFacade indicators;
+	protected GitHubGraphqlFacade githubClient;
+	private GithubIndicatorRepository<T> repository;
+
+	public AbstractGitHubIndicatorComputer() {
+	}
 
 	protected AbstractGitHubIndicatorComputer(
 			IndicatorRepositoryFacade indicators,

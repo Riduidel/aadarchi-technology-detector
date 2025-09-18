@@ -22,6 +22,11 @@ camel:
     max-pool-size: 10
     max-queue-size: -1
 quarkus:
+  camel:
+    routes-discovery:
+      enabled: true
+    expression:
+      extraction-enabled: false
   datasource:
     db-kind: postgresql
     devservices:
