@@ -1,24 +1,22 @@
 package com.zenika.tech.lab.ingester;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
-import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
-
 import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.processors.IndicatorComputationProcessor;
 import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
-
 import io.quarkus.logging.Log;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
+
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
@@ -64,19 +62,24 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.log("🎉 All indicators computations have been processed")
 			;
 		from(PROCESS_ONE_TECHNOLOGY)
-			.onCompletion().onCompleteOnly()
-				.process(e -> convertBackToIndicatorComputation(e, true))
-				.end()
-			.onCompletion().onFailureOnly()
-				.process(e -> convertBackToIndicatorComputation(e, false))
-				.end()
-			.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
-			// Mark the indicator computation as LOADED
-			.process(this::convertToTechnology)
-			// Dynamically route it
-			.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
-			.end()
-			;
+			.choice()
+				.when(this::canComputeIndicator)
+					.onCompletion().onCompleteOnly()
+						.process(e -> convertBackToIndicatorComputation(e, true))
+						.end()
+					.onCompletion().onFailureOnly()
+						.process(e -> convertBackToIndicatorComputation(e, false))
+						.end()
+					.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
+					// Mark the indicator computation as LOADED
+					.process(this::convertToTechnology)
+					// Dynamically route it
+					.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
+			.endChoice()
+			.otherwise()
+				.log(LoggingLevel.WARN, "Cannot currently compute ${body}")
+			.endChoice()
+		.end();
 	}
 	public void findAllOldestFirst(Exchange exchange) {
 		exchange.getMessage().setBody(indicators.findAllOldestFirst());
