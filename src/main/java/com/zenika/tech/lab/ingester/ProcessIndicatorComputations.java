@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
+	static final String FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID = ProcessIndicatorComputations.class.getSimpleName()+"-1-fetch-all-indicator-computations";
 	private static final String INDICATOR_ROUTE_HEADER = "route";
 	TechnologyRepositoryProcessor technologies;
 	IndicatorComputationProcessor indicators;
@@ -49,7 +50,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	public void configure() throws Exception {
 		DirectEndpointBuilder PROCESS_ONE_TECHNOLOGY = direct(getClass().getSimpleName()+"-process-one-technology");
 		from(direct(getClass().getSimpleName()))
-			.id(getClass().getSimpleName()+"-1-fetch-all-indicator-computations")
+			.id(FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID)
 			.log("🔍 Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
 			.process(this::findAllOldestFirst)
