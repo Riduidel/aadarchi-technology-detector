@@ -314,10 +314,10 @@
 								<requireJavaVersion>
 									<version>21</version>
 								</requireJavaVersion>
-								<requireProperty>
+								<!-- <requireProperty>
 									<property>tech-lab-ingester.stackexchange.api.key</property>
 									<message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
-								</requireProperty>
+								</requireProperty> -->
 								<requireProperty>
 									<property>tech-lab-ingester.libraries.io.token</property>
 									<message><![CDATA[tech-lab-ingester.libraries.io.token must be specified.]]></message>
