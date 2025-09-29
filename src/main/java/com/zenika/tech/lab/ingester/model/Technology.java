@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.apache.avro.reflect.AvroDoc;
 import org.apache.avro.reflect.AvroIgnore;
+import org.jilt.Builder;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -30,6 +31,7 @@ trim(regexp_replace(repositoryurl, '[\n\r]+', ' ', 'g')) as repositoryurl
 from technology
 			""")
 })
+@Builder
 public class Technology extends PanacheEntityBase {
 	@AvroDoc("Common name of that technology")
 	public String name;
@@ -52,6 +54,19 @@ public class Technology extends PanacheEntityBase {
 	public String repositoryUrl;
 	@AvroDoc("Distyribution platform for the technology. It doesn't implies a specific language is used.")
 	public String platform;
+	
+	public Technology() {}
+	public Technology(String name, String description, String homepage, Long id, String packageManagerUrl,
+			String repositoryUrl, String platform) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.homepage = homepage;
+		this.id = id;
+		this.packageManagerUrl = packageManagerUrl;
+		this.repositoryUrl = repositoryUrl;
+		this.platform = platform;
+	}
 	@Override
 	public String toString() {
 		return "Technology [" + (name != null ? "name=" + name + ", " : "")

@@ -88,6 +88,12 @@
 		</dependency>
 -->
 		<dependency>
+			<groupId>cc.jilt</groupId>
+			<artifactId>jilt</artifactId>
+			<version>1.8.3</version>
+			<scope>provided</scope> <!-- Jilt is not needed at runtime -->
+		</dependency>
+		<dependency>
 		    <groupId>io.quarkus</groupId>
 		    <artifactId>quarkus-jdbc-postgresql</artifactId>
 		</dependency>
@@ -254,6 +260,16 @@
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-mock</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-junit5-mockito</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>

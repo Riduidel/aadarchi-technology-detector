@@ -1,27 +1,26 @@
 package com.zenika.tech.lab.ingester;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
-import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
-
 import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.processors.IndicatorComputationProcessor;
 import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
-
 import io.quarkus.logging.Log;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
+import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
+
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
+	static final String FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID = ProcessIndicatorComputations.class.getSimpleName()+"-1-fetch-all-indicator-computations";
 	private static final String INDICATOR_ROUTE_HEADER = "route";
 	TechnologyRepositoryProcessor technologies;
 	IndicatorComputationProcessor indicators;
@@ -51,7 +50,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	public void configure() throws Exception {
 		DirectEndpointBuilder PROCESS_ONE_TECHNOLOGY = direct(getClass().getSimpleName()+"-process-one-technology");
 		from(direct(getClass().getSimpleName()))
-			.id(getClass().getSimpleName()+"-1-fetch-all-indicator-computations")
+			.id(FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID)
 			.log("🔍 Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
 			.process(this::findAllOldestFirst)
@@ -65,18 +64,22 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			;
 		from(PROCESS_ONE_TECHNOLOGY)
 			.onCompletion().onCompleteOnly()
-				.process(e -> convertBackToIndicatorComputation(e, true))
-				.end()
+			.	process(e -> convertBackToIndicatorComputation(e, true))
+			.end()
 			.onCompletion().onFailureOnly()
 				.process(e -> convertBackToIndicatorComputation(e, false))
-				.end()
-			.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
-			// Mark the indicator computation as LOADED
-			.process(this::convertToTechnology)
-			// Dynamically route it
-			.toD("${header."+INDICATOR_ROUTE_HEADER+"}")
 			.end()
-			;
+			.choice()
+				.when(this::canComputeIndicator)
+					.log("Running ${header.CamelSplitIndex}/${header.CamelSplitSize} ${body}")
+					// Mark the indicator computation as LOADED
+					.process(this::convertToTechnology)
+					// Dynamically route it
+					.toD("${header." + INDICATOR_ROUTE_HEADER + "}")
+			.otherwise()
+				.log(LoggingLevel.WARN, "Cannot currently compute ${body}")
+			.endChoice()
+		.end();
 	}
 	public void findAllOldestFirst(Exchange exchange) {
 		exchange.getMessage().setBody(indicators.findAllOldestFirst());

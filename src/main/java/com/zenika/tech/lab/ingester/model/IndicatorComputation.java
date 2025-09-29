@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.jilt.Builder;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -68,6 +70,7 @@ public class IndicatorComputation extends PanacheEntityBase {
 	
 	public IndicatorComputation() {}
 	
+	@Builder
 	public IndicatorComputation(Technology technology, String indicatorRoute) {
 		this();
 		id = new IndicatorComputationId();
