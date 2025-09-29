@@ -32,7 +32,7 @@ class GitHubStarsIndicatorComputerTest extends CamelQuarkusTestSupport {
 		Technology technology = new Technology();
 		technology.repositoryUrl = "https://cs.opensource.google/go/x/crypto";
 
-		Mockito.when(gitHubGraphqlFacade.getStargazers("go", "x"))
+		Mockito.when(gitHubGraphqlFacade.getTodayCountAsOfTodayForStargazers("go", "x"))
 				.thenThrow(new NoSuchRepository("Could not resolve to a Repository with the name 'go/x'.", null));
 
 		// When
