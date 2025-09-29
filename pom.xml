@@ -25,42 +25,42 @@
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 	</properties>
 
-    <url>https://riduidel.github.io/tech-lab-ingester/</url>
-    <licenses>
-        <license>
-            <name>The Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-        </license>
-    </licenses>
-    <developers>
-        <developer>
-            <id>Riduidel</id>
-            <name>Nicolas Delsaux</name>
-            <email>nicolas.delsaux@gmx.fr</email>
-            <roles>
-                <role>Tech Lead</role>
-            </roles>
-        </developer>
-    </developers>
-    <scm>
-        <!-- We use https connections for using tech-lab-ingester.github.token as
+	<url>https://riduidel.github.io/tech-lab-ingester/</url>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>Riduidel</id>
+			<name>Nicolas Delsaux</name>
+			<email>nicolas.delsaux@gmx.fr</email>
+			<roles>
+				<role>Tech Lead</role>
+			</roles>
+		</developer>
+	</developers>
+	<scm>
+		<!-- We use https connections for using tech-lab-ingester.github.token as
 		password -->
-        <connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
-        <developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>
-        <url>https://github.com/Riduidel/tech-lab-ingester.git</url>
-        <tag>HEAD</tag>
-    </scm>
-    <issueManagement>
-        <system>GitHub</system>
-        <url>https://github.com/Riduidel/tech-lab-ingester/issues</url>
-    </issueManagement>
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/Riduidel/tech-lab-ingester</url>
-        </repository>
-    </distributionManagement>
+		<connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
+		<developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>
+		<url>https://github.com/Riduidel/tech-lab-ingester.git</url>
+		<tag>HEAD</tag>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/Riduidel/tech-lab-ingester/issues</url>
+	</issueManagement>
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub Packages</name>
+			<url>https://maven.pkg.github.com/Riduidel/tech-lab-ingester</url>
+		</repository>
+	</distributionManagement>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -94,8 +94,8 @@
 			<scope>provided</scope> <!-- Jilt is not needed at runtime -->
 		</dependency>
 		<dependency>
-		    <groupId>io.quarkus</groupId>
-		    <artifactId>quarkus-jdbc-postgresql</artifactId>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-jdbc-postgresql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel.quarkus</groupId>
@@ -128,14 +128,14 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-hibernate-orm-panache</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-sql</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-csv</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.camel.quarkus</groupId>
+			<artifactId>camel-quarkus-sql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.quarkus</groupId>
+			<artifactId>camel-quarkus-csv</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.camel.quarkus</groupId>
 			<artifactId>camel-quarkus-jpa</artifactId>
@@ -236,9 +236,9 @@
 		</dependency>
 
 		<dependency>
-		  <groupId>org.apache.camel</groupId>
-		  <artifactId>camel-parquet-avro</artifactId>
-		  <version>${camel.version}</version>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-parquet-avro</artifactId>
+			<version>${camel.version}</version>
 			<!-- use the same version as your Camel core version -->
 		</dependency>
 
@@ -248,28 +248,30 @@
 			<version>${camel.version}</version>
 			<scope>provided</scope>
 		</dependency>
--->		<dependency>
+-->
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.17.0</version>
 		</dependency>
 
-		<!-- Leave test dependencies at the end, because there will be scoping issues otherwise with commons-lang3-->
+		<!-- Leave test dependencies at the end, because there will be scoping issues otherwise with
+		commons-lang3-->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.camel.quarkus</groupId>
-            <artifactId>camel-quarkus-mock</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-junit5-mockito</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.camel.quarkus</groupId>
+			<artifactId>camel-quarkus-mock</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-junit5-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -298,6 +300,42 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<version>3.6.1</version>
+				<executions>
+					<execution>
+						<id>enforce-versions</id>
+						<goals>
+							<goal>enforce</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<requireJavaVersion>
+									<version>21</version>
+								</requireJavaVersion>
+								<!-- <requireProperty>
+									<property>tech-lab-ingester.stackexchange.api.key</property>
+									<message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
+								</requireProperty> -->
+								<requireProperty>
+									<property>tech-lab-ingester.libraries.io.token</property>
+									<message><![CDATA[tech-lab-ingester.libraries.io.token must be specified.]]></message>
+								</requireProperty>
+								<requireProperty>
+									<property>tech-lab-ingester.github.token</property>
+									<message><![CDATA[tech-lab-ingester.github.token must be specified.]]></message>
+								</requireProperty>
+								<!-- <requireProperty>
+									<property>tech-lab-ingester.bigQuery.projectId</property>
+									<message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
+								</requireProperty> -->
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
 				<configuration>
@@ -312,9 +350,9 @@
 						<java.util.logging.manager>
 							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
-                        <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
-                    </systemPropertyVariables>
-                </configuration>
+						<tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
