@@ -1,4 +1,4 @@
-package com.zenika.tech.lab.ingester.indicators.github.forks;
+package com.zenika.tech.lab.ingester.indicators.github.discussions;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -10,41 +10,41 @@ import jakarta.persistence.NamedNativeQuery;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "GITHUB_FORKS")
+@Entity(name = "GITHUB_DISCUSSIONS")
 @NamedNativeQuery(
-		name = "GITHUB_FORKS.CSV.EXPORT",
+		name = "GITHUB_DISCUSSIONS.CSV.EXPORT",
 		query = """
-				select
-				to_char(fork_date, 'YYYY-MM-DD HH:MM:SS') as fork_date,
+				select 
+				to_char(discussion_date, 'YYYY-MM-DD HH:MM:SS') as discussion_date,
 				repo_owner,
 				repo_name,
-				fork_user
-				from github_forks;
+				discussion_user
+				from github_discussions;
 				""")
-public class Fork extends PanacheEntityBase {
+public class Discussion extends PanacheEntityBase {
 
 	@Embeddable
-	public static class ForkId implements Serializable {
+	public static class DiscussionsId implements Serializable {
 		@Column(name = "REPO_OWNER")
 		public String owner;
 		@Column(name = "REPO_NAME")
 		public String repo;
-		@Column(name = "FORK_DATE")
+		@Column(name = "DISCUSSION_DATE")
 		public Date date;
-		@Column(name = "FORK_USER")
+		@Column(name = "DISCUSSION_USER")
 		public String user;
 
 	}
 
 	@EmbeddedId
-	public ForkId id;
+	public DiscussionsId id;
 
-	public Fork() {
+	public Discussion() {
 		super();
 	}
 
-	public Fork(String owner, String repo, Date date, String user) {
-		this.id = new Fork.ForkId();
+	public Discussion(String owner, String repo, Date date, String user) {
+		this.id = new DiscussionsId();
 		this.id.owner = owner;
 		this.id.repo = repo;
 		this.id.date = date;
