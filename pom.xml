@@ -497,7 +497,7 @@
 						<executions>
 							<execution>
 								<id>update jacoco treshold from test results</id>
-								<phase>process-resources</phase>
+                <phase>verify</phase>
 								<goals>
 									<goal>execute</goal>
 								</goals>
