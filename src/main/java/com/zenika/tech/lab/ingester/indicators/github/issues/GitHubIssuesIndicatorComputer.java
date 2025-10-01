@@ -37,7 +37,7 @@ public class GitHubIssuesIndicatorComputer extends AbstractGitHubIndicatorComput
 		return new Issue(
 				ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
 				Date.from(createdAt.toInstant()),
-				author.login()
+				author==null ? "null" : author.login()
 		);
 	}
 

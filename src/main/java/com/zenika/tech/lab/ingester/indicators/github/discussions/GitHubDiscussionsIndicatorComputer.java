@@ -36,7 +36,7 @@ public class GitHubDiscussionsIndicatorComputer extends AbstractGitHubIndicatorC
 		return new Discussion(
 				ownerAndRepositoryName.getLeft(), ownerAndRepositoryName.getRight(),
 				Date.from(createdAt.toInstant()),
-				author.login()
+				author==null ? "null" : author.login()
 		);
 	}
 
