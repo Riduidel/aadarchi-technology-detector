@@ -12,12 +12,12 @@ public class Main extends EndpointRouteBuilder {
 		from(timer("autostart").repeatCount(1))
 			.id("1-starter-route")
 			.log("🚀 Starting the whole process")
-//			.to(direct(ReadPopularLibraries.class.getSimpleName()))
+			.to(direct(ReadPopularLibraries.class.getSimpleName()))
 			.to(direct(AddMissingFields.class.getSimpleName()))
-//			.to(direct(GenerateIndicatorComputations.class.getSimpleName()))
-//			.to(direct(ProcessIndicatorComputations.class.getSimpleName()))
-//			.to(direct(ExportToJson.class.getSimpleName()))
-//			.to(direct(ExportToCsv.class.getSimpleName()))
+			.to(direct(GenerateIndicatorComputations.class.getSimpleName()))
+			.to(direct(ProcessIndicatorComputations.class.getSimpleName()))
+			.to(direct(ExportToJson.class.getSimpleName()))
+			.to(direct(ExportToCsv.class.getSimpleName()))
 			.log("🏁 Everything should be terminated now.")
 			;
 	}
