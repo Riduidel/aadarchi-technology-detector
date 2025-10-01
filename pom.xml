@@ -25,8 +25,7 @@
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
 		<!-- Jacoco auto-increasing tests configuration -->
 		<jacoco.version>0.8.12</jacoco.version>
-				<jacoco.covered.instructions.target.percentage>0.03</jacoco.covered.instructions.target.percentage>
-
+    <jacoco.covered.instructions.target.percentage>0.06</jacoco.covered.instructions.target.percentage>
 	</properties>
 
 	<url>https://riduidel.github.io/tech-lab-ingester/</url>
