@@ -23,6 +23,9 @@
 		<camel.version>4.9.0</camel.version>
 		<skipITs>true</skipITs>
 		<surefire-plugin.version>3.5.0</surefire-plugin.version>
+		<!-- Jacoco auto-increasing tests configuration -->
+		<jacoco.version>0.8.12</jacoco.version>
+    <jacoco.covered.instructions.target.percentage>0.06</jacoco.covered.instructions.target.percentage>
 	</properties>
 
 	<url>https://riduidel.github.io/tech-lab-ingester/</url>
@@ -335,6 +338,62 @@
 					</execution>
 				</executions>
 			</plugin>
+								<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>${jacoco.version}</version>
+						<executions>
+							<execution>
+								<id>Jacoco - prepare agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>Jacoco - generate report</id>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<phase>test</phase>
+							</execution>
+							<execution>
+								<id>Jacoco - is code covered?</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
+								</goals>
+								<configuration>
+									<rules>
+										<rule>
+											<element>BUNDLE</element>
+											<limits>
+												<limit>
+													<counter>INSTRUCTION</counter>
+													<value>COVEREDRATIO</value>
+													<minimum>
+														${jacoco.covered.instructions.target.percentage}</minimum>
+												</limit>
+											</limits>
+										</rule>
+									</rules>
+								</configuration>
+							</execution>
+						</executions>
+						<configuration>
+							<excludes>
+								<exclude>**/annotations/*</exclude>
+								<exclude>**/enums/*</exclude>
+								<exclude>**/exceptions/*</exclude>
+								<exclude>**/*.docx</exclude>
+								<exclude>**/*.xlsx</exclude>
+								<exclude>**/*.jks</exclude>
+								<exclude>**/*.png</exclude>
+								<exclude>**/*.ttf</exclude>
+								<exclude>**/*.woff</exclude>
+							</excludes>
+						</configuration>
+					</plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${compiler-plugin.version}</version>
@@ -373,6 +432,15 @@
 							org.jboss.logmanager.LogManager</java.util.logging.manager>
 						<maven.home>${maven.home}</maven.home>
 					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>3.1.1</version>
+				<configuration>
+					<!-- During release, we update the required coverage level-->
+					<releaseProfiles>update-target-coverage</releaseProfiles>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -418,5 +486,39 @@
 				</plugins>
 			</build>
 		</profile>
+				<profile>
+		<!-- This profile will read the jacoco report file to change
+		the value of the jacoco treshold (the best way to have code quality raising).
+		It is intended to be run in Jenkins on master branch -->
+			<id>update-target-coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.gmaven</groupId>
+						<artifactId>groovy-maven-plugin</artifactId>
+						<dependencies>
+							<dependency>
+								<groupId>org.jsoup</groupId>
+								<artifactId>jsoup</artifactId>
+								<version>1.12.2</version>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>update jacoco treshold from test results</id>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>execute</goal>
+								</goals>
+								<configuration>
+									<source>src/build/groovy/updateJacocoTarget.groovy</source>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 </project>
