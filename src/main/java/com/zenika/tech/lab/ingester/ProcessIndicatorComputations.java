@@ -53,7 +53,7 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.id(FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID)
 			.log("🔍 Searching for indicator computations")
 			// I think it will be necessary to have some kind of batch processing
-			.process(this::findAllOldestFirst)
+			.process(this::findAllPriorized)
 			.log("✅ Found ${body.size} technologies")
 			.split(body())
 				.parallelProcessing()
@@ -81,20 +81,20 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 			.endChoice()
 		.end();
 	}
-	public void findAllOldestFirst(Exchange exchange) {
-		exchange.getMessage().setBody(indicators.findAllOldestFirst());
+	public void findAllPriorized(Exchange exchange) {
+		exchange.getMessage().setBody(indicators.findAllPriorized());
 	}
 	public boolean canComputeIndicator(Exchange exchange) {
-		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
-		IndicatorComputer computer = indicatorComputerRoutes.get(indicator.id.indicatorRoute);
-		if(computer==null) {
-			Log.errorf("🛑 Indicator computation %s routes to missing indicator computer %s. It won't be computed AT ALL",
-					indicator,
-					indicator.id.indicatorRoute);
-		} else {
-			return computer.canCompute(indicator.id.technology);
-		}
-		return false;
+//		IndicatorComputation indicator = exchange.getMessage().getBody(IndicatorComputation.class);
+//		IndicatorComputer computer = indicatorComputerRoutes.get(indicator.id.indicatorRoute);
+//		if(computer==null) {
+//			Log.errorf("🛑 Indicator computation %s routes to missing indicator computer %s. It won't be computed AT ALL",
+//					indicator,
+//					indicator.id.indicatorRoute);
+//		} else {
+//			return computer.canCompute(indicator.id.technology);
+//		}
+		return true;
 	}
 	
 	public void convertToTechnology(Exchange exchange) {
@@ -106,7 +106,11 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	}
 	public void convertBackToIndicatorComputation(Exchange exchange, boolean updateDate) {
 		IndicatorComputation indicatorComputation = exchange.getMessage().getHeader("indicatorComputation", IndicatorComputation.class);
-		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, updateDate);
-		exchange.getMessage().setBody(indicatorComputation);
+		if(indicatorComputation!=null) {
+			indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, updateDate);
+			exchange.getMessage().setBody(indicatorComputation);
+		} else {
+			exchange.setRouteStop(true);
+		}
 	}
 }

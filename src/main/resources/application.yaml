@@ -3,14 +3,16 @@
     export:
       INDICATOR:
         csv:
+          enabled: true
           to:
             gcp:
-              enabled: false
+              enabled: true
       TECHNOLOGY:
         csv:
+          enabled: true
           to:
             gcp:
-              enabled: false
+              enabled: true
     projects:
       per:
         page: 10
@@ -88,6 +90,9 @@ quarkus:
         Content-Type: application/json; charset=utf-8
       url: https://api.github.com/graphql
 tech-lab-ingester:
+  # Values in this key should be in the form "platform:name"
+  priorized-technologies:
+    - NPM:react
   export:
     INDICATOR_COMPUTATION:
       csv:
@@ -104,6 +109,16 @@ tech-lab-ingester:
             enabled: false
       
   indicators:
+    computations:
+      findAllPriorized:
+        sql: |
+          select *
+            from indicator_computation ic
+            order by 
+            ic.technology_id in :priorized desc,
+            ic.status desc,
+            ic.indicator_date  asc,
+            ic.technology_id asc;
     github:
       stars:
         graphql:
