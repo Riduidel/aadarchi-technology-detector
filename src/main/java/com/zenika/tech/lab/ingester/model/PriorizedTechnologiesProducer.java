@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
+import com.zenika.tech.lab.ingester.Configuration;
+
 import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
@@ -20,7 +22,7 @@ public class PriorizedTechnologiesProducer {
 	@Transactional
 	@Named("priorized")
 	List<Technology> buildPriorizedTechnologiesList(
-			@ConfigProperty(name="tech-lab-ingester.priorized-technologies") List<String> priorized,
+			@ConfigProperty(name=Configuration.CONFIGURATION_PREFIX + "priorized-technologies") List<String> priorized,
 			TechnologyRepository technologies) {
 		// In a very, VERY, strange fashion, config is not obtained from injection,
 		// but from that damn old ServiceProvider thingie

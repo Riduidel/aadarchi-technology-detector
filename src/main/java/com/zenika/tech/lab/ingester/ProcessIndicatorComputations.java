@@ -106,7 +106,11 @@ public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	}
 	public void convertBackToIndicatorComputation(Exchange exchange, boolean updateDate) {
 		IndicatorComputation indicatorComputation = exchange.getMessage().getHeader("indicatorComputation", IndicatorComputation.class);
-		indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, updateDate);
-		exchange.getMessage().setBody(indicatorComputation);
+		if(indicatorComputation!=null) {
+			indicators.markIndicator(indicatorComputation, IndicatorComputation.IndicatorComputationStatus.HOLD, updateDate);
+			exchange.getMessage().setBody(indicatorComputation);
+		} else {
+			exchange.setRouteStop(true);
+		}
 	}
 }

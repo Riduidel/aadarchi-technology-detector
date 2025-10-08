@@ -9,14 +9,20 @@ import org.apache.camel.model.ProcessDefinition;
 import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation.IndicatorComputationStatus;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationBuilder;
+import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
 import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.TechnologyBuilder;
+import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.test.junit.QuarkusMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 
@@ -25,19 +31,33 @@ class ProcessIndicatorComputationsTest extends CamelQuarkusTestSupport {
 
 	@Inject	ProducerTemplate producerTemplate;
 	@Inject ConsumerTemplate consumerTemplate;
+	@Inject IndicatorComputationRepository indicatorsToMock;
 
+	static Technology TESTED_TECHNOLOGY = TechnologyBuilder.technology()
+			.build();
+	static String INDICATOR_ROUTE = "log:done with that fake indicator route";
+	static IndicatorComputation indicatorComputation = IndicatorComputationBuilder
+			.indicatorComputation()
+			.technology(TESTED_TECHNOLOGY)
+			.indicatorRoute(INDICATOR_ROUTE)
+			.build();
+
+	@BeforeAll
+	public static void setup() {
+		IndicatorComputationRepository mockingIndicators = Mockito.mock(IndicatorComputationRepository.class);
+		PanacheQuery mockedQuery = Mockito.mock(PanacheQuery.class);
+		Mockito.when(mockedQuery.firstResult()).thenReturn(indicatorComputation);
+		Mockito
+			.when(mockingIndicators.find(Mockito.anyString(), 
+					Mockito.<Object[]>any() ))
+			.thenReturn(mockedQuery);
+		QuarkusMock.installMockForType(mockingIndicators, IndicatorComputationRepository.class);
+	}
 
 	@Test
 	void testRoutingToCorrectComputer() throws Exception {
 		// Given
-		Technology TESTED_TECHNOLOGY = TechnologyBuilder.technology()
-				.build();
-		String INDICATOR_ROUTE = "NO INDICATOR ROUTE CONFIFURED";
-		IndicatorComputation indicatorComputation = IndicatorComputationBuilder
-				.indicatorComputation()
-				.technology(TESTED_TECHNOLOGY)
-				.indicatorRoute(INDICATOR_ROUTE)
-				.build();
+		
 		// Replace standard call (which would get data from database)
 		// by our call (which get only one indicator computation)
 		AdviceWith.adviceWith(context, ProcessIndicatorComputations.FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID, a -> {
