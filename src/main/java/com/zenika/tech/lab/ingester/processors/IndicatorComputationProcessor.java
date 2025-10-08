@@ -10,16 +10,16 @@ import com.zenika.tech.lab.ingester.model.Technology;
 
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
-import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
+import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
 
 @Dependent
 public class IndicatorComputationProcessor {
 	@Inject IndicatorComputationRepository indicators;
 
-	@Inject @Identifier("priorized") List<Technology> priorized;
+	@Inject @Named("priorized") List<Technology> priorized;
 	
 	public void generateIndicatorComputationFor(Technology technology, String r) {
 		indicators.findOrCreateFromTechnology(technology, r);
