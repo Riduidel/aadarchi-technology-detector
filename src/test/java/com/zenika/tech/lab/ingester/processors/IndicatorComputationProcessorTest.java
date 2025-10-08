@@ -63,14 +63,13 @@ class IndicatorComputationProcessorTest extends CamelQuarkusTestSupport {
 					.platform("NPM")
 					.name("everything")
 					.build();
-			technologies.persist(react, everything);
 			indicatorComputations.persist(
 				IndicatorComputationBuilder.indicatorComputation()
 					.technology(react)
 					.indicatorRoute("log:just a test")
 					.build(),
 				IndicatorComputationBuilder.indicatorComputation()
-					.technology(react)
+					.technology(everything)
 					.indicatorRoute("log:just a test")
 					.build());
 		}
