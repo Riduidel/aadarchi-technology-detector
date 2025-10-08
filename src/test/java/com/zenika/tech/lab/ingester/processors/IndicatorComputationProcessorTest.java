@@ -55,21 +55,21 @@ class IndicatorComputationProcessorTest extends CamelQuarkusTestSupport {
 		if(indicatorComputations.count()==0) {
 			// Create some test data when none exist
 			// This is required since we tend to abuse dev mode
-			Technology react = TechnologyBuilder.technology()
+			technologies.persist(TechnologyBuilder.technology()
 					.platform("NPM")
 					.name("react")
-					.build();
-			Technology everything = TechnologyBuilder.technology()
+					.build());
+			technologies.persist(TechnologyBuilder.technology()
 					.platform("NPM")
 					.name("everything")
-					.build();
+					.build());
 			indicatorComputations.persist(
 				IndicatorComputationBuilder.indicatorComputation()
-					.technology(react)
+					.technology(technologies.find("name", "react").firstResult())
 					.indicatorRoute("log:just a test")
 					.build(),
 				IndicatorComputationBuilder.indicatorComputation()
-					.technology(everything)
+					.technology(technologies.find("name", "everything").firstResult())
 					.indicatorRoute("log:just a test")
 					.build());
 		}
