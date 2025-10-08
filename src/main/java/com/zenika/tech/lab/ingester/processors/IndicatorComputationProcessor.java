@@ -3,16 +3,14 @@ package com.zenika.tech.lab.ingester.processors;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.camel.Exchange;
-
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
+import com.zenika.tech.lab.ingester.model.IndicatorComputation.IndicatorComputationStatus;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
 import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.model.IndicatorComputation.IndicatorComputationStatus;
-import com.zenika.tech.lab.ingester.model.export.ComputedIndicators;
 
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
+import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -21,13 +19,20 @@ import jakarta.transaction.Transactional;
 public class IndicatorComputationProcessor {
 	@Inject IndicatorComputationRepository indicators;
 
+	@Inject @Identifier("priorized") List<Technology> priorized;
 	
 	public void generateIndicatorComputationFor(Technology technology, String r) {
 		indicators.findOrCreateFromTechnology(technology, r);
 	}
 
+	/**
+	 * Find all indicator computations sorted by priority.
+	 * This priority first takes in account the fact that technology is in 
+	 * the priorized technologies list, then sort by indicator computation date
+	 * @return
+	 */
 	@Transactional
-	public Iterable<IndicatorComputation> findAllOldestFirst() {
+	public Iterable<IndicatorComputation> findAllPriorized() {
 		List<IndicatorComputation> returned = indicators.findAll(
 				// This ensure we first finish currently computing indicators prior to computing new ones
 				Sort.by("status", Direction.Descending)
