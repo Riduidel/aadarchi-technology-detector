@@ -52,7 +52,7 @@ public class Technology extends PanacheEntityBase {
 	public String packageManagerUrl;
 	@AvroDoc("source code repository url")
 	public String repositoryUrl;
-	@AvroDoc("Distyribution platform for the technology. It doesn't implies a specific language is used.")
+	@AvroDoc("Distribution platform for the technology. It doesn't implies a specific language is used.")
 	public String platform;
 	
 	public Technology() {}
