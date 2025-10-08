@@ -10,11 +10,14 @@ import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Parameters;
 
 @ApplicationScoped
 public class PriorizedTechnologiesProducer {
 	@Produces
+	@Transactional
 	@Named("priorized")
 	List<Technology> buildPriorizedTechnologiesList(
 			@ConfigProperty(name="tech-lab-ingester.priorized-technologies") List<String> priorized,
@@ -39,6 +42,8 @@ public class PriorizedTechnologiesProducer {
 	}
 
 	private Optional<Technology> loadTechnology(String platform, String name, TechnologyRepository technologies) {
-		return technologies.find("platform", platform, "name", name).firstResultOptional();
+		return technologies.find("platform=:p and name=:n",
+				Parameters.with("p", platform).and("n", name)
+				).firstResultOptional();
 	}
 }

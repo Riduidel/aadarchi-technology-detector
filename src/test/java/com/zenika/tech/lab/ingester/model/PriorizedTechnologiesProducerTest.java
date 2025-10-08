@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.Mockito;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
+import io.quarkus.panache.common.Parameters;
 import io.quarkus.test.component.QuarkusComponentTest;
 import io.quarkus.test.component.QuarkusComponentTestExtension;
 import io.quarkus.test.component.TestConfigProperty;
@@ -28,7 +29,7 @@ class PriorizedTechnologiesProducerTest {
     		.scope(Dependent.class)
     		.createMockitoMock(mock -> {
     			PanacheQuery<Technology> mockedQuery = Mockito.mock(PanacheQuery.class);
-	    		Mockito.when(mock.find("platform", "NPM", "name", "react"))
+	    		Mockito.when(mock.find(Mockito.anyString(), Mockito.any(Parameters.class) ))
 	    			.thenReturn(mockedQuery);
 	    		Mockito.when(mockedQuery.firstResultOptional()).thenReturn(
     				Optional.of(
